@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.home;
+package space.lopatkin.spb.helpboardgamecard.ui.helpCard;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,17 +12,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import space.lopatkin.spb.helpboardgamecard.R;
 
-public class HomeFragment extends Fragment {
+public class HelpCardFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private HelpCardViewModel helpCardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+        helpCardViewModel =
+                ViewModelProviders.of(this).get(HelpCardViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_helpcard, container, false);
+        final TextView textView = root.findViewById(R.id.text_helpcard);
+        helpCardViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

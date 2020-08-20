@@ -1,16 +1,16 @@
-package space.lopatkin.spb.helpboardgamecard.ui.send;
+package space.lopatkin.spb.helpboardgamecard.ui.helpCard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SendViewModel extends ViewModel {
+public class HelpCardViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SendViewModel() {
+    public HelpCardViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is send fragment");
+        mText.setValue("тут хранится каталог памяток");
     }
 
     public LiveData<String> getText() {
