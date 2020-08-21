@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard;
+package space.lopatkin.spb.helpboardgamecard.ui;
 
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import space.lopatkin.spb.helpboardgamecard.R;
 
 public class MainActivity extends AppCompatActivity {
 
