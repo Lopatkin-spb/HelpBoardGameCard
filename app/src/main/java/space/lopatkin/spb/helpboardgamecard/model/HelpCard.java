@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.model;
+package space.lopatkin.spb.helpboardgamecard.model;
 
 
 import android.os.Parcel;
