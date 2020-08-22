@@ -14,6 +14,8 @@
     <string name="helpcard_text">введите текст заметки</string>
     <string name="helpcard_details_title">заметка</string>
     <string name="save">сохранить</string>
+    <string name="complited">выполнение</string>
+
 
 
 </resources>
