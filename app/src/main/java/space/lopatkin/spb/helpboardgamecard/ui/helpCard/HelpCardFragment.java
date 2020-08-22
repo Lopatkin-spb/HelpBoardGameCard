@@ -10,24 +10,38 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import space.lopatkin.spb.helpboardgamecard.R;
 
 public class HelpCardFragment extends Fragment {
 
     private HelpCardViewModel helpCardViewModel;
 
+    private RecyclerView recyclerView;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        helpCardViewModel =
-                ViewModelProviders.of(this).get(HelpCardViewModel.class);
+        //helpCardViewModel =
+                //ViewModelProviders.of(this).get(HelpCardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_helpcard, container, false);
-        final TextView textView = root.findViewById(R.id.list);
-        helpCardViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
+        //список
+        recyclerView = root.findViewById(R.id.list);
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager (this, RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        //разделитель
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+
+
+
+
+
+
         return root;
     }
 }
