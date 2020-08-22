@@ -12,7 +12,6 @@ public class MainViewModel extends ViewModel {
     //доступ к списку данных (синглтон тут тоже задействован)
 
 
-
     private LiveData<List<HelpCard>> helpCardLiveData =
             App.getInstance().getHelpCardDao().getAllLiveData();
 
