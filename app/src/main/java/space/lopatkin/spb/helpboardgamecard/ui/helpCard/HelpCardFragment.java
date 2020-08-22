@@ -21,7 +21,7 @@ public class HelpCardFragment extends Fragment {
         helpCardViewModel =
                 ViewModelProviders.of(this).get(HelpCardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_helpcard, container, false);
-        final TextView textView = root.findViewById(R.id.text_helpcard);
+        final TextView textView = root.findViewById(R.id.list);
         helpCardViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
