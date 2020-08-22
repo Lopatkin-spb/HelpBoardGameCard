@@ -10,4 +10,10 @@
     <string name="menu_helpcard">HelpCard</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_share">Share</string>
+
+    <string name="helpcard_text">введите текст заметки</string>
+    <string name="helpcard_details_title">заметка</string>
+    <string name="save">сохранить</string>
+
+
 </resources>

@@ -23,23 +23,18 @@ public class HelpCardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //helpCardViewModel =
-                //ViewModelProviders.of(this).get(HelpCardViewModel.class);
+//        helpCardViewModel =
+//                ViewModelProviders.of(this).get(HelpCardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_helpcard, container, false);
 
         //список
         recyclerView = root.findViewById(R.id.list);
 
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager (this, RecyclerView.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         //разделитель
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
-
-
-
-
 
 
         return root;
