@@ -86,7 +86,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.HelpCardViewHolder> {
         return sortedList.size();
     }
 
-
+//обновление елементов списка 
+// (найдет разницу в елементах и вызовет нужные методы для
+// обновления или замены только тех елементов которые нужны)
     public void setItems(List<HelpCard> helpCards) {
         sortedList.replaceAll(helpCards);
     }
