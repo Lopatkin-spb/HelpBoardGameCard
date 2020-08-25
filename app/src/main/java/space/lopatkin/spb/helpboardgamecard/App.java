@@ -2,9 +2,8 @@ package space.lopatkin.spb.helpboardgamecard;
 
 import android.app.Application;
 import androidx.room.Room;
-import space.lopatkin.spb.helpboardgamecard.data.AppDatabase;
-import space.lopatkin.spb.helpboardgamecard.data.HelpCardDao;
-import space.lopatkin.spb.helpboardgamecard.model.HelpCard;
+import space.lopatkin.spb.helpboardgamecard.dataRoom.AppDatabase;
+import space.lopatkin.spb.helpboardgamecard.dataRoom.HelpCardDao;
 
 public class App extends Application {
 

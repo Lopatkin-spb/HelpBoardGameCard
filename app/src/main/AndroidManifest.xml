@@ -24,11 +24,11 @@
 
 
 
-        <activity
-                android:name=".ui.HelpCardDetailsActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+<!--        <activity-->
+<!--                android:name=".ui.newCard.NewCardActivity"-->
+<!--                android:theme="@style/AppTheme.NoActionBar">-->
 
-        </activity>
+<!--        </activity>-->
 
 
     </application>

@@ -10,6 +10,11 @@
                 android:title="@string/menu_helpcard"/>
 
         <item
+                android:id="@+id/nav_newcard"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/menu_newcard"/>
+
+        <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="@string/menu_settings"/>

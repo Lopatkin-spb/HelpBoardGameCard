@@ -12,6 +12,12 @@
             tools:layout="@layout/fragment_helpcard"/>
 
     <fragment
+            android:id="@+id/nav_newcard"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.newCard.NewCardFragment"
+            android:label="@string/menu_newcard"
+            tools:layout="@layout/fragment_helpcard"/>
+
+    <fragment
             android:id="@+id/nav_settings"
             android:name="space.lopatkin.spb.helpboardgamecard.ui.settings.SettingsFragment"
             android:label="@string/menu_settings"

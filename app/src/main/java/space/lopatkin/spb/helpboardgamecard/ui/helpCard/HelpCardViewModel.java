@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui;
+package space.lopatkin.spb.helpboardgamecard.ui.helpCard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,7 +7,7 @@ import space.lopatkin.spb.helpboardgamecard.model.HelpCard;
 
 import java.util.List;
 
-public class MainViewModel extends ViewModel {
+public class HelpCardViewModel extends ViewModel {
 
     //доступ к списку данных (синглтон тут тоже задействован)
 

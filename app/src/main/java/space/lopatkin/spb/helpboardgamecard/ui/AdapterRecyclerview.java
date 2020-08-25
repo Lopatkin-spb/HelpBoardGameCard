@@ -1,6 +1,8 @@
 package space.lopatkin.spb.helpboardgamecard.ui;
 
-import android.app.Activity;
+//import android.support.v4.*;
+
+
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,20 +11,22 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 import space.lopatkin.spb.helpboardgamecard.App;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.model.HelpCard;
+import space.lopatkin.spb.helpboardgamecard.ui.newCard.NewCardFragment;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.HelpCardViewHolder> {
+public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclerview.HelpCardViewHolder> {
 
 
     private SortedList<HelpCard> sortedList;
 
-    public Adapter() {
+    public AdapterRecyclerview() {
 
         sortedList = new SortedList<>(HelpCard.class, new SortedList.Callback<HelpCard>() {
             @Override
@@ -104,6 +108,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.HelpCardViewHolder> {
 
         boolean silentUpdate;
 
+
+
+//        FragmentTransaction transaction;
+//        Fragment newCardFragment;
+
+
         //конструктор
         public HelpCardViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -112,11 +122,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.HelpCardViewHolder> {
             complited = itemView.findViewById(R.id.complited);
             delete = itemView.findViewById(R.id.delete);
 
-
+//обработчик для всего итема сразу - вызов активити для редактирования заметки
+// (нестандартный способ, чтоб не возится с передачей данных)
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HelpCardDetailsActivity.start((Activity) itemView.getContext(), helpCard);
+//                    MainActivity mainActivity = new MainActivity();
+//                    mainActivity.startNewcardFragment(itemView.getContext(), helpCard);
+
+
+                    //NewCardFragment.start((Fragment) itemView.getContext(), helpCard);
                 }
             });
 

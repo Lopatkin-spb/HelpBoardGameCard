@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.data;
+package space.lopatkin.spb.helpboardgamecard.dataRoom;
 
 
 import androidx.lifecycle.LiveData;

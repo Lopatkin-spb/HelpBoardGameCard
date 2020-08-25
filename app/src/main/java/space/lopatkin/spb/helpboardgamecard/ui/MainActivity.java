@@ -1,11 +1,12 @@
 package space.lopatkin.spb.helpboardgamecard.ui;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.view.MenuItem;
+import android.widget.EditText;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.View;
 import androidx.navigation.NavController;
@@ -18,14 +19,22 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import space.lopatkin.spb.helpboardgamecard.App;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.model.HelpCard;
-
-import java.util.List;
+import space.lopatkin.spb.helpboardgamecard.ui.newCard.NewCardFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+
+
+
+    private NewCardFragment newCardFragment;
+
+    private HelpCard helpCard;
+
+    private EditText editText;
 
     // private RecyclerView recyclerView;
 
@@ -33,8 +42,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //тулбар
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        //knopka nazad тулбара
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
 
 ////список
@@ -49,17 +62,18 @@ public class MainActivity extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HelpCardDetailsActivity.start(MainActivity.this, null);
-
-//было
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//               // NewCardFragment.start(MainActivity.this, null);
+//
+//
+////было
+//                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                //        .setAction("Action", null).show();
+//            }
+//        });
 
 //        //позволяет получить вьюмодел для нашей активити
 //        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -77,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_helpcard,
+                R.id.nav_newcard,
                 R.id.nav_settings, R.id.nav_share)
                 .setDrawerLayout(drawer)
                 .build();
@@ -85,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+
+    //создание верхнего меню
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -98,4 +115,44 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
+    @SuppressLint("ResourceType")
+   public void startNewcardFragment(Context context, HelpCard helpCard) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        NewCardFragment newCardFragment = new NewCardFragment();
+        transaction.replace(R.layout.fragment_newcard , newCardFragment);
+        transaction.commit();
+    }
+
+
+
+//    //обработка для событий
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+////            case android.R.id.home:
+////                finish();
+////                break;
+//            case R.id.action_save:
+//                if (editText.getText().length() > 0) {
+//                    helpCard.text = editText.getText().toString();
+//                    helpCard.favorites = false;
+//                    helpCard.timestamp = System.currentTimeMillis();
+//
+//                    if (newCardFragment.getIntent().hasExtra(EXTRA_HELPCARD)) {
+//                        App.getInstance().getHelpCardDao().update(helpCard);
+//                    } else {
+//                        App.getInstance().getHelpCardDao().insert(helpCard);
+//                    }
+//
+//                    //finish();
+//                }
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+
+
 }
