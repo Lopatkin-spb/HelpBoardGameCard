@@ -1,33 +1,36 @@
-package space.lopatkin.spb.helpboardgamecard.ui.newCard;
+package space.lopatkin.spb.helpboardgamecard.ui.addCard;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.*;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import space.lopatkin.spb.helpboardgamecard.App;
 import space.lopatkin.spb.helpboardgamecard.R;
-import space.lopatkin.spb.helpboardgamecard.model.HelpCard;
+import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+public class AddCardFragment extends Fragment {
 
-
-public class NewCardFragment extends Fragment {
-
-    private static final String EXTRA_HELPCARD = "NewCardFragment.EXTRA_HELPCARD";
+    public static final String EXTRA_HELPCARD = "space.lopatkin.spb.helpboardgamecard.ui.newCard.EXTRA_HELPCARD";
     //private static Intent intent;
 
-    private HelpCard helpCard;
+    private Helpcard helpCard;
 
     private EditText editText;
 
 
-//    //метод вызова етого активити извне
+    //включение режим вывода елементов фрагмента в action bar
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+
+    //    //метод вызова етого активити извне
 //    // (такой способ упрощает код -
 //    // чем прописывать каждый раз при вызове -
 //    // проще написать один раз в самом активити)
@@ -40,26 +43,32 @@ public class NewCardFragment extends Fragment {
 //    }
 
 
+    //создание вью
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_newcard, container, false);
+        View root = inflater.inflate(R.layout.fragment_addcard, container, false);
+
+        editText = root.findViewById(R.id.edit_text);
 
 
-//        //knopka nazad тулбара
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        setTitle(getString(R.string.newCard_title));
+        // разобраться с кнопкой впоследствии
+//        setSupportActionBar();
+        //  setTitle
 
 
-        editText = root.findViewById(R.id.text);
+        //editText.setText(getArguments().getString("context"));
 
-        //вызов намерения из метода старт
-        if (getActivity().getIntent().hasExtra(EXTRA_HELPCARD)) {
-            helpCard = getActivity().getIntent().getParcelableExtra(EXTRA_HELPCARD);
-            editText.setText(helpCard.text);
-        } else {
-            helpCard = new HelpCard();
-        }
+
+//        //вызов намерения из метода старт
+//        if (getActivity().getIntent().hasExtra(EXTRA_HELPCARD)) {
+//
+//            getActivity().getApplicationContext();
+//            helpCard = getActivity().getIntent().getParcelableExtra(EXTRA_HELPCARD);
+//            editText.setText(helpCard.text);
+//        } else {
+//            helpCard = new HelpCard();
+//
+//        }
 
 
         return root;
@@ -131,8 +140,45 @@ public class NewCardFragment extends Fragment {
 //    }
 
 
+    private void saveCard() {
+        String newCard = editText.getText().toString();
+
+        if (newCard.trim().isEmpty()) {
+            Toast.makeText(getContext(), "Please insert a text", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent data = new Intent();
+        data.putExtra(EXTRA_HELPCARD, newCard);
+
+        //выключить етот фрагмент навигацией
+
+    }
+
+
+    //создание меню
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.addcard_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    //что происходит в меню на нажатие определенных иконок
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                saveCard();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
     //private void closeFragment() {
-   //     getActivity().getFragmentManager().popBackStack();
+    //     getActivity().getFragmentManager().popBackStack();
     //}
 
 }

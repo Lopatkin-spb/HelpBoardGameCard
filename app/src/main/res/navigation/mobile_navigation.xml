@@ -9,19 +9,34 @@
             android:id="@+id/nav_helpcard"
             android:name="space.lopatkin.spb.helpboardgamecard.ui.helpCard.HelpCardFragment"
             android:label="@string/menu_helpcard"
-            tools:layout="@layout/fragment_helpcard"/>
+            tools:layout="@layout/fragment_helpcard">
+
+        <action
+                android:id="@+id/action_nav_helpcard_to_nav_newcard"
+                app:destination="@id/nav_addcard"/>
+    </fragment>
 
     <fragment
-            android:id="@+id/nav_newcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.newCard.NewCardFragment"
-            android:label="@string/menu_newcard"
-            tools:layout="@layout/fragment_helpcard"/>
+            android:id="@+id/nav_addcard"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.addCard.AddCardFragment"
+            android:label="@string/menu_addcard"
+            tools:layout="@layout/fragment_addcard">
+
+        <action
+                android:id="@+id/action_nav_addcard_to_nav_helpcard"
+                app:destination="@id/nav_helpcard"/>
+    </fragment>
 
     <fragment
             android:id="@+id/nav_settings"
             android:name="space.lopatkin.spb.helpboardgamecard.ui.settings.SettingsFragment"
             android:label="@string/menu_settings"
-            tools:layout="@layout/fragment_settings"/>
+            tools:layout="@layout/fragment_settings">
+
+        <action
+                android:id="@+id/action_nav_settings_to_nav_newcard"
+                app:destination="@id/nav_addcard"/>
+    </fragment>
 
     <fragment
             android:id="@+id/nav_share"

@@ -1,28 +1,18 @@
 package space.lopatkin.spb.helpboardgamecard.ui;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.Menu;
 import android.widget.EditText;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentTransaction;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import android.view.View;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.view.Menu;
-import space.lopatkin.spb.helpboardgamecard.App;
 import space.lopatkin.spb.helpboardgamecard.R;
-import space.lopatkin.spb.helpboardgamecard.model.HelpCard;
-import space.lopatkin.spb.helpboardgamecard.ui.newCard.NewCardFragment;
+import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.ui.addCard.AddCardFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private NewCardFragment newCardFragment;
+    private AddCardFragment addCardFragment;
 
-    private HelpCard helpCard;
+    private Helpcard helpCard;
 
     private EditText editText;
 
@@ -43,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //тулбар
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 //        //knopka nazad тулбара
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeButtonEnabled(true);
@@ -91,8 +81,9 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_helpcard,
-                R.id.nav_newcard,
-                R.id.nav_settings, R.id.nav_share)
+                R.id.nav_addcard,
+                R.id.nav_settings,
+                R.id.nav_share)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -105,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_details, menu);
+        getMenuInflater().inflate(R.menu.addcard_menu, menu);
         return true;
     }
 
@@ -117,13 +108,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("ResourceType")
-   public void startNewcardFragment(Context context, HelpCard helpCard) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        NewCardFragment newCardFragment = new NewCardFragment();
-        transaction.replace(R.layout.fragment_newcard , newCardFragment);
-        transaction.commit();
-    }
+//    @SuppressLint("ResourceType")
+//   public void startNewcardFragment() {
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        NewCardFragment newCardFragment = new NewCardFragment();
+//        transaction.replace(R.layout.fragment_addcard , newCardFragment);
+//        transaction.commit();
+//    }
 
 
 

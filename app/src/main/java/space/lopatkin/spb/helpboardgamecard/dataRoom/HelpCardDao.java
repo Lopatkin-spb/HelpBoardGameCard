@@ -3,7 +3,7 @@ package space.lopatkin.spb.helpboardgamecard.dataRoom;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
-import space.lopatkin.spb.helpboardgamecard.model.HelpCard;
+import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 import java.util.List;
 
@@ -12,32 +12,32 @@ public interface HelpCardDao {
 
     //выбрать все
     @Query("SELECT * FROM helpCard")
-    List<HelpCard> getAll();
+    List<Helpcard> getAll();
 
     //обновление списка с данными через ливдата (недопонял)
     @Query("SELECT * FROM helpCard")
-    LiveData<List<HelpCard>> getAllLiveData();
+    LiveData<List<Helpcard>> getAllLiveData();
 
     //
     @Query("SELECT * FROM helpCard WHERE uniqueId IN (:userIds)")
-    List<HelpCard> loadAllByIds(int[] userIds);
+    List<Helpcard> loadAllByIds(int[] userIds);
 
     //
     @Query("SELECT * FROM helpCard WHERE uniqueId = :uniqueId LIMIT 1")
-    HelpCard findById(int uniqueId);
+    Helpcard findById(int uniqueId);
 
     //если при вставке сущности уже есть с таким названием
     // - сущность заменяется на новую
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(HelpCard helpCard);
+    void insert(Helpcard helpCard);
 
     //функция для обновления
     @Update
-    void update(HelpCard helpCard);
+    void update(Helpcard helpCard);
 
     //
     @Delete
-    void delete(HelpCard helpCard);
+    void delete(Helpcard helpCard);
 
 
 }
