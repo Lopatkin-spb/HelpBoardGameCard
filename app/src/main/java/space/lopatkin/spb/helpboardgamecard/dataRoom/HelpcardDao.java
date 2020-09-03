@@ -20,7 +20,7 @@ public interface HelpcardDao {
 
 
     @Query("SELECT * FROM help_cards ORDER BY priority DESC")
-    LiveData<List<Helpcard>> getAllNotes();
+    LiveData<List<Helpcard>> getAllHelpcards();
 
     //
     @Query("SELECT * FROM help_cards WHERE id IN (:userIds)")
@@ -48,5 +48,5 @@ public interface HelpcardDao {
 
 
     @Query("DELETE FROM help_cards")
-    void deleteAllNotes();
+    void deleteAllHelpcards();
 }
