@@ -3,12 +3,12 @@ package space.lopatkin.spb.helpboardgamecard;
 import android.app.Application;
 import androidx.room.Room;
 import space.lopatkin.spb.helpboardgamecard.dataRoom.AppDatabase;
-import space.lopatkin.spb.helpboardgamecard.dataRoom.HelpCardDao;
+import space.lopatkin.spb.helpboardgamecard.dataRoom.HelpcardDao;
 
 public class App extends Application {
 
     private AppDatabase database;
-    private HelpCardDao helpCardDao;
+    private HelpcardDao helpCardDao;
 
 
     //допуск к классу из любого другого (антипаттерн синглтон - лучше его не использовать)
@@ -46,11 +46,11 @@ public class App extends Application {
         this.database = database;
     }
 
-    public HelpCardDao getHelpCardDao() {
+    public HelpcardDao getHelpCardDao() {
         return helpCardDao;
     }
 
-    public void setHelpCardDao(HelpCardDao helpCardDao) {
+    public void setHelpCardDao(HelpcardDao helpCardDao) {
         this.helpCardDao = helpCardDao;
     }
 }

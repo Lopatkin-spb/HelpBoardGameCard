@@ -9,6 +9,6 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 public abstract class AppDatabase extends RoomDatabase {
 
     //в классе лежат все таблицы которые будут в базе
-    public abstract HelpCardDao helpCardDao();
+    public abstract HelpcardDao helpCardDao();
 
 }

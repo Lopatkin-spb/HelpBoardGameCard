@@ -8,36 +8,45 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import java.util.List;
 
 @Dao
-public interface HelpCardDao {
+public interface HelpcardDao {
 
     //выбрать все
-    @Query("SELECT * FROM helpCard")
+    @Query("SELECT * FROM help_cards")
     List<Helpcard> getAll();
 
     //обновление списка с данными через ливдата (недопонял)
-    @Query("SELECT * FROM helpCard")
+    @Query("SELECT * FROM help_cards")
     LiveData<List<Helpcard>> getAllLiveData();
 
+
+    @Query("SELECT * FROM help_cards ORDER BY priority DESC")
+    LiveData<List<Helpcard>> getAllNotes();
+
     //
-    @Query("SELECT * FROM helpCard WHERE uniqueId IN (:userIds)")
+    @Query("SELECT * FROM help_cards WHERE id IN (:userIds)")
     List<Helpcard> loadAllByIds(int[] userIds);
 
     //
-    @Query("SELECT * FROM helpCard WHERE uniqueId = :uniqueId LIMIT 1")
+    @Query("SELECT * FROM help_cards WHERE id = :uniqueId LIMIT 1")
     Helpcard findById(int uniqueId);
+
 
     //если при вставке сущности уже есть с таким названием
     // - сущность заменяется на новую
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Helpcard helpCard);
+    void insert(Helpcard helpcard);
+
 
     //функция для обновления
     @Update
-    void update(Helpcard helpCard);
+    void update(Helpcard helpcard);
+
 
     //
     @Delete
-    void delete(Helpcard helpCard);
+    void delete(Helpcard helpcard);
 
 
+    @Query("DELETE FROM help_cards")
+    void deleteAllNotes();
 }
