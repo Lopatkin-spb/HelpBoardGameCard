@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.helpCard;
+package space.lopatkin.spb.helpboardgamecard.ui.helpcard;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.HelpcardAdapter;
-import space.lopatkin.spb.helpboardgamecard.ui.addCard.AddCardFragment;
+import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.addCard;
+package space.lopatkin.spb.helpboardgamecard.ui.addcard;
 
 import android.content.Intent;
 import android.os.Bundle;

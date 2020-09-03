@@ -7,7 +7,7 @@
 
     <fragment
             android:id="@+id/nav_helpcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.helpCard.HelpCardFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.helpcard.HelpCardFragment"
             android:label="@string/menu_helpcard"
             tools:layout="@layout/fragment_helpcard">
 
@@ -18,7 +18,7 @@
 
     <fragment
             android:id="@+id/nav_addcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.addCard.AddCardFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment"
             android:label="@string/menu_addcard"
             tools:layout="@layout/fragment_addcard">
 
