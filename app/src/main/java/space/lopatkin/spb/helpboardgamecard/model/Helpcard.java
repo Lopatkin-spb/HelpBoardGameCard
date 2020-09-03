@@ -21,9 +21,10 @@ public class Helpcard {
     @ColumnInfo(name = "favorites")
     private boolean favorites;
 
-    @ColumnInfo(name = "timestamp")
-    private long timestamp;
+//    @ColumnInfo(name = "timestamp")
+//    private long timestamp;
 
+    @ColumnInfo(name = "priority")
     private int priority;
 
 
@@ -34,11 +35,11 @@ public class Helpcard {
 
 
 
-    public Helpcard(String title, String description, boolean favorites, long timestamp, int priority) {
+    public Helpcard(String title, String description, boolean favorites,  int priority) {
         this.title = title;
         this.description = description;
         this.favorites = favorites;
-        this.timestamp = timestamp;
+//        this.timestamp = timestamp;
         this.priority = priority;
     }
 
@@ -75,13 +76,13 @@ public class Helpcard {
         this.favorites = favorites;
     }
 
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
+//    public long getTimestamp() {
+//        return timestamp;
+//    }
+//
+//    public void setTimestamp(long timestamp) {
+//        this.timestamp = timestamp;
+//    }
 
     public int getPriority() {
         return priority;
