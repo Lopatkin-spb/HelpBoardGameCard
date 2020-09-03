@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -32,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //тулбар
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+//        тулбар
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 //        //knopka nazad тулбара
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeButtonEnabled(true);
@@ -108,13 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    @SuppressLint("ResourceType")
-//   public void startNewcardFragment() {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        NewCardFragment newCardFragment = new NewCardFragment();
-//        transaction.replace(R.layout.fragment_addcard , newCardFragment);
-//        transaction.commit();
-//    }
+
 
 
 

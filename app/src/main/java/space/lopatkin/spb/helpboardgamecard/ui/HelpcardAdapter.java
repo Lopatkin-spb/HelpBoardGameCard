@@ -15,44 +15,50 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclerview.HelpCardViewHolder> {
+public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.HelpcardHolder> {
 
-    private List<Helpcard> list = new ArrayList<>();
-    private OnItemClickListener listener;
+    private List<Helpcard> helpcards = new ArrayList<>();
+    //private OnItemClickListener listener;
 
 
     @NonNull
     @Override
-    public HelpCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HelpcardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(
                 parent.getContext()).inflate(
-                R.layout.item_helpcard_list, parent, false);
+                R.layout.helpcard_item, parent, false);
 
-        return new HelpCardViewHolder(itemView);
+        return new HelpcardHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HelpCardViewHolder holder, int position) {
-        Helpcard currentHelpcard = list.get(position);
+    public void onBindViewHolder(@NonNull HelpcardHolder holder, int position) {
+        Helpcard currentHelpcard = helpcards.get(position);
 
-        holder.helpCardText.setText(currentHelpcard.getDescription());
+        //holder.helpCardText.setText(currentHelpcard.getDescription());
+
+        holder.textViewTitle.setText(currentHelpcard.getTitle());
+        holder.textViewDescription.setText(currentHelpcard.getDescription());
+        holder.textViewFavorites.setText(String.valueOf(currentHelpcard.isFavorites()));
+        holder.textViewPriority.setText(String.valueOf(currentHelpcard.getPriority()));
+
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return helpcards.size();
     }
 
 
-    public void setCards(List<Helpcard> list) {
-        this.list = list;
+    public void setHelpcards(List<Helpcard> helpcards) {
+        this.helpcards = helpcards;
         notifyDataSetChanged();
     }
 
 
-    public Helpcard getHelpCardAt (int position) {
-        return list.get(position);
-    }
+    //public Helpcard getHelpCardAt (int position) {
+    // return helpcards.get(position);
+    // }
 
 
     // pervii varik
@@ -133,31 +139,26 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
 //    }
 
 
-     class HelpCardViewHolder extends RecyclerView.ViewHolder {
+    class HelpcardHolder extends RecyclerView.ViewHolder {
 
+        //private TextView helpCardText;
 
-        private TextView helpCardText;
+        private TextView textViewTitle;
+        private TextView textViewDescription;
+        private TextView textViewFavorites;
+        private TextView textViewPriority;
+
 
         //конструктор
-        public HelpCardViewHolder(@NonNull final View itemView) {
+        public HelpcardHolder(View itemView) {
             super(itemView);
-            helpCardText = itemView.findViewById(R.id.helpcard_text);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
+            textViewTitle = itemView.findViewById(R.id.text_view_title);
+            textViewDescription = itemView.findViewById(R.id.text_view_description);
+            textViewFavorites = itemView.findViewById(R.id.text_view_favorites);
+            textViewPriority = itemView.findViewById(R.id.text_view_priority);
 
-                    if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(list.get(position));
-                    }
-
-                }
-            });
         }
-
-
-
 
 
 //        TextView helpCardText;
@@ -245,15 +246,14 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<AdapterRecyclervie
     }
 
 
-
-    public interface OnItemClickListener {
-        void onItemClick (Helpcard helpCard);
-
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
+//    public interface OnItemClickListener {
+//        void onItemClick (Helpcard helpCard);
+//
+//    }
+//
+//    public void setOnItemClickListener(OnItemClickListener listener) {
+//        this.listener = listener;
+//    }
+//
 
 }

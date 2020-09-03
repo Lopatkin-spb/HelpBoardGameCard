@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.ui.AdapterRecyclerview;
+import space.lopatkin.spb.helpboardgamecard.ui.HelpcardAdapter;
 import space.lopatkin.spb.helpboardgamecard.ui.addCard.AddCardFragment;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class HelpCardFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
 
-        final AdapterRecyclerview adapter = new AdapterRecyclerview();
+        final HelpcardAdapter adapter = new HelpcardAdapter();
         recyclerView.setAdapter(adapter);
 
 
@@ -54,12 +54,12 @@ public class HelpCardFragment extends Fragment {
         mainViewModel.getHelpCardLiveData().observe(this, new Observer<List<Helpcard>>() {
             @Override
             public void onChanged(List<Helpcard> helpcards) {
-                adapter.setCards(helpcards);
+                adapter.setHelpcards(helpcards);
             }
         });
 
 
-        adapter.setOnItemClickListener(new AdapterRecyclerview.OnItemClickListener() {
+        adapter.setOnItemClickListener(new HelpcardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Helpcard helpCard) {
                 Intent intent = new Intent(getContext(), AddCardFragment.class);

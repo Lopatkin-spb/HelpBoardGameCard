@@ -16,7 +16,10 @@
     <string name="newCard_title">заметка</string>
     <string name="save">сохранить</string>
     <string name="complited">выполнение</string>
-
+    <string name="title">title</string>
+    <string name="description">description</string>
+    <string name="_1">_1</string>
+    <string name="todo">TODO</string>
 
 
 </resources>
