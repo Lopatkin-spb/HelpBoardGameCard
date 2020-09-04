@@ -21,6 +21,7 @@
     <string name="_1">_1</string>
     <string name="todo">TODO</string>
     <string name="settings">action_settings</string>
+    <string name="priority">Priority</string>
 
 
 </resources>

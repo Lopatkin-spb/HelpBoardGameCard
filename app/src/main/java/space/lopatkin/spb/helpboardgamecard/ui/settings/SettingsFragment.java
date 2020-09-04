@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import space.lopatkin.spb.helpboardgamecard.R;
-import space.lopatkin.spb.helpboardgamecard.ui.MainActivity;
 
 public class SettingsFragment extends Fragment {
 
@@ -28,13 +27,13 @@ public class SettingsFragment extends Fragment {
 
         final TextView textView = root.findViewById(R.id.text_settings);
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity mainActivity = new MainActivity();
-                mainActivity.startNewcardFragment();
-            }
-        });
+//        textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                MainActivity mainActivity = new MainActivity();
+//                mainActivity.startNewcardFragment();
+//            }
+//        });
 
         Button buttonToRecordFragment = root.findViewById(R.id.buttonRecFrag);
 

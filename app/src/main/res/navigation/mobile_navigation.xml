@@ -18,7 +18,7 @@
 
     <fragment
             android:id="@+id/nav_addcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.addcard.AddcardFragment"
             android:label="@string/menu_addcard"
             tools:layout="@layout/fragment_addcard">
 
