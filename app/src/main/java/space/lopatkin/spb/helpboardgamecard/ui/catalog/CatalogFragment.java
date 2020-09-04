@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.HelpcardAdapter;
@@ -37,26 +36,26 @@ public class CatalogFragment extends Fragment {
 
 
 
-        FloatingActionButton fab = root.findViewById(R.id.button_add_note);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
-
-//                Intent intent = new Intent(getActivity(), AddFragment.class);
-//                startActivityForResult(intent, ADD_NOTE_REQUEST);
-//                getActivity().setResult(intent, ADD_NOTE_REQUEST);
-
-
-
-                //    //v5safeargs
-//                Navigation.findNavController(view).navigate(R.id.action_nav_gallery_to_nav_home);
-
-
-            }
-        });
+//        FloatingActionButton fab = root.findViewById(R.id.button_add_note);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//
+//
+////                Intent intent = new Intent(getActivity(), AddFragment.class);
+////                startActivityForResult(intent, ADD_NOTE_REQUEST);
+////                getActivity().setResult(intent, ADD_NOTE_REQUEST);
+//
+//
+//
+//                //    //v5safeargs
+////                Navigation.findNavController(view).navigate(R.id.action_nav_gallery_to_nav_home);
+//
+//
+//            }
+//        });
 
 
 

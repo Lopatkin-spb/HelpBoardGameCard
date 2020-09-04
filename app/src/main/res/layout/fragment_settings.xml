@@ -23,7 +23,7 @@
             android:layout_height="match_parent" tools:layout_editor_absoluteY="75dp"
             tools:layout_editor_absoluteX="-101dp">
         <Button
-                android:text="Button to record fragment"
+                android:text="@string/recordFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonRecFrag"/>

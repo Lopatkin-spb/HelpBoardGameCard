@@ -30,8 +30,8 @@ public class Helpcard {
 
 
 
-    public Helpcard() {
-    }
+//    public Helpcard() {
+//    }
 
 
 

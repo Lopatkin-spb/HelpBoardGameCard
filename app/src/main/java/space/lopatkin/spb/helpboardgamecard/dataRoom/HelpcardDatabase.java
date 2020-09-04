@@ -1,15 +1,14 @@
 package space.lopatkin.spb.helpboardgamecard.dataRoom;
 
 
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
-import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import android.content.Context;
 import android.os.AsyncTask;
 import androidx.annotation.NonNull;
+import androidx.room.Database;
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-//import space.lopatkin.spb.testnavdrawer.model.Note;
+import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 //import android.support.annotation.NonNull;
 
@@ -23,7 +22,7 @@ public abstract class HelpcardDatabase extends RoomDatabase {
     public static synchronized HelpcardDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    HelpcardDatabase.class, "note_database")
+                    HelpcardDatabase.class, "helpcard_database")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
                     .build();
