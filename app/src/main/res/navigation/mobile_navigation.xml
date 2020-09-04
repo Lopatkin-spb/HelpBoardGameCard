@@ -7,9 +7,9 @@
 
     <fragment
             android:id="@+id/nav_helpcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.helpcard.HelpCardFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogFragment"
             android:label="@string/menu_helpcard"
-            tools:layout="@layout/fragment_helpcard">
+            tools:layout="@layout/fragment_catalog">
 
         <action
                 android:id="@+id/action_nav_helpcard_to_nav_newcard"

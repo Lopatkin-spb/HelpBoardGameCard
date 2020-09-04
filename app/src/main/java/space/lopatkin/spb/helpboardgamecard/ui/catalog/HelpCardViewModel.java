@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.helpcard;
+package space.lopatkin.spb.helpboardgamecard.ui.catalog;
 
 //import androidx.lifecycle.LiveData;
 //import androidx.lifecycle.ViewModel;
