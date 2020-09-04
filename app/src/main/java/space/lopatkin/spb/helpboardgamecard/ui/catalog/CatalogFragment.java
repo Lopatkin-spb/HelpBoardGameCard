@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -133,31 +134,31 @@ public class CatalogFragment extends Fragment {
 
 
 
-//    //v5safeargs
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        if (getArguments() != null) {
-//
-//            CatalogFragmentArgs args = CatalogFragmentArgs.fromBundle(getArguments());
-//            String title = args.getMessageTitle();
-//            String description = args.getMessageDescription();
-//            int priority = args.getMessagePriority();
-//
-//            if (!title.equals("default") || !description.equals("default")) {
-//
-//                Helpcard helpcard = new Helpcard(title, description, priority);
-//                helpcardViewModel.insert(helpcard);
-//                Toast.makeText(getActivity(), "Note saved", Toast.LENGTH_SHORT).show();
-//
-//            } else {
-//                Toast.makeText(getActivity(), "Note not saved", Toast.LENGTH_SHORT).show();
-//
-//
-//            }
-//        }
-//
-//    }
+    //v5safeargs
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null) {
+
+            CatalogFragmentArgs args = CatalogFragmentArgs.fromBundle(getArguments());
+            String title = args.getMessageTitle();
+            String description = args.getMessageDescription();
+            int priority = args.getMessagePriority();
+
+            if (!title.equals("default") || !description.equals("default")) {
+
+                Helpcard helpcard = new Helpcard(title, description, false, priority);
+                helpcardViewModel.insert(helpcard);
+                Toast.makeText(getActivity(), "Helpcard saved", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Toast.makeText(getActivity(), "Helpcard not saved", Toast.LENGTH_SHORT).show();
+
+
+            }
+        }
+
+    }
 
 
 

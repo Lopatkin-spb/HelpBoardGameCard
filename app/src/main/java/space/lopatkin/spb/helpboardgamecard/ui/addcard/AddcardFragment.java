@@ -32,25 +32,13 @@ public class AddcardFragment extends Fragment {
 
     NavController navController;
 
-    //включение режим вывода елементов фрагмента в action bar
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
-
-    //    //метод вызова етого активити извне
-//    // (такой способ упрощает код -
-//    // чем прописывать каждый раз при вызове -
-//    // проще написать один раз в самом активити)
-//    public static void start(Fragment caller, HelpCard helpCard) {
-//        Intent intent = new Intent(caller, NewCardFragment.class);
-//        if (helpCard != null) {
-//            intent.putExtra(EXTRA_HELPCARD, helpCard);
-//        }
-//        caller.startActivity(intent);
+//    //включение режим вывода елементов фрагмента в action bar
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        setHasOptionsMenu(true);
+//        super.onCreate(savedInstanceState);
 //    }
+
 
 
     //создание вью
@@ -68,6 +56,8 @@ public class AddcardFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
         ((AppCompatActivity) getActivity()).setTitle("Add Note");
+
+        setHasOptionsMenu(true);
 
 
         // разобраться с кнопкой впоследствии
@@ -197,13 +187,13 @@ public class AddcardFragment extends Fragment {
 
 
 
-//        //v5safeargs
-//        AddFragmentDirections.ActionNavHomeToNavGallery action =
-//                AddFragmentDirections.actionNavHomeToNavGallery();
-//        action.setMessageTitle(messageTitle);
-//        action.setMessageDescription(messageDescription);
-//        action.setMessagePriority(messagePriority);
-//        navController.navigate(action);
+        //v5safeargs
+        AddcardFragmentDirections.ActionNavAddcardToNavHelpcard action =
+                AddcardFragmentDirections.actionNavAddcardToNavHelpcard();
+        action.setMessageTitle(messageTitle);
+        action.setMessageDescription(messageDescription);
+        action.setMessagePriority(messagePriority);
+        navController.navigate(action);
 
 
 

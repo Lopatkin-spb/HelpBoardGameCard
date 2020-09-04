@@ -12,7 +12,7 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 //import android.support.annotation.NonNull;
 
-@Database(entities = {Helpcard.class}, version = 1)
+@Database(entities = {Helpcard.class}, version = 2)
 public abstract class HelpcardDatabase extends RoomDatabase {
 
     private static HelpcardDatabase instance;
@@ -23,6 +23,8 @@ public abstract class HelpcardDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     HelpcardDatabase.class, "helpcard_database")
+                    //начать новую бд либо можно сдеать миграцию,
+                    // чтоб не потерять данные с прредыдущей бд
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
                     .build();
@@ -46,9 +48,9 @@ public abstract class HelpcardDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-            helpcardDao.insert(new Helpcard("Title 1", "Description 1", true, 1));
-            helpcardDao.insert(new Helpcard("Title 2", "Description 2", true, 2));
-            helpcardDao.insert(new Helpcard("Title 3", "Description 3", true, 3));
+            helpcardDao.insert(new Helpcard("Title 1", "Description 1", false, 1));
+            helpcardDao.insert(new Helpcard("Title 2", "Description 2", false, 2));
+            helpcardDao.insert(new Helpcard("Title 3", "Description 3", false, 3));
             return null;
         }
     }
