@@ -7,10 +7,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_tools">Tools</string>
 
-    <string name="menu_helpcard">HelpCard</string>
-    <string name="menu_addcard">NewCard</string>
-    <string name="menu_settings">Settings</string>
+
+    <string name="menu_catalog">Helpcards Catalog</string>
+    <string name="menu_addcard">Add New Helpcard</string>
+    <string name="menu_favorites">Favorites</string>
     <string name="menu_share">Share</string>
+
 
     <string name="helpcard_text">Введите текст памятки</string>
     <string name="newCard_title">заметка</string>

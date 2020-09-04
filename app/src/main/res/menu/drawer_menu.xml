@@ -5,19 +5,19 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/nav_helpcard"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="@string/menu_helpcard"/>
+                android:id="@+id/nav_catalog"
+                android:icon="@drawable/ic_library_books"
+                android:title="@string/menu_catalog"/>
 
         <item
                 android:id="@+id/nav_addcard"
-                android:icon="@drawable/ic_add"
+                android:icon="@drawable/ic_queue_add"
                 android:title="@string/menu_addcard"/>
 
         <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/menu_settings"/>
+                android:id="@+id/nav_favorites"
+                android:icon="@drawable/ic_collections_bookmark"
+                android:title="@string/menu_favorites"/>
     </group>
 
     <item android:title="Communicate">

@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.settings;
+package space.lopatkin.spb.helpboardgamecard.ui.favorites;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import space.lopatkin.spb.helpboardgamecard.R;
 
-public class SettingsFragment extends Fragment {
+public class FavoritesFragment extends Fragment {
 
     private SettingsViewModel settingsViewModel;
 
@@ -22,7 +22,7 @@ public class SettingsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         settingsViewModel =
                 ViewModelProviders.of(this).get(SettingsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        View root = inflater.inflate(R.layout.fragment_favorites, container, false);
 
 
         final TextView textView = root.findViewById(R.id.text_settings);

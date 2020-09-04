@@ -3,13 +3,13 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/mobile_navigation"
-            app:startDestination="@+id/nav_helpcard"
+            app:startDestination="@+id/nav_catalog"
             tools:ignore="UnusedNavigation">
 
     <fragment
-            android:id="@+id/nav_helpcard"
+            android:id="@+id/nav_catalog"
             android:name="space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogFragment"
-            android:label="@string/menu_helpcard"
+            android:label="@string/menu_catalog"
             tools:layout="@layout/fragment_catalog">
 
         <action
@@ -28,14 +28,14 @@
 
         <action
                 android:id="@+id/action_nav_addcard_to_nav_helpcard"
-                app:destination="@id/nav_helpcard"/>
+                app:destination="@id/nav_catalog"/>
     </fragment>
 
     <fragment
-            android:id="@+id/nav_settings"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.settings.SettingsFragment"
-            android:label="@string/menu_settings"
-            tools:layout="@layout/fragment_settings">
+            android:id="@+id/nav_favorites"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.favorites.FavoritesFragment"
+            android:label="@string/menu_favorites"
+            tools:layout="@layout/fragment_favorites">
 
         <action
                 android:id="@+id/action_nav_settings_to_nav_newcard"

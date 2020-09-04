@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.settings;
+package space.lopatkin.spb.helpboardgamecard.ui.favorites;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
