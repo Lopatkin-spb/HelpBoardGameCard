@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "help_cards")
+@Entity(tableName = "helpcard_table")
 public class Helpcard {
 
 
