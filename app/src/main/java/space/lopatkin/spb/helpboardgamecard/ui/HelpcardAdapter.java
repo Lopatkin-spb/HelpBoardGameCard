@@ -50,9 +50,17 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
     }
 
 
+
+
     public void setHelpcards(List<Helpcard> helpcards) {
         this.helpcards = helpcards;
         notifyDataSetChanged();
+    }
+
+
+    //uznaet poziciu dlia stirania
+    public Helpcard getHelpcardAt (int position) {
+        return helpcards.get(position);
     }
 
 

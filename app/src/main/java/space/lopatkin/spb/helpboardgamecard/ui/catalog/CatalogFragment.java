@@ -1,15 +1,14 @@
 package space.lopatkin.spb.helpboardgamecard.ui.catalog;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import space.lopatkin.spb.helpboardgamecard.R;
@@ -35,6 +34,8 @@ public class CatalogFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_catalog, container, false);
 
+        //разрешение на создание верхнего меню
+        setHasOptionsMenu(true);
 
 
 //        FloatingActionButton fab = root.findViewById(R.id.button_add_note);
@@ -57,8 +58,6 @@ public class CatalogFragment extends Fragment {
 //
 //            }
 //        });
-
-
 
 
 //        //список
@@ -108,9 +107,6 @@ public class CatalogFragment extends Fragment {
 ////        });
 
 
-
-
-
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
@@ -129,9 +125,24 @@ public class CatalogFragment extends Fragment {
         });
 
 
+        //swipe delete left & right
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                helpcardViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
+                Toast.makeText(getActivity(), "Helpcard delete", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(recyclerView);
+
+
         return root;
     }
-
 
 
     //v5safeargs
@@ -160,6 +171,25 @@ public class CatalogFragment extends Fragment {
 
     }
 
+
+    //создание меню верхнего справа
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.app_bar_right_side_main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    //что происходит в меню на нажатие определенных иконок
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete_all_helpcards:
+                helpcardViewModel.deleteAllHelpcards();
+                Toast.makeText(getActivity(), "All helpcards deleted", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 }

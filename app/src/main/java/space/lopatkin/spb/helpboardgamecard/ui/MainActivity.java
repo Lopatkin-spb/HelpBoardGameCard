@@ -1,7 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.ui;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -33,9 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity_main);
-//        тулбар
+
+
+//        тулбар должен быть инициализирован, чтоб на фрагментах можно было их установить
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 //        //knopka nazad тулбара
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeButtonEnabled(true);
@@ -93,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //создание верхнего меню
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.addcard_menu, menu);
-        return true;
-    }
+//    //создание верхнего меню
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.addcard_menu, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onSupportNavigateUp() {

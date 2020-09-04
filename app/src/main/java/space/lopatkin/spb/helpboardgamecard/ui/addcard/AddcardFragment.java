@@ -55,7 +55,9 @@ public class AddcardFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
-        ((AppCompatActivity) getActivity()).setTitle("Add Note");
+        //надпись работает с дровера потому ета тут не нужна
+        //((AppCompatActivity) getActivity()).setTitle("Add Note");
+
 
         setHasOptionsMenu(true);
 
@@ -201,14 +203,12 @@ public class AddcardFragment extends Fragment {
 
 
 
-    //создание меню
+    //создание меню верхнего справа
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.addcard_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
-
-
     //что происходит в меню на нажатие определенных иконок
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
