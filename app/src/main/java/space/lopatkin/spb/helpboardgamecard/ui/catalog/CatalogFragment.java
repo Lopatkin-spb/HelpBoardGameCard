@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +27,10 @@ public class CatalogFragment extends Fragment {
 
 
     private HelpcardViewModel helpcardViewModel;
+
+
+    NavController navController;
+
 
     public CatalogFragment() {
     }
@@ -141,31 +147,74 @@ public class CatalogFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);
 
 
+        //редактирование: навигация и передача данных
+        adapter.setOnItemClickListener(new HelpcardAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Helpcard helpcard) {
+                //переход на новый фрагмент редактирования
+                // и забор и передача данных в редактирование
+
+                int editId = helpcard.getId();
+                String editTitle = helpcard.getTitle();
+                String editDescription = helpcard.getDescription();
+                int editPriority = helpcard.getPriority();
+
+                CatalogFragmentDirections.ActionNavHelpcardToNavNewcard action =
+                        CatalogFragmentDirections.actionNavHelpcardToNavNewcard();
+                action.setMessageEditId(editId);
+                action.setMessageEditTitle(editTitle);
+                action.setMessageEditDescription(editDescription);
+                action.setMessageEditPriority(editPriority);
+                navController.navigate(action);
+
+
+            }
+        });
+
+
         return root;
     }
 
 
-    //v5safeargs
+    //v5safeargs: заюор данных из АДД и запись в КАТАЛОГ
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(getView());
+
         if (getArguments() != null) {
 
             CatalogFragmentArgs args = CatalogFragmentArgs.fromBundle(getArguments());
-            String title = args.getMessageTitle();
-            String description = args.getMessageDescription();
-            int priority = args.getMessagePriority();
+            String title = args.getMessageNewTitle();
+            String description = args.getMessageNewDescription();
+            int priority = args.getMessageNewPriority();
+            int id = args.getId();
 
-            if (!title.equals("default") || !description.equals("default")) {
+            if (!title.equals("default") && description.equals("default")
+                    || title.equals("default") && !description.equals("default")) {
+                Toast.makeText(getActivity(), "Helpcard not saved", Toast.LENGTH_SHORT).show();
 
+            } else if (!title.equals("default") && !description.equals("default") && id == -1) {
                 Helpcard helpcard = new Helpcard(title, description, false, priority);
                 helpcardViewModel.insert(helpcard);
                 Toast.makeText(getActivity(), "Helpcard saved", Toast.LENGTH_SHORT).show();
 
+//            } else if (id == -1) {
+//                //сли реквест на корректировку записи но айди нет
+//                Toast.makeText(getActivity(), "Helpcard can't be updated", Toast.LENGTH_SHORT).show();
+//                return;
+
+                //и потом запись
+
+            } else if (!title.equals("default") && !description.equals("default") && id != -1) {
+                Helpcard helpcard = new Helpcard(title, description, false, priority);
+                helpcard.setId(id);
+                helpcardViewModel.update(helpcard);
+                Toast.makeText(getActivity(), "Helpcard updated", Toast.LENGTH_SHORT).show();
+
+
             } else {
-                Toast.makeText(getActivity(), "Helpcard not saved", Toast.LENGTH_SHORT).show();
-
-
+                //никаких знаков не вылезает - к примеру если ето просто переключение между фрагментами
             }
         }
 
@@ -178,6 +227,7 @@ public class CatalogFragment extends Fragment {
         inflater.inflate(R.menu.app_bar_right_side_main_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     //что происходит в меню на нажатие определенных иконок
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

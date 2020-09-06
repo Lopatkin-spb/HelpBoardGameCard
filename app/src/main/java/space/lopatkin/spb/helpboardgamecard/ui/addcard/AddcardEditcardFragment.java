@@ -14,7 +14,7 @@ import androidx.navigation.Navigation;
 import space.lopatkin.spb.helpboardgamecard.R;
 
 
-public class AddcardFragment extends Fragment {
+public class AddcardEditcardFragment extends Fragment {
 
     public static final String EXTRA_TITLE =
             "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_TITLE";
@@ -29,7 +29,6 @@ public class AddcardFragment extends Fragment {
     private NumberPicker numberPickerPriority;
 
 
-
     NavController navController;
 
 //    //включение режим вывода елементов фрагмента в action bar
@@ -38,7 +37,6 @@ public class AddcardFragment extends Fragment {
 //        setHasOptionsMenu(true);
 //        super.onCreate(savedInstanceState);
 //    }
-
 
 
     //создание вью
@@ -52,22 +50,14 @@ public class AddcardFragment extends Fragment {
         numberPickerPriority.setMinValue(1);
         numberPickerPriority.setMaxValue(10);
 
-
+           //устанавливает в верхнем меню левую иконку
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
-        //надпись работает с дровера потому ета тут не нужна
-        //((AppCompatActivity) getActivity()).setTitle("Add Note");
+          //устанавливает тайтл динамически
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_addcard);
 
-
+        //разрешает верхнее правое меню
         setHasOptionsMenu(true);
-
-
-        // разобраться с кнопкой впоследствии
-//        setSupportActionBar();
-        //  setTitle
-
-
-        //editText.setText(getArguments().getString("context"));
 
 
 //        //вызов намерения из метода старт
@@ -169,10 +159,10 @@ public class AddcardFragment extends Fragment {
 
     private void saveHelpcard() {
         //забор данных в переменные
-        String messageTitle = editTextTitle.getText().toString();
-        String messageDescription = editTextDescription.getText().toString();
-        int messagePriority = numberPickerPriority.getValue();
-        if (messageTitle.trim().isEmpty() || messageDescription.trim().isEmpty()) {
+        String messageNewTitle = editTextTitle.getText().toString();
+        String messageNewDescription = editTextDescription.getText().toString();
+        int messageNewPriority = numberPickerPriority.getValue();
+        if (messageNewTitle.trim().isEmpty() || messageNewDescription.trim().isEmpty()) {
             Toast.makeText(getActivity(), "Please insert a title and description", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -188,19 +178,22 @@ public class AddcardFragment extends Fragment {
 //        //vstavit navigatiu
 
 
-
         //v5safeargs
-        AddcardFragmentDirections.ActionNavAddcardToNavHelpcard action =
-                AddcardFragmentDirections.actionNavAddcardToNavHelpcard();
-        action.setMessageTitle(messageTitle);
-        action.setMessageDescription(messageDescription);
-        action.setMessagePriority(messagePriority);
+        AddcardEditcardFragmentDirections.ActionNavAddcardToNavHelpcard action =
+                AddcardEditcardFragmentDirections.actionNavAddcardToNavHelpcard();
+        action.setMessageNewTitle(messageNewTitle);
+        action.setMessageNewDescription(messageNewDescription);
+        action.setMessageNewPriority(messageNewPriority);
+
+        //если перепись заметки то отправляется старый АйДи
+        AddcardEditcardFragmentArgs args = AddcardEditcardFragmentArgs.fromBundle(getArguments());
+        int id = args.getMessageEditId();
+        if (id != -1) {
+            action.setId(id);
+        }
+
         navController.navigate(action);
-
-
-
     }
-
 
 
     //создание меню верхнего справа
@@ -209,6 +202,7 @@ public class AddcardFragment extends Fragment {
         inflater.inflate(R.menu.addcard_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     //что происходит в меню на нажатие определенных иконок
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -222,11 +216,6 @@ public class AddcardFragment extends Fragment {
     }
 
 
-    //private void closeFragment() {
-    //     getActivity().getFragmentManager().popBackStack();
-    //}
-
-
     //v5safeargs
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -234,9 +223,27 @@ public class AddcardFragment extends Fragment {
 
         navController = Navigation.findNavController(getView());
 
+        if (getArguments() != null) {
+            AddcardEditcardFragmentArgs args = AddcardEditcardFragmentArgs.fromBundle(getArguments());
+            int id = args.getMessageEditId();
 
+            if (id == -1) {
+                //смена названия заголовка в тулбаре
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_addcard);
+
+
+            } else {
+                //смена названия заголовка в тулбаре
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_edit_card);
+
+                editTextTitle.setText(args.getMessageEditTitle());
+                editTextDescription.setText(args.getMessageEditDescription());
+                numberPickerPriority.setValue(args.getMessageEditPriority());
+            }
+        }
     }
 
 
-
 }
+
+

@@ -18,7 +18,7 @@ import java.util.List;
 public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.HelpcardHolder> {
 
     private List<Helpcard> helpcards = new ArrayList<>();
-    //private OnItemClickListener listener;
+    private OnItemClickListener listener;
 
 
     @NonNull
@@ -166,6 +166,19 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
             textViewFavorites = itemView.findViewById(R.id.text_view_favorites);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
 
+
+            //для редактирования записи
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(helpcards.get(position));
+                    }
+                }
+            });
+
+
         }
 
 
@@ -254,14 +267,15 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
     }
 
 
-//    public interface OnItemClickListener {
-//        void onItemClick (Helpcard helpCard);
-//
-//    }
-//
-//    public void setOnItemClickListener(OnItemClickListener listener) {
-//        this.listener = listener;
-//    }
-//
+
+//для редактирования существующей записи
+    public interface OnItemClickListener {
+        void onItemClick (Helpcard helpCard);
+
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
 
 }

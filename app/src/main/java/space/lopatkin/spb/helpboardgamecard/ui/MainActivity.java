@@ -12,7 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddcardFragment;
+import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddcardEditcardFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private AddcardFragment addCardFragment;
+    private AddcardEditcardFragment addCardEditcardFragment;
 
     private Helpcard helpCard;
 
