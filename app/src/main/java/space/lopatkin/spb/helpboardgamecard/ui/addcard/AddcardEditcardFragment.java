@@ -1,7 +1,9 @@
 package space.lopatkin.spb.helpboardgamecard.ui.addcard;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.*;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
@@ -196,7 +198,17 @@ public class AddcardEditcardFragment extends Fragment {
     }
 
 
-    //создание меню верхнего справа
+    private void hideKeyboard() {
+        //скрытие клавиатуры
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+    }
+
+
+
+        //создание меню верхнего справа
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.addcard_menu, menu);
@@ -209,6 +221,8 @@ public class AddcardEditcardFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveHelpcard();
+                hideKeyboard();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

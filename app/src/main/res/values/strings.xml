@@ -28,6 +28,7 @@
     <string name="priority">Priority</string>
     <string name="button_to_record_fragment">Button to record fragment</string>
     <string name="recordFragment">button_to_record_fragment</string>
+<!--    <string name="communicate">Communicate</string>-->
 
 
 </resources>
