@@ -122,7 +122,6 @@ public class CatalogFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                helpcardViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
                 helpcardViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(getActivity(), "Helpcard delete", Toast.LENGTH_SHORT).show();
             }

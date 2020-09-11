@@ -22,6 +22,9 @@ public interface HelpcardDao {
     @Query("SELECT * FROM helpcard_table ORDER BY priority DESC")
     LiveData<List<Helpcard>> getAllHelpcards();
 
+    @Query("SELECT * FROM helpcard_table WHERE favorites = 1 ORDER BY priority DESC")
+    LiveData<List<Helpcard>> getAllFavoritesHelpcards();
+
 //    //
 //    @Query("SELECT * FROM helpcard_table WHERE id IN (:userIds)")
 //    List<Helpcard> loadAllByIds(int[] userIds);

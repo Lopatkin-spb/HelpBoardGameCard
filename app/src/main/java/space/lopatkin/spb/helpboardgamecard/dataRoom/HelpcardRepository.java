@@ -14,11 +14,15 @@ public class HelpcardRepository {
 
     private HelpcardDao helpcardDao;
     private LiveData<List<Helpcard>> allHelpcards;
+    private LiveData<List<Helpcard>> allFavoritesHelpcards;
+
 
     public HelpcardRepository(Application application) {
         HelpcardDatabase database = HelpcardDatabase.getInstance(application);
         helpcardDao = database.helpcardDao();
         allHelpcards = helpcardDao.getAllHelpcards();
+        allFavoritesHelpcards = helpcardDao.getAllFavoritesHelpcards();
+
     }
 
     public void insert(Helpcard helpcard) {
@@ -35,6 +39,9 @@ public class HelpcardRepository {
     }
     public LiveData<List<Helpcard>> getAllHelpcards() {
         return allHelpcards;
+    }
+    public LiveData<List<Helpcard>> getAllFavoritesHelpcards() {
+        return allFavoritesHelpcards;
     }
 
     private static class InsertHelpcardAsyncTask extends AsyncTask<Helpcard, Void, Void> {
