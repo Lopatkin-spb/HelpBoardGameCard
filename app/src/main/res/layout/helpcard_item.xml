@@ -13,7 +13,9 @@
     <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:padding="8dp"
+    >
+
 
         <TextView
                 android:id="@+id/text_view_title"
@@ -36,7 +38,7 @@
 
 
         <CheckBox
-                android:id="@+id/text_view_favorites"
+                android:id="@+id/checkbox_view_favorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -44,6 +46,15 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="77dp"/>
 
+<!--        <RatingBar android:layout_width="wrap_content"-->
+<!--                   android:layout_height="wrap_content"-->
+<!--                   android:numStars="2"-->
+<!--                   android:stepSize="1"-->
+<!--                   android:id="@+id/rating_bar"-->
+<!--                   android:layout_alignParentEnd="true"-->
+<!--                   android:layout_marginEnd="200dp"-->
+<!--                   android:layout_marginTop="4dp"-->
+<!--                   android:layout_alignParentTop="true"/>-->
         <ImageView
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"

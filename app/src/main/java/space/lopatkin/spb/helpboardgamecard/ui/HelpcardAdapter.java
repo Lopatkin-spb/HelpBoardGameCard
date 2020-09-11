@@ -6,6 +6,8 @@ package space.lopatkin.spb.helpboardgamecard.ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +19,15 @@ import java.util.List;
 
 public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.HelpcardHolder> {
 
-    private List<Helpcard> helpcards = new ArrayList<>();
+
+    private List<Helpcard> listHelpcards = new ArrayList<>(); //в будущем рассмотреть апгрейд на сортед лист
+
     private OnItemClickListener listener;
 
+    private OnItemCheckboxListenerTest listenerCheckboxTest;
 
+
+    //метод для создания холдера (обязательный)
     @NonNull
     @Override
     public HelpcardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,42 +38,37 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
         return new HelpcardHolder(itemView);
     }
 
+    //установка значений в поле\ячейку из бд
     @Override
-    public void onBindViewHolder(@NonNull HelpcardHolder holder, int position) {
-        Helpcard currentHelpcard = helpcards.get(position);
-
-        //holder.helpCardText.setText(currentHelpcard.getDescription());
-
-        holder.textViewTitle.setText(currentHelpcard.getTitle());
-        holder.textViewDescription.setText(currentHelpcard.getDescription());
-        holder.textViewFavorites.setText(String.valueOf(currentHelpcard.isFavorites()));
-        holder.textViewPriority.setText(String.valueOf(currentHelpcard.getPriority()));
+    public void onBindViewHolder(@NonNull HelpcardHolder holder, final int position) {
+        holder.bind(listHelpcards.get(position));
 
     }
 
+
+    //обязательный метод ресайклера
     @Override
     public int getItemCount() {
-        return helpcards.size();
+        return listHelpcards.size();
     }
 
 
-
-
-    public void setHelpcards(List<Helpcard> helpcards) {
-        this.helpcards = helpcards;
+    //метод сет для массива карточек
+    public void setListHelpcards(List<Helpcard> listHelpcards) {
+        this.listHelpcards = listHelpcards;
         notifyDataSetChanged();
     }
 
 
-    //uznaet poziciu dlia stirania
-    public Helpcard getHelpcardAt (int position) {
-        return helpcards.get(position);
+    //uznaet poziciu dlia svaipa stirania
+    public Helpcard getHelpcardAt(int position) {
+        return listHelpcards.get(position);
     }
 
 
-    //public Helpcard getHelpCardAt (int position) {
-    // return helpcards.get(position);
-    // }
+//    public Helpcard getHelpCardAtCheck(boolean b) {
+//        return helpcards.
+//    }
 
 
     // pervii varik
@@ -147,51 +149,61 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
 //    }
 
 
+    //вся работа с ресайкл вью идет в адаптере (вставка и забор данных)
     class HelpcardHolder extends RecyclerView.ViewHolder {
 
-        //private TextView helpCardText;
-
+        //перечисляем все видимые компоненты
         private TextView textViewTitle;
         private TextView textViewDescription;
-        private TextView textViewFavorites;
+        private CheckBox booleanViewFavorites;
         private TextView textViewPriority;
 
-
         //конструктор
-        public HelpcardHolder(View itemView) {
+        public HelpcardHolder(final View itemView) {
             super(itemView);
-
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewFavorites = itemView.findViewById(R.id.text_view_favorites);
+            booleanViewFavorites = itemView.findViewById(R.id.checkbox_view_favorites);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
 
 
-            //для редактирования записи
+// общее вью  для редактирования карты
+            //обработчик для всего итема сразу
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(helpcards.get(position));
+                        boolean b = booleanViewFavorites.isChecked();
+                        listener.onItemClick(listHelpcards.get(position));
                     }
                 }
             });
-
-
         }
 
+        //установка данных во вью
+        public void bind(Helpcard helpcard) {
+            textViewTitle.setText(helpcard.getTitle());
+            textViewDescription.setText(helpcard.getDescription());
+            textViewPriority.setText(String.valueOf(helpcard.getPriority()));
+            booleanViewFavorites.setOnCheckedChangeListener(null);
+            booleanViewFavorites.setChecked((helpcard.isFavorites()));
+            booleanViewFavorites.setOnCheckedChangeListener(onCheckedChangeListener);
+        }
 
-//        TextView helpCardText;
-//        CheckBox complited;
-//        View delete;
-//
-//        HelpCard helpCard;
-//
-//        boolean silentUpdate;
-//
-//
-//
+        //бработчик на чекбокс
+        private CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                int adapterPosition = getAdapterPosition();
+                if (listenerCheckboxTest != null && adapterPosition != RecyclerView.NO_POSITION) {
+                    listenerCheckboxTest.onItemCheckboxTest(listHelpcards.get(adapterPosition), b);
+                }
+            }
+        };
+
+
 //        //конструктор
 //        public HelpCardViewHolder(@NonNull final View itemView) {
 //            super(itemView);
@@ -241,19 +253,6 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
 //
 //        }
 //
-//        public void bind(HelpCard helpCard) {
-//            this.helpCard = helpCard;
-//
-//            helpCardText.setText(helpCard.text);
-//            updateStrokeOut();
-//
-//            silentUpdate = true;
-//            complited.setChecked(helpCard.favorites);
-//            silentUpdate = false;
-//
-//        }
-//
-//
 //        //зачеркивание записи
 //        private void updateStrokeOut() {
 //            if (helpCard.favorites) {
@@ -267,14 +266,23 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
     }
 
 
-
-//для редактирования существующей записи
+    //для редактирования существующей записи строки
     public interface OnItemClickListener {
-        void onItemClick (Helpcard helpCard);
-
+        void onItemClick(Helpcard helpCard);
     }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+
+    //для редактирования чекбокса
+    public interface OnItemCheckboxListenerTest {
+        void onItemCheckboxTest(Helpcard helpCard, boolean b);
+    }
+
+    public void setOnItemCheckboxListenerTest(OnItemCheckboxListenerTest listenerCheckboxTest) {
+        this.listenerCheckboxTest = listenerCheckboxTest;
     }
 
 

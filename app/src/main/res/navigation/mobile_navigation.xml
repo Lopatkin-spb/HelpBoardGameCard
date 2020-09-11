@@ -15,10 +15,11 @@
         <action
                 android:id="@+id/action_nav_helpcard_to_nav_newcard"
                 app:destination="@id/nav_addcard"/>
-        <argument android:name="messageNewTitle" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageNewDescription" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageNewPriority" app:argType="integer" android:defaultValue="1"/>
-        <argument android:name="id" app:argType="integer" android:defaultValue="-1"/>
+        <argument android:name="messageTitle" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageDescription" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messagePriority" app:argType="integer" android:defaultValue="1"/>
+        <argument android:name="messageId" app:argType="integer" android:defaultValue="-1"/>
+        <argument android:name="messageFavorites" app:argType="boolean" android:defaultValue="false"/>
     </fragment>
 
     <fragment
@@ -30,10 +31,11 @@
         <action
                 android:id="@+id/action_nav_addcard_to_nav_helpcard"
                 app:destination="@id/nav_catalog"/>
-        <argument android:name="messageEditId" app:argType="integer" android:defaultValue="-1"/>
-        <argument android:name="messageEditTitle" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageEditDescription" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageEditPriority" app:argType="integer" android:defaultValue="1"/>
+        <argument android:name="messageId" app:argType="integer" android:defaultValue="-1"/>
+        <argument android:name="messageTitle" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageDescription" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messagePriority" app:argType="integer" android:defaultValue="1"/>
+        <argument android:name="messageFavorites" app:argType="boolean" android:defaultValue="false"/>
     </fragment>
 
     <fragment

@@ -23,17 +23,14 @@ import java.util.List;
 
 public class CatalogFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-
-
     private HelpcardViewModel helpcardViewModel;
-
 
     NavController navController;
 
 
     public CatalogFragment() {
     }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,12 +53,8 @@ public class CatalogFragment extends Fragment {
 ////                startActivityForResult(intent, ADD_NOTE_REQUEST);
 ////                getActivity().setResult(intent, ADD_NOTE_REQUEST);
 //
-//
-//
 //                //    //v5safeargs
 ////                Navigation.findNavController(view).navigate(R.id.action_nav_gallery_to_nav_home);
-//
-//
 //            }
 //        });
 
@@ -91,18 +84,6 @@ public class CatalogFragment extends Fragment {
 //            }
 //        });
 //
-//
-//        adapter.setOnItemClickListener(new HelpcardAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(Helpcard helpCard) {
-//                Intent intent = new Intent(getContext(), AddCardFragment.class);
-//
-//                intent.putExtra(AddCardFragment.EXTRA_HELPCARD, helpCard.getDescription());
-//
-//                startActivityForResult(intent, 1);
-//            }
-//        });
-//
 ////        recyclerView.setOnClickListener(new View.OnClickListener() {
 ////            @Override
 ////            public void onClick(View view) {
@@ -112,11 +93,11 @@ public class CatalogFragment extends Fragment {
 ////            }
 ////        });
 
-
+//инициализация ресайкл вью
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-
+//подключение адаптера к ресайкл вью
         final HelpcardAdapter adapter = new HelpcardAdapter();
         recyclerView.setAdapter(adapter);
 
@@ -125,51 +106,105 @@ public class CatalogFragment extends Fragment {
         helpcardViewModel.getAllHelpcards().observe(getActivity(), new Observer<List<Helpcard>>() {
             @Override
             public void onChanged(@Nullable List<Helpcard> helpcards) {
-                adapter.setHelpcards(helpcards);
-
+                adapter.setListHelpcards(helpcards);
             }
         });
-
 
         //swipe delete left & right
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//                helpcardViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
                 helpcardViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(getActivity(), "Helpcard delete", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
 
 
-        //редактирование: навигация и передача данных
+        //редактирование чека
+        adapter.setOnItemCheckboxListenerTest(new HelpcardAdapter.OnItemCheckboxListenerTest() {
+            @Override
+            public void onItemCheckboxTest(Helpcard helpcard, boolean b) {
+                helpcard.setFavorites(b);
+                helpcardViewModel.update(helpcard);
+                if (b) {
+                    Toast.makeText(getActivity(), "Helpcard is favorites", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Helpcard unfavorites", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        //редактирование одной карты: навигация и передача данных
         adapter.setOnItemClickListener(new HelpcardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Helpcard helpcard) {
-                //переход на новый фрагмент редактирования
-                // и забор и передача данных в редактирование
-
+//                переход на новый фрагмент редактирования
+//                 и забор и передача данных в редактирование
                 int editId = helpcard.getId();
                 String editTitle = helpcard.getTitle();
                 String editDescription = helpcard.getDescription();
+                boolean editFavorites = helpcard.isFavorites();
                 int editPriority = helpcard.getPriority();
-
+                //отправка данных на редактирование
                 CatalogFragmentDirections.ActionNavHelpcardToNavNewcard action =
                         CatalogFragmentDirections.actionNavHelpcardToNavNewcard();
-                action.setMessageEditId(editId);
-                action.setMessageEditTitle(editTitle);
-                action.setMessageEditDescription(editDescription);
-                action.setMessageEditPriority(editPriority);
+                action.setMessageId(editId);
+                action.setMessageTitle(editTitle);
+                action.setMessageDescription(editDescription);
+                action.setMessageFavorites(editFavorites);
+                action.setMessagePriority(editPriority);
                 navController.navigate(action);
-
-
             }
         });
+
+//        editCheckFavorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                if (compoundButton.isChecked()) {
+//                    Toast.makeText(getActivity(), "check button is ckecked", Toast.LENGTH_SHORT).show();
+//                } else {
+//                }
+//
+//
+//
+////                if (editCheckFavorites == null) {
+////
+////                    String editTitle = helpcard.getTitle();
+////                    String editDescription = helpcard.getDescription();
+////                    boolean editFavorites = false;
+////                    int editPriority = helpcard.getPriority();
+////
+////                    Helpcard helpcard = new Helpcard(editTitle, editDescription, editFavorites, editPriority);
+////                    helpcardViewModel.update(helpcard);
+////
+////
+////                } else if (isChecked) {
+////
+////                    //int editId = helpcard.getId();
+////                    String editTitle = helpcard.getTitle();
+////                    String editDescription = helpcard.getDescription();
+////                    boolean editFavorites = isChecked;
+////                    int editPriority = helpcard.getPriority();
+////
+////                    Helpcard helpcard = new Helpcard(editTitle, editDescription, editFavorites, editPriority);
+////                    helpcardViewModel.update(helpcard);
+////                    Toast.makeText(getActivity(), "Helpcard is favorites", Toast.LENGTH_SHORT).show();
+////                } else {
+////
+////                }
+//
+//            }
+//        });
 
 
         return root;
@@ -185,17 +220,18 @@ public class CatalogFragment extends Fragment {
         if (getArguments() != null) {
 
             CatalogFragmentArgs args = CatalogFragmentArgs.fromBundle(getArguments());
-            String title = args.getMessageNewTitle();
-            String description = args.getMessageNewDescription();
-            int priority = args.getMessageNewPriority();
-            int id = args.getId();
+            String title = args.getMessageTitle();
+            String description = args.getMessageDescription();
+            boolean favorites = args.getMessageFavorites();
+            int priority = args.getMessagePriority();
+            int id = args.getMessageId();
 
             if (!title.equals("default") && description.equals("default")
                     || title.equals("default") && !description.equals("default")) {
                 Toast.makeText(getActivity(), "Helpcard not saved", Toast.LENGTH_SHORT).show();
 
             } else if (!title.equals("default") && !description.equals("default") && id == -1) {
-                Helpcard helpcard = new Helpcard(title, description, false, priority);
+                Helpcard helpcard = new Helpcard(title, description, favorites, priority);
                 helpcardViewModel.insert(helpcard);
                 Toast.makeText(getActivity(), "Helpcard saved", Toast.LENGTH_SHORT).show();
 
@@ -207,7 +243,7 @@ public class CatalogFragment extends Fragment {
                 //и потом запись
 
             } else if (!title.equals("default") && !description.equals("default") && id != -1) {
-                Helpcard helpcard = new Helpcard(title, description, false, priority);
+                Helpcard helpcard = new Helpcard(title, description, favorites, priority);
                 helpcard.setId(id);
                 helpcardViewModel.update(helpcard);
                 Toast.makeText(getActivity(), "Helpcard updated", Toast.LENGTH_SHORT).show();

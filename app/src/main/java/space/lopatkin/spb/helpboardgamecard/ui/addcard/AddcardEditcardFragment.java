@@ -27,7 +27,7 @@ public class AddcardEditcardFragment extends Fragment {
 
     private EditText editTextTitle;
     private EditText editTextDescription;
-    private EditText editTextFavorites;
+    private boolean editCheckFavorites;
     private NumberPicker numberPickerPriority;
 
 
@@ -48,14 +48,15 @@ public class AddcardEditcardFragment extends Fragment {
 
         editTextTitle = root.findViewById(R.id.edit_text_title);
         editTextDescription = root.findViewById(R.id.edit_text_description);
+        editCheckFavorites = false;
         numberPickerPriority = root.findViewById(R.id.number_picker_priority);
         numberPickerPriority.setMinValue(1);
         numberPickerPriority.setMaxValue(10);
 
-           //устанавливает в верхнем меню левую иконку
+        //устанавливает в верхнем меню левую иконку
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
-          //устанавливает тайтл динамически
+        //устанавливает тайтл динамически
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_addcard);
 
         //разрешает верхнее правое меню
@@ -161,10 +162,11 @@ public class AddcardEditcardFragment extends Fragment {
 
     private void saveHelpcard() {
         //забор данных в переменные
-        String messageNewTitle = editTextTitle.getText().toString();
-        String messageNewDescription = editTextDescription.getText().toString();
-        int messageNewPriority = numberPickerPriority.getValue();
-        if (messageNewTitle.trim().isEmpty() || messageNewDescription.trim().isEmpty()) {
+        String messageTitle = editTextTitle.getText().toString();
+        String messageDescription = editTextDescription.getText().toString();
+        boolean messageFavorites = editCheckFavorites;
+        int messagePriority = numberPickerPriority.getValue();
+        if (messageTitle.trim().isEmpty() || messageDescription.trim().isEmpty()) {
             Toast.makeText(getActivity(), "Please insert a title and description", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -183,15 +185,16 @@ public class AddcardEditcardFragment extends Fragment {
         //v5safeargs
         AddcardEditcardFragmentDirections.ActionNavAddcardToNavHelpcard action =
                 AddcardEditcardFragmentDirections.actionNavAddcardToNavHelpcard();
-        action.setMessageNewTitle(messageNewTitle);
-        action.setMessageNewDescription(messageNewDescription);
-        action.setMessageNewPriority(messageNewPriority);
+        action.setMessageTitle(messageTitle);
+        action.setMessageDescription(messageDescription);
+        action.setMessageFavorites(messageFavorites);
+        action.setMessagePriority(messagePriority);
 
         //если перепись заметки то отправляется старый АйДи
         AddcardEditcardFragmentArgs args = AddcardEditcardFragmentArgs.fromBundle(getArguments());
-        int id = args.getMessageEditId();
+        int id = args.getMessageId();
         if (id != -1) {
-            action.setId(id);
+            action.setMessageId(id);
         }
 
         navController.navigate(action);
@@ -207,8 +210,7 @@ public class AddcardEditcardFragment extends Fragment {
     }
 
 
-
-        //создание меню верхнего справа
+    //создание меню верхнего справа
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.addcard_menu, menu);
@@ -239,7 +241,7 @@ public class AddcardEditcardFragment extends Fragment {
 
         if (getArguments() != null) {
             AddcardEditcardFragmentArgs args = AddcardEditcardFragmentArgs.fromBundle(getArguments());
-            int id = args.getMessageEditId();
+            int id = args.getMessageId();
 
             if (id == -1) {
                 //смена названия заголовка в тулбаре
@@ -250,9 +252,11 @@ public class AddcardEditcardFragment extends Fragment {
                 //смена названия заголовка в тулбаре
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_edit_card);
 
-                editTextTitle.setText(args.getMessageEditTitle());
-                editTextDescription.setText(args.getMessageEditDescription());
-                numberPickerPriority.setValue(args.getMessageEditPriority());
+                //установка значений в поля для редактирования
+                editTextTitle.setText(args.getMessageTitle());
+                editTextDescription.setText(args.getMessageDescription());
+                editCheckFavorites = args.getMessageFavorites();
+                numberPickerPriority.setValue(args.getMessagePriority());
             }
         }
     }
