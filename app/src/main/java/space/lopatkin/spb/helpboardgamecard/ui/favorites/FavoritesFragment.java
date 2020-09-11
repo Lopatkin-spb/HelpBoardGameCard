@@ -65,17 +65,5 @@ public class FavoritesFragment extends Fragment {
 
         return root;
     }
-//
-//    @SuppressLint("ResourceType")
-//    private void eeeeeee( ) {
-//        NewCardFragment newCardFragment = new NewCardFragment();
-//        FragmentManager fragmentManager = getFragmentManager();
-//
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()  ;
-//        fragmentTransaction.replace(R.id.flContent , newCardFragment);
-//        fragmentTransaction.commit();
-//
-//
-//
-//    }
+
 }
