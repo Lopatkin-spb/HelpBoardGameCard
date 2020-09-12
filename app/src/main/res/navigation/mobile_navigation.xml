@@ -20,6 +20,11 @@
         <argument android:name="messagePriority" app:argType="integer" android:defaultValue="1"/>
         <argument android:name="messageId" app:argType="integer" android:defaultValue="-1"/>
         <argument android:name="messageFavorites" app:argType="boolean" android:defaultValue="false"/>
+        <argument android:name="messageVictoryCondition" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageEndGame" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messagePreparation" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
     </fragment>
 
     <fragment
@@ -36,6 +41,11 @@
         <argument android:name="messageDescription" app:argType="string" android:defaultValue="default"/>
         <argument android:name="messagePriority" app:argType="integer" android:defaultValue="1"/>
         <argument android:name="messageFavorites" app:argType="boolean" android:defaultValue="false"/>
+        <argument android:name="messageVictoryCondition" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageEndGame" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messagePreparation" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
     </fragment>
 
     <fragment

@@ -151,15 +151,26 @@ public class CatalogFragment extends Fragment {
 //                 и забор и передача данных в редактирование
                 int editId = helpcard.getId();
                 String editTitle = helpcard.getTitle();
+                String editVictoryCondition = helpcard.getVictoryCondition();
+                String editEndGame = helpcard.getEndGame();
+                String editPreparation = helpcard.getPreparation();
                 String editDescription = helpcard.getDescription();
+                String editPlayerTurn = helpcard.getPlayerTurn();
+                String editEffects = helpcard.getEffects();
                 boolean editFavorites = helpcard.isFavorites();
                 int editPriority = helpcard.getPriority();
                 //отправка данных на редактирование
                 CatalogFragmentDirections.ActionNavHelpcardToNavNewcard action =
                         CatalogFragmentDirections.actionNavHelpcardToNavNewcard();
+
                 action.setMessageId(editId);
                 action.setMessageTitle(editTitle);
+                action.setMessageVictoryCondition(editVictoryCondition);
+                action.setMessageEndGame(editEndGame);
+                action.setMessagePreparation(editPreparation);
                 action.setMessageDescription(editDescription);
+                action.setMessagePlayerTurn(editPlayerTurn);
+                action.setMessageEffects(editEffects);
                 action.setMessageFavorites(editFavorites);
                 action.setMessagePriority(editPriority);
                 navController.navigate(action);
@@ -219,8 +230,14 @@ public class CatalogFragment extends Fragment {
         if (getArguments() != null) {
 
             CatalogFragmentArgs args = CatalogFragmentArgs.fromBundle(getArguments());
+
             String title = args.getMessageTitle();
+            String victoryCondition = args.getMessageVictoryCondition();
+            String endGame = args.getMessageEndGame();
+            String preparation = args.getMessagePreparation();
             String description = args.getMessageDescription();
+            String playerTurn = args.getMessagePlayerTurn();
+            String effects = args.getMessageEffects();
             boolean favorites = args.getMessageFavorites();
             int priority = args.getMessagePriority();
             int id = args.getMessageId();
@@ -229,8 +246,9 @@ public class CatalogFragment extends Fragment {
                     || title.equals("default") && !description.equals("default")) {
                 Toast.makeText(getActivity(), "Helpcard not saved", Toast.LENGTH_SHORT).show();
 
-            } else if (!title.equals("default") && !description.equals("default") && id == -1) {
-                Helpcard helpcard = new Helpcard(title, description, favorites, priority);
+            } else if (!title.equals("default") && id == -1) {
+                Helpcard helpcard = new Helpcard(title, victoryCondition, endGame,
+                        preparation, description, playerTurn, effects, favorites, priority);
                 helpcardViewModel.insert(helpcard);
                 Toast.makeText(getActivity(), "Helpcard saved", Toast.LENGTH_SHORT).show();
 
@@ -241,8 +259,9 @@ public class CatalogFragment extends Fragment {
 
                 //и потом запись
 
-            } else if (!title.equals("default") && !description.equals("default") && id != -1) {
-                Helpcard helpcard = new Helpcard(title, description, favorites, priority);
+            } else if (!title.equals("default") && id != -1) {
+                Helpcard helpcard = new Helpcard(title, victoryCondition, endGame,
+                        preparation, description, playerTurn, effects, favorites, priority);
                 helpcard.setId(id);
                 helpcardViewModel.update(helpcard);
                 Toast.makeText(getActivity(), "Helpcard updated", Toast.LENGTH_SHORT).show();

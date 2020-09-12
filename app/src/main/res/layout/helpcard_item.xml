@@ -24,6 +24,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/text_view_priority"
                 android:ellipsize="end"
+                android:textSize="35dp"
                 android:maxLines="1"
                 android:text="@string/title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
@@ -55,12 +56,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="71dp"
+                android:layout_marginEnd="84dp"
                 android:layout_alignParentTop="true"
 
                 android:scaleX="1.8"
                 android:scaleY="1.8"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="23dp"
+        />
+
         <ImageView
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
@@ -68,18 +71,20 @@
                 android:layout_marginStart="16dp"
                 android:layout_alignParentEnd="true"
                 android:src="@android:drawable/ic_notification_clear_all"
-                android:layout_marginEnd="32dp"
-                android:contentDescription="@string/todo"/>
-
+                android:layout_marginEnd="40dp"
+                android:contentDescription="@string/todo" android:layout_marginTop="22dp"
+                android:layout_alignParentTop="true"/>
         <TextView
                 android:id="@+id/text_view_priority"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="51dp"
                 android:layout_alignParentEnd="true"
                 android:text="@string/_1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" android:layout_marginTop="24dp"
                 android:layout_alignParentTop="true"
-        />
+                android:textSize="25dp"
+
+                android:layout_marginEnd="6dp"/>
 
 
     </RelativeLayout>

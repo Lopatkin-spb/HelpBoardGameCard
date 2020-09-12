@@ -26,7 +26,12 @@ public class AddcardEditcardFragment extends Fragment {
             "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_PRIORITY";
 
     private EditText editTextTitle;
+    private EditText editTextVictoryCondition;
+    private EditText editTextEndGame;
+    private EditText editTextPreparation;
     private EditText editTextDescription;
+    private EditText editTextPlayerTurn;
+    private EditText editTextEffects;
     private boolean editCheckFavorites;
     private NumberPicker numberPickerPriority;
 
@@ -46,8 +51,14 @@ public class AddcardEditcardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_addcard, container, false);
 
+        //инициализация полей вью
         editTextTitle = root.findViewById(R.id.edit_text_title);
+        editTextVictoryCondition = root.findViewById(R.id.edit_text_victory_condition);
+        editTextEndGame = root.findViewById(R.id.edit_text_end_game);
+        editTextPreparation = root.findViewById(R.id.edit_text_preparation);
         editTextDescription = root.findViewById(R.id.edit_text_description);
+        editTextPlayerTurn = root.findViewById(R.id.edit_text_player_turn);
+        editTextEffects = root.findViewById(R.id.edit_text_effects);
         editCheckFavorites = false;
         numberPickerPriority = root.findViewById(R.id.number_picker_priority);
         numberPickerPriority.setMinValue(1);
@@ -163,11 +174,20 @@ public class AddcardEditcardFragment extends Fragment {
     private void saveHelpcard() {
         //забор данных в переменные
         String messageTitle = editTextTitle.getText().toString();
+        String messageVictoryCondition = editTextVictoryCondition.getText().toString();
+        String messageEndGame = editTextEndGame.getText().toString();
+        String messagePreparation = editTextPreparation.getText().toString();
         String messageDescription = editTextDescription.getText().toString();
+
+        String messagePlayerTurn = editTextPlayerTurn.getText().toString();
+        String messageEffects = editTextEffects.getText().toString();
+
         boolean messageFavorites = editCheckFavorites;
         int messagePriority = numberPickerPriority.getValue();
-        if (messageTitle.trim().isEmpty() || messageDescription.trim().isEmpty()) {
-            Toast.makeText(getActivity(), "Please insert a title and description", Toast.LENGTH_SHORT).show();
+
+//        if (messageTitle.trim().isEmpty() || messageDescription.trim().isEmpty()) {
+        if (messageTitle.trim().isEmpty()) {
+            Toast.makeText(getActivity(), "Please insert a title", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -186,7 +206,17 @@ public class AddcardEditcardFragment extends Fragment {
         AddcardEditcardFragmentDirections.ActionNavAddcardToNavHelpcard action =
                 AddcardEditcardFragmentDirections.actionNavAddcardToNavHelpcard();
         action.setMessageTitle(messageTitle);
+
+        action.setMessageVictoryCondition(messageVictoryCondition);
+        action.setMessageEndGame(messageEndGame);
+        action.setMessagePreparation(messagePreparation);
+
         action.setMessageDescription(messageDescription);
+
+        action.setMessagePlayerTurn(messagePlayerTurn);
+        action.setMessageEffects(messageEffects);
+
+
         action.setMessageFavorites(messageFavorites);
         action.setMessagePriority(messagePriority);
 
@@ -254,7 +284,12 @@ public class AddcardEditcardFragment extends Fragment {
 
                 //установка значений в поля для редактирования
                 editTextTitle.setText(args.getMessageTitle());
+                editTextVictoryCondition.setText(args.getMessageVictoryCondition());
+                editTextEndGame.setText(args.getMessageEndGame());
+                editTextPreparation.setText(args.getMessagePreparation());
                 editTextDescription.setText(args.getMessageDescription());
+                editTextPlayerTurn.setText(args.getMessagePlayerTurn());
+                editTextEffects.setText(args.getMessageEffects());
                 editCheckFavorites = args.getMessageFavorites();
                 numberPickerPriority.setValue(args.getMessagePriority());
             }

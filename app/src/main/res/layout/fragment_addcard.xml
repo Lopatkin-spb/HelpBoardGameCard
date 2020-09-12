@@ -10,16 +10,63 @@
 
     <EditText
             android:id="@+id/edit_text_title"
-            android:layout_width="339dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/title"
-            android:inputType="text" android:autofillHints=""/>
+            android:inputType="textCapWords"
+            android:textSize="50dp"
+            android:autofillHints=""/>
+
+    <EditText
+            android:id="@+id/edit_text_victory_condition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="victory condition"
+            android:inputType="textMultiLine"
+            android:textSize="30dp"
+            android:autofillHints=""/>
+
+    <EditText
+            android:id="@+id/edit_text_end_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="end game"
+            android:inputType="textMultiLine"
+            android:autofillHints=""/>
+
+    <EditText
+            android:id="@+id/edit_text_preparation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="preparation"
+            android:inputType="textMultiLine"
+            android:autofillHints=""/>
+
+
     <EditText
             android:id="@+id/edit_text_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/description"
-            android:inputType="textMultiLine" android:autofillHints=""/>
+            android:inputType="textMultiLine"
+            android:autofillHints=""/>
+
+    <EditText
+            android:id="@+id/edit_text_player_turn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="player turn"
+            android:inputType="textMultiLine"
+            android:textSize="30dp"
+            android:autofillHints=""/>
+
+    <EditText
+            android:id="@+id/edit_text_effects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="effects"
+            android:inputType="textMultiLine"
+            android:autofillHints=""/>
 
     <TextView
             android:layout_width="wrap_content"

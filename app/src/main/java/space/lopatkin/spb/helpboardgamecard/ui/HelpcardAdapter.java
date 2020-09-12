@@ -38,7 +38,7 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
         return new HelpcardHolder(itemView);
     }
 
-    //установка значений в поле\ячейку из бд
+    //установка значений в поле\ячейку из бд через адаптер
     @Override
     public void onBindViewHolder(@NonNull HelpcardHolder holder, final int position) {
         holder.bind(listHelpcards.get(position));
@@ -162,6 +162,12 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
         public HelpcardHolder(final View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
+
+//            private TextView    textViewVictoryCondition = itemView.findViewById(R.id.edit_text_victory_condition);
+//            private TextView  textViewEndGame = itemView.findViewById(R.id.edit_text_end_game);
+//            private TextView  textViewPreparation = itemView.findViewById(R.id.edit_text_preparation);
+//
+
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             booleanViewFavorites = itemView.findViewById(R.id.checkbox_view_favorites);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
@@ -191,7 +197,7 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
             booleanViewFavorites.setOnCheckedChangeListener(onCheckedChangeListener);
         }
 
-        //бработчик на чекбокс
+        //обработчик на чекбокс
         private CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

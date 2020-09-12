@@ -15,8 +15,23 @@ public class Helpcard {
     @ColumnInfo(name = "title")
     private String title;
 
+    @ColumnInfo(name = "victory_condition")
+    private String victoryCondition;
+
+    @ColumnInfo(name = "end_game")
+    private String endGame;
+
+    @ColumnInfo(name = "preparation")
+    private String preparation;
+
     @ColumnInfo(name = "description")
     private String description;
+
+    @ColumnInfo(name = "player_turn")
+    private String playerTurn;
+
+    @ColumnInfo(name = "effects")
+    private String effects;
 
     @ColumnInfo(name = "favorites")
     private boolean favorites;
@@ -35,14 +50,21 @@ public class Helpcard {
 
 
 
-    public Helpcard(String title, String description, boolean favorites,  int priority) {
+
+    public Helpcard(String title, String victoryCondition,
+                    String endGame, String preparation,
+                    String description, String playerTurn,
+                    String effects, boolean favorites, int priority) {
         this.title = title;
+        this.victoryCondition = victoryCondition;
+        this.endGame = endGame;
+        this.preparation = preparation;
         this.description = description;
+        this.playerTurn = playerTurn;
+        this.effects = effects;
         this.favorites = favorites;
-//        this.timestamp = timestamp;
         this.priority = priority;
     }
-
 
     public int getId() {
         return id;
@@ -60,12 +82,52 @@ public class Helpcard {
         this.title = title;
     }
 
+    public String getVictoryCondition() {
+        return victoryCondition;
+    }
+
+    public void setVictoryCondition(String victoryCondition) {
+        this.victoryCondition = victoryCondition;
+    }
+
+    public String getEndGame() {
+        return endGame;
+    }
+
+    public void setEndGame(String endGame) {
+        this.endGame = endGame;
+    }
+
+    public String getPreparation() {
+        return preparation;
+    }
+
+    public void setPreparation(String preparation) {
+        this.preparation = preparation;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPlayerTurn() {
+        return playerTurn;
+    }
+
+    public void setPlayerTurn(String playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
+    public String getEffects() {
+        return effects;
+    }
+
+    public void setEffects(String effects) {
+        this.effects = effects;
     }
 
     public boolean isFavorites() {
@@ -76,14 +138,6 @@ public class Helpcard {
         this.favorites = favorites;
     }
 
-//    public long getTimestamp() {
-//        return timestamp;
-//    }
-//
-//    public void setTimestamp(long timestamp) {
-//        this.timestamp = timestamp;
-//    }
-
     public int getPriority() {
         return priority;
     }
@@ -91,6 +145,8 @@ public class Helpcard {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+
+
 
     //parcelable
 //    @Override
