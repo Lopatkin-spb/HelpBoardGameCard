@@ -143,10 +143,50 @@ public class CatalogFragment extends Fragment {
         });
 
 
-        //редактирование одной карты: навигация и передача данных
+
+        //показ одной карты: навигация и передача данных
         adapter.setOnItemClickListener(new HelpcardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Helpcard helpcard) {
+//                переход на новый фрагмент редактирования
+//                 и забор и передача данных в редактирование
+                int editId = helpcard.getId();
+                String editTitle = helpcard.getTitle();
+                String editVictoryCondition = helpcard.getVictoryCondition();
+                String editEndGame = helpcard.getEndGame();
+                String editPreparation = helpcard.getPreparation();
+                String editDescription = helpcard.getDescription();
+                String editPlayerTurn = helpcard.getPlayerTurn();
+                String editEffects = helpcard.getEffects();
+                boolean editFavorites = helpcard.isFavorites();
+                int editPriority = helpcard.getPriority();
+
+
+              //отправка данных на редактирование
+                CatalogFragmentDirections.ActionNavCatalogToNavHelpcard messageToHelpcard =
+                        CatalogFragmentDirections.actionNavCatalogToNavHelpcard();
+
+                messageToHelpcard.setMessageId(editId);
+                messageToHelpcard.setMessageTitle(editTitle);
+                messageToHelpcard.setMessageVictoryCondition(editVictoryCondition);
+                messageToHelpcard.setMessageEndGame(editEndGame);
+                messageToHelpcard.setMessagePreparation(editPreparation);
+                messageToHelpcard.setMessageDescription(editDescription);
+                messageToHelpcard.setMessagePlayerTurn(editPlayerTurn);
+                messageToHelpcard.setMessageEffects(editEffects);
+                messageToHelpcard.setMessageFavorites(editFavorites);
+                messageToHelpcard.setMessagePriority(editPriority);
+                navController.navigate(messageToHelpcard);
+            }
+        });
+
+
+
+
+        //редактирование одной карты: навигация и передача данных
+        adapter.setOnItemEditClickListener(new HelpcardAdapter.OnItemEditClickListener() {
+            @Override
+            public void onItemEditClick(Helpcard helpcard) {
 //                переход на новый фрагмент редактирования
 //                 и забор и передача данных в редактирование
                 int editId = helpcard.getId();

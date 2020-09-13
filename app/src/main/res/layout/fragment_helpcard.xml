@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                tools:context=".ui.helpcard.HelpcardFragment">
+
+    <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="50dp"/>
+
+    <TextView
+            android:id="@+id/text_view_victory_condition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
+            android:hint="victory condition"
+            android:textSize="30dp"/>
+
+    <TextView
+            android:id="@+id/text_view_end_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_victory_condition"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
+            android:hint="end game"
+            android:textSize="20dp"/>
+
+    <TextView
+            android:id="@+id/text_view_preparation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_end_game"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
+            android:hint="preparation"
+            android:textSize="20dp"/>
+
+
+    <TextView
+            android:id="@+id/text_view_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_preparation"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
+            android:hint="@string/description"
+            android:textSize="20dp"/>
+
+    <TextView
+            android:id="@+id/text_view_player_turn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
+            android:hint="player turn"
+            android:textSize="30dp"
+    />
+
+    <TextView
+            android:id="@+id/text_view_effects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_player_turn"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
+            android:hint="effects"
+            android:textSize="30dp"
+    />
+
+    <TextView
+            android:id="@+id/text_view_info_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/priority"
+            android:layout_below="@+id/text_view_effects"
+            android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+    <TextView
+            android:id="@+id/text_view_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="51dp"
+            android:layout_below="@+id/text_view_info_priority"
+            android:text="@string/_1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="25dp"
+            android:layout_marginEnd="6dp"/>
+
+</RelativeLayout>

@@ -114,34 +114,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-//    //обработка для событий
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-////            case android.R.id.home:
-////                finish();
-////                break;
-//            case R.id.action_save:
-//                if (editText.getText().length() > 0) {
-//                    helpCard.text = editText.getText().toString();
-//                    helpCard.favorites = false;
-//                    helpCard.timestamp = System.currentTimeMillis();
-//
-//                    if (newCardFragment.getIntent().hasExtra(EXTRA_HELPCARD)) {
-//                        App.getInstance().getHelpCardDao().update(helpCard);
-//                    } else {
-//                        App.getInstance().getHelpCardDao().insert(helpCard);
-//                    }
-//
-//                    //finish();
-//                }
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-
-
 }

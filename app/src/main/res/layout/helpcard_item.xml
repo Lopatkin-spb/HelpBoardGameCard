@@ -5,36 +5,33 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp">
-
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
-    >
-
+            android:padding="8dp">
 
         <TextView
-                android:id="@+id/text_view_title"
+                android:id="@+id/text_view_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/text_view_priority"
-                android:ellipsize="end"
-                android:textSize="35dp"
-                android:maxLines="1"
-                android:text="@string/title"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+                android:layout_toStartOf="@id/text_view_item_priority"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
 
+                android:ellipsize="end"
+                android:textSize="40dp"
+                android:maxLines="1"
+                android:text="@string/title"/>
 
         <TextView
-                android:id="@+id/text_view_description"
+                android:id="@+id/text_view_item_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_title"
+                android:layout_below="@id/text_view_item_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:text="@string/description"/>
 
 
@@ -50,42 +47,56 @@
         <!--                   android:layout_marginEnd="200dp"-->
         <!--                   android:layout_marginTop="4dp"-->
         <!--                   android:layout_alignParentTop="true"/>-->
+
         <CheckBox
-                android:id="@+id/checkbox_view_favorites"
+                android:id="@+id/button_view_item_favorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="84dp"
                 android:layout_alignParentTop="true"
-
                 android:scaleX="1.8"
                 android:scaleY="1.8"
-                android:layout_marginTop="23dp"
-        />
+                android:layout_marginTop="23dp"/>
 
         <ImageView
-                android:id="@+id/delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/image_view_item_edit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="16dp"
                 android:layout_alignParentEnd="true"
-                android:src="@android:drawable/ic_notification_clear_all"
-                android:layout_marginEnd="40dp"
-                android:contentDescription="@string/todo" android:layout_marginTop="22dp"
+                android:src="@drawable/ic_edit"
+                android:layout_marginEnd="38dp"
+                android:contentDescription="edit"
+                android:layout_marginTop="18dp"
                 android:layout_alignParentTop="true"/>
+
         <TextView
-                android:id="@+id/text_view_priority"
-                android:layout_width="35dp"
-                android:layout_height="51dp"
+                android:id="@+id/text_view_item_priority"
+                android:layout_width="20dp"
+                android:layout_height="32dp"
                 android:layout_alignParentEnd="true"
                 android:text="@string/_1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" android:layout_marginTop="24dp"
-                android:layout_alignParentTop="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="25dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="23dp"
+                android:layout_alignParentTop="true"/>
 
-                android:layout_marginEnd="6dp"/>
+        <ImageView
+                android:id="@+id/image_view_item_navigate_next"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:scaleY="2"
+                android:layout_marginStart="16dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_navigate_next"
+                android:layout_marginEnd="-15dp"
 
+                android:contentDescription="edit"
+                android:layout_marginTop="7dp"
+                android:layout_alignParentTop="true"/>
 
     </RelativeLayout>
 

@@ -25,6 +25,7 @@
         <argument android:name="messagePreparation" app:argType="string" android:defaultValue="default"/>
         <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
         <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
+        <action android:id="@+id/action_nav_catalog_to_nav_helpcard" app:destination="@+id/nav_helpcard"/>
     </fragment>
 
     <fragment
@@ -64,5 +65,28 @@
             android:name="space.lopatkin.spb.helpboardgamecard.ui.share.ShareFragment"
             android:label="@string/menu_share"
             tools:layout="@layout/fragment_share"/>
+
+    <fragment
+            android:id="@+id/nav_helpcard"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.helpcard.HelpcardFragment"
+            android:label="helpcard"
+            tools:layout="@layout/fragment_helpcard">
+        <action android:id="@+id/action_nav_helpcard_to_nav_addcard" app:destination="@id/nav_addcard"/>
+
+
+        <argument android:name="messageTitle" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageDescription" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messagePriority" app:argType="integer" android:defaultValue="1"/>
+        <argument android:name="messageId" app:argType="integer" android:defaultValue="-1"/>
+        <argument android:name="messageFavorites" app:argType="boolean" android:defaultValue="false"/>
+        <argument android:name="messageVictoryCondition" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageEndGame" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messagePreparation" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
+
+
+    </fragment>
+
 
 </navigation>

@@ -11,6 +11,8 @@
     <string name="menu_catalog">Helpcards Catalog</string>
     <string name="menu_addcard">Add New Helpcard</string>
     <string name="menu_edit_card">Edit Helpcard</string>
+    <string name="menu_view_card">View Helpcard</string>
+
 
     <string name="menu_favorites">Favorites</string>
     <string name="menu_share">Share</string>
@@ -22,7 +24,7 @@
     <string name="complited">выполнение</string>
     <string name="title">title</string>
     <string name="description">description</string>
-    <string name="_1">_1</string>
+    <string name="_1">1</string>
     <string name="todo">TODO</string>
     <string name="action_delete_all">"Delete all helpcards"</string>
     <string name="priority">Priority</string>

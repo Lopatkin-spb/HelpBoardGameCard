@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,8 +23,8 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
 
     private List<Helpcard> listHelpcards = new ArrayList<>(); //в будущем рассмотреть апгрейд на сортед лист
 
-    private OnItemClickListener listener;
-
+    private OnItemClickListener listenerView;
+    private OnItemEditClickListener listenerEdit;
     private OnItemCheckboxListenerTest listenerCheckboxTest;
 
 
@@ -156,32 +157,45 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
         private TextView textViewTitle;
         private TextView textViewDescription;
         private CheckBox booleanViewFavorites;
+        private ImageView imageViewEdit;
         private TextView textViewPriority;
 
         //конструктор
         public HelpcardHolder(final View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.text_view_title);
+            textViewTitle = itemView.findViewById(R.id.text_view_item_title);
 
 //            private TextView    textViewVictoryCondition = itemView.findViewById(R.id.edit_text_victory_condition);
 //            private TextView  textViewEndGame = itemView.findViewById(R.id.edit_text_end_game);
 //            private TextView  textViewPreparation = itemView.findViewById(R.id.edit_text_preparation);
 //
 
-            textViewDescription = itemView.findViewById(R.id.text_view_description);
-            booleanViewFavorites = itemView.findViewById(R.id.checkbox_view_favorites);
-            textViewPriority = itemView.findViewById(R.id.text_view_priority);
+            textViewDescription = itemView.findViewById(R.id.text_view_item_description);
+            booleanViewFavorites = itemView.findViewById(R.id.button_view_item_favorites);
+            imageViewEdit = itemView.findViewById(R.id.image_view_item_edit);
+            textViewPriority = itemView.findViewById(R.id.text_view_item_priority);
 
 
-// общее вью  для редактирования карты
+            // общее вью  для показа карты
             //обработчик для всего итема сразу
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if (listener != null && position != RecyclerView.NO_POSITION) {
-                        boolean b = booleanViewFavorites.isChecked();
-                        listener.onItemClick(listHelpcards.get(position));
+                    int adapterPosition = getAdapterPosition();
+                    if (listenerView != null && adapterPosition != RecyclerView.NO_POSITION) {
+                        listenerView.onItemClick(listHelpcards.get(adapterPosition));
+                    }
+                }
+            });
+
+
+            //обработчик для редактирования записи
+            imageViewEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int adapterPosition = getAdapterPosition();
+                    if (listenerEdit != null && adapterPosition != RecyclerView.NO_POSITION) {
+                        listenerEdit.onItemEditClick(listHelpcards.get(adapterPosition));
                     }
                 }
             });
@@ -277,12 +291,26 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
         void onItemClick(Helpcard helpCard);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
+    public void setOnItemClickListener(OnItemClickListener listenerView) {
+        this.listenerView = listenerView;
     }
 
 
-    //для редактирования чекбокса
+
+//для редактирования существующей записи строки
+public interface OnItemEditClickListener {
+    void onItemEditClick(Helpcard helpCard);
+}
+
+    public void setOnItemEditClickListener(OnItemEditClickListener listenerEdit) {
+        this.listenerEdit = listenerEdit;
+    }
+
+
+
+
+
+//для редактирования чекбокса
     public interface OnItemCheckboxListenerTest {
         void onItemCheckboxTest(Helpcard helpCard, boolean b);
     }
