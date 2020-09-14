@@ -58,7 +58,20 @@
                 android:layout_alignParentTop="true"
                 android:scaleX="1.8"
                 android:scaleY="1.8"
-                android:layout_marginTop="23dp"/>
+                android:layout_marginTop="3dp"/>
+
+        <CheckBox
+                android:id="@+id/checkbox_view_item_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector_lock"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="88dp"
+                android:layout_alignParentTop="true"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:layout_marginTop="50dp"/>
 
         <ImageView
                 android:id="@+id/image_view_item_edit"

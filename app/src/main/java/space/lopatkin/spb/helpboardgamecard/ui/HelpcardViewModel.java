@@ -37,6 +37,14 @@ public class HelpcardViewModel extends AndroidViewModel {
     public void deleteAllHelpcards() {
         repository.deleteAllHelpcards();
     }
+
+//    public void deleteUnlock(Helpcard helpcard) {
+//        repository.deleteUnlock(helpcard);
+//    }
+
+    public void deleteAllUnlockHelpcards() {
+        repository.deleteAllUnlockHelpcards();
+    }
     public LiveData<List<Helpcard>> getAllHelpcards() {
         return allHelpcards;
     }

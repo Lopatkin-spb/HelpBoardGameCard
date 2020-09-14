@@ -37,6 +37,18 @@ public class HelpcardRepository {
     public void deleteAllHelpcards() {
         new DeleteAllHelpcardsAsyncTask(helpcardDao).execute();
     }
+
+
+//    public void deleteUnlock(Helpcard helpcard) {
+//        new DeleteUnlockHelpcardAsyncTask(helpcardDao).execute(helpcard);
+//    }
+
+    public void deleteAllUnlockHelpcards() {
+        new DeleteAllUnlockHelpcardsAsyncTask(helpcardDao).execute();
+    }
+
+
+
     public LiveData<List<Helpcard>> getAllHelpcards() {
         return allHelpcards;
     }
@@ -68,6 +80,8 @@ public class HelpcardRepository {
         }
     }
 
+
+
     private static class DeleteHelpcardAsyncTask extends AsyncTask<Helpcard, Void, Void> {
         private HelpcardDao helpcardDao;
         private DeleteHelpcardAsyncTask(HelpcardDao helpcardDao) {
@@ -80,6 +94,19 @@ public class HelpcardRepository {
         }
     }
 
+
+//    private static class DeleteUnlockHelpcardAsyncTask extends AsyncTask<Helpcard, Void, Void> {
+//        private HelpcardDao helpcardDao;
+//        private DeleteUnlockHelpcardAsyncTask(HelpcardDao helpcardDao) {
+//            this.helpcardDao = helpcardDao;
+//        }
+//        @Override
+//        protected Void doInBackground(Helpcard... helpcards) {
+//            helpcardDao.deleteUnlock(helpcards[0]);
+//            return null;
+//        }
+//    }
+
     private static class DeleteAllHelpcardsAsyncTask extends AsyncTask<Void, Void, Void> {
         private HelpcardDao helpcardDao;
         private DeleteAllHelpcardsAsyncTask(HelpcardDao helpcardDao) {
@@ -91,4 +118,20 @@ public class HelpcardRepository {
             return null;
         }
     }
+
+    private static class DeleteAllUnlockHelpcardsAsyncTask extends AsyncTask<Void, Void, Void> {
+        private HelpcardDao helpcardDao;
+        private DeleteAllUnlockHelpcardsAsyncTask(HelpcardDao helpcardDao) {
+            this.helpcardDao = helpcardDao;
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            helpcardDao.deleteAllUnlockHelpcards();
+            return null;
+        }
+    }
+
+
+
+
 }

@@ -26,6 +26,7 @@
         <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
         <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
         <action android:id="@+id/action_nav_catalog_to_nav_helpcard" app:destination="@+id/nav_helpcard"/>
+        <argument android:name="messageLock" app:argType="boolean" android:defaultValue="false"/>
     </fragment>
 
     <fragment
@@ -47,6 +48,7 @@
         <argument android:name="messagePreparation" app:argType="string" android:defaultValue="default"/>
         <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
         <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageLock" app:argType="boolean" android:defaultValue="false"/>
     </fragment>
 
     <fragment
@@ -84,6 +86,7 @@
         <argument android:name="messagePreparation" app:argType="string" android:defaultValue="default"/>
         <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
         <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
+        <argument android:name="messageLock" app:argType="boolean" android:defaultValue="false"/>
 
 
     </fragment>

@@ -53,7 +53,15 @@ public interface HelpcardDao {
     @Delete
     void delete(Helpcard helpcard);
 
+//
+//    @Query("DELETE FROM helpcard_table WHERE lock = 0")
+//    void deleteUnlock(Helpcard helpcard);
+
 
     @Query("DELETE FROM helpcard_table")
     void deleteAllHelpcards();
+
+
+    @Query("DELETE FROM helpcard_table WHERE lock = 0")
+    void deleteAllUnlockHelpcards();
 }

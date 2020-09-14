@@ -62,6 +62,21 @@ public class FavoritesFragment extends Fragment {
         });
 
 
+        //редактирование Lock
+        adapter.setOnItemCheckboxListenerLock(new HelpcardAdapter.OnItemCheckboxListenerLock() {
+            @Override
+            public void onItemCheckboxLock(Helpcard helpcard, boolean b) {
+                helpcard.setLock(b);
+                favoritesViewModel.update(helpcard);
+                if (b) {
+                    Toast.makeText(getActivity(), "Helpcard is lock", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Helpcard unlock", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
 
         return root;
     }

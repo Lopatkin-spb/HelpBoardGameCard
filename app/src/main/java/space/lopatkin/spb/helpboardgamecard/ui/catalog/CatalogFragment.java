@@ -122,8 +122,15 @@ public class CatalogFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                helpcardViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(getActivity(), "Helpcard delete", Toast.LENGTH_SHORT).show();
+                boolean lock = adapter.getHelpcardAt(viewHolder.getAdapterPosition()).isLock();
+
+                if (lock != true) {
+                    helpcardViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
+                    Toast.makeText(getActivity(), "Helpcard delete", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Helpcard not delete", Toast.LENGTH_SHORT).show();
+
+                }
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -143,6 +150,20 @@ public class CatalogFragment extends Fragment {
         });
 
 
+        //редактирование Lock
+        adapter.setOnItemCheckboxListenerLock(new HelpcardAdapter.OnItemCheckboxListenerLock() {
+            @Override
+            public void onItemCheckboxLock(Helpcard helpcard, boolean b) {
+                helpcard.setLock(b);
+                helpcardViewModel.update(helpcard);
+                if (b) {
+                    Toast.makeText(getActivity(), "Helpcard is lock", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Helpcard unlock", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         //показ одной карты: навигация и передача данных
         adapter.setOnItemClickListener(new HelpcardAdapter.OnItemClickListener() {
@@ -159,10 +180,11 @@ public class CatalogFragment extends Fragment {
                 String editPlayerTurn = helpcard.getPlayerTurn();
                 String editEffects = helpcard.getEffects();
                 boolean editFavorites = helpcard.isFavorites();
+                boolean editLock = helpcard.isLock();
                 int editPriority = helpcard.getPriority();
 
 
-              //отправка данных на редактирование
+                //отправка данных на редактирование
                 CatalogFragmentDirections.ActionNavCatalogToNavHelpcard messageToHelpcard =
                         CatalogFragmentDirections.actionNavCatalogToNavHelpcard();
 
@@ -175,12 +197,12 @@ public class CatalogFragment extends Fragment {
                 messageToHelpcard.setMessagePlayerTurn(editPlayerTurn);
                 messageToHelpcard.setMessageEffects(editEffects);
                 messageToHelpcard.setMessageFavorites(editFavorites);
+                messageToHelpcard.setMessageLock(editLock);
+
                 messageToHelpcard.setMessagePriority(editPriority);
                 navController.navigate(messageToHelpcard);
             }
         });
-
-
 
 
         //редактирование одной карты: навигация и передача данных
@@ -198,6 +220,7 @@ public class CatalogFragment extends Fragment {
                 String editPlayerTurn = helpcard.getPlayerTurn();
                 String editEffects = helpcard.getEffects();
                 boolean editFavorites = helpcard.isFavorites();
+                boolean editLock = helpcard.isLock();
                 int editPriority = helpcard.getPriority();
                 //отправка данных на редактирование
                 CatalogFragmentDirections.ActionNavHelpcardToNavNewcard action =
@@ -212,6 +235,8 @@ public class CatalogFragment extends Fragment {
                 action.setMessagePlayerTurn(editPlayerTurn);
                 action.setMessageEffects(editEffects);
                 action.setMessageFavorites(editFavorites);
+                action.setMessageLock(editLock);
+
                 action.setMessagePriority(editPriority);
                 navController.navigate(action);
             }
@@ -279,6 +304,8 @@ public class CatalogFragment extends Fragment {
             String playerTurn = args.getMessagePlayerTurn();
             String effects = args.getMessageEffects();
             boolean favorites = args.getMessageFavorites();
+            boolean lock = args.getMessageLock();
+
             int priority = args.getMessagePriority();
             int id = args.getMessageId();
 
@@ -288,7 +315,7 @@ public class CatalogFragment extends Fragment {
 
             } else if (!title.equals("default") && id == -1) {
                 Helpcard helpcard = new Helpcard(title, victoryCondition, endGame,
-                        preparation, description, playerTurn, effects, favorites, priority);
+                        preparation, description, playerTurn, effects, favorites, lock, priority);
                 helpcardViewModel.insert(helpcard);
                 Toast.makeText(getActivity(), "Helpcard saved", Toast.LENGTH_SHORT).show();
 
@@ -301,7 +328,7 @@ public class CatalogFragment extends Fragment {
 
             } else if (!title.equals("default") && id != -1) {
                 Helpcard helpcard = new Helpcard(title, victoryCondition, endGame,
-                        preparation, description, playerTurn, effects, favorites, priority);
+                        preparation, description, playerTurn, effects, favorites, lock, priority);
                 helpcard.setId(id);
                 helpcardViewModel.update(helpcard);
                 Toast.makeText(getActivity(), "Helpcard updated", Toast.LENGTH_SHORT).show();
@@ -327,8 +354,8 @@ public class CatalogFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete_all_helpcards:
-                helpcardViewModel.deleteAllHelpcards();
-                Toast.makeText(getActivity(), "All helpcards deleted", Toast.LENGTH_SHORT).show();
+                helpcardViewModel.deleteAllUnlockHelpcards();
+                Toast.makeText(getActivity(), "All unlock helpcards deleted", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

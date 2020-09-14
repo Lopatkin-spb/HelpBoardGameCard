@@ -36,6 +36,9 @@ public class Helpcard {
     @ColumnInfo(name = "favorites")
     private boolean favorites;
 
+    @ColumnInfo(name = "lock")
+    private boolean lock;
+
 //    @ColumnInfo(name = "timestamp")
 //    private long timestamp;
 
@@ -54,7 +57,7 @@ public class Helpcard {
     public Helpcard(String title, String victoryCondition,
                     String endGame, String preparation,
                     String description, String playerTurn,
-                    String effects, boolean favorites, int priority) {
+                    String effects, boolean favorites, boolean lock, int priority) {
         this.title = title;
         this.victoryCondition = victoryCondition;
         this.endGame = endGame;
@@ -63,6 +66,8 @@ public class Helpcard {
         this.playerTurn = playerTurn;
         this.effects = effects;
         this.favorites = favorites;
+        this.lock = lock;
+
         this.priority = priority;
     }
 
@@ -146,9 +151,15 @@ public class Helpcard {
         this.priority = priority;
     }
 
+    public boolean isLock() {
+        return lock;
+    }
 
+    public void setLock(boolean lock) {
+        this.lock = lock;
+    }
 
-    //parcelable
+//parcelable
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;

@@ -12,7 +12,7 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 //import android.support.annotation.NonNull;
 
-@Database(entities = {Helpcard.class}, version = 3)
+@Database(entities = {Helpcard.class}, version = 4)
 public abstract class HelpcardDatabase extends RoomDatabase {
 
     private static HelpcardDatabase instance;
@@ -43,20 +43,22 @@ public abstract class HelpcardDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private HelpcardDao helpcardDao;
+
         private PopulateDbAsyncTask(HelpcardDatabase db) {
             helpcardDao = db.helpcardDao();
         }
+
         @Override
         protected Void doInBackground(Void... voids) {
-            helpcardDao.insert(new Helpcard("Title 1", "victory_condition 1" ,
-                    "end_game 1", "preparation 1" ,"Description 1",
-                    "player_turn 1","effects 1", false, 1));
-            helpcardDao.insert(new Helpcard("Title 2", "victory_condition 2" ,
-                    "end_game 2", "preparation 2" ,"Description 2",
-                    "player_turn 2","effects 2", false, 2));
-            helpcardDao.insert(new Helpcard("Title 3", "victory_condition 3" ,
-                    "end_game 3", "preparation 3" ,"Description 3",
-                    "player_turn 3","effects 3", false, 3));
+            helpcardDao.insert(new Helpcard("Title 1", "victory_condition 1",
+                    "end_game 1", "preparation 1", "Description 1",
+                    "player_turn 1", "effects 1", false, false, 1));
+            helpcardDao.insert(new Helpcard("Title 2", "victory_condition 2",
+                    "end_game 2", "preparation 2", "Description 2",
+                    "player_turn 2", "effects 2", false, false, 2));
+            helpcardDao.insert(new Helpcard("Title 3", "victory_condition 3",
+                    "end_game 3", "preparation 3", "Description 3",
+                    "player_turn 3", "effects 3", false, false, 3));
             return null;
         }
     }

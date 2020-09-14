@@ -33,6 +33,8 @@ public class AddcardEditcardFragment extends Fragment {
     private EditText editTextPlayerTurn;
     private EditText editTextEffects;
     private boolean editCheckFavorites;
+    private boolean editCheckLock;
+
     private NumberPicker numberPickerPriority;
 
 
@@ -60,6 +62,7 @@ public class AddcardEditcardFragment extends Fragment {
         editTextPlayerTurn = root.findViewById(R.id.edit_text_player_turn);
         editTextEffects = root.findViewById(R.id.edit_text_effects);
         editCheckFavorites = false;
+        editCheckLock = false;
         numberPickerPriority = root.findViewById(R.id.number_picker_priority);
         numberPickerPriority.setMinValue(1);
         numberPickerPriority.setMaxValue(10);
@@ -183,6 +186,8 @@ public class AddcardEditcardFragment extends Fragment {
         String messageEffects = editTextEffects.getText().toString();
 
         boolean messageFavorites = editCheckFavorites;
+        boolean messageLock = editCheckLock;
+
         int messagePriority = numberPickerPriority.getValue();
 
 //        if (messageTitle.trim().isEmpty() || messageDescription.trim().isEmpty()) {
@@ -218,6 +223,8 @@ public class AddcardEditcardFragment extends Fragment {
 
 
         action.setMessageFavorites(messageFavorites);
+        action.setMessageLock(messageLock);
+
         action.setMessagePriority(messagePriority);
 
         //если перепись заметки то отправляется старый АйДи
@@ -291,6 +298,8 @@ public class AddcardEditcardFragment extends Fragment {
                 editTextPlayerTurn.setText(args.getMessagePlayerTurn());
                 editTextEffects.setText(args.getMessageEffects());
                 editCheckFavorites = args.getMessageFavorites();
+                editCheckLock = args.getMessageLock();
+
                 numberPickerPriority.setValue(args.getMessagePriority());
             }
         }
