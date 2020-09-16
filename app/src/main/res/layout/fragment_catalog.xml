@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                     xmlns:tools="http://schemas.android.com/tools"
-                                                     android:layout_width="match_parent"
-                                                     android:layout_height="match_parent"
-                                                     tools:context="ui.catalog.CatalogFragment">
-
-
-<androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/helpcard_item"/>
+        android:background="@color/colorTextWhite"
+        tools:context="ui.catalog.CatalogFragment">
 
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/helpcard_item"/>
 
-<!--            android:id="@+id/button_add_note"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="bottom|end"-->
-<!--            android:layout_margin="32dp"-->
-<!--            android:src="@drawable/ic_add"-->
 
-<!--    />-->
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+
+    <!--            android:id="@+id/button_add_note"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="bottom|end"-->
+    <!--            android:layout_margin="32dp"-->
+    <!--            android:src="@drawable/ic_add"-->
+
+    <!--    />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -12,9 +12,9 @@
 
     <gradient
             android:angle="135"
-            android:centerColor="@color/colorBlue"
-            android:endColor="@color/colorBlueDark"
-            android:startColor="@color/colorBlueLight"
+            android:centerColor="@color/colorGreyPrimaryBackground"
+            android:endColor="@color/colorBackgroundDark"
+            android:startColor="@color/colorGrey20Light"
             android:type="linear"/>
 
 

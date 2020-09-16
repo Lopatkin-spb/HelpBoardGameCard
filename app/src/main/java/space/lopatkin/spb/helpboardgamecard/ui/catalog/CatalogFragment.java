@@ -123,7 +123,6 @@ public class CatalogFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 boolean lock = adapter.getHelpcardAt(viewHolder.getAdapterPosition()).isLock();
-
                 if (lock != true) {
                     helpcardViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
                     Toast.makeText(getActivity(), "Helpcard delete", Toast.LENGTH_SHORT).show();

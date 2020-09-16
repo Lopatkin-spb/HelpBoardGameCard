@@ -51,11 +51,12 @@ public class HelpcardFragment extends Fragment {
 
 
         //инициализация полей вью
-        textViewTitle = root.findViewById(R.id.text_view_title);
+//        textViewTitle = root.findViewById(R.id.text_view_title);
+//        textViewDescription = root.findViewById(R.id.text_view_description);
+
         textViewVictoryCondition = root.findViewById(R.id.text_view_victory_condition);
         textViewEndGame = root.findViewById(R.id.text_view_end_game);
         textViewPreparation = root.findViewById(R.id.text_view_preparation);
-        textViewDescription = root.findViewById(R.id.text_view_description);
         textViewPlayerTurn = root.findViewById(R.id.text_view_player_turn);
         textViewEffects = root.findViewById(R.id.text_view_effects);
 //        editCheckFavorites = false;
@@ -65,8 +66,8 @@ public class HelpcardFragment extends Fragment {
         //устанавливает в верхнем меню левую иконку
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
-        //устанавливает тайтл динамически
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_view_card);
+//        //устанавливает тайтл динамически
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_view_card);
 
 //        //разрешает верхнее правое меню
 //        setHasOptionsMenu(true);
@@ -144,20 +145,31 @@ public class HelpcardFragment extends Fragment {
 
         navController = Navigation.findNavController(getView());
 
+
         if (getArguments() != null) {
             HelpcardFragmentArgs args = HelpcardFragmentArgs.fromBundle(getArguments());
 
+
             //установка значений в поля
-            textViewTitle.setText(args.getMessageTitle());
+//            textViewTitle.setText(args.getMessageTitle());
             textViewVictoryCondition.setText(args.getMessageVictoryCondition());
             textViewEndGame.setText(args.getMessageEndGame());
             textViewPreparation.setText(args.getMessagePreparation());
-            textViewDescription.setText(args.getMessageDescription());
+//            textViewDescription.setText(args.getMessageDescription());
             textViewPlayerTurn.setText(args.getMessagePlayerTurn());
             textViewEffects.setText(args.getMessageEffects());
 //                t = args.getMessageFavorites();
             textViewPriority.setText(String.valueOf(args.getMessagePriority()));
 
+            String titleUp = args.getMessageTitle();
+            String descriptionUp = args.getMessageDescription();
+            //устанавливает тайтл динамически
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(descriptionUp + " " + titleUp);
+
+
+        } else {
+            //устанавливает тайтл динамически
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_view_card);
         }
     }
 
