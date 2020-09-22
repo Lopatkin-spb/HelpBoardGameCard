@@ -181,6 +181,8 @@ public class CatalogFragment extends Fragment {
         adapter.setOnItemEditClickListener(new HelpcardAdapter.OnItemEditClickListener() {
             @Override
             public void onItemEditClick(Helpcard helpcard) {
+                Helpcard data = helpcard;
+
 //                переход на новый фрагмент редактирования
 //                 и забор и передача данных в редактирование
                 int editId = helpcard.getId();
@@ -203,12 +205,17 @@ public class CatalogFragment extends Fragment {
                         CatalogFragmentDirections.actionNavCatalogToNavAddcard()
                                 .setHelpcard(helpcardToAddcard);
                 navController.navigate(action);
+
+
+
             }
         });
 
 
         return root;
     }
+
+
 
 
     //v5safeargs: заюор данных из АДД и запись в КАТАЛОГ
