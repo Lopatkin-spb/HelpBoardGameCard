@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import space.lopatkin.spb.helpboardgamecard.R;
+import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 
 public class AddcardEditcardFragment extends Fragment {
@@ -39,13 +40,6 @@ public class AddcardEditcardFragment extends Fragment {
 
 
     NavController navController;
-
-//    //включение режим вывода елементов фрагмента в action bar
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        setHasOptionsMenu(true);
-//        super.onCreate(savedInstanceState);
-//    }
 
 
     //создание вью
@@ -76,86 +70,12 @@ public class AddcardEditcardFragment extends Fragment {
         //разрешает верхнее правое меню
         setHasOptionsMenu(true);
 
-
-//        //вызов намерения из метода старт
-//        if (getActivity().getIntent().hasExtra(EXTRA_HELPCARD)) {
-//
-//            getActivity().getApplicationContext();
-//            helpCard = getActivity().getIntent().getParcelableExtra(EXTRA_HELPCARD);
-//            editText.setText(helpCard.text);
-//        } else {
-//            helpCard = new HelpCard();
-//
-//        }
-
-
         return root;
     }
 
 
-//    //создание меню
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        //извлечение меню
-//        getMenuInflater().inflate(R.menu.menu_details, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
 
 
-//    //обработка для событий
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//
-//
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                finish();
-//                break;
-//            case R.id.action_save:
-//                if (editText.getText().length() > 0) {
-//                    helpCard.text = editText.getText().toString();
-//                    helpCard.favorites = false;
-//                    helpCard.timestamp = System.currentTimeMillis();
-//
-//                    if (getIntent().hasExtra(EXTRA_HELPCARD)) {
-//                        App.getInstance().getHelpCardDao().update(helpCard);
-//                    } else {
-//                        App.getInstance().getHelpCardDao().insert(helpCard);
-//                    }
-//
-//                    finish();
-//                }
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-////            case android.R.id.home:
-////                finish();
-////                break;
-//            case R.id.action_save:
-//                if (editText.getText().length() > 0) {
-//                    helpCard.text = editText.getText().toString();
-//                    helpCard.favorites = false;
-//                    helpCard.timestamp = System.currentTimeMillis();
-//
-//                    if (getActivity().getIntent().hasExtra(EXTRA_HELPCARD)) {
-//                        App.getInstance().getHelpCardDao().update(helpCard);
-//                    } else {
-//                        App.getInstance().getHelpCardDao().insert(helpCard);
-//                    }
-//
-//                    //closeFragment();
-//                    //finish();
-//                }
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 
 //    private void saveCard() {
@@ -181,13 +101,10 @@ public class AddcardEditcardFragment extends Fragment {
         String messageEndGame = editTextEndGame.getText().toString();
         String messagePreparation = editTextPreparation.getText().toString();
         String messageDescription = editTextDescription.getText().toString();
-
         String messagePlayerTurn = editTextPlayerTurn.getText().toString();
         String messageEffects = editTextEffects.getText().toString();
-
         boolean messageFavorites = editCheckFavorites;
         boolean messageLock = editCheckLock;
-
         int messagePriority = numberPickerPriority.getValue();
 
 //        if (messageTitle.trim().isEmpty() || messageDescription.trim().isEmpty()) {
@@ -196,45 +113,28 @@ public class AddcardEditcardFragment extends Fragment {
             return;
         }
 
-//        //интент для обычного передачи результата
-//        Intent data = new Intent();
-//        data.putExtra(EXTRA_TITLE, title);
-//        data.putExtra(EXTRA_DESCRIPTION, description);
-//        data.putExtra(EXTRA_PRIORITY, priority);
-//        getActivity().setResult(RESULT_OK, data);
-//
-//        Toast.makeText(getActivity(), "" + data, Toast.LENGTH_LONG).show();
-//        //vstavit navigatiu
 
-
-        //v5safeargs
-        AddcardEditcardFragmentDirections.ActionNavAddcardToNavHelpcard action =
-                AddcardEditcardFragmentDirections.actionNavAddcardToNavHelpcard();
-        action.setMessageTitle(messageTitle);
-
-        action.setMessageVictoryCondition(messageVictoryCondition);
-        action.setMessageEndGame(messageEndGame);
-        action.setMessagePreparation(messagePreparation);
-
-        action.setMessageDescription(messageDescription);
-
-        action.setMessagePlayerTurn(messagePlayerTurn);
-        action.setMessageEffects(messageEffects);
-
-
-        action.setMessageFavorites(messageFavorites);
-        action.setMessageLock(messageLock);
-
-        action.setMessagePriority(messagePriority);
-
+//safeargs + parcelable
+        Helpcard helpcard = new Helpcard(messageTitle, messageVictoryCondition,
+                messageEndGame, messagePreparation, messageDescription,
+                messagePlayerTurn, messageEffects, messageFavorites, messageLock, messagePriority);
         //если перепись заметки то отправляется старый АйДи
         AddcardEditcardFragmentArgs args = AddcardEditcardFragmentArgs.fromBundle(getArguments());
-        int id = args.getMessageId();
-        if (id != -1) {
-            action.setMessageId(id);
+        Helpcard messageHelpcardFromCatalog = args.getHelpcard();
+        int id = 0;
+        if (messageHelpcardFromCatalog != null) {
+            id = messageHelpcardFromCatalog.getId();
+            if (id != -1) {
+                helpcard.setId(id);
+            }
         }
-
+        AddcardEditcardFragmentDirections.ActionNavAddcardToNavCatalog action =
+                AddcardEditcardFragmentDirections.actionNavAddcardToNavCatalog()
+                        .setHelpcard(helpcard);
         navController.navigate(action);
+
+                //выключить етот фрагмент навигацией
+
     }
 
 
@@ -243,7 +143,6 @@ public class AddcardEditcardFragment extends Fragment {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
     }
 
 
@@ -269,7 +168,7 @@ public class AddcardEditcardFragment extends Fragment {
     }
 
 
-    //v5safeargs
+    //safeargs + parcelable
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -278,30 +177,37 @@ public class AddcardEditcardFragment extends Fragment {
 
         if (getArguments() != null) {
             AddcardEditcardFragmentArgs args = AddcardEditcardFragmentArgs.fromBundle(getArguments());
-            int id = args.getMessageId();
+            Helpcard messageHelpcardFromCatalog = args.getHelpcard();
+            int id = 0;
 
-            if (id == -1) {
-                //смена названия заголовка в тулбаре
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_addcard);
+            if (messageHelpcardFromCatalog != null) {
+                id = messageHelpcardFromCatalog.getId();
 
+                if (id == -1) {
+//смена названия заголовка в тулбаре
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_addcard);
 
-            } else {
-                //смена названия заголовка в тулбаре
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_edit_card);
+                } else {
+                    //смена названия заголовка в тулбаре
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_edit_card);
 
-                //установка значений в поля для редактирования
-                editTextTitle.setText(args.getMessageTitle());
-                editTextVictoryCondition.setText(args.getMessageVictoryCondition());
-                editTextEndGame.setText(args.getMessageEndGame());
-                editTextPreparation.setText(args.getMessagePreparation());
-                editTextDescription.setText(args.getMessageDescription());
-                editTextPlayerTurn.setText(args.getMessagePlayerTurn());
-                editTextEffects.setText(args.getMessageEffects());
-                editCheckFavorites = args.getMessageFavorites();
-                editCheckLock = args.getMessageLock();
+                    Helpcard helpcard = messageHelpcardFromCatalog;
+                    //установка значений в поля для редактирования
+                    editTextTitle.setText(helpcard.getTitle());
+                    editTextVictoryCondition.setText(helpcard.getVictoryCondition());
+                    editTextEndGame.setText(helpcard.getEndGame());
+                    editTextPreparation.setText(helpcard.getPreparation());
+                    editTextDescription.setText(helpcard.getDescription());
+                    editTextPlayerTurn.setText(helpcard.getPlayerTurn());
+                    editTextEffects.setText(helpcard.getEffects());
+                    editCheckFavorites = helpcard.isFavorites();
+                    editCheckLock = helpcard.isLock();
+                    numberPickerPriority.setValue(helpcard.getPriority());
+                }
 
-                numberPickerPriority.setValue(args.getMessagePriority());
             }
+
+
         }
     }
 

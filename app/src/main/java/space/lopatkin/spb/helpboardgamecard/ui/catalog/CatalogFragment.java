@@ -73,25 +73,7 @@ public class CatalogFragment extends Fragment {
 //
 //        final HelpcardAdapter adapter = new HelpcardAdapter();
 //        recyclerView.setAdapter(adapter);
-//
-//
-//        //позволяет получить вьюмодел для нашей активити
-//        HelpCardViewModel mainViewModel = ViewModelProviders.of(this).get(HelpCardViewModel.class);
-//        mainViewModel.getHelpCardLiveData().observe(this, new Observer<List<Helpcard>>() {
-//            @Override
-//            public void onChanged(List<Helpcard> helpcards) {
-//                adapter.setHelpcards(helpcards);
-//            }
-//        });
-//
-////        recyclerView.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////                //eeeeeee();
-////
-////                Navigation.findNavController(view).navigate(R.id.action_nav_helpcard_to_nav_newcard);
-////            }
-////        });
+
 
 //инициализация ресайкл вью
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
@@ -101,7 +83,7 @@ public class CatalogFragment extends Fragment {
         final HelpcardAdapter adapter = new HelpcardAdapter();
         recyclerView.setAdapter(adapter);
 
-
+        // подключение вьюмодел для нашей активити
         helpcardViewModel = ViewModelProviders.of(getActivity()).get(HelpcardViewModel.class);
         helpcardViewModel.getAllHelpcards().observe(getActivity(), new Observer<List<Helpcard>>() {
             @Override
@@ -182,24 +164,15 @@ public class CatalogFragment extends Fragment {
                 boolean editLock = helpcard.isLock();
                 int editPriority = helpcard.getPriority();
 
-
-                //отправка данных на редактирование
-                CatalogFragmentDirections.ActionNavCatalogToNavHelpcard messageToHelpcard =
-                        CatalogFragmentDirections.actionNavCatalogToNavHelpcard();
-
-                messageToHelpcard.setMessageId(editId);
-                messageToHelpcard.setMessageTitle(editTitle);
-                messageToHelpcard.setMessageVictoryCondition(editVictoryCondition);
-                messageToHelpcard.setMessageEndGame(editEndGame);
-                messageToHelpcard.setMessagePreparation(editPreparation);
-                messageToHelpcard.setMessageDescription(editDescription);
-                messageToHelpcard.setMessagePlayerTurn(editPlayerTurn);
-                messageToHelpcard.setMessageEffects(editEffects);
-                messageToHelpcard.setMessageFavorites(editFavorites);
-                messageToHelpcard.setMessageLock(editLock);
-
-                messageToHelpcard.setMessagePriority(editPriority);
-                navController.navigate(messageToHelpcard);
+                //отправка данных на редактирование (parcelable)
+                Helpcard helpcardToViewcard = new Helpcard(editId, editTitle,
+                        editVictoryCondition, editEndGame, editPreparation,
+                        editDescription, editPlayerTurn, editEffects,
+                        editFavorites, editLock, editPriority);
+                CatalogFragmentDirections.ActionNavCatalogToNavHelpcard action =
+                        CatalogFragmentDirections.actionNavCatalogToNavHelpcard()
+                                .setHelpcard(helpcardToViewcard);
+                navController.navigate(action);
             }
         });
 
@@ -221,64 +194,17 @@ public class CatalogFragment extends Fragment {
                 boolean editFavorites = helpcard.isFavorites();
                 boolean editLock = helpcard.isLock();
                 int editPriority = helpcard.getPriority();
-                //отправка данных на редактирование
-                CatalogFragmentDirections.ActionNavHelpcardToNavNewcard action =
-                        CatalogFragmentDirections.actionNavHelpcardToNavNewcard();
 
-                action.setMessageId(editId);
-                action.setMessageTitle(editTitle);
-                action.setMessageVictoryCondition(editVictoryCondition);
-                action.setMessageEndGame(editEndGame);
-                action.setMessagePreparation(editPreparation);
-                action.setMessageDescription(editDescription);
-                action.setMessagePlayerTurn(editPlayerTurn);
-                action.setMessageEffects(editEffects);
-                action.setMessageFavorites(editFavorites);
-                action.setMessageLock(editLock);
-
-                action.setMessagePriority(editPriority);
+                //отправка данных на редактирование (parcelable)
+                Helpcard helpcardToAddcard = new Helpcard(editId, editTitle,
+                        editVictoryCondition, editEndGame, editPreparation,
+                        editDescription, editPlayerTurn, editEffects, editFavorites, editLock, editPriority);
+                CatalogFragmentDirections.ActionNavCatalogToNavAddcard action =
+                        CatalogFragmentDirections.actionNavCatalogToNavAddcard()
+                                .setHelpcard(helpcardToAddcard);
                 navController.navigate(action);
             }
         });
-
-//        editCheckFavorites.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if (compoundButton.isChecked()) {
-//                    Toast.makeText(getActivity(), "check button is ckecked", Toast.LENGTH_SHORT).show();
-//                } else {
-//                }
-//
-//
-//
-////                if (editCheckFavorites == null) {
-////
-////                    String editTitle = helpcard.getTitle();
-////                    String editDescription = helpcard.getDescription();
-////                    boolean editFavorites = false;
-////                    int editPriority = helpcard.getPriority();
-////
-////                    Helpcard helpcard = new Helpcard(editTitle, editDescription, editFavorites, editPriority);
-////                    helpcardViewModel.update(helpcard);
-////
-////
-////                } else if (isChecked) {
-////
-////                    //int editId = helpcard.getId();
-////                    String editTitle = helpcard.getTitle();
-////                    String editDescription = helpcard.getDescription();
-////                    boolean editFavorites = isChecked;
-////                    int editPriority = helpcard.getPriority();
-////
-////                    Helpcard helpcard = new Helpcard(editTitle, editDescription, editFavorites, editPriority);
-////                    helpcardViewModel.update(helpcard);
-////                    Toast.makeText(getActivity(), "Helpcard is favorites", Toast.LENGTH_SHORT).show();
-////                } else {
-////
-////                }
-//
-//            }
-//        });
 
 
         return root;
@@ -293,51 +219,81 @@ public class CatalogFragment extends Fragment {
 
         if (getArguments() != null) {
 
+//            CatalogFragmentArgs args = CatalogFragmentArgs.fromBundle(getArguments());
+//
+//            String title = args.getMessageTitle();
+//            String victoryCondition = args.getMessageVictoryCondition();
+//            String endGame = args.getMessageEndGame();
+//            String preparation = args.getMessagePreparation();
+//            String description = args.getMessageDescription();
+//            String playerTurn = args.getMessagePlayerTurn();
+//            String effects = args.getMessageEffects();
+//            boolean favorites = args.getMessageFavorites();
+//            boolean lock = args.getMessageLock();
+//
+//            int priority = args.getMessagePriority();
+//            int id = args.getMessageId();
+//
+//            if (!title.equals("default") && description.equals("default")
+//                    || title.equals("default") && !description.equals("default")) {
+//                Toast.makeText(getActivity(), "Helpcard not saved", Toast.LENGTH_SHORT).show();
+//
+//            } else if (!title.equals("default") && id == -1) {
+//                Helpcard helpcard = new Helpcard(id,title, victoryCondition, endGame,
+//                        preparation, description, playerTurn, effects, favorites, lock, priority);
+//                helpcardViewModel.insert(helpcard);
+//                Toast.makeText(getActivity(), "Helpcard saved", Toast.LENGTH_SHORT).show();
+//
+//
+//                            System.out.println("------CatalogFragment-------" + helpcard);
+//
+////            } else if (id == -1) {
+////                //сли реквест на корректировку записи но айди нет
+////                Toast.makeText(getActivity(), "Helpcard can't be updated", Toast.LENGTH_SHORT).show();
+////                return;
+//
+//                //и потом запись
+//
+//            } else if (!title.equals("default") && id != -1) {
+//                Helpcard helpcard = new Helpcard(id, title, victoryCondition, endGame,
+//                        preparation, description, playerTurn, effects, favorites, lock, priority);
+//                helpcard.setId(id);
+//                helpcardViewModel.update(helpcard);
+//                Toast.makeText(getActivity(), "Helpcard updated", Toast.LENGTH_SHORT).show();
+//
+//            } else {
+//                //никаких знаков не вылезает - к примеру если ето просто переключение между фрагментами
+//            }
+
+
+            //parcelable pass data version
             CatalogFragmentArgs args = CatalogFragmentArgs.fromBundle(getArguments());
+            Helpcard messageHelpcardFromAddcard = args.getHelpcard();
+            int id = 0;
+            String title = null;
+            if (messageHelpcardFromAddcard != null) {
+                id = messageHelpcardFromAddcard.getId();
+                title = messageHelpcardFromAddcard.getTitle();
 
-            String title = args.getMessageTitle();
-            String victoryCondition = args.getMessageVictoryCondition();
-            String endGame = args.getMessageEndGame();
-            String preparation = args.getMessagePreparation();
-            String description = args.getMessageDescription();
-            String playerTurn = args.getMessagePlayerTurn();
-            String effects = args.getMessageEffects();
-            boolean favorites = args.getMessageFavorites();
-            boolean lock = args.getMessageLock();
-
-            int priority = args.getMessagePriority();
-            int id = args.getMessageId();
-
-            if (!title.equals("default") && description.equals("default")
-                    || title.equals("default") && !description.equals("default")) {
-                Toast.makeText(getActivity(), "Helpcard not saved", Toast.LENGTH_SHORT).show();
-
-            } else if (!title.equals("default") && id == -1) {
-                Helpcard helpcard = new Helpcard(title, victoryCondition, endGame,
-                        preparation, description, playerTurn, effects, favorites, lock, priority);
-                helpcardViewModel.insert(helpcard);
-                Toast.makeText(getActivity(), "Helpcard saved", Toast.LENGTH_SHORT).show();
-
-//            } else if (id == -1) {
-//                //сли реквест на корректировку записи но айди нет
-//                Toast.makeText(getActivity(), "Helpcard can't be updated", Toast.LENGTH_SHORT).show();
-//                return;
-
-                //и потом запись
-
-            } else if (!title.equals("default") && id != -1) {
-                Helpcard helpcard = new Helpcard(title, victoryCondition, endGame,
-                        preparation, description, playerTurn, effects, favorites, lock, priority);
-                helpcard.setId(id);
-                helpcardViewModel.update(helpcard);
-                Toast.makeText(getActivity(), "Helpcard updated", Toast.LENGTH_SHORT).show();
-
-
-            } else {
+                if (id == 0) {
+                    Helpcard helpcard = messageHelpcardFromAddcard;
+                    helpcardViewModel.insert(helpcard);
+                    Toast.makeText(getActivity(), "Helpcard saved", Toast.LENGTH_SHORT).show();
+                } else if (title == null) {
+                    Toast.makeText(getActivity(), "Helpcard not saved", Toast.LENGTH_SHORT).show();
+                } else if (title != null && id != 0) {
+                    Helpcard helpcard = messageHelpcardFromAddcard;
+                    helpcardViewModel.update(helpcard);
+                    Toast.makeText(getActivity(), "Helpcard updated", Toast.LENGTH_SHORT).show();
+                } else {
                 //никаких знаков не вылезает - к примеру если ето просто переключение между фрагментами
+                }
             }
-        }
 
+
+
+
+        }
     }
 
 

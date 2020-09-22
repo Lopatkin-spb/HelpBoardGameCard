@@ -13,20 +13,15 @@
             tools:layout="@layout/fragment_catalog">
 
         <action
-                android:id="@+id/action_nav_helpcard_to_nav_newcard"
+                android:id="@+id/action_nav_catalog_to_nav_addcard"
                 app:destination="@id/nav_addcard"/>
-        <argument android:name="messageTitle" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageDescription" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messagePriority" app:argType="integer" android:defaultValue="1"/>
-        <argument android:name="messageId" app:argType="integer" android:defaultValue="-1"/>
-        <argument android:name="messageFavorites" app:argType="boolean" android:defaultValue="false"/>
-        <argument android:name="messageVictoryCondition" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageEndGame" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messagePreparation" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
-        <action android:id="@+id/action_nav_catalog_to_nav_helpcard" app:destination="@+id/nav_helpcard"/>
-        <argument android:name="messageLock" app:argType="boolean" android:defaultValue="false"/>
+        <action android:id="@+id/action_nav_catalog_to_nav_helpcard"
+                app:destination="@+id/nav_helpcard"/>
+        <argument android:name="helpcard"
+                  app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
+                  app:nullable="true"
+                  android:defaultValue="@null"/>
+
     </fragment>
 
     <fragment
@@ -36,31 +31,17 @@
             tools:layout="@layout/fragment_addcard">
 
         <action
-                android:id="@+id/action_nav_addcard_to_nav_helpcard"
-                app:destination="@id/nav_catalog"/>
-        <argument android:name="messageId" app:argType="integer" android:defaultValue="-1"/>
-        <argument android:name="messageTitle" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageDescription" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messagePriority" app:argType="integer" android:defaultValue="1"/>
-        <argument android:name="messageFavorites" app:argType="boolean" android:defaultValue="false"/>
-        <argument android:name="messageVictoryCondition" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageEndGame" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messagePreparation" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageLock" app:argType="boolean" android:defaultValue="false"/>
+                android:id="@+id/action_nav_addcard_to_nav_catalog"
+                app:destination="@+id/nav_catalog"/>
+        <argument android:name="helpcard" app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
+                  app:nullable="true" android:defaultValue="@null"/>
     </fragment>
 
     <fragment
             android:id="@+id/nav_favorites"
             android:name="space.lopatkin.spb.helpboardgamecard.ui.favorites.FavoritesFragment"
             android:label="@string/menu_favorites"
-            tools:layout="@layout/fragment_favorites">
-
-        <action
-                android:id="@+id/action_nav_settings_to_nav_newcard"
-                app:destination="@id/nav_addcard"/>
-    </fragment>
+            tools:layout="@layout/fragment_favorites"/>
 
     <fragment
             android:id="@+id/nav_share"
@@ -73,23 +54,14 @@
             android:name="space.lopatkin.spb.helpboardgamecard.ui.helpcard.HelpcardFragment"
             android:label="helpcard"
             tools:layout="@layout/fragment_helpcard">
-        <action android:id="@+id/action_nav_helpcard_to_nav_addcard" app:destination="@id/nav_addcard"/>
 
 
-        <argument android:name="messageTitle" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageDescription" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messagePriority" app:argType="integer" android:defaultValue="1"/>
-        <argument android:name="messageId" app:argType="integer" android:defaultValue="-1"/>
-        <argument android:name="messageFavorites" app:argType="boolean" android:defaultValue="false"/>
-        <argument android:name="messageVictoryCondition" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageEndGame" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messagePreparation" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messagePlayerTurn" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageEffects" app:argType="string" android:defaultValue="default"/>
-        <argument android:name="messageLock" app:argType="boolean" android:defaultValue="false"/>
+        <argument android:name="helpcard" app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
+                  app:nullable="true" android:defaultValue="@null"/>
 
 
     </fragment>
+    <argument android:defaultValue="default" android:name="currentHelpcard"/>
 
 
 </navigation>

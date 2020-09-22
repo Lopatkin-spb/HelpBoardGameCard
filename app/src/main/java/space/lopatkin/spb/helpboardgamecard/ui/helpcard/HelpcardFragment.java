@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import space.lopatkin.spb.helpboardgamecard.R;
+import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 
 public class HelpcardFragment extends Fragment {
@@ -138,38 +139,36 @@ public class HelpcardFragment extends Fragment {
 //
 
 
-    //v5safeargs
+    //safeargs + parcelable
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(getView());
-
-
         if (getArguments() != null) {
             HelpcardFragmentArgs args = HelpcardFragmentArgs.fromBundle(getArguments());
-
-
-            //установка значений в поля
+            Helpcard messageHelpcard = args.getHelpcard();
+            if (messageHelpcard != null) {
+                //установка значений в поля
 //            textViewTitle.setText(args.getMessageTitle());
-            textViewVictoryCondition.setText(args.getMessageVictoryCondition());
-            textViewEndGame.setText(args.getMessageEndGame());
-            textViewPreparation.setText(args.getMessagePreparation());
-//            textViewDescription.setText(args.getMessageDescription());
-            textViewPlayerTurn.setText(args.getMessagePlayerTurn());
-            textViewEffects.setText(args.getMessageEffects());
+                //            textViewDescription.setText(args.getMessageDescription());
+
+                textViewVictoryCondition.setText(messageHelpcard.getVictoryCondition());
+                textViewEndGame.setText(messageHelpcard.getEndGame());
+                textViewPreparation.setText(messageHelpcard.getPreparation());
+                textViewPlayerTurn.setText(messageHelpcard.getPlayerTurn());
+                textViewEffects.setText(messageHelpcard.getEffects());
 //                t = args.getMessageFavorites();
-            textViewPriority.setText(String.valueOf(args.getMessagePriority()));
+                textViewPriority.setText(String.valueOf(messageHelpcard.getPriority()));
 
-            String titleUp = args.getMessageTitle();
-            String descriptionUp = args.getMessageDescription();
-            //устанавливает тайтл динамически
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(descriptionUp + " " + titleUp);
-
-
-        } else {
-            //устанавливает тайтл динамически
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_view_card);
+                String titleUp = messageHelpcard.getTitle();
+                String descriptionUp = messageHelpcard.getDescription();
+                //устанавливает тайтл динамически
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(descriptionUp + " " + titleUp);
+            } else {
+                //устанавливает тайтл динамически
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_view_card);
+            }
         }
     }
 

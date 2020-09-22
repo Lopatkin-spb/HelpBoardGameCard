@@ -1,15 +1,19 @@
 package space.lopatkin.spb.helpboardgamecard.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "helpcard_table")
-public class Helpcard {
+public class Helpcard implements Parcelable {
 
 
     @PrimaryKey(autoGenerate = true)
+//    @NonNull
     private int id;
 
     @ColumnInfo(name = "title")
@@ -46,18 +50,11 @@ public class Helpcard {
     private int priority;
 
 
-
-
-    public Helpcard() {
-    }
-
-
-
-
     public Helpcard(String title, String victoryCondition,
                     String endGame, String preparation,
                     String description, String playerTurn,
-                    String effects, boolean favorites, boolean lock, int priority) {
+                    String effects, boolean favorites,
+                    boolean lock, int priority) {
         this.title = title;
         this.victoryCondition = victoryCondition;
         this.endGame = endGame;
@@ -67,9 +64,56 @@ public class Helpcard {
         this.effects = effects;
         this.favorites = favorites;
         this.lock = lock;
-
         this.priority = priority;
     }
+
+
+    @Ignore
+    public Helpcard(
+            int id, String title, String victoryCondition,
+            String endGame, String preparation,
+            String description, String playerTurn,
+            String effects, boolean favorites, boolean lock, int priority) {
+        this.id = id;
+        this.title = title;
+        this.victoryCondition = victoryCondition;
+        this.endGame = endGame;
+        this.preparation = preparation;
+        this.description = description;
+        this.playerTurn = playerTurn;
+        this.effects = effects;
+        this.favorites = favorites;
+        this.lock = lock;
+        this.priority = priority;
+    }
+
+
+    protected Helpcard(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        victoryCondition = in.readString();
+        endGame = in.readString();
+        preparation = in.readString();
+        description = in.readString();
+        playerTurn = in.readString();
+        effects = in.readString();
+        favorites = in.readByte() != 0;
+        lock = in.readByte() != 0;
+        priority = in.readInt();
+    }
+
+    public static final Creator<Helpcard> CREATOR = new Creator<Helpcard>() {
+        @Override
+        public Helpcard createFromParcel(Parcel in) {
+            return new Helpcard(in);
+        }
+
+        @Override
+        public Helpcard[] newArray(int size) {
+            return new Helpcard[size];
+        }
+    };
+
 
     public int getId() {
         return id;
@@ -159,57 +203,44 @@ public class Helpcard {
         this.lock = lock;
     }
 
-//parcelable
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Helpcard helpCard = (Helpcard) o;
-//        return id == helpCard.id &&
-//                timestamp == helpCard.timestamp &&
-//                favorites == helpCard.favorites &&
-//                Objects.equals(description, helpCard.description);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, description, timestamp, favorites);
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel parcel, int i) {
-//        parcel.writeInt(id);
-//        parcel.writeString(description);
-//        parcel.writeLong(timestamp);
-//        parcel.writeByte((byte) (favorites ? 1 : 0));
-//    }
-//
-//
-//    protected Helpcard(Parcel in) {
-//        id = in.readInt();
-//        description = in.readString();
-//        timestamp = in.readLong();
-//        favorites = in.readByte() != 0;
-//    }
-//
-//    public static final Creator<Helpcard> CREATOR = new Creator<Helpcard>() {
-//        @Override
-//        public Helpcard createFromParcel(Parcel in) {
-//            return new Helpcard(in);
-//        }
-//
-//        @Override
-//        public Helpcard[] newArray(int size) {
-//            return new Helpcard[size];
-//        }
-//    };
-//
 
+    @Override
+    public String toString() {
+        return "Helpcard{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", victoryCondition='" + victoryCondition + '\'' +
+                ", endGame='" + endGame + '\'' +
+                ", preparation='" + preparation + '\'' +
+                ", description='" + description + '\'' +
+                ", playerTurn='" + playerTurn + '\'' +
+                ", effects='" + effects + '\'' +
+                ", favorites=" + favorites +
+                ", lock=" + lock +
+                ", priority=" + priority +
+                '}';
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeString(victoryCondition);
+        parcel.writeString(endGame);
+        parcel.writeString(preparation);
+        parcel.writeString(description);
+        parcel.writeString(playerTurn);
+        parcel.writeString(effects);
+        parcel.writeByte((byte) (favorites ? 1 : 0));
+        parcel.writeByte((byte) (lock ? 1 : 0));
+        parcel.writeInt(priority);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
 
 }
