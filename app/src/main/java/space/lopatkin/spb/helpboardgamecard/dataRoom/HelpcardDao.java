@@ -10,28 +10,14 @@ import java.util.List;
 @Dao
 public interface HelpcardDao {
 
-//    //выбрать все
-//    @Query("SELECT * FROM helpcard_table")
-//    List<Helpcard> getAll();
-//
-//    //обновление списка с данными через ливдата (недопонял)
-//    @Query("SELECT * FROM helpcard_table")
-//    LiveData<List<Helpcard>> getAllLiveData();
 
-
+        //обновление списка с данными через ливдата (недопонял)
     @Query("SELECT * FROM helpcard_table ORDER BY priority DESC")
     LiveData<List<Helpcard>> getAllHelpcards();
 
+
     @Query("SELECT * FROM helpcard_table WHERE favorites = 1 ORDER BY priority DESC")
     LiveData<List<Helpcard>> getAllFavoritesHelpcards();
-
-//    //
-//    @Query("SELECT * FROM helpcard_table WHERE id IN (:userIds)")
-//    List<Helpcard> loadAllByIds(int[] userIds);
-//
-//    //
-//    @Query("SELECT * FROM helpcard_table WHERE id = :uniqueId LIMIT 1")
-//    Helpcard findById(int uniqueId);
 
 
 //    //если при вставке сущности уже есть с таким названием
@@ -40,6 +26,7 @@ public interface HelpcardDao {
 //    void insert(Helpcard helpcard);
 
 
+    //для вставки
     @Insert
     void insert(Helpcard helpcard);
 
@@ -49,13 +36,9 @@ public interface HelpcardDao {
     void update(Helpcard helpcard);
 
 
-    //
+    //для стирания
     @Delete
     void delete(Helpcard helpcard);
-
-//
-//    @Query("DELETE FROM helpcard_table WHERE lock = 0")
-//    void deleteUnlock(Helpcard helpcard);
 
 
     @Query("DELETE FROM helpcard_table")

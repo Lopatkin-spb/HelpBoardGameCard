@@ -23,13 +23,14 @@ import java.util.List;
 
 public class CatalogFragment extends Fragment {
 
-    private HelpcardViewModel helpcardViewModel;
+    private CatalogViewModel catalogViewModel;
+    private RecyclerView recyclerView;
 
     NavController navController;
 
 
-    public CatalogFragment() {
-    }
+//    public CatalogFragment() {
+//    }
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -59,9 +60,7 @@ public class CatalogFragment extends Fragment {
 //        });
 
 
-//        //список
-//        recyclerView = root.findViewById(R.id.list);
-//
+
 //        LinearLayoutManager linearLayoutManager =
 //                new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
 //        //LinearLayoutManager linearLayoutManager =
@@ -70,13 +69,11 @@ public class CatalogFragment extends Fragment {
 //        //разделитель
 //        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 //
-//
-//        final HelpcardAdapter adapter = new HelpcardAdapter();
-//        recyclerView.setAdapter(adapter);
+
 
 
 //инициализация ресайкл вью
-        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+         recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 //подключение адаптера к ресайкл вью
@@ -84,8 +81,8 @@ public class CatalogFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         // подключение вьюмодел для нашей активити
-        helpcardViewModel = ViewModelProviders.of(getActivity()).get(HelpcardViewModel.class);
-        helpcardViewModel.getAllHelpcards().observe(getActivity(), new Observer<List<Helpcard>>() {
+        catalogViewModel = ViewModelProviders.of(getActivity()).get(CatalogViewModel.class);
+        catalogViewModel.getAllHelpcards().observe(getActivity(), new Observer<List<Helpcard>>() {
             @Override
             public void onChanged(@Nullable List<Helpcard> helpcards) {
                 adapter.setListHelpcards(helpcards);
@@ -106,7 +103,7 @@ public class CatalogFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 boolean lock = adapter.getHelpcardAt(viewHolder.getAdapterPosition()).isLock();
                 if (lock != true) {
-                    helpcardViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
+                    catalogViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
                     Toast.makeText(getActivity(), "Helpcard delete", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Helpcard not delete", Toast.LENGTH_SHORT).show();
@@ -121,7 +118,7 @@ public class CatalogFragment extends Fragment {
             @Override
             public void onItemCheckboxTest(Helpcard helpcard, boolean b) {
                 helpcard.setFavorites(b);
-                helpcardViewModel.update(helpcard);
+                catalogViewModel.update(helpcard);
                 if (b) {
                     Toast.makeText(getActivity(), "Helpcard is favorites", Toast.LENGTH_SHORT).show();
                 } else {
@@ -136,7 +133,7 @@ public class CatalogFragment extends Fragment {
             @Override
             public void onItemCheckboxLock(Helpcard helpcard, boolean b) {
                 helpcard.setLock(b);
-                helpcardViewModel.update(helpcard);
+                catalogViewModel.update(helpcard);
                 if (b) {
                     Toast.makeText(getActivity(), "Helpcard is lock", Toast.LENGTH_SHORT).show();
                 } else {
@@ -205,17 +202,12 @@ public class CatalogFragment extends Fragment {
                         CatalogFragmentDirections.actionNavCatalogToNavAddcard()
                                 .setHelpcard(helpcardToAddcard);
                 navController.navigate(action);
-
-
-
             }
         });
 
 
         return root;
     }
-
-
 
 
     //v5safeargs: заюор данных из АДД и запись в КАТАЛОГ
@@ -284,13 +276,13 @@ public class CatalogFragment extends Fragment {
 
                 if (id == 0) {
                     Helpcard helpcard = messageHelpcardFromAddcard;
-                    helpcardViewModel.insert(helpcard);
+                    catalogViewModel.insert(helpcard);
                     Toast.makeText(getActivity(), "Helpcard saved", Toast.LENGTH_SHORT).show();
                 } else if (title == null) {
                     Toast.makeText(getActivity(), "Helpcard not saved", Toast.LENGTH_SHORT).show();
                 } else if (title != null && id != 0) {
                     Helpcard helpcard = messageHelpcardFromAddcard;
-                    helpcardViewModel.update(helpcard);
+                    catalogViewModel.update(helpcard);
                     Toast.makeText(getActivity(), "Helpcard updated", Toast.LENGTH_SHORT).show();
                 } else {
                 //никаких знаков не вылезает - к примеру если ето просто переключение между фрагментами
@@ -316,7 +308,7 @@ public class CatalogFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete_all_helpcards:
-                helpcardViewModel.deleteAllUnlockHelpcards();
+                catalogViewModel.deleteAllUnlockHelpcards();
                 Toast.makeText(getActivity(), "All unlock helpcards deleted", Toast.LENGTH_SHORT).show();
                 return true;
             default:

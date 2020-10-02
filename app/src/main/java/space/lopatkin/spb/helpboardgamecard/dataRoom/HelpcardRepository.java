@@ -12,6 +12,7 @@ import java.util.List;
 
 public class HelpcardRepository {
 
+
     private HelpcardDao helpcardDao;
     private LiveData<List<Helpcard>> allHelpcards;
     private LiveData<List<Helpcard>> allFavoritesHelpcards;
@@ -39,10 +40,6 @@ public class HelpcardRepository {
     }
 
 
-//    public void deleteUnlock(Helpcard helpcard) {
-//        new DeleteUnlockHelpcardAsyncTask(helpcardDao).execute(helpcard);
-//    }
-
     public void deleteAllUnlockHelpcards() {
         new DeleteAllUnlockHelpcardsAsyncTask(helpcardDao).execute();
     }
@@ -55,6 +52,7 @@ public class HelpcardRepository {
     public LiveData<List<Helpcard>> getAllFavoritesHelpcards() {
         return allFavoritesHelpcards;
     }
+
 
     private static class InsertHelpcardAsyncTask extends AsyncTask<Helpcard, Void, Void> {
         private HelpcardDao helpcardDao;
@@ -94,18 +92,6 @@ public class HelpcardRepository {
         }
     }
 
-
-//    private static class DeleteUnlockHelpcardAsyncTask extends AsyncTask<Helpcard, Void, Void> {
-//        private HelpcardDao helpcardDao;
-//        private DeleteUnlockHelpcardAsyncTask(HelpcardDao helpcardDao) {
-//            this.helpcardDao = helpcardDao;
-//        }
-//        @Override
-//        protected Void doInBackground(Helpcard... helpcards) {
-//            helpcardDao.deleteUnlock(helpcards[0]);
-//            return null;
-//        }
-//    }
 
     private static class DeleteAllHelpcardsAsyncTask extends AsyncTask<Void, Void, Void> {
         private HelpcardDao helpcardDao;

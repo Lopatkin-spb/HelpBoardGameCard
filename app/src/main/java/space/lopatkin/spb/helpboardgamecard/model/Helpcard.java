@@ -13,11 +13,14 @@ public class Helpcard implements Parcelable {
 
 
     @PrimaryKey(autoGenerate = true)
-//    @NonNull
     private int id;
 
     @ColumnInfo(name = "title")
     private String title;
+
+    @ColumnInfo(name = "description")
+    private String description;
+
 
     @ColumnInfo(name = "victory_condition")
     private String victoryCondition;
@@ -27,9 +30,6 @@ public class Helpcard implements Parcelable {
 
     @ColumnInfo(name = "preparation")
     private String preparation;
-
-    @ColumnInfo(name = "description")
-    private String description;
 
     @ColumnInfo(name = "player_turn")
     private String playerTurn;
@@ -43,13 +43,13 @@ public class Helpcard implements Parcelable {
     @ColumnInfo(name = "lock")
     private boolean lock;
 
-//    @ColumnInfo(name = "timestamp")
-//    private long timestamp;
 
     @ColumnInfo(name = "priority")
     private int priority;
 
 
+    //конструктор
+    // (если рум есть - остальные конструкторы должны быть подписаны игнором)
     public Helpcard(String title, String victoryCondition,
                     String endGame, String preparation,
                     String description, String playerTurn,
@@ -68,6 +68,7 @@ public class Helpcard implements Parcelable {
     }
 
 
+    //игнор для рума только, чтобы игнорировала его (во избежание ошибок)
     @Ignore
     public Helpcard(
             int id, String title, String victoryCondition,
@@ -88,6 +89,7 @@ public class Helpcard implements Parcelable {
     }
 
 
+    //для парселя
     protected Helpcard(Parcel in) {
         id = in.readInt();
         title = in.readString();
@@ -102,6 +104,8 @@ public class Helpcard implements Parcelable {
         priority = in.readInt();
     }
 
+
+    //для парселя
     public static final Creator<Helpcard> CREATOR = new Creator<Helpcard>() {
         @Override
         public Helpcard createFromParcel(Parcel in) {
@@ -222,6 +226,7 @@ public class Helpcard implements Parcelable {
     }
 
 
+    //для парселя
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
@@ -237,6 +242,7 @@ public class Helpcard implements Parcelable {
         parcel.writeInt(priority);
     }
 
+    //для парселя
     @Override
     public int describeContents() {
         return 0;

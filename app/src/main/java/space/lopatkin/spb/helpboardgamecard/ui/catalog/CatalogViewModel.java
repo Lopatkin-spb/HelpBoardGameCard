@@ -1,4 +1,5 @@
-package space.lopatkin.spb.helpboardgamecard.ui;
+package space.lopatkin.spb.helpboardgamecard.ui.catalog;
+
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -9,14 +10,14 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 import java.util.List;
 
-public class HelpcardViewModel extends AndroidViewModel {
+public class CatalogViewModel extends AndroidViewModel {
 
     private HelpcardRepository repository;
     private LiveData<List<Helpcard>> allHelpcards;
 
 
 
-    public HelpcardViewModel(@NonNull Application application) {
+    public CatalogViewModel(@NonNull Application application) {
         super(application);
         repository = new HelpcardRepository(application);
         allHelpcards = repository.getAllHelpcards();

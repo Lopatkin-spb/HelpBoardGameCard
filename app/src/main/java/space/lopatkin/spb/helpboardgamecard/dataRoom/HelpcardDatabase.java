@@ -10,7 +10,6 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
-//import android.support.annotation.NonNull;
 
 @Database(entities = {Helpcard.class}, version = 4)
 public abstract class HelpcardDatabase extends RoomDatabase {
@@ -19,6 +18,7 @@ public abstract class HelpcardDatabase extends RoomDatabase {
 
     public abstract HelpcardDao helpcardDao();
 
+    //создание бд
     public static synchronized HelpcardDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
@@ -41,6 +41,7 @@ public abstract class HelpcardDatabase extends RoomDatabase {
     };
 
 
+    //наполнение первой бд тремя предзаписями
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private HelpcardDao helpcardDao;
 

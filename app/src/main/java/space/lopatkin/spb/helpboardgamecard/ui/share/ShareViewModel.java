@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel;
 
 public class ShareViewModel extends ViewModel {
 
+    //проверено
+
     private MutableLiveData<String> mText;
 
     public ShareViewModel() {

@@ -14,6 +14,9 @@ import space.lopatkin.spb.helpboardgamecard.R;
 
 public class ShareFragment extends Fragment {
 
+
+    //проверено
+
     private ShareViewModel shareViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,

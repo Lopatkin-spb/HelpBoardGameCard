@@ -78,6 +78,9 @@ public class FavoritesFragment extends Fragment {
 
 
 
+        //будет просмотр и редактирование
+
+
         return root;
     }
 

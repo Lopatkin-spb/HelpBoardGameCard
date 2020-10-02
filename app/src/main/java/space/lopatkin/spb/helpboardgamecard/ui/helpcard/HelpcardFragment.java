@@ -78,6 +78,7 @@ public class HelpcardFragment extends Fragment {
     }
 
 
+    //понадобится для сейва в будущем
 //    private void saveHelpcard() {
 //        //забор данных в переменные
 //        String messageTitle = editTextTitle.getText().toString();

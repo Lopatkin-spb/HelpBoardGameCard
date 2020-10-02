@@ -228,8 +228,6 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 int adapterPosition = getAdapterPosition();
 
-
-
                 if (listenerCheckboxLock != null && adapterPosition != RecyclerView.NO_POSITION) {
                     listenerCheckboxLock.onItemCheckboxLock(listHelpcards.get(adapterPosition), b);
                 }
@@ -257,21 +255,11 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
 //                    // Context context = itemView.getContext(), helpCard;
 //                    //itemView.getContext();
 //
-//
-//                    Navigation.findNavController(view).navigate(R.id.action_nav_helpcard_to_nav_newcard);
-//
-//
-//                    //NewCardFragment.start((Fragment) itemView.getContext(), helpCard);
+//         //NewCardFragment.start((Fragment) itemView.getContext(), helpCard);
 //                }
 //            });
 //
 //
-//            delete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    App.getInstance().getHelpCardDao().delete(helpCard);
-//                }
-//            });
 //
 //            complited.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //                @Override

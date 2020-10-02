@@ -19,12 +19,14 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 public class AddcardEditcardFragment extends Fragment {
 
-    public static final String EXTRA_TITLE =
-            "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_TITLE";
-    public static final String EXTRA_DESCRIPTION =
-            "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_DESCRIPTION";
-    public static final String EXTRA_PRIORITY =
-            "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_PRIORITY";
+
+//    public static final String EXTRA_TITLE =
+//            "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_TITLE";
+//    public static final String EXTRA_DESCRIPTION =
+//            "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_DESCRIPTION";
+//    public static final String EXTRA_PRIORITY =
+//            "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_PRIORITY";
+
 
     private EditText editTextTitle;
     private EditText editTextVictoryCondition;
@@ -35,7 +37,6 @@ public class AddcardEditcardFragment extends Fragment {
     private EditText editTextEffects;
     private boolean editCheckFavorites;
     private boolean editCheckLock;
-
     private NumberPicker numberPickerPriority;
 
 
@@ -72,26 +73,6 @@ public class AddcardEditcardFragment extends Fragment {
 
         return root;
     }
-
-
-
-
-
-
-//    private void saveCard() {
-//        String newCard = editText.getText().toString();
-//
-//        if (newCard.trim().isEmpty()) {
-//            Toast.makeText(getContext(), "Please insert a text", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        Intent data = new Intent();
-//        data.putExtra(EXTRA_HELPCARD, newCard);
-//
-//        //выключить етот фрагмент навигацией
-//
-//    }
 
 
     private void saveHelpcard() {
@@ -133,7 +114,7 @@ public class AddcardEditcardFragment extends Fragment {
                         .setHelpcard(helpcard);
         navController.navigate(action);
 
-                //выключить етот фрагмент навигацией
+        //выключить етот фрагмент навигацией
 
     }
 

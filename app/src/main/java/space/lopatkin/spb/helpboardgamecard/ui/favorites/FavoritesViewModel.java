@@ -23,26 +23,12 @@ public class FavoritesViewModel extends AndroidViewModel {
         allFavoritesHelpcards = repository.getAllFavoritesHelpcards();
     }
 
-//    public void insert(Helpcard helpcard) {
-//        repository.insert(helpcard);
-//    }
-//    public void update(Helpcard helpcard) {
-//        repository.update(helpcard);
-//    }
-//    public void delete(Helpcard helpcard) {
-//        repository.delete(helpcard);
-//    }
-//    public void deleteAllHelpcards() {
-//        repository.deleteAllHelpcards();
-//    }
-//    public LiveData<List<Helpcard>> getAllHelpcards() {
-//        return allHelpcards;
-//    }
-
+//проверено
 
     public void update(Helpcard helpcard) {
         repository.update(helpcard);
     }
+
     public LiveData<List<Helpcard>> getAllFavoritesHelpcards() {
         return allFavoritesHelpcards;
     }
