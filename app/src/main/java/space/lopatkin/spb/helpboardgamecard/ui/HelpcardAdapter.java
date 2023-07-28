@@ -153,7 +153,6 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
 
     //вся работа с ресайкл вью идет в адаптере (вставка и забор данных)
     class HelpcardHolder extends RecyclerView.ViewHolder {
-
         //перечисляем все видимые компоненты
         private TextView textViewTitle;
         private TextView textViewDescription;

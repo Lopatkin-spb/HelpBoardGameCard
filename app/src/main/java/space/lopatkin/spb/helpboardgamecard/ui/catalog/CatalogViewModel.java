@@ -11,11 +11,8 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import java.util.List;
 
 public class CatalogViewModel extends AndroidViewModel {
-
     private HelpcardRepository repository;
     private LiveData<List<Helpcard>> allHelpcards;
-
-
 
     public CatalogViewModel(@NonNull Application application) {
         super(application);
@@ -36,12 +33,9 @@ public class CatalogViewModel extends AndroidViewModel {
         repository.deleteAllHelpcards();
     }
 
-
-
     public void deleteAllUnlockHelpcards() {
         repository.deleteAllUnlockHelpcards();
     }
-
 
     public LiveData<List<Helpcard>> getAllHelpcards() {
         return allHelpcards;

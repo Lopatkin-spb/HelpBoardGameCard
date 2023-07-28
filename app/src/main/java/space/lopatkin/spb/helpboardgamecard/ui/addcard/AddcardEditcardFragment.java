@@ -16,18 +16,7 @@ import androidx.navigation.Navigation;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
-
 public class AddcardEditcardFragment extends Fragment {
-
-
-//    public static final String EXTRA_TITLE =
-//            "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_TITLE";
-//    public static final String EXTRA_DESCRIPTION =
-//            "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_DESCRIPTION";
-//    public static final String EXTRA_PRIORITY =
-//            "space.lopatkin.spb.testnavdrawer.ui.add.EXTRA_PRIORITY";
-
-
     private EditText editTextTitle;
     private EditText editTextVictoryCondition;
     private EditText editTextEndGame;
@@ -38,94 +27,23 @@ public class AddcardEditcardFragment extends Fragment {
     private boolean editCheckFavorites;
     private boolean editCheckLock;
     private NumberPicker numberPickerPriority;
-
-
-    NavController navController;
-
+    private NavController navController;
+    private int buttonClose = R.drawable.ic_close;
+    private int toolbarTitleEditcard = R.string.menu_edit_card;
+    private int toolbarTitleAddcard = R.string.menu_addcard;
+    private String insertTitle = "Please insert a title";
 
     //создание вью
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_addcard, container, false);
-
-        //инициализация полей вью
-        editTextTitle = root.findViewById(R.id.edit_text_title);
-        editTextVictoryCondition = root.findViewById(R.id.edit_text_victory_condition);
-        editTextEndGame = root.findViewById(R.id.edit_text_end_game);
-        editTextPreparation = root.findViewById(R.id.edit_text_preparation);
-        editTextDescription = root.findViewById(R.id.edit_text_description);
-        editTextPlayerTurn = root.findViewById(R.id.edit_text_player_turn);
-        editTextEffects = root.findViewById(R.id.edit_text_effects);
-        editCheckFavorites = false;
-        editCheckLock = false;
-        numberPickerPriority = root.findViewById(R.id.number_picker_priority);
-        numberPickerPriority.setMinValue(1);
-        numberPickerPriority.setMaxValue(10);
-
-        //устанавливает в верхнем меню левую иконку
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-
-        //устанавливает тайтл динамически
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_addcard);
-
+        initializationViewField(root);
+        setUpButtonClose();
+        setToolbarTitle(toolbarTitleAddcard);
         //разрешает верхнее правое меню
         setHasOptionsMenu(true);
-
         return root;
     }
-
-
-    private void saveHelpcard() {
-        //забор данных в переменные
-        String messageTitle = editTextTitle.getText().toString();
-        String messageVictoryCondition = editTextVictoryCondition.getText().toString();
-        String messageEndGame = editTextEndGame.getText().toString();
-        String messagePreparation = editTextPreparation.getText().toString();
-        String messageDescription = editTextDescription.getText().toString();
-        String messagePlayerTurn = editTextPlayerTurn.getText().toString();
-        String messageEffects = editTextEffects.getText().toString();
-        boolean messageFavorites = editCheckFavorites;
-        boolean messageLock = editCheckLock;
-        int messagePriority = numberPickerPriority.getValue();
-
-//        if (messageTitle.trim().isEmpty() || messageDescription.trim().isEmpty()) {
-        if (messageTitle.trim().isEmpty()) {
-            Toast.makeText(getActivity(), "Please insert a title", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-
-//safeargs + parcelable
-        Helpcard helpcard = new Helpcard(messageTitle, messageVictoryCondition,
-                messageEndGame, messagePreparation, messageDescription,
-                messagePlayerTurn, messageEffects, messageFavorites, messageLock, messagePriority);
-        //если перепись заметки то отправляется старый АйДи
-        AddcardEditcardFragmentArgs args = AddcardEditcardFragmentArgs.fromBundle(getArguments());
-        Helpcard messageHelpcardFromCatalog = args.getHelpcard();
-        int id = 0;
-        if (messageHelpcardFromCatalog != null) {
-            id = messageHelpcardFromCatalog.getId();
-            if (id != -1) {
-                helpcard.setId(id);
-            }
-        }
-        AddcardEditcardFragmentDirections.ActionNavAddcardToNavCatalog action =
-                AddcardEditcardFragmentDirections.actionNavAddcardToNavCatalog()
-                        .setHelpcard(helpcard);
-        navController.navigate(action);
-
-        //выключить етот фрагмент навигацией
-
-    }
-
-
-    private void hideKeyboard() {
-        //скрытие клавиатуры
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
 
     //создание меню верхнего справа
     @Override
@@ -139,59 +57,125 @@ public class AddcardEditcardFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                saveHelpcard();
+                saveData();
                 hideKeyboard();
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-
     //safeargs + parcelable
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         navController = Navigation.findNavController(getView());
-
         if (getArguments() != null) {
             AddcardEditcardFragmentArgs args = AddcardEditcardFragmentArgs.fromBundle(getArguments());
             Helpcard messageHelpcardFromCatalog = args.getHelpcard();
             int id = 0;
-
             if (messageHelpcardFromCatalog != null) {
                 id = messageHelpcardFromCatalog.getId();
-
                 if (id == -1) {
-//смена названия заголовка в тулбаре
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_addcard);
-
+                    setToolbarTitle(toolbarTitleAddcard);
                 } else {
-                    //смена названия заголовка в тулбаре
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_edit_card);
-
-                    Helpcard helpcard = messageHelpcardFromCatalog;
-                    //установка значений в поля для редактирования
-                    editTextTitle.setText(helpcard.getTitle());
-                    editTextVictoryCondition.setText(helpcard.getVictoryCondition());
-                    editTextEndGame.setText(helpcard.getEndGame());
-                    editTextPreparation.setText(helpcard.getPreparation());
-                    editTextDescription.setText(helpcard.getDescription());
-                    editTextPlayerTurn.setText(helpcard.getPlayerTurn());
-                    editTextEffects.setText(helpcard.getEffects());
-                    editCheckFavorites = helpcard.isFavorites();
-                    editCheckLock = helpcard.isLock();
-                    numberPickerPriority.setValue(helpcard.getPriority());
+                    setToolbarTitle(toolbarTitleEditcard);
+                    setDataForEdit(messageHelpcardFromCatalog);
                 }
-
             }
-
-
         }
     }
 
+    private void initializationViewField(View root) {
+        editTextTitle = root.findViewById(R.id.edit_text_title);
+        editTextVictoryCondition = root.findViewById(R.id.edit_text_victory_condition);
+        editTextEndGame = root.findViewById(R.id.edit_text_end_game);
+        editTextPreparation = root.findViewById(R.id.edit_text_preparation);
+        editTextDescription = root.findViewById(R.id.edit_text_description);
+        editTextPlayerTurn = root.findViewById(R.id.edit_text_player_turn);
+        editTextEffects = root.findViewById(R.id.edit_text_effects);
+        editCheckFavorites = false;
+        editCheckLock = false;
+        numberPickerPriority = root.findViewById(R.id.number_picker_priority);
+        numberPickerPriority.setMinValue(1);
+        numberPickerPriority.setMaxValue(10);
+    }
+
+    private void setUpButtonClose() {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(buttonClose);
+    }
+
+    private void saveData() {
+        Helpcard data = getData();
+        String title = editTextTitle.getText().toString();
+        if (title.trim().isEmpty()) {
+            showSystemMessage(insertTitle);
+            return;
+        }
+        //если перепись заметки то отправляется старый АйДи
+        AddcardEditcardFragmentArgs args = AddcardEditcardFragmentArgs.fromBundle(getArguments());
+        Helpcard messageHelpcardFromCatalog = args.getHelpcard();
+        int id = 0;
+        if (messageHelpcardFromCatalog != null) {
+            id = messageHelpcardFromCatalog.getId();
+            if (id != -1) {
+                data.setId(id);
+            }
+        }
+        navigationAndSend(data);
+        //TODO выключить етот фрагмент навигацией
+    }
+
+    private void showSystemMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private Helpcard getData() {
+        String messageTitle = editTextTitle.getText().toString();
+        String messageVictoryCondition = editTextVictoryCondition.getText().toString();
+        String messageEndGame = editTextEndGame.getText().toString();
+        String messagePreparation = editTextPreparation.getText().toString();
+        String messageDescription = editTextDescription.getText().toString();
+        String messagePlayerTurn = editTextPlayerTurn.getText().toString();
+        String messageEffects = editTextEffects.getText().toString();
+        boolean messageFavorites = editCheckFavorites;
+        boolean messageLock = editCheckLock;
+        int messagePriority = numberPickerPriority.getValue();
+        Helpcard h = new Helpcard(messageTitle, messageVictoryCondition,
+                messageEndGame, messagePreparation, messageDescription,
+                messagePlayerTurn, messageEffects, messageFavorites, messageLock, messagePriority);
+        return h;
+    }
+
+    private void navigationAndSend(Helpcard helpcard) {
+        AddcardEditcardFragmentDirections.ActionNavAddcardToNavCatalog action =
+                AddcardEditcardFragmentDirections.actionNavAddcardToNavCatalog()
+                        .setHelpcard(helpcard);
+        navController.navigate(action);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private void setDataForEdit(Helpcard data) {
+        editTextTitle.setText(data.getTitle());
+        editTextVictoryCondition.setText(data.getVictoryCondition());
+        editTextEndGame.setText(data.getEndGame());
+        editTextPreparation.setText(data.getPreparation());
+        editTextDescription.setText(data.getDescription());
+        editTextPlayerTurn.setText(data.getPlayerTurn());
+        editTextEffects.setText(data.getEffects());
+        editCheckFavorites = data.isFavorites();
+        editCheckLock = data.isLock();
+        numberPickerPriority.setValue(data.getPriority());
+    }
+
+    private void setToolbarTitle(int toolbarTitle) {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(toolbarTitle);
+    }
 
 }
 

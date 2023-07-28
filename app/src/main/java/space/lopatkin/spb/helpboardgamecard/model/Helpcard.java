@@ -1,6 +1,5 @@
 package space.lopatkin.spb.helpboardgamecard.model;
 
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import androidx.room.ColumnInfo;
@@ -10,46 +9,30 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "helpcard_table")
 public class Helpcard implements Parcelable {
-
-
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     @ColumnInfo(name = "title")
     private String title;
-
     @ColumnInfo(name = "description")
     private String description;
-
-
     @ColumnInfo(name = "victory_condition")
     private String victoryCondition;
-
     @ColumnInfo(name = "end_game")
     private String endGame;
-
     @ColumnInfo(name = "preparation")
     private String preparation;
-
     @ColumnInfo(name = "player_turn")
     private String playerTurn;
-
     @ColumnInfo(name = "effects")
     private String effects;
-
     @ColumnInfo(name = "favorites")
     private boolean favorites;
-
     @ColumnInfo(name = "lock")
     private boolean lock;
-
-
     @ColumnInfo(name = "priority")
     private int priority;
 
-
-    //конструктор
-    // (если рум есть - остальные конструкторы должны быть подписаны игнором)
+    //конструктор (если рум есть - остальные конструкторы должны быть подписаны игнором)
     public Helpcard(String title, String victoryCondition,
                     String endGame, String preparation,
                     String description, String playerTurn,
@@ -66,7 +49,6 @@ public class Helpcard implements Parcelable {
         this.lock = lock;
         this.priority = priority;
     }
-
 
     //игнор для рума только, чтобы игнорировала его (во избежание ошибок)
     @Ignore
@@ -88,7 +70,6 @@ public class Helpcard implements Parcelable {
         this.priority = priority;
     }
 
-
     //для парселя
     protected Helpcard(Parcel in) {
         id = in.readInt();
@@ -104,7 +85,6 @@ public class Helpcard implements Parcelable {
         priority = in.readInt();
     }
 
-
     //для парселя
     public static final Creator<Helpcard> CREATOR = new Creator<Helpcard>() {
         @Override
@@ -117,7 +97,6 @@ public class Helpcard implements Parcelable {
             return new Helpcard[size];
         }
     };
-
 
     public int getId() {
         return id;
@@ -207,7 +186,6 @@ public class Helpcard implements Parcelable {
         this.lock = lock;
     }
 
-
     @Override
     public String toString() {
         return "Helpcard{" +
@@ -224,7 +202,6 @@ public class Helpcard implements Parcelable {
                 ", priority=" + priority +
                 '}';
     }
-
 
     //для парселя
     @Override
@@ -247,6 +224,5 @@ public class Helpcard implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
 
 }
