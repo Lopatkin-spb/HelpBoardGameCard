@@ -1,0 +1,44 @@
+
+
+--- GLOBAL:
+!!!create first version
+
+
+
+
+--- TODAY:
+1) update helpCard fragment
+
+- up min version to 31
+- update helpCard fragment
+- set one game
+
+
+
+
+
+--- TOMORROW:
+- change name app to "Help Cards for Board Games"
+- clean architecture
+- add game variants
+
+
+
+
+
+
+--- FUTURE:
+1) migrate to kotlin
+
+
+- rxjava 2
+- design
+- settings: day/night switch
+- sort list
+- first player definition
+- host/ player ?
+- add header collapse
+- icons list
+- load image game from net/ site
+- add game statistics
+
