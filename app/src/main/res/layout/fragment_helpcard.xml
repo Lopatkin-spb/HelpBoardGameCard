@@ -4,8 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-     >
+        android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -15,9 +14,7 @@
             android:layout_marginTop="8dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="8dp"
-            android:layout_marginBottom="8dp"
-
-    >
+            android:layout_marginBottom="8dp">
 
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -67,7 +64,7 @@
                     android:text="Victory condition"/>
 
             <TextView
-                    android:id="@+id/text_view_victory_condition"
+                    android:id="@+id/text_victory_condition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view_victory_condition"
@@ -82,7 +79,7 @@
                     android:id="@+id/separator_1"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_victory_condition"
+                    android:layout_below="@+id/text_victory_condition"
                     android:layout_height="5dp"/>
 
             <TextView
@@ -94,7 +91,7 @@
                     android:text="End game"/>
 
             <TextView
-                    android:id="@+id/text_view_end_game"
+                    android:id="@+id/text_end_game"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -108,7 +105,7 @@
                     android:id="@+id/separator_2"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_end_game"
+                    android:layout_below="@+id/text_end_game"
                     android:layout_height="5dp"/>
 
 
@@ -121,7 +118,7 @@
                     android:text="Preparation"/>
 
             <TextView
-                    android:id="@+id/text_view_preparation"
+                    android:id="@+id/text_preparation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view_preparation"
@@ -135,7 +132,7 @@
                     android:id="@+id/separator_3"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_preparation"
+                    android:layout_below="@+id/text_preparation"
                     android:layout_height="5dp"/>
 
 
@@ -148,7 +145,7 @@
                     android:text="Player turn"/>
 
             <TextView
-                    android:id="@+id/text_view_player_turn"
+                    android:id="@+id/text_player_turn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view_player_turn"
@@ -164,7 +161,7 @@
                     android:id="@+id/separator_4"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_player_turn"
+                    android:layout_below="@+id/text_player_turn"
                     android:layout_height="5dp"/>
 
 
@@ -177,7 +174,7 @@
                     android:text="Effects"/>
 
             <TextView
-                    android:id="@+id/text_view_effects"
+                    android:id="@+id/text_effects"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view_effects"
@@ -186,44 +183,6 @@
                     android:layout_marginStart="50dp"
                     android:hint="effects"
                     android:textSize="40dp"/>
-
-
-            <View
-                    android:id="@+id/separator_5"
-                    android:layout_width="match_parent"
-                    android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_effects"
-                    android:layout_height="5dp"/>
-
-
-            <TextView
-                    android:id="@+id/text_view_info_priority"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/priority"
-                    android:layout_below="@+id/separator_5"
-                    android:textColor="@color/colorTextWhite"
-                    android:layout_marginEnd="10dp"/>
-
-            <TextView
-                    android:id="@+id/text_view_priority"
-                    android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:layout_below="@+id/text_view_info_priority"
-                    android:text="@string/_1"
-                    android:textColor="@color/colorTextWhite"
-                    android:textSize="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"/>
-
-            <View
-                    android:id="@+id/separator_6"
-                    android:layout_width="match_parent"
-                    android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_priority"
-                    android:layout_height="5dp"/>
-
 
         </RelativeLayout>
 

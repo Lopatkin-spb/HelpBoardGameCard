@@ -154,10 +154,11 @@ public class CatalogFragment extends Fragment {
             @Override
             public void onItemClick(Helpcard helpcard) {
                 Helpcard helpcardToViewcard = getData(helpcard);
+                Integer id = helpcardToViewcard.getId();
                 //отправка данных (parcelable)
                 CatalogFragmentDirections.ActionNavCatalogToNavHelpcard action =
                         CatalogFragmentDirections.actionNavCatalogToNavHelpcard()
-                                .setHelpcard(helpcardToViewcard);
+                                .setId(id);
                 navController.navigate(action);
             }
         });

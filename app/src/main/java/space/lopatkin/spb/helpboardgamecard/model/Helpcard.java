@@ -32,6 +32,10 @@ public class Helpcard implements Parcelable {
     @ColumnInfo(name = "priority")
     private int priority;
 
+    @Ignore
+    public Helpcard() {
+    }
+
     //конструктор (если рум есть - остальные конструкторы должны быть подписаны игнором)
     public Helpcard(String title, String victoryCondition,
                     String endGame, String preparation,

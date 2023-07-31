@@ -5,18 +5,18 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import space.lopatkin.spb.helpboardgamecard.dataRoom.HelpcardRepository;
+import space.lopatkin.spb.helpboardgamecard.dataRoom.HelpcardRepositoryImpl;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 import java.util.List;
 
 public class CatalogViewModel extends AndroidViewModel {
-    private HelpcardRepository repository;
+    private HelpcardRepositoryImpl repository;
     private LiveData<List<Helpcard>> allHelpcards;
 
     public CatalogViewModel(@NonNull Application application) {
         super(application);
-        repository = new HelpcardRepository(application);
+        repository = new HelpcardRepositoryImpl(application);
         allHelpcards = repository.getAllHelpcards();
     }
 

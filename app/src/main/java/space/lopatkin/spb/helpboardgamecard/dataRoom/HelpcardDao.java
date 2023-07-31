@@ -10,20 +10,22 @@ import java.util.List;
 @Dao
 public interface HelpcardDao {
 
+    /**
+     * Получить карточку памяти по идентификатору настольной игры.
+     */
+    @Query("SELECT * FROM helpcard_table WHERE id=:boardGameId")
+    LiveData<Helpcard> getHelpcard(int boardGameId);
 
-        //обновление списка с данными через ливдата (недопонял)
+
+
+
+    //обновление списка с данными через ливдата (недопонял)
     @Query("SELECT * FROM helpcard_table ORDER BY priority DESC")
     LiveData<List<Helpcard>> getAllHelpcards();
 
 
     @Query("SELECT * FROM helpcard_table WHERE favorites = 1 ORDER BY priority DESC")
     LiveData<List<Helpcard>> getAllFavoritesHelpcards();
-
-
-//    //если при вставке сущности уже есть с таким названием
-//    // - сущность заменяется на новую
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    void insert(Helpcard helpcard);
 
 
     //для вставки

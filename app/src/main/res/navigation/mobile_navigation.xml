@@ -56,8 +56,8 @@
             tools:layout="@layout/fragment_helpcard">
 
 
-        <argument android:name="helpcard" app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
-                  app:nullable="true" android:defaultValue="@null"/>
+        <argument android:name="id" app:argType="integer"
+                  app:nullable="false" android:defaultValue="-1"/>
 
 
     </fragment>

@@ -4,7 +4,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import space.lopatkin.spb.helpboardgamecard.dataRoom.HelpcardRepository;
+import space.lopatkin.spb.helpboardgamecard.dataRoom.HelpcardRepositoryImpl;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 import java.util.List;
@@ -14,12 +14,12 @@ public class FavoritesViewModel extends AndroidViewModel {
 //    //было
 //    private MutableLiveData<String> mText;
 
-    private HelpcardRepository repository;
+    private HelpcardRepositoryImpl repository;
     private LiveData<List<Helpcard>> allFavoritesHelpcards;
 
     public FavoritesViewModel(@NonNull Application application) {
         super(application);
-        repository = new HelpcardRepository(application);
+        repository = new HelpcardRepositoryImpl(application);
         allFavoritesHelpcards = repository.getAllFavoritesHelpcards();
     }
 

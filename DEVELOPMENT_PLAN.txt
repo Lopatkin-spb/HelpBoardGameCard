@@ -1,7 +1,7 @@
 
 
 --- GLOBAL:
-!!!create first version
+!!!create first version and pull to "release" branch -> fix bugs and design -> pull to "prod" branch
 
 
 
@@ -33,12 +33,33 @@
 
 - rxjava 2
 - design
-- settings: day/night switch
-- sort list
+- settings: day/night switch and add sharedPrefs
+- add sort list/ delete priority
 - first player definition
 - host/ player ?
 - add header collapse
 - icons list
 - load image game from net/ site
 - add game statistics
+
+
+
+
+---------------------------------------draft--------------------------------
+
+
+- Helpcard: add logic for show details, create viewModel and useCase and repository,
+delete old viewModel;
+- Refactoring: rename old repository to repositoryImpl, set implement interface;
+- Helpcard xml: rename values, delete redundant code, delete priority;
+- CatalogFragment: edit pass data to Helpcard from model to int;
+- Model Helpcard: add empty constructor;
+- Db: add new method to Dao;
+- Xml navigation: edit default value to integer;
+
+
+
+
+
+
 
