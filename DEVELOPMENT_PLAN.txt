@@ -21,6 +21,8 @@
 - change name app to "Help Cards for Board Games"
 - clean architecture
 - add game variants
+- add in description split to speed / agression/ mehanics
+
 
 
 
@@ -31,8 +33,7 @@
 1) migrate to kotlin
 
 
-
-- add in description split to speed / agression/ mehanics
+- add touch animations
 - rxjava 2
 - design
 - settings: day/night switch and add sharedPrefs
@@ -47,6 +48,11 @@
 
 
 
+bugs (for simulation) in release branch
+- title for big words
+- description for big words
+- save bug (search)
+- check details Helpcard after off/ turn to horizontal position (work viewModel)
 
 ---------------------------------------draft--------------------------------
 

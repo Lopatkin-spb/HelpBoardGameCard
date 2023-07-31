@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
 public class HelpcardFragment extends Fragment {
 
@@ -34,7 +35,7 @@ public class HelpcardFragment extends Fragment {
         textPlayerTurn = root.findViewById(R.id.text_player_turn);
         textEffects = root.findViewById(R.id.text_effects);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(HelpcardViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity(), new ViewModelFactory()).get(HelpcardViewModel.class);
 
         return root;
     }
@@ -72,11 +73,9 @@ public class HelpcardFragment extends Fragment {
                     String descriptionUp = helpcard.getDescription();
                     //устанавливает тайтл динамически
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(descriptionUp + " " + titleUp);
-
                 }
             }
         });
-
     }
 
 }
