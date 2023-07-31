@@ -31,9 +31,12 @@
 1) migrate to kotlin
 
 
+
+- add in description split to speed / agression/ mehanics
 - rxjava 2
 - design
 - settings: day/night switch and add sharedPrefs
+- settings: small/ big icons in helpcard
 - add sort list/ delete priority
 - first player definition
 - host/ player ?

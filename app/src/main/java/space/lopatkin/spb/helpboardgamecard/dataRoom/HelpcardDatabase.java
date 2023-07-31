@@ -22,7 +22,7 @@ public abstract class HelpcardDatabase extends RoomDatabase {
     public static synchronized HelpcardDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    HelpcardDatabase.class, "helpcard_database")
+                            HelpcardDatabase.class, "helpcard_database")
                     //начать новую бд либо можно сдеать миграцию,
                     // чтоб не потерять данные с прредыдущей бд
                     .fallbackToDestructiveMigration()
@@ -41,7 +41,7 @@ public abstract class HelpcardDatabase extends RoomDatabase {
     };
 
 
-    //наполнение первой бд тремя предзаписями
+    //заполнить бд 4 записи при первой установке приложения
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private HelpcardDao helpcardDao;
 
@@ -57,9 +57,14 @@ public abstract class HelpcardDatabase extends RoomDatabase {
             helpcardDao.insert(new Helpcard("Title 2", "victory_condition 2",
                     "end_game 2", "preparation 2", "Description 2",
                     "player_turn 2", "effects 2", false, false, 2));
-            helpcardDao.insert(new Helpcard("Title 3", "victory_condition 3",
-                    "end_game 3", "preparation 3", "Description 3",
+            helpcardDao.insert(new Helpcard("Илос 1вар", "victory_condition 3",
+                    "end_game 3", "1) \uD83D\uDD03\uD83C\uDF9F️\uD83D\uDC49\uD83D\uDC655️⃣\uD83C\uDF9F️\uD83D\uDC64\n2) \uD83D\uDC655️⃣⛵\uD83D\uDC64\n3) \uD83D\uDC65\uD83D\uDD1F\uD83D\uDD74️\uD83D\uDC64\n4) \uD83D\uDD03\uD83E\uDDE9",
+                    "евро, семейка",
                     "player_turn 3", "effects 3", false, false, 3));
+            helpcardDao.insert(new Helpcard("Илос 2вар", "victory_condition 4",
+                    "end_game 4", "1) \uD83D\uDD03\uD83C\uDF9F️➕\uD83E\uDDE9\n2) 4️⃣\uD83E\uDDE9✖️\uD83D\uDC65\n3) \uD83D\uDC655️⃣\uD83C\uDF9F️\n ➕5️⃣\uD83D\uDEA4\n ➕\uD83D\uDD1F\uD83D\uDD74️\n ➕\uD83D\uDDBC",
+                    "средняя, семейка, евро",
+                    "player_turn 4", "effects 4", false, false, 4));
             return null;
         }
     }

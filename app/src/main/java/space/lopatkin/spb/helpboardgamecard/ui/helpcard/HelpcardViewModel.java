@@ -13,7 +13,6 @@ public class HelpcardViewModel extends ViewModel {
     private HelpcardRepositoryImpl repositoryImpl;
     private GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase;
 
-
     public HelpcardViewModel() {
         Application application = new Application();
         repositoryImpl = new HelpcardRepositoryImpl(application);
