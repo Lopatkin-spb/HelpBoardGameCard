@@ -9,9 +9,13 @@
 --- TODAY:
 1) update helpCard fragment
 
+- add mutableLiveData to viewModels
+- add dagger2 to other presentations and domains
+
 - up min version to 31
-- update helpCard fragment
-- set one game
+
+
+- set full one game to card
 
 
 
@@ -33,6 +37,7 @@
 1) migrate to kotlin
 
 
+- viewLoading to fragments
 - add touch animations
 - rxjava 2
 - design
@@ -51,20 +56,24 @@
 bugs (for simulation) in release branch
 - title for big words
 - description for big words
-- save bug (search)
+- save bug (search) in backButton
 - check details Helpcard after off/ turn to horizontal position (work viewModel)
+
+
+
+--------------------------------reference---------------------------
+- dagger 2: kodeco/dagger2 tutorial for android advanced
+
+
+
+
+
 
 ---------------------------------------draft--------------------------------
 
-
-- Helpcard: add logic for show details, create viewModel and useCase and repository,
-delete old viewModel;
-- Refactoring: rename old repository to repositoryImpl, set implement interface;
-- Helpcard xml: rename values, delete redundant code, delete priority;
-- CatalogFragment: edit pass data to Helpcard from model to int;
-- Model Helpcard: add empty constructor;
-- Db: add new method to Dao;
-- Xml navigation: edit default value to integer;
+- Di: add Dagger2 to App (create modules, component, etc.), set Di to HelpcardFragment;
+- ViewModelFactory: add throw error to method;
+- Plan: update;
 
 
 
