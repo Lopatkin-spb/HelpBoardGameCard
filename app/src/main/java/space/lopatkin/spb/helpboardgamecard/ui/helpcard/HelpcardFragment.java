@@ -29,9 +29,11 @@ public class HelpcardFragment extends Fragment {
     private TextView textPreparation;
     private TextView textPlayerTurn;
     private TextView textEffects;
+    private Helpcard details;
 
     @Override
     public void onAttach(@NonNull Context context) {
+        //todo: create abstractFragment, move code to abstractFragment, extends from absFrag
         ((App) context.getApplicationContext()).getAppComponent().inject(this);
         super.onAttach(context);
     }
@@ -47,46 +49,56 @@ public class HelpcardFragment extends Fragment {
         textPlayerTurn = root.findViewById(R.id.text_player_turn);
         textEffects = root.findViewById(R.id.text_effects);
 
-        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(HelpcardViewModel.class);
+        details = new Helpcard();
 
         return root;
     }
 
     //safeargs + parcelable
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(HelpcardViewModel.class);
 
         if (getArguments() != null) {
             HelpcardFragmentArgs args = HelpcardFragmentArgs.fromBundle(getArguments());
             int id = args.getId();
-            if (id >= 0) {
+            if (id > 0) {
                 loadDetails(id);
             } else {
-                //устанавливает тайтл динамически
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_view_card);
+                setTitleDynamically();
             }
         }
     }
 
     private void loadDetails(int id) {
-        viewModel.loadHelpcard(id).observe(getViewLifecycleOwner(), new Observer<Helpcard>() {
+        viewModel.setId(id);
+        viewModel.helpcardLiveData.observe(getViewLifecycleOwner(), new Observer<Helpcard>() {
             @Override
             public void onChanged(Helpcard helpcard) {
                 if (helpcard != null) {
+                    details = helpcard;
                     textVictoryCondition.setText(helpcard.getVictoryCondition());
                     textEndGame.setText(helpcard.getEndGame());
                     textPreparation.setText(helpcard.getPreparation());
                     textPlayerTurn.setText(helpcard.getPlayerTurn());
                     textEffects.setText(helpcard.getEffects());
 
-                    String titleUp = helpcard.getTitle();
-                    String descriptionUp = helpcard.getDescription();
-                    //устанавливает тайтл динамически
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(descriptionUp + " " + titleUp);
+                    setTitleDynamically();
                 }
             }
         });
+    }
+
+    private void setTitleDynamically() {
+        if (details != null && details.getId() > 0) {
+            String titleUp = details.getTitle();
+            String descriptionUp = details.getDescription();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(descriptionUp + " " + titleUp);
+        } else {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_view_card);
+        }
     }
 
 }

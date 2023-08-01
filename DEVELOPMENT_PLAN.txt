@@ -7,13 +7,11 @@
 
 
 --- TODAY:
-1) update helpCard fragment
+1) update other fragments
 
-- add mutableLiveData to viewModels
 - add dagger2 to other presentations and domains
 
 - up min version to 31
-
 
 - set full one game to card
 
@@ -53,15 +51,16 @@
 
 
 
-bugs (for simulation) in release branch
+bugs (for simulation search and fix in "release" branch)
 - title for big words
 - description for big words
-- save bug (search) in backButton
+- save bug (search) in backButton: add new -> save -> enter this again -> backButton -> bug create copy automation
 - check details Helpcard after off/ turn to horizontal position (work viewModel)
 
 
 
 --------------------------------reference---------------------------
+
 - dagger 2: kodeco/dagger2 tutorial for android advanced
 
 
@@ -71,8 +70,7 @@ bugs (for simulation) in release branch
 
 ---------------------------------------draft--------------------------------
 
-- Di: add Dagger2 to App (create modules, component, etc.), set Di to HelpcardFragment;
-- ViewModelFactory: add throw error to method;
+- Helpcard: add good practice for LiveData include MutableLiveData, split code title to method;
 - Plan: update;
 
 
