@@ -27,6 +27,7 @@
     <string name="_1">1</string>
     <string name="todo">TODO</string>
     <string name="action_delete_all">"Delete all helpcards"</string>
+    <string name="action_delete_all_unlock_helpcards">"Delete all unlock helpcards"</string>
     <string name="priority">Priority</string>
     <string name="button_to_record_fragment">Button to record fragment</string>
     <string name="recordFragment">button_to_record_fragment</string>

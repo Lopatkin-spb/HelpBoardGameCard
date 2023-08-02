@@ -11,49 +11,49 @@ import java.util.List;
 
 
 public class HelpcardRepositoryImpl implements HelpcardRepository {
-
-
     private HelpcardDao helpcardDao;
     private LiveData<List<Helpcard>> allHelpcards;
     private LiveData<List<Helpcard>> allFavoritesHelpcards;
-
 
     public HelpcardRepositoryImpl(Application application) {
         HelpcardDatabase database = HelpcardDatabase.getInstance(application);
         helpcardDao = database.helpcardDao();
         allHelpcards = helpcardDao.getAllHelpcards();
         allFavoritesHelpcards = helpcardDao.getAllFavoritesHelpcards();
-
-    }
-
-    public void insert(Helpcard helpcard) {
-        new InsertHelpcardAsyncTask(helpcardDao).execute(helpcard);
-    }
-
-    public void update(Helpcard helpcard) {
-        new UpdateHelpcardAsyncTask(helpcardDao).execute(helpcard);
-    }
-
-    public void delete(Helpcard helpcard) {
-        new DeleteHelpcardAsyncTask(helpcardDao).execute(helpcard);
-    }
-
-    public void deleteAllHelpcards() {
-        new DeleteAllHelpcardsAsyncTask(helpcardDao).execute();
-    }
-
-
-    public void deleteAllUnlockHelpcards() {
-        new DeleteAllUnlockHelpcardsAsyncTask(helpcardDao).execute();
     }
 
     @Override
     public LiveData<Helpcard> getHelpcard(int boardGameId) {
         return helpcardDao.getHelpcard(boardGameId);
     }
-
+    @Override
     public LiveData<List<Helpcard>> getAllHelpcards() {
         return allHelpcards;
+    }
+    @Override
+    public void delete(Helpcard helpcard) {
+        new DeleteHelpcardAsyncTask(helpcardDao).execute(helpcard);
+    }
+    @Override
+    public void delete(int id) {
+    }
+    @Override
+    public void update(Helpcard helpcard) {
+        new UpdateHelpcardAsyncTask(helpcardDao).execute(helpcard);
+    }
+    @Override
+    public void deleteAllUnlockHelpcards() {
+        new DeleteAllUnlockHelpcardsAsyncTask(helpcardDao).execute();
+    }
+    @Override
+    public void addNewHelpcard(Helpcard helpcard) {
+        new InsertHelpcardAsyncTask(helpcardDao).execute(helpcard);
+    }
+
+
+    //todo: do work -------
+    public void deleteAllHelpcards() {
+        new DeleteAllHelpcardsAsyncTask(helpcardDao).execute();
     }
 
     public LiveData<List<Helpcard>> getAllFavoritesHelpcards() {
@@ -61,6 +61,7 @@ public class HelpcardRepositoryImpl implements HelpcardRepository {
     }
 
 
+    //todo: move to db repo -------
     private static class InsertHelpcardAsyncTask extends AsyncTask<Helpcard, Void, Void> {
         private HelpcardDao helpcardDao;
 

@@ -16,37 +16,47 @@ public interface HelpcardDao {
     @Query("SELECT * FROM helpcard_table WHERE id=:boardGameId")
     LiveData<Helpcard> getHelpcard(int boardGameId);
 
-
-
-
-    //обновление списка с данными через ливдата (недопонял)
+    /**
+     * Получить все карточки памяти и применить фильтр по убыванию.
+     */
     @Query("SELECT * FROM helpcard_table ORDER BY priority DESC")
     LiveData<List<Helpcard>> getAllHelpcards();
 
-
-    @Query("SELECT * FROM helpcard_table WHERE favorites = 1 ORDER BY priority DESC")
-    LiveData<List<Helpcard>> getAllFavoritesHelpcards();
-
-
-    //для вставки
-    @Insert
-    void insert(Helpcard helpcard);
-
-
-    //функция для обновления
-    @Update
-    void update(Helpcard helpcard);
-
-
-    //для стирания
+    /**
+     * Удалить карточку памяти.
+     */
     @Delete
     void delete(Helpcard helpcard);
 
+    /**
+     * Удалить карточку памяти по идентификационному номеру.
+     */
+    @Query("DELETE FROM helpcard_table WHERE id=:boardGameId")
+    void delete(int boardGameId);
+
+    /**
+     * Обновить карточку памяти.
+     */
+    @Update
+    void update(Helpcard helpcard);
+
+    /**
+     * Добавить новую карточку памяти.
+     */
+    @Insert
+    void insert(Helpcard helpcard);
+
+    /**
+     * Удалить все незаблокированные карточки памяти.
+     */
+    @Query("DELETE FROM helpcard_table WHERE lock = 0")
+    void deleteAllUnlockHelpcards();
+
+    //todo: do work -------
+    @Query("SELECT * FROM helpcard_table WHERE favorites = 1 ORDER BY priority DESC")
+    LiveData<List<Helpcard>> getAllFavoritesHelpcards();
 
     @Query("DELETE FROM helpcard_table")
     void deleteAllHelpcards();
 
-
-    @Query("DELETE FROM helpcard_table WHERE lock = 0")
-    void deleteAllUnlockHelpcards();
 }

@@ -1,27 +1,40 @@
 package space.lopatkin.spb.helpboardgamecard.ui.catalog;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import space.lopatkin.spb.helpboardgamecard.R;
+import space.lopatkin.spb.helpboardgamecard.app.App;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.HelpcardAdapter;
+import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class CatalogFragment extends Fragment {
-    private CatalogViewModel catalogViewModel;
+
+    @Inject
+    ViewModelFactory viewModelFactory;
+    private CatalogViewModel viewModel;
     private RecyclerView recyclerView;
+    private HelpcardAdapter adapter;
     private NavController navController;
     private String allCardDelete = "All unlock helpcards deleted";
     private String saved = "Helpcard saved";
@@ -34,6 +47,12 @@ public class CatalogFragment extends Fragment {
     private String delete = "Helpcard delete";
     private String notDelete = "Helpcard not delete";
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        ((App) context.getApplicationContext()).getAppComponent().inject(this);
+        super.onAttach(context);
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_catalog, container, false);
@@ -44,16 +63,9 @@ public class CatalogFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 //подключение адаптера к ресайкл вью
-        final HelpcardAdapter adapter = new HelpcardAdapter();
+        adapter = new HelpcardAdapter();
         recyclerView.setAdapter(adapter);
-        // подключение вьюмодел для нашей активити
-        catalogViewModel = ViewModelProviders.of(getActivity()).get(CatalogViewModel.class);
-        catalogViewModel.getAllHelpcards().observe(getActivity(), new Observer<List<Helpcard>>() {
-            @Override
-            public void onChanged(@Nullable List<Helpcard> helpcards) {
-                adapter.setListHelpcards(helpcards);
-            }
-        });
+
         setSwipeDelete(adapter);
         setEditFavoritesItem(adapter);
         setEditLockItem(adapter);
@@ -62,41 +74,73 @@ public class CatalogFragment extends Fragment {
         return root;
     }
 
-    //v5safeargs: заюор данных из АДД и запись в КАТАЛОГ
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(CatalogViewModel.class);
+        viewModel.getListHelpcards().observe(getActivity(), new Observer<List<Helpcard>>() {
+            @Override
+            public void onChanged(@Nullable List<Helpcard> helpcards) {
+                adapter.setListHelpcards(helpcards);
+            }
+        });
+
+
+
+//todo: bug add new card
         navController = Navigation.findNavController(getView());
         if (getArguments() != null) {
             //parcelable pass data version
             CatalogFragmentArgs args = CatalogFragmentArgs.fromBundle(getArguments());
-            Helpcard messageHelpcardFromAddcard = args.getHelpcard();
+            Helpcard helpcardFromAddcard = args.getHelpcard();
             int id = 0;
             String title = null;
-            if (messageHelpcardFromAddcard != null) {
-                id = messageHelpcardFromAddcard.getId();
-                title = messageHelpcardFromAddcard.getTitle();
+            if (helpcardFromAddcard != null) {
+                id = helpcardFromAddcard.getId();
+                title = helpcardFromAddcard.getTitle();
 
                 if (id == 0) {
-                    Helpcard helpcard = messageHelpcardFromAddcard;
-                    catalogViewModel.insert(helpcard);
+                    Helpcard helpcard = helpcardFromAddcard;
+                    viewModel.addNewHelpcard(helpcard);
                     showSystemMessage(saved);
                 } else if (title == null) {
                     showSystemMessage(notSaved);
                 } else if (title != null && id != 0) {
-                    Helpcard helpcard = messageHelpcardFromAddcard;
-                    catalogViewModel.update(helpcard);
+                    Helpcard helpcard = helpcardFromAddcard;
+                    viewModel.update(helpcard);
                     showSystemMessage(update);
                 } else {
                     //никаких знаков не вылезает - к примеру если ето просто переключение между фрагментами
                 }
             }
+        }
 
 
+
+
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.app_bar_right_side_main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete_all_unlock_helpcards:
+                viewModel.deleteAllUnlockHelpcards();
+                showSystemMessage(allCardDelete);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
-    private void setSwipeDelete(final HelpcardAdapter adapter) {
+    private void setSwipeDelete(HelpcardAdapter adapter) {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -105,12 +149,12 @@ public class CatalogFragment extends Fragment {
                                   @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
-
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 boolean lock = adapter.getHelpcardAt(viewHolder.getAdapterPosition()).isLock();
-                if (lock != true) {
-                    catalogViewModel.delete(adapter.getHelpcardAt(viewHolder.getAdapterPosition()));
+                if (!lock) {
+                    Helpcard helpcard = adapter.getHelpcardAt(viewHolder.getAdapterPosition());
+                    viewModel.delete(helpcard);
                     showSystemMessage(delete);
                 } else {
                     showSystemMessage(notDelete);
@@ -124,7 +168,7 @@ public class CatalogFragment extends Fragment {
             @Override
             public void onItemCheckboxTest(Helpcard helpcard, boolean b) {
                 helpcard.setFavorites(b);
-                catalogViewModel.update(helpcard);
+                viewModel.update(helpcard);
                 if (b) {
                     showSystemMessage(favorites);
                 } else {
@@ -139,7 +183,7 @@ public class CatalogFragment extends Fragment {
             @Override
             public void onItemCheckboxLock(Helpcard helpcard, boolean b) {
                 helpcard.setLock(b);
-                catalogViewModel.update(helpcard);
+                viewModel.update(helpcard);
                 if (b) {
                     showSystemMessage(lock);
                 } else {
@@ -197,25 +241,6 @@ public class CatalogFragment extends Fragment {
         return h;
     }
 
-    //создание меню верхнего справа
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.app_bar_right_side_main_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    //что происходит в меню на нажатие определенных иконок
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_delete_all_helpcards:
-                catalogViewModel.deleteAllUnlockHelpcards();
-                showSystemMessage(allCardDelete);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     private void showSystemMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
