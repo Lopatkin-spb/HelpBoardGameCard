@@ -3,13 +3,8 @@ package space.lopatkin.spb.helpboardgamecard.di;
 import dagger.Module;
 import dagger.Provides;
 import space.lopatkin.spb.helpboardgamecard.domain.repository.HelpcardRepository;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.AddNewHelpcardUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetAllHelpcardsUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.*;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
 
 import javax.inject.Singleton;
 
@@ -60,9 +55,9 @@ public class DomainModule {
 
     @Singleton
     @Provides
-    public AddNewHelpcardUseCase provideAddNewHelpcardUseCase(
+    public SaveNewHelpcardUseCase provideSaveNewHelpcardUseCase(
             HelpcardRepository repository) {
-        return new AddNewHelpcardUseCase(repository);
+        return new SaveNewHelpcardUseCase(repository);
     }
 
 }

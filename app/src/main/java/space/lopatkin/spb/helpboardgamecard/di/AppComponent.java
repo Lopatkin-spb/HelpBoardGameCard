@@ -1,6 +1,7 @@
 package space.lopatkin.spb.helpboardgamecard.di;
 
 import dagger.Component;
+import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment;
 import space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogFragment;
 import space.lopatkin.spb.helpboardgamecard.ui.helpcard.HelpcardFragment;
 
@@ -15,6 +16,8 @@ import javax.inject.Singleton;
 public interface AppComponent {
 
     void inject(CatalogFragment fragment);
+
+    void inject(AddCardFragment fragment);
 
     void inject(HelpcardFragment fragment);
 

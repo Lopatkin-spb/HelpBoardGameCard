@@ -37,8 +37,6 @@ public class CatalogFragment extends Fragment {
     private HelpcardAdapter adapter;
     private NavController navController;
     private String allCardDelete = "All unlock helpcards deleted";
-    private String saved = "Helpcard saved";
-    private String notSaved = "Helpcard not saved";
     private String update = "Helpcard updated";
     private String lock = "Helpcard is lock";
     private String unlock = "Helpcard unlock";
@@ -78,6 +76,8 @@ public class CatalogFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        navController = Navigation.findNavController(getView());
+
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(CatalogViewModel.class);
         viewModel.getListHelpcards().observe(getActivity(), new Observer<List<Helpcard>>() {
             @Override
@@ -85,41 +85,6 @@ public class CatalogFragment extends Fragment {
                 adapter.setListHelpcards(helpcards);
             }
         });
-
-
-
-//todo: bug add new card
-        navController = Navigation.findNavController(getView());
-        if (getArguments() != null) {
-            //parcelable pass data version
-            CatalogFragmentArgs args = CatalogFragmentArgs.fromBundle(getArguments());
-            Helpcard helpcardFromAddcard = args.getHelpcard();
-            int id = 0;
-            String title = null;
-            if (helpcardFromAddcard != null) {
-                id = helpcardFromAddcard.getId();
-                title = helpcardFromAddcard.getTitle();
-
-                if (id == 0) {
-                    Helpcard helpcard = helpcardFromAddcard;
-                    viewModel.addNewHelpcard(helpcard);
-                    showSystemMessage(saved);
-                } else if (title == null) {
-                    showSystemMessage(notSaved);
-                } else if (title != null && id != 0) {
-                    Helpcard helpcard = helpcardFromAddcard;
-                    viewModel.update(helpcard);
-                    showSystemMessage(update);
-                } else {
-                    //никаких знаков не вылезает - к примеру если ето просто переключение между фрагментами
-                }
-            }
-        }
-
-
-
-
-
     }
 
     @Override
@@ -213,11 +178,11 @@ public class CatalogFragment extends Fragment {
         adapter.setOnItemEditClickListener(new HelpcardAdapter.OnItemEditClickListener() {
             @Override
             public void onItemEditClick(Helpcard helpcard) {
-                Helpcard helpcardToAddcard = getData(helpcard);
-                CatalogFragmentDirections.ActionNavCatalogToNavAddcard action =
-                        CatalogFragmentDirections.actionNavCatalogToNavAddcard()
-                                .setHelpcard(helpcardToAddcard);
-                navController.navigate(action);
+//                Helpcard helpcardToAddcard = getData(helpcard);
+//                CatalogFragmentDirections.ActionNavCatalogToNavAddcard action =
+//                        CatalogFragmentDirections.actionNavCatalogToNavAddcard()
+//                                .setHelpcard(helpcardToAddcard);
+//                navController.navigate(action);
             }
         });
     }

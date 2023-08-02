@@ -3,7 +3,6 @@ package space.lopatkin.spb.helpboardgamecard.ui.catalog;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.AddNewHelpcardUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
@@ -20,7 +19,6 @@ public class CatalogViewModel extends ViewModel {
     private DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase;
     private UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase;
     private DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase;
-    private AddNewHelpcardUseCase addNewHelpcardUseCase;
 
     private LiveData<List<Helpcard>> listHelpcards;
 
@@ -28,14 +26,12 @@ public class CatalogViewModel extends ViewModel {
                             DeleteHelpcardUseCase deleteHelpcardUseCase,
                             DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase,
                             UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase,
-                            DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase,
-                            AddNewHelpcardUseCase addNewHelpcardUseCase) {
+                            DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase) {
         this.getAllHelpcardsUseCase = getAllHelpcardsUseCase;
         this.deleteHelpcardUseCase = deleteHelpcardUseCase;
         this.deleteHelpcardByIdUseCase = deleteHelpcardByIdUseCase;
         this.updateHelpcardByObjectUseCase = updateHelpcardByObjectUseCase;
         this.deleteHelpcardsByLockUseCase = deleteHelpcardsByLockUseCase;
-        this.addNewHelpcardUseCase = addNewHelpcardUseCase;
 
         listHelpcards = this.getAllHelpcardsUseCase.execute();
     }
@@ -55,9 +51,6 @@ public class CatalogViewModel extends ViewModel {
     }
     public void deleteAllUnlockHelpcards() {
         deleteHelpcardsByLockUseCase.execute();
-    }
-    public void addNewHelpcard(Helpcard helpcard) {
-        addNewHelpcardUseCase.execute(helpcard);
     }
 
 }

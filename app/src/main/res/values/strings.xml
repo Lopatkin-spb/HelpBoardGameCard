@@ -9,7 +9,7 @@
 
 
     <string name="menu_catalog">Helpcards Catalog</string>
-    <string name="menu_addcard">Add New Helpcard</string>
+    <string name="title_addcard">Add New Helpcard</string>
     <string name="menu_edit_card">Edit Helpcard</string>
     <string name="menu_view_card">View Helpcard</string>
 
@@ -31,7 +31,9 @@
     <string name="priority">Priority</string>
     <string name="button_to_record_fragment">Button to record fragment</string>
     <string name="recordFragment">button_to_record_fragment</string>
-<!--    <string name="communicate">Communicate</string>-->
 
+
+    <string name="message_helpcard_saved">Helpcard saved</string>
+    <string name="message_insert_title">Please insert a title</string>
 
 </resources>

@@ -38,8 +38,8 @@ public interface HelpcardRepository {
     void deleteAllUnlockHelpcards();
 
     /**
-     * Добавить новую карточку памяти.
+     * Сохранить новую карточку памяти.
      */
-    void addNewHelpcard(Helpcard helpcard);
+    void saveNewHelpcard(Helpcard helpcard);
 
 }

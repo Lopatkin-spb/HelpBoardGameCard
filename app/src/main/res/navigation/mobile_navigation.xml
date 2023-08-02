@@ -26,15 +26,11 @@
 
     <fragment
             android:id="@+id/nav_addcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.addcard.AddcardEditcardFragment"
-            android:label="@string/menu_addcard"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment"
+            android:label="@string/title_addcard"
             tools:layout="@layout/fragment_addcard">
 
-        <action
-                android:id="@+id/action_nav_addcard_to_nav_catalog"
-                app:destination="@+id/nav_catalog"/>
-        <argument android:name="helpcard" app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
-                  app:nullable="true" android:defaultValue="@null"/>
+        <action android:id="@+id/action_nav_addcard_to_nav_catalog" app:destination="@id/nav_catalog"/>
     </fragment>
 
     <fragment

@@ -7,7 +7,9 @@
 
 
 --- TODAY:
-1) update other fragments
+1) create edit helpcard (?), delete favorites (?), editShareFrag, rename to helpcardDetails
+
+- update other fragments
 
 - add dagger2 to other presentations and domains
 
@@ -55,8 +57,9 @@ bugs (for simulation search and fix in "release" branch)
 - title for big words
 - description for big words
 - save bug (search) in backButton: add new -> save -> enter this again -> backButton -> bug create copy automation
+- AddCard: change up left option menu button to back
 - check details Helpcard after off/ turn to horizontal position (work viewModel)
-
+- AddCard set keyboard: after enter text -> hide
 
 
 --------------------------------reference---------------------------

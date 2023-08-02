@@ -46,7 +46,7 @@ public class HelpcardRepositoryImpl implements HelpcardRepository {
         new DeleteAllUnlockHelpcardsAsyncTask(helpcardDao).execute();
     }
     @Override
-    public void addNewHelpcard(Helpcard helpcard) {
+    public void saveNewHelpcard(Helpcard helpcard) {
         new InsertHelpcardAsyncTask(helpcardDao).execute(helpcard);
     }
 

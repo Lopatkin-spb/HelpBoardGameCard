@@ -3,13 +3,9 @@ package space.lopatkin.spb.helpboardgamecard.ui;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.AddNewHelpcardUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetAllHelpcardsUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.*;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
+import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardViewModel;
 import space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogViewModel;
 import space.lopatkin.spb.helpboardgamecard.ui.helpcard.HelpcardViewModel;
 
@@ -21,16 +17,16 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     private DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase;
     private UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase;
     private DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase;
-    private AddNewHelpcardUseCase addNewHelpcardUseCase;
+    private SaveNewHelpcardUseCase saveNewHelpcardUseCase;
 
-    public ViewModelFactory(GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase, GetAllHelpcardsUseCase getAllHelpcardsUseCase, DeleteHelpcardUseCase deleteHelpcardUseCase, DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase, UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase, DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase, AddNewHelpcardUseCase addNewHelpcardUseCase) {
+    public ViewModelFactory(GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase, GetAllHelpcardsUseCase getAllHelpcardsUseCase, DeleteHelpcardUseCase deleteHelpcardUseCase, DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase, UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase, DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase, SaveNewHelpcardUseCase saveNewHelpcardUseCase) {
         this.getDetailsHelpcardByBoardGameIdUseCase = getDetailsHelpcardByBoardGameIdUseCase;
         this.getAllHelpcardsUseCase = getAllHelpcardsUseCase;
         this.deleteHelpcardUseCase = deleteHelpcardUseCase;
         this.deleteHelpcardByIdUseCase = deleteHelpcardByIdUseCase;
         this.updateHelpcardByObjectUseCase = updateHelpcardByObjectUseCase;
         this.deleteHelpcardsByLockUseCase = deleteHelpcardsByLockUseCase;
-        this.addNewHelpcardUseCase = addNewHelpcardUseCase;
+        this.saveNewHelpcardUseCase = saveNewHelpcardUseCase;
     }
 
     //возможно переделать в дженерик в будущем
@@ -42,8 +38,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         } else if (modelClass.isAssignableFrom(CatalogViewModel.class)) {
             return (T) new CatalogViewModel(getAllHelpcardsUseCase, deleteHelpcardUseCase,
                     deleteHelpcardByIdUseCase, updateHelpcardByObjectUseCase,
-                    deleteHelpcardsByLockUseCase, addNewHelpcardUseCase);
+                    deleteHelpcardsByLockUseCase);
+        } else if (modelClass.isAssignableFrom(AddCardViewModel.class)) {
+            return (T) new AddCardViewModel(saveNewHelpcardUseCase);
         }
+
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass);
     }
 

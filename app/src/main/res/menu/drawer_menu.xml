@@ -12,7 +12,7 @@
         <item
                 android:id="@+id/nav_addcard"
                 android:icon="@drawable/ic_queue_add"
-                android:title="@string/menu_addcard"/>
+                android:title="@string/title_addcard"/>
 
         <item
                 android:id="@+id/nav_favorites"

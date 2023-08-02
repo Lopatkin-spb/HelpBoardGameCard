@@ -3,7 +3,7 @@ package space.lopatkin.spb.helpboardgamecard.di;
 import android.app.Application;
 import dagger.Module;
 import dagger.Provides;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.AddNewHelpcardUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
@@ -37,14 +37,14 @@ public class AppModule {
                                                     DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase,
                                                     UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase,
                                                     DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase,
-                                                    AddNewHelpcardUseCase addNewHelpcardUseCase) {
+                                                    SaveNewHelpcardUseCase saveNewHelpcardUseCase) {
         return new ViewModelFactory(getDetailsHelpcardByBoardGameIdUseCase,
                 getAllHelpcardsUseCase,
                 deleteHelpcardUseCase,
                 deleteHelpcardByIdUseCase,
                 updateHelpcardByObjectUseCase,
                 deleteHelpcardsByLockUseCase,
-                addNewHelpcardUseCase
+                saveNewHelpcardUseCase
         );
     }
 
