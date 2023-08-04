@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 public class ShareViewModel extends ViewModel {
 
-    //проверено
-
     private MutableLiveData<String> mText;
 
     public ShareViewModel() {
@@ -18,4 +16,5 @@ public class ShareViewModel extends ViewModel {
     public LiveData<String> getText() {
         return mText;
     }
+
 }

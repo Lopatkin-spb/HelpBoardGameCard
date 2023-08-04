@@ -21,7 +21,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.Snackbar;
 import space.lopatkin.spb.helpboardgamecard.R;
-import space.lopatkin.spb.helpboardgamecard.app.App;
+import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
@@ -48,7 +48,7 @@ public class AddCardFragment extends Fragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
-        ((App) context.getApplicationContext()).getAppComponent().inject(this);
+        ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
         super.onAttach(context);
     }
 

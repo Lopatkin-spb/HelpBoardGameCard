@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import space.lopatkin.spb.helpboardgamecard.R;
-import space.lopatkin.spb.helpboardgamecard.app.App;
+import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
@@ -34,7 +34,7 @@ public class HelpcardFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         //todo: create abstractFragment, move code to abstractFragment, extends from absFrag
-        ((App) context.getApplicationContext()).getAppComponent().inject(this);
+        ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
         super.onAttach(context);
     }
 

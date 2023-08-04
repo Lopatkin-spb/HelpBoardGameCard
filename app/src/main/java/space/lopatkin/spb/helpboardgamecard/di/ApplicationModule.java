@@ -15,11 +15,11 @@ import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 import javax.inject.Singleton;
 
 @Module
-public class AppModule {
+public class ApplicationModule {
 
     private Application applicationContext;
 
-    public AppModule(Application applicationContext) {
+    public ApplicationModule(Application applicationContext) {
         this.applicationContext = applicationContext;
     }
 

@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_catalog,
                 R.id.nav_addcard,
-                R.id.nav_favorites,
                 R.id.nav_share)
                 .setDrawerLayout(drawer)
                 .build();

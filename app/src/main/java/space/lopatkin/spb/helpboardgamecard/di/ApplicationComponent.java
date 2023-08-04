@@ -9,11 +9,11 @@ import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = {
-        AppModule.class,
+        ApplicationModule.class,
         DomainModule.class,
         DataModule.class
 })
-public interface AppComponent {
+public interface ApplicationComponent {
 
     void inject(CatalogFragment fragment);
 

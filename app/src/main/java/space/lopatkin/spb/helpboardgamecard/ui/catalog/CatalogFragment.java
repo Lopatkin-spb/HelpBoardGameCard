@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import space.lopatkin.spb.helpboardgamecard.R;
-import space.lopatkin.spb.helpboardgamecard.app.App;
+import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.HelpcardAdapter;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
@@ -47,7 +47,7 @@ public class CatalogFragment extends Fragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
-        ((App) context.getApplicationContext()).getAppComponent().inject(this);
+        ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
         super.onAttach(context);
     }
 

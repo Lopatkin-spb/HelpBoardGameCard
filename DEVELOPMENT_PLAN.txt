@@ -22,14 +22,23 @@
 
 
 --- TOMORROW:
-- change name app to "Help Cards for Board Games"
+- change name app to "Help Cards for Board Games" , setup
 - clean architecture
 - add game variants
 - add in description split to speed / agression/ mehanics
 
 
 
-
+reference card - справочная карточка
+game helper
+rules - правила (входит все: contents, overview, setup, play, variants, glossary)
+play: round summary - actions, check victory, winning
+quick rules -> setup (details) , play (details), variants (details)
+game rules
+game details
+view rules
+create rules
+edit rules
 
 
 
@@ -73,7 +82,7 @@ bugs (for simulation search and fix in "release" branch)
 
 ---------------------------------------draft--------------------------------
 
-- Helpcard: add good practice for LiveData include MutableLiveData, split code title to method;
+- Refactoring: renames Di components and main app, delete Favorites content;
 - Plan: update;
 
 
