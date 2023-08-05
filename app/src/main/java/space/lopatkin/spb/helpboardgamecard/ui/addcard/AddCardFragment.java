@@ -129,9 +129,7 @@ public class AddCardFragment extends Fragment {
     }
 
     private void navigateToCatalog() {
-        AddCardFragmentDirections.ActionNavAddcardToNavCatalog action =
-                AddCardFragmentDirections.actionNavAddcardToNavCatalog();
-        navController.navigate(action);
+        navController.navigate(AddCardFragmentDirections.actionNavAddcardToNavCatalog());
     }
 
     private void hideKeyboard() {

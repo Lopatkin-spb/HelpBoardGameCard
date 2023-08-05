@@ -3,7 +3,8 @@ package space.lopatkin.spb.helpboardgamecard.di;
 import dagger.Component;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment;
 import space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogFragment;
-import space.lopatkin.spb.helpboardgamecard.ui.helpcard.HelpcardFragment;
+import space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.cardedit.CardEditFragment;
+import space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.HelpcardFragment;
 
 import javax.inject.Singleton;
 
@@ -20,5 +21,8 @@ public interface ApplicationComponent {
     void inject(AddCardFragment fragment);
 
     void inject(HelpcardFragment fragment);
+
+    void inject(CardEditFragment fragment);
+
 
 }

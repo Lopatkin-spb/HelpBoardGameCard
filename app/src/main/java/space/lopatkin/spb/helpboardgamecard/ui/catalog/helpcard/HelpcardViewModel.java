@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.helpcard;
+package space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard;
 
 
 import androidx.lifecycle.LiveData;
@@ -23,5 +23,9 @@ public class HelpcardViewModel extends ViewModel {
 
     public LiveData<Helpcard> helpcardLiveData = Transformations
             .switchMap(idMutableLiveData, (id) -> getDetailsHelpcardByBoardGameIdUseCase.execute(id));
+
+    public LiveData<Integer> getCardId() {
+        return idMutableLiveData;
+    }
 
 }

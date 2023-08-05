@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scroll_card_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGreyCardBackground"
+            android:padding="16dp"
+            android:layout_margin="10dp">
+
+        <View
+                android:id="@+id/separator_0"
+                android:layout_width="match_parent"
+                android:background="@drawable/separator"
+                android:layout_height="5dp"/>
+
+        <EditText
+                android:id="@+id/edit_title"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_title"
+                android:inputType="textCapWords"
+                android:textColor="@color/colorTextWhite"
+                android:textColorHint="@color/colorTextWhite"
+                android:layout_below="@+id/separator_0"
+                android:textSize="@dimen/edit_text_size"/>
+
+        <EditText
+                android:id="@+id/edit_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_description"
+                android:inputType="textMultiLine"
+                android:layout_below="@+id/edit_title"
+                android:layout_marginStart="50dp"
+                android:textSize="@dimen/edit_text_size"
+                android:textColor="@color/colorTextWhite"
+                android:textColorHint="@color/colorTextWhite"/>
+
+        <View
+                android:id="@+id/separator_1"
+                android:layout_width="match_parent"
+                android:background="@drawable/separator"
+                android:layout_below="@+id/edit_description"
+                android:layout_height="5dp"/>
+
+        <TextView
+                android:id="@+id/header_victory_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/separator_1"
+                android:textColor="@color/colorTextWhite"
+                android:text="@string/header_victory_condition"
+                android:textSize="@dimen/header_text_size"/>
+
+        <EditText
+                android:id="@+id/edit_victory_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_below="@+id/header_victory_condition"
+                android:hint="@string/hint_victory_condition"
+                android:textColor="@color/colorTextWhite"
+                android:textColorHint="@color/colorTextWhite"
+                android:inputType="textMultiLine"
+                android:textSize="@dimen/edit_text_size"/>
+
+        <View
+                android:id="@+id/separator_2"
+                android:layout_width="match_parent"
+                android:background="@drawable/separator"
+                android:layout_below="@+id/edit_victory_condition"
+                android:layout_height="5dp"/>
+
+        <TextView
+                android:id="@+id/header_end_game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/separator_2"
+                android:textColor="@color/colorTextWhite"
+                android:text="@string/header_end_game"
+                android:textSize="@dimen/header_text_size"/>
+
+        <EditText
+                android:id="@+id/edit_end_game"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/header_end_game"
+                android:layout_marginStart="50dp"
+                android:textColor="@color/colorTextWhite"
+                android:textColorHint="@color/colorTextWhite"
+                android:textSize="@dimen/edit_text_size"
+                android:hint="@string/hint_end_game"
+                android:inputType="textMultiLine"/>
+
+        <View
+                android:id="@+id/separator_3"
+                android:layout_width="match_parent"
+                android:background="@drawable/separator"
+                android:layout_below="@+id/edit_end_game"
+                android:layout_height="5dp"/>
+
+        <TextView
+                android:id="@+id/header_preparation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextWhite"
+                android:layout_below="@+id/separator_3"
+                android:text="@string/header_preparation"
+                android:textSize="@dimen/header_text_size"/>
+
+        <EditText
+                android:id="@+id/edit_preparation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/header_preparation"
+                android:layout_marginStart="50dp"
+                android:hint="@string/hint_preparation"
+                android:textColor="@color/colorTextWhite"
+                android:textColorHint="@color/colorTextWhite"
+                android:textSize="@dimen/edit_text_size"
+                android:inputType="textMultiLine"
+                android:autofillHints=""/>
+
+        <View
+                android:id="@+id/separator_4"
+                android:layout_width="match_parent"
+                android:background="@drawable/separator"
+                android:layout_below="@+id/edit_preparation"
+                android:layout_height="5dp"/>
+
+        <TextView
+                android:id="@+id/header_player_turn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextWhite"
+                android:layout_below="@+id/separator_4"
+                android:text="@string/header_player_turn"
+                android:textSize="@dimen/header_text_size"/>
+
+        <EditText
+                android:id="@+id/edit_player_turn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/header_player_turn"
+                android:layout_marginStart="50dp"
+                android:hint="@string/hint_player_turn"
+                android:inputType="textMultiLine"
+                android:textColor="@color/colorTextWhite"
+                android:textColorHint="@color/colorTextWhite"
+                android:textSize="@dimen/edit_text_size"
+                android:autofillHints=""/>
+
+        <View
+                android:id="@+id/separator_5"
+                android:layout_width="match_parent"
+                android:background="@drawable/separator"
+                android:layout_below="@+id/edit_player_turn"
+                android:layout_height="5dp"/>
+
+    </RelativeLayout>
+
+</ScrollView>

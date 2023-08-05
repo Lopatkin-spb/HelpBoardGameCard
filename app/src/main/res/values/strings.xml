@@ -9,7 +9,6 @@
 
 
     <string name="menu_catalog">Helpcards Catalog</string>
-    <string name="title_addcard">Add New Helpcard</string>
     <string name="menu_edit_card">Edit Helpcard</string>
     <string name="menu_view_card">View Helpcard</string>
 
@@ -21,8 +20,6 @@
     <string name="newCard_title">заметка</string>
     <string name="save">сохранить</string>
     <string name="complited">выполнение</string>
-    <string name="title">title</string>
-    <string name="description">description</string>
     <string name="_1">1</string>
     <string name="todo">TODO</string>
     <string name="action_delete_all">"Delete all helpcards"</string>
@@ -32,7 +29,26 @@
     <string name="recordFragment">button_to_record_fragment</string>
 
 
+    <string name="title_addcard">Add New Helpcard</string>
+    <string name="title_card_edit">Card edit</string>
+
+    <string name="hint_title">title</string>
+    <string name="hint_description">description</string>
+    <string name="header_victory_condition">Victory condition</string>
+    <string name="hint_victory_condition">victory condition</string>
+    <string name="header_end_game">End game</string>
+    <string name="hint_end_game">end game</string>
+    <string name="header_preparation">Preparation</string>
+    <string name="hint_preparation">preparation</string>
+    <string name="header_player_turn">Player turn</string>
+    <string name="hint_player_turn">player turn</string>
+
+    <string name="action_save">Save</string>
+    <string name="action_card_save">Card save</string>
+    <string name="action_card_edit">Card edit</string>
+
     <string name="message_helpcard_saved">Helpcard saved</string>
+    <string name="message_card_updated">Card updated</string>
     <string name="message_insert_title">Please insert a title</string>
 
 </resources>

@@ -1,13 +1,13 @@
 
 
 --- GLOBAL:
-!!!create first version and pull to "release" branch -> fix bugs and design -> pull to "prod" branch
+!!!create first version and pull to "release" branch -> fix bugs and design -> pull to "prod" branch v0.0.0
 
 
 
 
 --- TODAY:
-1) create edit helpcard (?), delete favorites (?), editShareFrag, rename to helpcardDetails
+1)  editShareFrag, rename to helpcardDetails
 
 - update other fragments
 
@@ -46,6 +46,7 @@ edit rules
 1) migrate to kotlin
 
 
+- screen for scoring points
 - viewLoading to fragments
 - add touch animations
 - rxjava 2
@@ -53,12 +54,12 @@ edit rules
 - settings: day/night switch and add sharedPrefs
 - settings: small/ big icons in helpcard
 - add sort list/ delete priority
-- first player definition
+- screen for first player definition
 - host/ player ?
 - add header collapse
 - icons list
 - load image game from net/ site
-- add game statistics
+- screen for add game statistics
 
 
 
@@ -69,7 +70,7 @@ bugs (for simulation search and fix in "release" branch)
 - AddCard: change up left option menu button to back
 - check details Helpcard after off/ turn to horizontal position (work viewModel)
 - AddCard set keyboard: after enter text -> hide
-
+- delete edit to item (catalog)
 
 --------------------------------reference---------------------------
 
@@ -77,6 +78,11 @@ bugs (for simulation search and fix in "release" branch)
 
 
 
+--------------------------------glossary-----------------------------
+
+quick rules for board games
+name card, name game ,descriptions
+card ? / memo (памятка)? note  - setup, play/gameplay, variants
 
 
 

@@ -50,7 +50,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
 
     /*
-     * Navigation
+     * Android Jetpack: Navigation component
      */
     def navigation_version = "2.3.0"
     implementation "androidx.navigation:navigation-fragment:$navigation_version"

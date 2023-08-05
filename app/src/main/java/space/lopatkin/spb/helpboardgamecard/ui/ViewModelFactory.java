@@ -7,7 +7,8 @@ import space.lopatkin.spb.helpboardgamecard.domain.usecase.*;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardViewModel;
 import space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogViewModel;
-import space.lopatkin.spb.helpboardgamecard.ui.helpcard.HelpcardViewModel;
+import space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.cardedit.CardEditViewModel;
+import space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.HelpcardViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -41,8 +42,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     deleteHelpcardsByLockUseCase);
         } else if (modelClass.isAssignableFrom(AddCardViewModel.class)) {
             return (T) new AddCardViewModel(saveNewHelpcardUseCase);
+        } else if (modelClass.isAssignableFrom(CardEditViewModel.class)) {
+            return (T) new CardEditViewModel(getDetailsHelpcardByBoardGameIdUseCase, updateHelpcardByObjectUseCase);
         }
-
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass);
     }
 

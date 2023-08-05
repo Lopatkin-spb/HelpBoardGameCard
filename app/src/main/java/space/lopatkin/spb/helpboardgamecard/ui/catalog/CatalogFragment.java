@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.ui.HelpcardAdapter;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
 import javax.inject.Inject;

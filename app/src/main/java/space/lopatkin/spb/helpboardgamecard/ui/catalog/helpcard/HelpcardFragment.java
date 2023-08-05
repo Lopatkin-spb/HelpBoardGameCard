@@ -1,8 +1,11 @@
-package space.lopatkin.spb.helpboardgamecard.ui.helpcard;
+package space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
@@ -30,6 +35,7 @@ public class HelpcardFragment extends Fragment {
     private TextView textPlayerTurn;
     private TextView textEffects;
     private Helpcard details;
+    private NavController navController;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -51,6 +57,8 @@ public class HelpcardFragment extends Fragment {
 
         details = new Helpcard();
 
+        setHasOptionsMenu(true);
+
         return root;
     }
 
@@ -58,6 +66,7 @@ public class HelpcardFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        navController = Navigation.findNavController(getView());
 
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(HelpcardViewModel.class);
 
@@ -69,6 +78,23 @@ public class HelpcardFragment extends Fragment {
             } else {
                 setTitleDynamically();
             }
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_card_details, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_card_edit:
+                navigateToCardEdit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -99,6 +125,17 @@ public class HelpcardFragment extends Fragment {
         } else {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_view_card);
         }
+    }
+
+    private void navigateToCardEdit() {
+        viewModel.getCardId().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                HelpcardFragmentDirections.ActionNavHelpcardToNavCardEdit action =
+                        HelpcardFragmentDirections.actionNavHelpcardToNavCardEdit().setId(integer);
+                navController.navigate(action);
+            }
+        });
     }
 
 }

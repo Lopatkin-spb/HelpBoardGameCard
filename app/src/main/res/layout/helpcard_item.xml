@@ -30,14 +30,14 @@
                 android:ellipsize="end"
                 android:textSize="40dp"
                 android:maxLines="2"
-                android:text="@string/title"/>
+                android:text="@string/hint_title"/>
 
         <TextView
                 android:id="@+id/text_view_item_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_view_item_title"
-                android:text="@string/description"
+                android:text="@string/hint_description"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="25dp"
 

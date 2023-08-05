@@ -21,7 +21,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/shadow"
                 android:padding="16dp"
-                tools:context=".ui.helpcard.HelpcardFragment">
+                tools:context=".ui.catalog.helpcard.HelpcardFragment">
 
             <!--            <TextView-->
             <!--                    android:id="@+id/text_view_title"-->

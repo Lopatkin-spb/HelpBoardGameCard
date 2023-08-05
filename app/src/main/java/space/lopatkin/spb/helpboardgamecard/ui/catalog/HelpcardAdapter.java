@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui;
+package space.lopatkin.spb.helpboardgamecard.ui.catalog;
 
 //import android.support.v4.*;
 
