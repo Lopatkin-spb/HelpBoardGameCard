@@ -2,12 +2,14 @@ package space.lopatkin.spb.helpboardgamecard.ui.addcard;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -71,6 +73,7 @@ public class AddCardFragment extends Fragment {
         setScreenTitle(R.string.title_addcard);
         //разрешает верхнее правое меню
         setHasOptionsMenu(true);
+        setupEditViews();
         return root;
     }
 
@@ -97,6 +100,13 @@ public class AddCardFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void setupEditViews() {
+        editTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        editTitle.setRawInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        editDescription.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        editDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
     }
 
     private void saveNewHelpcard() {
