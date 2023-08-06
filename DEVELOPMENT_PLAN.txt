@@ -11,6 +11,8 @@
 
 - up min version to 31
 
+
+
 - set full one game to card
 
 
@@ -18,6 +20,7 @@
 
 
 --- TOMORROW:
+- add binding views to project
 - change name app to "Help Cards for Board Games" , setup
 - clean architecture
 - add game variants
@@ -59,7 +62,8 @@ bugs (for simulation search and fix in "release" branch)
 - AddCard: change up left option menu button to back
 - check details Helpcard after off/ turn to horizontal position (work viewModel)
 - AddCard set keyboard: after enter text -> hide
-- delete edit to item (catalog)
+
+
 
 --------------------------------reference---------------------------
 
@@ -93,7 +97,8 @@ card ? / memo (памятка)? note  - setup, play/gameplay, variants
 
 
 
-
+- Bug fix: delete edit icon in Catalog items;
+- Plan: update;
 
 
 

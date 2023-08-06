@@ -67,7 +67,6 @@ public class CatalogFragment extends Fragment {
         setEditFavoritesItem(adapter);
         setEditLockItem(adapter);
         navigateToShowItem(adapter);
-        navigateToEditItem(adapter);
         return root;
     }
 
@@ -172,20 +171,6 @@ public class CatalogFragment extends Fragment {
         });
     }
 
-    private void navigateToEditItem(HelpcardAdapter adapter) {
-        //редактирование одной карты: навигация и передача данных
-        adapter.setOnItemEditClickListener(new HelpcardAdapter.OnItemEditClickListener() {
-            @Override
-            public void onItemEditClick(Helpcard helpcard) {
-//                Helpcard helpcardToAddcard = getData(helpcard);
-//                CatalogFragmentDirections.ActionNavCatalogToNavAddcard action =
-//                        CatalogFragmentDirections.actionNavCatalogToNavAddcard()
-//                                .setHelpcard(helpcardToAddcard);
-//                navController.navigate(action);
-            }
-        });
-    }
-
     private Helpcard getData(Helpcard data) {
         int editId = data.getId();
         String editTitle = data.getTitle();
@@ -204,7 +189,6 @@ public class CatalogFragment extends Fragment {
                 editFavorites, editLock, editPriority);
         return h;
     }
-
 
     private void showSystemMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
