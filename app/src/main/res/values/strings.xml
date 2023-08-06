@@ -42,6 +42,8 @@
     <string name="hint_preparation">preparation</string>
     <string name="header_player_turn">Player turn</string>
     <string name="hint_player_turn">player turn</string>
+    <string name="text_stub">--</string>
+
 
     <string name="action_save">Save</string>
     <string name="action_card_save">Card save</string>
