@@ -1,17 +1,13 @@
 
 
 --- GLOBAL:
-!!!create first version and pull to "release" branch -> fix bugs and design -> pull to "prod" branch v0.0.0
+!!!create first version and pull to "release-0.1.0" branch -> fix bugs and design -> pull to "prod" branch v0.1.0
 
 
 
 
 --- TODAY:
-1)  editShareFrag, rename to helpcardDetails
-
-- update other fragments
-
-- add dagger2 to other presentations and domains
+1) pull to "release-0.1.0" branch
 
 - up min version to 31
 
@@ -29,16 +25,7 @@
 
 
 
-reference card - справочная карточка
-game helper
-rules - правила (входит все: contents, overview, setup, play, variants, glossary)
-play: round summary - actions, check victory, winning
-quick rules -> setup (details) , play (details), variants (details)
-game rules
-game details
-view rules
-create rules
-edit rules
+
 
 
 
@@ -46,20 +33,22 @@ edit rules
 1) migrate to kotlin
 
 
-- screen for scoring points
+- global: renames to helpcardDetails etc...
+- возможность добавить свой комментарий к каждой памятке
+- feature: screen for scoring points
 - viewLoading to fragments
 - add touch animations
 - rxjava 2
 - design
-- settings: day/night switch and add sharedPrefs
-- settings: small/ big icons in helpcard
-- add sort list/ delete priority
-- screen for first player definition
-- host/ player ?
-- add header collapse
-- icons list
+- feature: settings: day/night switch and add sharedPrefs
+- feature: settings: small/ big icons in helpcard
+- feature: add sort list/ delete priority
+- feature: screen for first player definition
+- feature: host/ player ?
+- feature: add header collapse
+- feature: icons keyboard
 - load image game from net/ site
-- screen for add game statistics
+- feature: screen for add game statistics
 
 
 
@@ -79,6 +68,17 @@ bugs (for simulation search and fix in "release" branch)
 
 
 --------------------------------glossary-----------------------------
+
+reference card - справочная карточка
+game helper
+rules - правила (входит все: contents, overview, setup, play, variants, glossary)
+play: round summary - actions, check victory, winning
+quick rules -> setup (details) , play (details), variants (details)
+game rules
+game details
+view rules
+create rules
+edit rules
 
 quick rules for board games
 name card, name game ,descriptions
