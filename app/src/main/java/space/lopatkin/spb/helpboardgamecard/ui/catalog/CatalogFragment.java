@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,6 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.snackbar.Snackbar;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
@@ -96,7 +96,7 @@ public class CatalogFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_delete_all_unlock_helpcards:
                 viewModel.deleteAllUnlockHelpcards();
-                showSystemMessage(allCardDelete);
+                showMessage(allCardDelete);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -118,9 +118,9 @@ public class CatalogFragment extends Fragment {
                 if (!lock) {
                     Helpcard helpcard = adapter.getHelpcardAt(viewHolder.getAdapterPosition());
                     viewModel.delete(helpcard);
-                    showSystemMessage(delete);
+                    showMessage(delete);
                 } else {
-                    showSystemMessage(notDelete);
+                    showMessage(notDelete);
                 }
             }
         }).attachToRecyclerView(recyclerView);
@@ -133,9 +133,9 @@ public class CatalogFragment extends Fragment {
                 helpcard.setFavorites(b);
                 viewModel.update(helpcard);
                 if (b) {
-                    showSystemMessage(favorites);
+                    showMessage(favorites);
                 } else {
-                    showSystemMessage(unfavorites);
+                    showMessage(unfavorites);
                 }
             }
         });
@@ -148,9 +148,9 @@ public class CatalogFragment extends Fragment {
                 helpcard.setLock(b);
                 viewModel.update(helpcard);
                 if (b) {
-                    showSystemMessage(lock);
+                    showMessage(lock);
                 } else {
-                    showSystemMessage(unlock);
+                    showMessage(unlock);
                 }
             }
         });
@@ -190,8 +190,9 @@ public class CatalogFragment extends Fragment {
         return h;
     }
 
-    private void showSystemMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    private void showMessage(String message) {
+        Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT).show();
     }
+
 
 }
