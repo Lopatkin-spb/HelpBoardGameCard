@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
-        android:id="@+id/scroll_addcard"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scroll_card_edit"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_height="match_parent">
 
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorGreyCardBackground"
-                    android:padding="16dp"
-                    android:layout_margin="10dp"
-                    tools:context=".ui.addcard.AddCardFragment">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGreyCardBackground"
+            android:padding="16dp"
+            android:layout_margin="10dp">
 
         <View
                 android:id="@+id/separator_0"
@@ -24,7 +21,7 @@
                 android:layout_height="5dp"/>
 
         <EditText
-                android:id="@+id/edit_text_title"
+                android:id="@+id/edit_title"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_title"
@@ -34,100 +31,98 @@
                 android:layout_below="@+id/separator_0"
                 android:textSize="@dimen/edit_text_size"/>
 
-
         <EditText
-                android:id="@+id/edit_text_description"
+                android:id="@+id/edit_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_description"
-                android:layout_below="@+id/edit_text_title"
+                android:maxLength="25"
+                android:layout_below="@+id/edit_title"
                 android:layout_marginStart="50dp"
                 android:textSize="@dimen/edit_text_size_description"
                 android:textColor="@color/colorTextWhite"
-                android:maxLength="25"
                 android:textColorHint="@color/colorTextWhite"/>
 
         <View
                 android:id="@+id/separator_1"
                 android:layout_width="match_parent"
                 android:background="@drawable/separator"
-                android:layout_below="@+id/edit_text_description"
+                android:layout_below="@+id/edit_description"
                 android:layout_height="5dp"/>
 
-
         <TextView
-                android:id="@+id/view_victory_condition"
+                android:id="@+id/header_victory_condition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_below="@+id/separator_1"
                 android:textColor="@color/colorTextWhite"
-                android:text="Victory condition"/>
+                android:text="@string/header_victory_condition"
+                android:textSize="@dimen/header_text_size"/>
 
         <EditText
-                android:id="@+id/edit_text_victory_condition"
+                android:id="@+id/edit_victory_condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="victory condition"
+                android:layout_marginStart="50dp"
+                android:layout_below="@+id/header_victory_condition"
+                android:hint="@string/hint_victory_condition"
                 android:textColor="@color/colorTextWhite"
                 android:textColorHint="@color/colorTextWhite"
                 android:inputType="textMultiLine"
-                android:layout_marginStart="50dp"
-
-                android:layout_below="@+id/view_victory_condition"
                 android:textSize="@dimen/edit_text_size"/>
 
         <View
                 android:id="@+id/separator_2"
                 android:layout_width="match_parent"
                 android:background="@drawable/separator"
-                android:layout_below="@+id/edit_text_victory_condition"
+                android:layout_below="@+id/edit_victory_condition"
                 android:layout_height="5dp"/>
 
         <TextView
-                android:id="@+id/view_end_game"
+                android:id="@+id/header_end_game"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/separator_2"
                 android:textColor="@color/colorTextWhite"
-                android:text="End game"/>
-
+                android:text="@string/header_end_game"
+                android:textSize="@dimen/header_text_size"/>
 
         <EditText
-                android:id="@+id/edit_text_end_game"
+                android:id="@+id/edit_end_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view_end_game"
+                android:layout_below="@+id/header_end_game"
                 android:layout_marginStart="50dp"
                 android:textColor="@color/colorTextWhite"
                 android:textColorHint="@color/colorTextWhite"
-
                 android:textSize="@dimen/edit_text_size"
-                android:hint="end game"
+                android:hint="@string/hint_end_game"
                 android:inputType="textMultiLine"/>
 
         <View
                 android:id="@+id/separator_3"
                 android:layout_width="match_parent"
                 android:background="@drawable/separator"
-                android:layout_below="@+id/edit_text_end_game"
+                android:layout_below="@+id/edit_end_game"
                 android:layout_height="5dp"/>
 
         <TextView
-                android:id="@+id/view_preparation"
+                android:id="@+id/header_preparation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorTextWhite"
                 android:layout_below="@+id/separator_3"
-                android:text="Preparation"/>
+                android:text="@string/header_preparation"
+                android:textSize="@dimen/header_text_size"/>
 
         <EditText
-                android:id="@+id/edit_text_preparation"
+                android:id="@+id/edit_preparation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="preparation"
-                android:layout_below="@+id/view_preparation"
+                android:layout_below="@+id/header_preparation"
                 android:layout_marginStart="50dp"
+                android:hint="@string/hint_preparation"
                 android:textColor="@color/colorTextWhite"
                 android:textColorHint="@color/colorTextWhite"
                 android:textSize="@dimen/edit_text_size"
@@ -138,94 +133,36 @@
                 android:id="@+id/separator_4"
                 android:layout_width="match_parent"
                 android:background="@drawable/separator"
-                android:layout_below="@+id/edit_text_preparation"
+                android:layout_below="@+id/edit_preparation"
                 android:layout_height="5dp"/>
 
         <TextView
-                android:id="@+id/view_player_turn"
+                android:id="@+id/header_player_turn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorTextWhite"
                 android:layout_below="@+id/separator_4"
-                android:text="Player turn"/>
+                android:text="@string/header_player_turn"
+                android:textSize="@dimen/header_text_size"/>
 
         <EditText
-                android:id="@+id/edit_text_player_turn"
+                android:id="@+id/edit_player_turn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="player turn"
-                android:inputType="textMultiLine"
-                android:layout_below="@+id/view_player_turn"
+                android:layout_below="@+id/header_player_turn"
                 android:layout_marginStart="50dp"
+                android:hint="@string/hint_player_turn"
+                android:inputType="textMultiLine"
                 android:textColor="@color/colorTextWhite"
                 android:textColorHint="@color/colorTextWhite"
                 android:textSize="@dimen/edit_text_size"
                 android:autofillHints=""/>
-
 
         <View
                 android:id="@+id/separator_5"
                 android:layout_width="match_parent"
                 android:background="@drawable/separator"
-                android:layout_below="@+id/edit_text_player_turn"
-                android:layout_height="5dp"/>
-
-
-        <TextView
-                android:id="@+id/view_effects"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorTextWhite"
-                android:layout_below="@+id/separator_5"
-                android:text="Effects"/>
-
-
-        <EditText
-                android:id="@+id/edit_text_effects"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/view_effects"
-                android:layout_marginStart="50dp"
-                android:textColor="@color/colorTextWhite"
-                android:textColorHint="@color/colorTextWhite"
-                android:textSize="@dimen/edit_text_size"
-                android:hint="effects"
-                android:inputType="textMultiLine"
-                android:autofillHints=""/>
-
-        <View
-                android:id="@+id/separator_6"
-                android:layout_width="match_parent"
-                android:background="@drawable/separator"
-                android:layout_below="@+id/edit_text_effects"
-                android:layout_height="5dp"/>
-
-
-        <TextView
-                android:id="@+id/text_view_info_priority"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/priority"
-                android:layout_below="@+id/separator_6"
-                android:textColor="@color/colorTextWhite"
-                android:layout_marginEnd="10dp"/>
-
-        <NumberPicker
-                android:id="@+id/number_picker_priority"
-                android:layout_width="wrap_content"
-                android:layout_below="@+id/text_view_info_priority"
-                android:layout_marginStart="50dp"
-                android:textColor="@color/colorTextWhite"
-                android:textColorHint="@color/colorTextWhite"
-                android:layout_height="wrap_content"/>
-
-
-        <View
-                android:id="@+id/separator_7"
-                android:layout_width="match_parent"
-                android:background="@drawable/separator"
-                android:layout_below="@+id/number_picker_priority"
+                android:layout_below="@+id/edit_player_turn"
                 android:layout_height="5dp"/>
 
     </RelativeLayout>

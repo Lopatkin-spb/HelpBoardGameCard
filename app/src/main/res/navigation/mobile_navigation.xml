@@ -11,57 +11,69 @@
             android:name="space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogFragment"
             android:label="@string/menu_catalog"
             tools:layout="@layout/fragment_catalog">
-
         <action
                 android:id="@+id/action_nav_catalog_to_nav_addcard"
                 app:destination="@id/nav_addcard"/>
-        <action android:id="@+id/action_nav_catalog_to_nav_helpcard"
+        <action
+                android:id="@+id/action_nav_catalog_to_nav_helpcard"
                 app:destination="@+id/nav_helpcard"/>
-        <argument android:name="helpcard"
-                  app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
-                  app:nullable="true"
-                  android:defaultValue="@null"/>
-
+        <argument
+                android:name="helpcard"
+                app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
+                app:nullable="true"
+                android:defaultValue="@null"/>
     </fragment>
 
     <fragment
             android:id="@+id/nav_addcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.addcard.AddcardEditcardFragment"
-            android:label="@string/menu_addcard"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment"
+            android:label="@string/title_addcard"
             tools:layout="@layout/fragment_addcard">
-
         <action
                 android:id="@+id/action_nav_addcard_to_nav_catalog"
-                app:destination="@+id/nav_catalog"/>
-        <argument android:name="helpcard" app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
-                  app:nullable="true" android:defaultValue="@null"/>
+                app:destination="@id/nav_catalog"/>
     </fragment>
 
+
     <fragment
-            android:id="@+id/nav_favorites"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.favorites.FavoritesFragment"
-            android:label="@string/menu_favorites"
-            tools:layout="@layout/fragment_favorites"/>
+            android:id="@+id/nav_helpcard"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.HelpcardFragment"
+            android:label="helpcard"
+            tools:layout="@layout/fragment_helpcard">
+        <action
+                android:id="@+id/action_nav_helpcard_to_nav_card_edit"
+                app:destination="@id/nav_card_edit"/>
+        <argument
+                android:name="id"
+                app:argType="integer"
+                app:nullable="false"
+                android:defaultValue="-1"/>
+    </fragment>
+
+
+    <fragment
+            android:id="@+id/nav_card_edit"
+            android:name="space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.cardedit.CardEditFragment"
+            android:label="@string/title_card_edit"
+            tools:layout="@layout/fragment_card_edit">
+        <argument
+                android:name="id"
+                app:argType="integer"
+                app:nullable="false"
+                android:defaultValue="-1"/>
+        <action
+                android:id="@+id/action_nav_card_edit_to_nav_catalog"
+                app:destination="@id/nav_catalog"/>
+    </fragment>
+
+
+    <argument android:defaultValue="default" android:name="currentHelpcard"/>
 
     <fragment
             android:id="@+id/nav_share"
             android:name="space.lopatkin.spb.helpboardgamecard.ui.share.ShareFragment"
             android:label="@string/menu_share"
             tools:layout="@layout/fragment_share"/>
-
-    <fragment
-            android:id="@+id/nav_helpcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.helpcard.HelpcardFragment"
-            android:label="helpcard"
-            tools:layout="@layout/fragment_helpcard">
-
-
-        <argument android:name="helpcard" app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
-                  app:nullable="true" android:defaultValue="@null"/>
-
-
-    </fragment>
-    <argument android:defaultValue="default" android:name="currentHelpcard"/>
 
 
 </navigation>

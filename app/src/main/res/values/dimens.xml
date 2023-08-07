@@ -6,4 +6,19 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="design_navigation_icon_size">55dp</dimen>
+
+
+    <!-- Global. -->
+    <dimen name="application_corners_radius">10dp</dimen>
+    <dimen name="application_margin">10dp</dimen>
+
+    <!-- Text size. -->
+    <dimen name="edit_text_size">30sp</dimen>
+    <dimen name="edit_text_size_description">20sp</dimen>
+    <dimen name="header_text_size">15sp</dimen>
+
+    <!-- Items. -->
+    <dimen name="item_title_text_size">30sp</dimen>
+    <dimen name="item_description_text_size">20sp</dimen>
+
 </resources>

@@ -1,43 +1,56 @@
 package space.lopatkin.spb.helpboardgamecard.ui.catalog;
 
 
-import android.app.Application;
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import space.lopatkin.spb.helpboardgamecard.dataRoom.HelpcardRepository;
+import androidx.lifecycle.ViewModel;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetAllHelpcardsUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 import java.util.List;
 
-public class CatalogViewModel extends AndroidViewModel {
-    private HelpcardRepository repository;
-    private LiveData<List<Helpcard>> allHelpcards;
+public class CatalogViewModel extends ViewModel {
 
-    public CatalogViewModel(@NonNull Application application) {
-        super(application);
-        repository = new HelpcardRepository(application);
-        allHelpcards = repository.getAllHelpcards();
+    private GetAllHelpcardsUseCase getAllHelpcardsUseCase;
+    private DeleteHelpcardUseCase deleteHelpcardUseCase;
+    private DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase;
+    private UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase;
+    private DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase;
+
+    private LiveData<List<Helpcard>> listHelpcards;
+
+    public CatalogViewModel(GetAllHelpcardsUseCase getAllHelpcardsUseCase,
+                            DeleteHelpcardUseCase deleteHelpcardUseCase,
+                            DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase,
+                            UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase,
+                            DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase) {
+        this.getAllHelpcardsUseCase = getAllHelpcardsUseCase;
+        this.deleteHelpcardUseCase = deleteHelpcardUseCase;
+        this.deleteHelpcardByIdUseCase = deleteHelpcardByIdUseCase;
+        this.updateHelpcardByObjectUseCase = updateHelpcardByObjectUseCase;
+        this.deleteHelpcardsByLockUseCase = deleteHelpcardsByLockUseCase;
+
+        listHelpcards = this.getAllHelpcardsUseCase.execute();
     }
 
-    public void insert(Helpcard helpcard) {
-        repository.insert(helpcard);
+    public LiveData<List<Helpcard>> getListHelpcards() {
+        return listHelpcards;
+    }
+
+    public void delete(Helpcard helpcard) {
+        deleteHelpcardUseCase.execute(helpcard);
+    }
+    public void delete(int id) {
+        deleteHelpcardByIdUseCase.execute(id);
     }
     public void update(Helpcard helpcard) {
-        repository.update(helpcard);
+        updateHelpcardByObjectUseCase.execute(helpcard);
     }
-    public void delete(Helpcard helpcard) {
-        repository.delete(helpcard);
-    }
-    public void deleteAllHelpcards() {
-        repository.deleteAllHelpcards();
-    }
-
     public void deleteAllUnlockHelpcards() {
-        repository.deleteAllUnlockHelpcards();
+        deleteHelpcardsByLockUseCase.execute();
     }
 
-    public LiveData<List<Helpcard>> getAllHelpcards() {
-        return allHelpcards;
-    }
 }

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-
+        android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -17,45 +14,53 @@
             android:layout_marginTop="8dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="8dp"
-            android:layout_marginBottom="8dp"
-
-    >
+            android:layout_marginBottom="8dp">
 
         <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/shadow"
-                        android:padding="16dp"
-                        tools:context=".ui.helpcard.HelpcardFragment">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shadow"
+                android:padding="16dp"
+                tools:context=".ui.catalog.helpcard.HelpcardFragment">
 
-            <!--            <TextView-->
-            <!--                    android:id="@+id/text_view_title"-->
-            <!--                    android:layout_width="300dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:hint="@string/title"-->
-            <!--                    android:textColor="@color/colorTextWhite"-->
-            <!--                    android:textColorHint="@color/colorTextWhite"-->
+                        <TextView
+                                android:id="@+id/text_view_title"
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
+                                android:hint="title"
+                                android:textColor="@color/colorTextWhite"
+                                android:textColorHint="@color/colorTextWhite"
 
-            <!--                    android:textSize="50dp"/>-->
+                                android:textSize="@dimen/edit_text_size"/>
 
-            <!--            <TextView-->
-            <!--                    android:id="@+id/text_view_description"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:hint="description"-->
-            <!--                    android:layout_below="@+id/text_view_title"-->
-            <!--                    android:layout_marginStart="50dp"-->
-            <!--                    android:textSize="40dp"-->
-            <!--                    android:textColorHint="@color/colorTextWhite"-->
+            <View
+                    android:id="@+id/separator_0_4"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/separator"
+                    android:layout_below="@+id/text_view_title"
 
-            <!--                    android:textColor="@color/colorTextWhite"-->
-            <!--            />-->
+                    android:layout_height="5dp"/>
+
+                        <TextView
+                                android:id="@+id/text_view_description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="description"
+                                android:layout_below="@+id/separator_0_4"
+                                android:layout_marginStart="50dp"
+                                android:textSize="@dimen/edit_text_size_description"
+                                android:textColorHint="@color/colorTextWhite"
+
+                                android:textColor="@color/colorTextWhite"
+                        />
 
 
             <View
                     android:id="@+id/separator_0"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
+                    android:layout_below="@+id/text_view_description"
+
                     android:layout_height="5dp"/>
 
 
@@ -65,11 +70,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_below="@+id/separator_0"
+                    android:textSize="@dimen/header_text_size"
                     android:textColor="@color/colorTextWhite"
                     android:text="Victory condition"/>
 
             <TextView
-                    android:id="@+id/text_view_victory_condition"
+                    android:id="@+id/text_victory_condition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view_victory_condition"
@@ -77,14 +83,14 @@
                     android:layout_marginStart="50dp"
                     android:hint="victory condition"
                     android:textColorHint="@color/colorTextWhite"
-                    android:textSize="40dp"/>
+                    android:textSize="@dimen/edit_text_size"/>
 
 
             <View
                     android:id="@+id/separator_1"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_victory_condition"
+                    android:layout_below="@+id/text_victory_condition"
                     android:layout_height="5dp"/>
 
             <TextView
@@ -93,10 +99,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/separator_1"
                     android:textColor="@color/colorTextWhite"
+                    android:textSize="@dimen/header_text_size"
                     android:text="End game"/>
 
             <TextView
-                    android:id="@+id/text_view_end_game"
+                    android:id="@+id/text_end_game"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -104,13 +111,13 @@
                     android:textColor="@color/colorTextWhite"
                     android:textColorHint="@color/colorTextWhite"
                     android:hint="end game"
-                    android:textSize="40dp"/>
+                    android:textSize="@dimen/edit_text_size"/>
 
             <View
                     android:id="@+id/separator_2"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_end_game"
+                    android:layout_below="@+id/text_end_game"
                     android:layout_height="5dp"/>
 
 
@@ -120,10 +127,11 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorTextWhite"
                     android:layout_below="@+id/separator_2"
+                    android:textSize="@dimen/header_text_size"
                     android:text="Preparation"/>
 
             <TextView
-                    android:id="@+id/text_view_preparation"
+                    android:id="@+id/text_preparation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view_preparation"
@@ -131,13 +139,13 @@
                     android:textColorHint="@color/colorTextWhite"
                     android:hint="preparation"
                     android:layout_marginStart="50dp"
-                    android:textSize="40dp"/>
+                    android:textSize="@dimen/edit_text_size"/>
 
             <View
                     android:id="@+id/separator_3"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_preparation"
+                    android:layout_below="@+id/text_preparation"
                     android:layout_height="5dp"/>
 
 
@@ -147,10 +155,11 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorTextWhite"
                     android:layout_below="@+id/separator_3"
+                    android:textSize="@dimen/header_text_size"
                     android:text="Player turn"/>
 
             <TextView
-                    android:id="@+id/text_view_player_turn"
+                    android:id="@+id/text_player_turn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view_player_turn"
@@ -159,14 +168,14 @@
                     android:textColor="@color/colorTextWhite"
                     android:textColorHint="@color/colorTextWhite"
                     android:hint="player turn"
-                    android:textSize="40dp"/>
+                    android:textSize="@dimen/edit_text_size"/>
 
 
             <View
                     android:id="@+id/separator_4"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_player_turn"
+                    android:layout_below="@+id/text_player_turn"
                     android:layout_height="5dp"/>
 
 
@@ -176,10 +185,11 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorTextWhite"
                     android:layout_below="@+id/separator_4"
+                    android:textSize="@dimen/header_text_size"
                     android:text="Effects"/>
 
             <TextView
-                    android:id="@+id/text_view_effects"
+                    android:id="@+id/text_effects"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view_effects"
@@ -187,47 +197,10 @@
                     android:textColor="@color/colorTextWhite"
                     android:layout_marginStart="50dp"
                     android:hint="effects"
-                    android:textSize="40dp"/>
-
-
-            <View
-                    android:id="@+id/separator_5"
-                    android:layout_width="match_parent"
-                    android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_effects"
-                    android:layout_height="5dp"/>
-
-
-            <TextView
-                    android:id="@+id/text_view_info_priority"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/priority"
-                    android:layout_below="@+id/separator_5"
-                    android:textColor="@color/colorTextWhite"
-                    android:layout_marginEnd="10dp"/>
-
-            <TextView
-                    android:id="@+id/text_view_priority"
-                    android:layout_width="wrap_content"
-                    android:layout_height="51dp"
-                    android:layout_below="@+id/text_view_info_priority"
-                    android:text="@string/_1"
-                    android:textColor="@color/colorTextWhite"
-                    android:textSize="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"/>
-
-            <View
-                    android:id="@+id/separator_6"
-                    android:layout_width="match_parent"
-                    android:background="@drawable/separator"
-                    android:layout_below="@+id/text_view_priority"
-                    android:layout_height="5dp"/>
-
+                    android:textSize="@dimen/edit_text_size"/>
 
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
 </ScrollView>

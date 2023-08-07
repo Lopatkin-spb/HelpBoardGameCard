@@ -1,0 +1,107 @@
+
+
+--- GLOBAL:
+!!!create first version and pull to "release-0.1.0" branch -> fix bugs and design -> pull to "prod" branch v0.1.0
+
+
+
+
+--- TODAY:
+1) set tag to "release", pull to "development" & "production" branch
+
+- up min version to 31
+
+- binding views
+
+- set full one game to card
+
+
+
+
+
+--- TOMORROW:
+- change name app to "Help Cards for Board Games" , setup
+- clean architecture
+- add game variants
+- add in description split to speed / agression/ mehanics
+
+
+
+
+
+
+
+--- FUTURE:
+1) migrate to kotlin
+
+
+- global: create text style...
+- global: renames to helpcardDetails etc...
+- возможность добавить свой комментарий к каждой памятке
+- feature: screen for scoring points
+- viewLoading to fragments
+- add touch animations
+- rxjava 2
+- design
+- feature: settings: day/night switch and add sharedPrefs
+- feature: settings: small/ big icons in helpcard
+- feature: add sort list/ delete priority
+- feature: screen for first player definition
+- feature: host/ player ?
+- feature: add header collapse
+- feature: icons keyboard
+- load image game from net/ site
+- feature: screen for add game statistics
+
+
+
+bugs (for simulation search and fix in "release" branch)
+- dont showed stub in text views when data null
+- design: shadow, corners, primary secondary color tones
+
+--------------------------------reference---------------------------
+
+- dagger 2: kodeco/dagger2 tutorial for android advanced
+
+
+
+--------------------------------glossary-----------------------------
+
+reference card - справочная карточка
+game helper
+rules - правила (входит все: contents, overview, setup, play, variants, glossary)
+play: round summary - actions, check victory, winning
+quick rules -> setup (details) , play (details), variants (details)
+game rules
+game details
+view rules
+create rules
+edit rules
+
+quick rules for board games
+name card, name game ,descriptions
+card ? / memo (памятка)? note  - setup, play/gameplay, variants
+
+
+-----player-----(guest)
+victory (winning, winner) - scoring
+check victory (win condition)
+actions
+
+
+----host-----(master)
+variants
+setup
+
+
+
+---------------------------------------draft--------------------------------
+
+
+
+
+- Bug fix: Helpcard title;
+- Plan: update;
+
+
+
