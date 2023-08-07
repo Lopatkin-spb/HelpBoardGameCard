@@ -54,6 +54,7 @@ public class HelpcardFragment extends Fragment {
         textPreparation = root.findViewById(R.id.text_preparation);
         textPlayerTurn = root.findViewById(R.id.text_player_turn);
         textEffects = root.findViewById(R.id.text_effects);
+        setScreenTitle(R.string.title_helpcard_details);
 
         details = new Helpcard();
 
@@ -75,8 +76,6 @@ public class HelpcardFragment extends Fragment {
             int id = args.getId();
             if (id > 0) {
                 loadDetails(id);
-            } else {
-                setTitleDynamically();
             }
         }
     }
@@ -110,21 +109,13 @@ public class HelpcardFragment extends Fragment {
                     textPreparation.setText(helpcard.getPreparation());
                     textPlayerTurn.setText(helpcard.getPlayerTurn());
                     textEffects.setText(helpcard.getEffects());
-
-                    setTitleDynamically();
                 }
             }
         });
     }
 
-    private void setTitleDynamically() {
-        if (details != null && details.getId() > 0) {
-            String titleUp = details.getTitle();
-            String descriptionUp = details.getDescription();
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(descriptionUp + " " + titleUp);
-        } else {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_view_card);
-        }
+    private void setScreenTitle(int toolbarTitle) {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(toolbarTitle);
     }
 
     private void navigateToCardEdit() {

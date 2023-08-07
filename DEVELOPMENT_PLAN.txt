@@ -83,13 +83,24 @@ name card, name game ,descriptions
 card ? / memo (памятка)? note  - setup, play/gameplay, variants
 
 
+-----player-----(guest)
+victory (winning, winner) - scoring
+check victory (win condition)
+actions
+
+
+----host-----(master)
+variants
+setup
+
+
 
 ---------------------------------------draft--------------------------------
 
 
 
 
-- Bug fix: when drawer open then keyboard not hide;
+- Bug fix: Helpcard title;
 - Plan: update;
 
 

@@ -10,7 +10,6 @@
 
     <string name="menu_catalog">Helpcards Catalog</string>
     <string name="menu_edit_card">Edit Helpcard</string>
-    <string name="menu_view_card">View Helpcard</string>
 
 
     <string name="menu_share">Share</string>
@@ -30,6 +29,7 @@
 
 
     <string name="title_addcard">Add New Helpcard</string>
+    <string name="title_helpcard_details">Helpcard details</string>
     <string name="title_card_edit">Card edit</string>
 
     <string name="hint_title">title</string>
@@ -43,7 +43,6 @@
     <string name="header_player_turn">Player turn</string>
     <string name="hint_player_turn">player turn</string>
     <string name="text_stub">--</string>
-
 
     <string name="action_save">Save</string>
     <string name="action_card_save">Card save</string>
