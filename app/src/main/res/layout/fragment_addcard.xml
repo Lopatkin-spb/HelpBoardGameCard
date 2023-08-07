@@ -75,7 +75,7 @@
                 android:layout_marginStart="50dp"
 
                 android:layout_below="@+id/view_victory_condition"
-                android:textSize="40dp"/>
+                android:textSize="@dimen/item_title_text_size"/>
 
         <View
                 android:id="@+id/separator_2"
