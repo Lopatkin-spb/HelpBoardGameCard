@@ -1,7 +1,11 @@
 package space.lopatkin.spb.helpboardgamecard.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,11 +21,10 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+    private DrawerLayout drawerLayout;
 
 
     private AddCardFragment addCardEditcardFragment;
-
-
 
 
     @Override
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //инициализация дровера
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         //навигейшин архитекчер компонент
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -86,11 +89,13 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_catalog,
                 R.id.nav_addcard,
                 R.id.nav_share)
-                .setDrawerLayout(drawer)
+                .setDrawerLayout(drawerLayout)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        setupDrawer();
     }
 
 
@@ -109,7 +114,21 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    private void setupDrawer() {
+        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                hideKeyboard(drawerView);
+            }
+        });
+    }
 
-
+    private void hideKeyboard(View view) {
+        if (view.getWindowToken() != null) {
+            InputMethodManager inputManager =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 
 }

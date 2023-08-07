@@ -57,8 +57,7 @@
 
 
 bugs (for simulation search and fix in "release" branch)
-- AddCard set keyboard: after enter text -> hide
-
+- dont showed stub in text views when data null
 
 --------------------------------reference---------------------------
 
@@ -90,8 +89,7 @@ card ? / memo (памятка)? note  - setup, play/gameplay, variants
 
 
 
-- Bug fix: rename item, rework item for text fixes (lines, max symbols), update dimens & string & drawable;
-- Gradle: upgrade ConstraintLayout;
+- Bug fix: when drawer open then keyboard not hide;
 - Plan: update;
 
 
