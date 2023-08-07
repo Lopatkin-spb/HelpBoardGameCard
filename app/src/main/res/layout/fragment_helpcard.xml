@@ -23,34 +23,44 @@
                 android:padding="16dp"
                 tools:context=".ui.catalog.helpcard.HelpcardFragment">
 
-            <!--            <TextView-->
-            <!--                    android:id="@+id/text_view_title"-->
-            <!--                    android:layout_width="300dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:hint="@string/title"-->
-            <!--                    android:textColor="@color/colorTextWhite"-->
-            <!--                    android:textColorHint="@color/colorTextWhite"-->
+                        <TextView
+                                android:id="@+id/text_view_title"
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
+                                android:hint="title"
+                                android:textColor="@color/colorTextWhite"
+                                android:textColorHint="@color/colorTextWhite"
 
-            <!--                    android:textSize="50dp"/>-->
+                                android:textSize="@dimen/edit_text_size"/>
 
-            <!--            <TextView-->
-            <!--                    android:id="@+id/text_view_description"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:hint="description"-->
-            <!--                    android:layout_below="@+id/text_view_title"-->
-            <!--                    android:layout_marginStart="50dp"-->
-            <!--                    android:textSize="40dp"-->
-            <!--                    android:textColorHint="@color/colorTextWhite"-->
+            <View
+                    android:id="@+id/separator_0_4"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/separator"
+                    android:layout_below="@+id/text_view_title"
 
-            <!--                    android:textColor="@color/colorTextWhite"-->
-            <!--            />-->
+                    android:layout_height="5dp"/>
+
+                        <TextView
+                                android:id="@+id/text_view_description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="description"
+                                android:layout_below="@+id/separator_0_4"
+                                android:layout_marginStart="50dp"
+                                android:textSize="@dimen/edit_text_size_description"
+                                android:textColorHint="@color/colorTextWhite"
+
+                                android:textColor="@color/colorTextWhite"
+                        />
 
 
             <View
                     android:id="@+id/separator_0"
                     android:layout_width="match_parent"
                     android:background="@drawable/separator"
+                    android:layout_below="@+id/text_view_description"
+
                     android:layout_height="5dp"/>
 
 
@@ -60,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_below="@+id/separator_0"
+                    android:textSize="@dimen/header_text_size"
                     android:textColor="@color/colorTextWhite"
                     android:text="Victory condition"/>
 
@@ -72,7 +83,7 @@
                     android:layout_marginStart="50dp"
                     android:hint="victory condition"
                     android:textColorHint="@color/colorTextWhite"
-                    android:textSize="40dp"/>
+                    android:textSize="@dimen/edit_text_size"/>
 
 
             <View
@@ -88,6 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/separator_1"
                     android:textColor="@color/colorTextWhite"
+                    android:textSize="@dimen/header_text_size"
                     android:text="End game"/>
 
             <TextView
@@ -99,7 +111,7 @@
                     android:textColor="@color/colorTextWhite"
                     android:textColorHint="@color/colorTextWhite"
                     android:hint="end game"
-                    android:textSize="40dp"/>
+                    android:textSize="@dimen/edit_text_size"/>
 
             <View
                     android:id="@+id/separator_2"
@@ -115,6 +127,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorTextWhite"
                     android:layout_below="@+id/separator_2"
+                    android:textSize="@dimen/header_text_size"
                     android:text="Preparation"/>
 
             <TextView
@@ -126,7 +139,7 @@
                     android:textColorHint="@color/colorTextWhite"
                     android:hint="preparation"
                     android:layout_marginStart="50dp"
-                    android:textSize="40dp"/>
+                    android:textSize="@dimen/edit_text_size"/>
 
             <View
                     android:id="@+id/separator_3"
@@ -142,6 +155,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorTextWhite"
                     android:layout_below="@+id/separator_3"
+                    android:textSize="@dimen/header_text_size"
                     android:text="Player turn"/>
 
             <TextView
@@ -154,7 +168,7 @@
                     android:textColor="@color/colorTextWhite"
                     android:textColorHint="@color/colorTextWhite"
                     android:hint="player turn"
-                    android:textSize="40dp"/>
+                    android:textSize="@dimen/edit_text_size"/>
 
 
             <View
@@ -171,6 +185,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorTextWhite"
                     android:layout_below="@+id/separator_4"
+                    android:textSize="@dimen/header_text_size"
                     android:text="Effects"/>
 
             <TextView
@@ -182,7 +197,7 @@
                     android:textColor="@color/colorTextWhite"
                     android:layout_marginStart="50dp"
                     android:hint="effects"
-                    android:textSize="40dp"/>
+                    android:textSize="@dimen/edit_text_size"/>
 
         </RelativeLayout>
 

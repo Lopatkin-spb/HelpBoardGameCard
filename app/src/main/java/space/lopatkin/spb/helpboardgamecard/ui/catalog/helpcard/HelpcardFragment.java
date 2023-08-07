@@ -29,12 +29,14 @@ public class HelpcardFragment extends Fragment {
     @Inject
     ViewModelFactory viewModelFactory;
     private HelpcardViewModel viewModel;
+    private TextView textTitle;
+    private TextView textDescription;
+
     private TextView textVictoryCondition;
     private TextView textEndGame;
     private TextView textPreparation;
     private TextView textPlayerTurn;
     private TextView textEffects;
-    private Helpcard details;
     private NavController navController;
 
     @Override
@@ -49,14 +51,15 @@ public class HelpcardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_helpcard, container, false);
+        textTitle = root.findViewById(R.id.text_view_title);
+        textDescription = root.findViewById(R.id.text_view_description);
+
         textVictoryCondition = root.findViewById(R.id.text_victory_condition);
         textEndGame = root.findViewById(R.id.text_end_game);
         textPreparation = root.findViewById(R.id.text_preparation);
         textPlayerTurn = root.findViewById(R.id.text_player_turn);
         textEffects = root.findViewById(R.id.text_effects);
         setScreenTitle(R.string.title_helpcard_details);
-
-        details = new Helpcard();
 
         setHasOptionsMenu(true);
 
@@ -103,7 +106,8 @@ public class HelpcardFragment extends Fragment {
             @Override
             public void onChanged(Helpcard helpcard) {
                 if (helpcard != null) {
-                    details = helpcard;
+                    textTitle.setText(helpcard.getTitle());
+                    textDescription.setText(helpcard.getDescription());
                     textVictoryCondition.setText(helpcard.getVictoryCondition());
                     textEndGame.setText(helpcard.getEndGame());
                     textPreparation.setText(helpcard.getPreparation());
