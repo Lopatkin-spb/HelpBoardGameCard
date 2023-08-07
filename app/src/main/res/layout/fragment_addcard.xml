@@ -32,7 +32,7 @@
                 android:textColor="@color/colorTextWhite"
                 android:textColorHint="@color/colorTextWhite"
                 android:layout_below="@+id/separator_0"
-                android:textSize="@dimen/item_title_text_size"/>
+                android:textSize="@dimen/edit_text_size"/>
 
 
         <EditText
@@ -42,7 +42,7 @@
                 android:hint="@string/hint_description"
                 android:layout_below="@+id/edit_text_title"
                 android:layout_marginStart="50dp"
-                android:textSize="@dimen/item_description_text_size"
+                android:textSize="@dimen/edit_text_size_description"
                 android:textColor="@color/colorTextWhite"
                 android:maxLength="25"
                 android:textColorHint="@color/colorTextWhite"/>
@@ -75,7 +75,7 @@
                 android:layout_marginStart="50dp"
 
                 android:layout_below="@+id/view_victory_condition"
-                android:textSize="@dimen/item_title_text_size"/>
+                android:textSize="@dimen/edit_text_size"/>
 
         <View
                 android:id="@+id/separator_2"
@@ -102,7 +102,7 @@
                 android:textColor="@color/colorTextWhite"
                 android:textColorHint="@color/colorTextWhite"
 
-                android:textSize="@dimen/item_title_text_size"
+                android:textSize="@dimen/edit_text_size"
                 android:hint="end game"
                 android:inputType="textMultiLine"/>
 
@@ -130,7 +130,7 @@
                 android:layout_marginStart="50dp"
                 android:textColor="@color/colorTextWhite"
                 android:textColorHint="@color/colorTextWhite"
-                android:textSize="@dimen/item_title_text_size"
+                android:textSize="@dimen/edit_text_size"
                 android:inputType="textMultiLine"
                 android:autofillHints=""/>
 
@@ -159,7 +159,7 @@
                 android:layout_marginStart="50dp"
                 android:textColor="@color/colorTextWhite"
                 android:textColorHint="@color/colorTextWhite"
-                android:textSize="@dimen/item_title_text_size"
+                android:textSize="@dimen/edit_text_size"
                 android:autofillHints=""/>
 
 
@@ -188,7 +188,7 @@
                 android:layout_marginStart="50dp"
                 android:textColor="@color/colorTextWhite"
                 android:textColorHint="@color/colorTextWhite"
-                android:textSize="@dimen/item_title_text_size"
+                android:textSize="@dimen/edit_text_size"
                 android:hint="effects"
                 android:inputType="textMultiLine"
                 android:autofillHints=""/>
