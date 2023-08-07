@@ -7,11 +7,11 @@
 
 
 --- TODAY:
-1) pull to "release-0.1.0" branch
+1) set tag to "release", pull to "development" & "production" branch
 
 - up min version to 31
 
-
+- binding views
 
 - set full one game to card
 
@@ -20,7 +20,6 @@
 
 
 --- TOMORROW:
-- add binding views to project
 - change name app to "Help Cards for Board Games" , setup
 - clean architecture
 - add game variants
@@ -58,6 +57,7 @@
 
 bugs (for simulation search and fix in "release" branch)
 - dont showed stub in text views when data null
+- design: shadow, corners, primary secondary color tones
 
 --------------------------------reference---------------------------
 
