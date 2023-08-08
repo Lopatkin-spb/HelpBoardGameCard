@@ -95,7 +95,9 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
         //установка данных во вью
         public void bind(Helpcard helpcard) {
             textViewTitle.setText(helpcard.getTitle());
-            textViewDescription.setText(helpcard.getDescription());
+            if (helpcard.getDescription() != null && !helpcard.getDescription().isEmpty()) {
+                textViewDescription.setText(helpcard.getDescription());
+            }
             textViewPriority.setText(String.valueOf(helpcard.getPriority()));
 
             booleanViewFavorites.setOnCheckedChangeListener(null);
