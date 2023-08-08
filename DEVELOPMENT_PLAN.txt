@@ -1,15 +1,18 @@
 
 
 --- GLOBAL:
-!!!create first version and pull to "release-0.1.0" branch -> fix bugs and design -> pull to "prod" branch v0.1.0
-
+!!!create custom keyboard
 
 
 
 --- TODAY:
-1) set tag to "release", pull to "development" & "production" branch
+1)
 
-- up min version to 31
+- hotfix: round corners - prod
+- plan - to development
+
+
+up min version to 31 - to new feature
 
 - binding views
 
@@ -42,7 +45,10 @@
 - viewLoading to fragments
 - add touch animations
 - rxjava 2
-- design
+- design: classic color theme
+- design: secondary texts & icons set to darker color
+- design: item icons move from right to bottom item line (?)
+- design: drawer move to bottom
 - feature: settings: day/night switch and add sharedPrefs
 - feature: settings: small/ big icons in helpcard
 - feature: add sort list/ delete priority
