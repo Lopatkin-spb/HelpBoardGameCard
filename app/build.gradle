@@ -3,12 +3,12 @@ apply plugin: "androidx.navigation.safeargs"
 
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdk 33
+    buildToolsVersion "33.0.0"
     defaultConfig {
         applicationId "space.lopatkin.spb.helpboardgamecard"
         minSdkVersion 26
-        targetSdkVersion 30
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
