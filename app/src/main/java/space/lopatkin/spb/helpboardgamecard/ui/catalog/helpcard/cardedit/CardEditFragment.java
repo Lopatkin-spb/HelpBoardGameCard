@@ -98,6 +98,8 @@ public class CardEditFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        hideKeyboard();
+
         switch (item.getItemId()) {
             case R.id.action_card_save:
                 cardSave();
@@ -145,7 +147,6 @@ public class CardEditFragment extends Fragment {
         }
         viewModel.update(editedCard);
         showMessage(R.string.message_card_updated);
-        hideKeyboard();
         navigateToCatalog();
     }
 
