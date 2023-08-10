@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.NumberPicker;
-import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,30 +21,20 @@ import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.Snackbar;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
+import space.lopatkin.spb.helpboardgamecard.databinding.FragmentAddcardBinding;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
 import javax.inject.Inject;
 
 public class AddCardFragment extends Fragment {
-
     @Inject
     ViewModelFactory viewModelFactory;
-
     private AddCardViewModel viewModel;
-    private ScrollView parentView;
-    private EditText editTitle;
-    private EditText editVictoryCondition;
-    private EditText editEndGame;
-    private EditText editPreparation;
-    private EditText editDescription;
-    private EditText editPlayerTurn;
-    private EditText editEffects;
-    private boolean editFavorites;
-    private boolean editLock;
-    private NumberPicker numberPickerPriority;
+    private FragmentAddcardBinding binding;
     private NavController navController;
 
+    //todo: move to abstract fragment
     @Override
     public void onAttach(@NonNull Context context) {
         ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
@@ -56,25 +43,14 @@ public class AddCardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_addcard, container, false);
-        parentView = root.findViewById(R.id.scroll_addcard);
-        editTitle = root.findViewById(R.id.edit_text_title);
-        editVictoryCondition = root.findViewById(R.id.edit_text_victory_condition);
-        editEndGame = root.findViewById(R.id.edit_text_end_game);
-        editPreparation = root.findViewById(R.id.edit_text_preparation);
-        editDescription = root.findViewById(R.id.edit_text_description);
-        editPlayerTurn = root.findViewById(R.id.edit_text_player_turn);
-        editEffects = root.findViewById(R.id.edit_text_effects);
-        numberPickerPriority = root.findViewById(R.id.number_picker_priority);
-        editFavorites = false;
-        editLock = false;
-        numberPickerPriority.setMinValue(1);
-        numberPickerPriority.setMaxValue(10);
+        binding = FragmentAddcardBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
         setScreenTitle(R.string.title_addcard);
         //разрешает верхнее правое меню
         setHasOptionsMenu(true);
-        setupEditViews();
-        return root;
+        setupViews();
+        return view;
     }
 
     @Override
@@ -102,11 +78,19 @@ public class AddCardFragment extends Fragment {
         }
     }
 
-    private void setupEditViews() {
-        editTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        editTitle.setRawInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-        editDescription.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        editDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    private void setupViews() {
+        binding.editTextTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        binding.editTextDescription.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.numberPickerPriority.setMinValue(1);
+        binding.numberPickerPriority.setMaxValue(10);
     }
 
     private void saveNewHelpcard() {
@@ -117,31 +101,30 @@ public class AddCardFragment extends Fragment {
         }
         viewModel.saveNewHelpcard(newHelpcard);
         showMessage(R.string.message_helpcard_saved);
+        //todo: move to onOptionsItemSel
         hideKeyboard();
         navigateToCatalog();
     }
 
     private Helpcard getData() {
-        String messageTitle = editTitle.getText().toString();
-        String messageVictoryCondition = editVictoryCondition.getText().toString();
-        String messageEndGame = editEndGame.getText().toString();
-        String messagePreparation = editPreparation.getText().toString();
-        String messageDescription = editDescription.getText().toString();
-        String messagePlayerTurn = editPlayerTurn.getText().toString();
-        String messageEffects = editEffects.getText().toString();
-        boolean messageFavorites = editFavorites;
-        boolean messageLock = editLock;
-        int messagePriority = numberPickerPriority.getValue();
-        Helpcard h = new Helpcard(messageTitle, messageVictoryCondition,
-                messageEndGame, messagePreparation, messageDescription,
-                messagePlayerTurn, messageEffects, messageFavorites, messageLock, messagePriority);
-        return h;
+        return new Helpcard(
+                binding.editTextTitle.getText().toString(),
+                binding.editTextVictoryCondition.getText().toString(),
+                binding.editTextEndGame.getText().toString(),
+                binding.editTextPreparation.getText().toString(),
+                binding.editTextDescription.getText().toString(),
+                binding.editTextPlayerTurn.getText().toString(),
+                binding.editTextEffects.getText().toString(),
+                false,
+                false,
+                binding.numberPickerPriority.getValue());
     }
 
     private void navigateToCatalog() {
         navController.navigate(AddCardFragmentDirections.actionNavAddcardToNavCatalog());
     }
 
+    //todo: rework to delete focus to
     private void hideKeyboard() {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -152,8 +135,9 @@ public class AddCardFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(toolbarTitle);
     }
 
+    //todo: move to main act after add eventBus
     private void showMessage(int message) {
-        Snackbar.make(parentView, message, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(binding.scrollAddcard, message, Snackbar.LENGTH_SHORT).show();
     }
 
 }

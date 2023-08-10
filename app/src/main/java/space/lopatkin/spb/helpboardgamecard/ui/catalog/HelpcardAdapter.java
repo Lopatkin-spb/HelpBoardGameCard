@@ -4,21 +4,17 @@ package space.lopatkin.spb.helpboardgamecard.ui.catalog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import space.lopatkin.spb.helpboardgamecard.R;
+import space.lopatkin.spb.helpboardgamecard.databinding.ItemCardBinding;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.HelpcardHolder> {
-
     private List<Helpcard> listHelpcards = new ArrayList<>(); //в будущем рассмотреть апгрейд на сортед лист
-
     private OnItemClickListener listenerView;
     private OnItemCheckboxListenerTest listenerCheckboxTest;
     private OnItemCheckboxListenerLock listenerCheckboxLock;
@@ -26,19 +22,16 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
     //метод для создания холдера (обязательный)
     @NonNull
     @Override
-    public HelpcardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(
-                parent.getContext()).inflate(
-                R.layout.item_card, parent, false);
+    public HelpcardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {//
+        ItemCardBinding binding = ItemCardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        return new HelpcardHolder(itemView);
+        return new HelpcardHolder(binding);
     }
 
     //установка значений в поле\ячейку из бд через адаптер
     @Override
     public void onBindViewHolder(@NonNull HelpcardHolder holder, final int position) {
         holder.bind(listHelpcards.get(position));
-
     }
 
     //обязательный метод ресайклера
@@ -62,21 +55,11 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
 
     //вся работа с ресайкл вью идет в адаптере (вставка и забор данных)
     class HelpcardHolder extends RecyclerView.ViewHolder {
-        //перечисляем все видимые компоненты
-        private TextView textViewTitle;
-        private TextView textViewDescription;
-        private CheckBox booleanViewFavorites;
-        private CheckBox booleanViewLock;
-        private TextView textViewPriority;
-
+        private ItemCardBinding binding;
         //конструктор
-        public HelpcardHolder(final View itemView) {
-            super(itemView);
-            textViewTitle = itemView.findViewById(R.id.text_item_title);
-            textViewDescription = itemView.findViewById(R.id.text_item_description);
-            booleanViewFavorites = itemView.findViewById(R.id.action_item_favorites);
-            booleanViewLock = itemView.findViewById(R.id.action_item_lock);
-            textViewPriority = itemView.findViewById(R.id.text_item_priority);
+        public HelpcardHolder(ItemCardBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
             // общее вью  для показа карты
             //обработчик для всего итема сразу
@@ -94,19 +77,19 @@ public class HelpcardAdapter extends RecyclerView.Adapter<HelpcardAdapter.Helpca
 
         //установка данных во вью
         public void bind(Helpcard helpcard) {
-            textViewTitle.setText(helpcard.getTitle());
+            binding.textItemTitle.setText(helpcard.getTitle());
             if (helpcard.getDescription() != null && !helpcard.getDescription().isEmpty()) {
-                textViewDescription.setText(helpcard.getDescription());
+                binding.textItemDescription.setText(helpcard.getDescription());
             }
-            textViewPriority.setText(String.valueOf(helpcard.getPriority()));
+            binding.textItemPriority.setText(String.valueOf(helpcard.getPriority()));
 
-            booleanViewFavorites.setOnCheckedChangeListener(null);
-            booleanViewFavorites.setChecked((helpcard.isFavorites()));
-            booleanViewFavorites.setOnCheckedChangeListener(onCheckedChangeListener);
+            binding.actionItemFavorites.setOnCheckedChangeListener(null);
+            binding.actionItemFavorites.setChecked((helpcard.isFavorites()));
+            binding.actionItemFavorites.setOnCheckedChangeListener(onCheckedChangeListener);
 
-            booleanViewLock.setOnCheckedChangeListener(null);
-            booleanViewLock.setChecked((helpcard.isLock()));
-            booleanViewLock.setOnCheckedChangeListener(onCheckedChangeListenerLock);
+            binding.actionItemLock.setOnCheckedChangeListener(null);
+            binding.actionItemLock.setChecked((helpcard.isLock()));
+            binding.actionItemLock.setOnCheckedChangeListener(onCheckedChangeListenerLock);
         }
 
         //обработчик на чекбокс Favorites

@@ -8,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +18,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
+import space.lopatkin.spb.helpboardgamecard.databinding.FragmentHelpcardBinding;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
@@ -29,19 +29,12 @@ public class HelpcardFragment extends Fragment {
     @Inject
     ViewModelFactory viewModelFactory;
     private HelpcardViewModel viewModel;
-    private TextView textTitle;
-    private TextView textDescription;
-
-    private TextView textVictoryCondition;
-    private TextView textEndGame;
-    private TextView textPreparation;
-    private TextView textPlayerTurn;
-    private TextView textEffects;
+    private FragmentHelpcardBinding binding;
     private NavController navController;
 
+    //todo: create abstractFragment, move code to abstractFragment, extends from absFrag
     @Override
     public void onAttach(@NonNull Context context) {
-        //todo: create abstractFragment, move code to abstractFragment, extends from absFrag
         ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
         super.onAttach(context);
     }
@@ -50,20 +43,12 @@ public class HelpcardFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_helpcard, container, false);
-        textTitle = root.findViewById(R.id.text_view_title);
-        textDescription = root.findViewById(R.id.text_view_description);
+        binding = FragmentHelpcardBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        textVictoryCondition = root.findViewById(R.id.text_victory_condition);
-        textEndGame = root.findViewById(R.id.text_end_game);
-        textPreparation = root.findViewById(R.id.text_preparation);
-        textPlayerTurn = root.findViewById(R.id.text_player_turn);
-        textEffects = root.findViewById(R.id.text_effects);
         setScreenTitle(R.string.title_helpcard_details);
-
         setHasOptionsMenu(true);
-
-        return root;
+        return view;
     }
 
     //safeargs + parcelable
@@ -100,19 +85,25 @@ public class HelpcardFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void loadDetails(int id) {
         viewModel.setId(id);
         viewModel.helpcardLiveData.observe(getViewLifecycleOwner(), new Observer<Helpcard>() {
             @Override
             public void onChanged(Helpcard helpcard) {
                 if (helpcard != null) {
-                    textTitle.setText(helpcard.getTitle());
-                    textDescription.setText(helpcard.getDescription());
-                    textVictoryCondition.setText(helpcard.getVictoryCondition());
-                    textEndGame.setText(helpcard.getEndGame());
-                    textPreparation.setText(helpcard.getPreparation());
-                    textPlayerTurn.setText(helpcard.getPlayerTurn());
-                    textEffects.setText(helpcard.getEffects());
+                    binding.textViewTitle.setText(helpcard.getTitle());
+                    binding.textViewDescription.setText(helpcard.getDescription());
+                    binding.textVictoryCondition.setText(helpcard.getVictoryCondition());
+                    binding.textEndGame.setText(helpcard.getEndGame());
+                    binding.textPreparation.setText(helpcard.getPreparation());
+                    binding.textPlayerTurn.setText(helpcard.getPlayerTurn());
+                    binding.textEffects.setText(helpcard.getEffects());
                 }
             }
         });

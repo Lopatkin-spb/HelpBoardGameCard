@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
+import space.lopatkin.spb.helpboardgamecard.databinding.FragmentCatalogBinding;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
@@ -28,13 +29,14 @@ import javax.inject.Inject;
 import java.util.List;
 
 public class CatalogFragment extends Fragment {
-
     @Inject
     ViewModelFactory viewModelFactory;
     private CatalogViewModel viewModel;
-    private RecyclerView recyclerView;
+    private FragmentCatalogBinding binding;
     private HelpcardAdapter adapter;
     private NavController navController;
+
+    //todo: extract strings to res
     private String allCardDelete = "All unlock helpcards deleted";
     private String update = "Helpcard updated";
     private String lock = "Helpcard is lock";
@@ -44,6 +46,7 @@ public class CatalogFragment extends Fragment {
     private String delete = "Helpcard delete";
     private String notDelete = "Helpcard not delete";
 
+    //todo: move to absFrag
     @Override
     public void onAttach(@NonNull Context context) {
         ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
@@ -52,24 +55,25 @@ public class CatalogFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_catalog, container, false);
+        binding = FragmentCatalogBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
         //разрешение на создание верхнего меню
         setHasOptionsMenu(true);
 //инициализация ресайкл вью
-        recyclerView = root.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyclerView.setHasFixedSize(true);
 //подключение адаптера к ресайкл вью
         adapter = new HelpcardAdapter();
-        recyclerView.setAdapter(adapter);
+        binding.recyclerView.setAdapter(adapter);
 
         setSwipeDelete(adapter);
         setEditFavoritesItem(adapter);
         setEditLockItem(adapter);
         navigateToShowItem(adapter);
-        return root;
+        return view;
     }
 
+    //todo: upgrade dependencies in gradle (add fragment last vers)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -103,6 +107,12 @@ public class CatalogFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void setSwipeDelete(HelpcardAdapter adapter) {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -123,7 +133,7 @@ public class CatalogFragment extends Fragment {
                     showMessage(notDelete);
                 }
             }
-        }).attachToRecyclerView(recyclerView);
+        }).attachToRecyclerView(binding.recyclerView);
     }
 
     private void setEditFavoritesItem(HelpcardAdapter adapter) {
@@ -164,13 +174,13 @@ public class CatalogFragment extends Fragment {
                 Integer id = helpcardToViewcard.getId();
                 //отправка данных (parcelable)
                 CatalogFragmentDirections.ActionNavCatalogToNavHelpcard action =
-                        CatalogFragmentDirections.actionNavCatalogToNavHelpcard()
-                                .setId(id);
+                        CatalogFragmentDirections.actionNavCatalogToNavHelpcard().setId(id);
                 navController.navigate(action);
             }
         });
     }
 
+    //todo: redundant method - delete
     private Helpcard getData(Helpcard data) {
         int editId = data.getId();
         String editTitle = data.getTitle();
@@ -190,9 +200,9 @@ public class CatalogFragment extends Fragment {
         return h;
     }
 
+    //todo: move method to activity and send message from EventBus
     private void showMessage(String message) {
-        Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(binding.recyclerView, message, Snackbar.LENGTH_SHORT).show();
     }
-
 
 }
