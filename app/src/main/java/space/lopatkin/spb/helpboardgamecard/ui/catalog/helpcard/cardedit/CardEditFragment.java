@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,33 +22,25 @@ import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.Snackbar;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
+import space.lopatkin.spb.helpboardgamecard.databinding.FragmentCardEditBinding;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
 import javax.inject.Inject;
 
 public class CardEditFragment extends Fragment {
-
     @Inject
     ViewModelFactory viewModelFactory;
     private CardEditViewModel viewModel;
-    private ScrollView parentView;
-    private EditText editTitle;
-    private EditText editDescription;
-    private EditText editVictoryCondition;
-    private EditText editEndGame;
-    private EditText editPreparation;
-    private EditText editPlayerTurn;
-    //values temp state start
+    private FragmentCardEditBinding binding;
     private int idCard = 0;
     private String effects = "";
     private boolean favorites = false;
     private boolean lock = false;
     private int priority = 0;
-    //values temp state end
-
     private NavController navController;
 
+    //todo: move to absFrag
     @Override
     public void onAttach(@NonNull Context context) {
         ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
@@ -59,19 +49,13 @@ public class CardEditFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentCardEditBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        View root = inflater.inflate(R.layout.fragment_card_edit, container, false);
-        parentView = root.findViewById(R.id.scroll_card_edit);
-        editTitle = root.findViewById(R.id.edit_title);
-        editDescription = root.findViewById(R.id.edit_description);
-        editVictoryCondition = root.findViewById(R.id.edit_victory_condition);
-        editEndGame = root.findViewById(R.id.edit_end_game);
-        editPreparation = root.findViewById(R.id.edit_preparation);
-        editPlayerTurn = root.findViewById(R.id.edit_player_turn);
         setScreenTitle(R.string.title_card_edit);
         setHasOptionsMenu(true);
         setupEditViews();
-        return root;
+        return view;
     }
 
     @Override
@@ -109,11 +93,17 @@ public class CardEditFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void setupEditViews() {
-        editTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        editTitle.setRawInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-        editDescription.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        editDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        binding.editTitle.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        binding.editDescription.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        binding.editDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
     }
 
     private void loadCardDetails(int cardId) {
@@ -122,12 +112,12 @@ public class CardEditFragment extends Fragment {
             @Override
             public void onChanged(Helpcard card) {
                 if (card != null) {
-                    editTitle.setText(card.getTitle());
-                    editDescription.setText(card.getDescription());
-                    editVictoryCondition.setText(card.getVictoryCondition());
-                    editEndGame.setText(card.getEndGame());
-                    editPreparation.setText(card.getPreparation());
-                    editPlayerTurn.setText(card.getPlayerTurn());
+                    binding.editTitle.setText(card.getTitle());
+                    binding.editDescription.setText(card.getDescription());
+                    binding.editVictoryCondition.setText(card.getVictoryCondition());
+                    binding.editEndGame.setText(card.getEndGame());
+                    binding.editPreparation.setText(card.getPreparation());
+                    binding.editPlayerTurn.setText(card.getPlayerTurn());
 
                     idCard = card.getId();
                     effects = card.getEffects();
@@ -151,26 +141,30 @@ public class CardEditFragment extends Fragment {
     }
 
     private Helpcard getEditedData() {
-        String messageTitle = editTitle.getText().toString();
-        String messageDescription = editDescription.getText().toString();
-        String messageVictoryCondition = editVictoryCondition.getText().toString();
-        String messageEndGame = editEndGame.getText().toString();
-        String messagePreparation = editPreparation.getText().toString();
-        String messagePlayerTurn = editPlayerTurn.getText().toString();
-
-        return new Helpcard(idCard, messageTitle, messageVictoryCondition,
-                messageEndGame, messagePreparation, messageDescription,
-                messagePlayerTurn, effects, favorites, lock, priority);
+        return new Helpcard(
+                idCard,
+                binding.editTitle.getText().toString(),
+                binding.editVictoryCondition.getText().toString(),
+                binding.editEndGame.getText().toString(),
+                binding.editPreparation.getText().toString(),
+                binding.editDescription.getText().toString(),
+                binding.editPlayerTurn.getText().toString(),
+                effects,
+                favorites,
+                lock,
+                priority);
     }
 
+    //todo: rework
     private void hideKeyboard() {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    //todo: move to activity
     private void showMessage(int message) {
-        Snackbar.make(parentView, message, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(binding.scrollCardEdit, message, Snackbar.LENGTH_SHORT).show();
     }
 
     private void setScreenTitle(int toolbarTitle) {
