@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,6 +74,9 @@ public class AddCardFragment extends Fragment {
             case R.id.action_save:
                 saveNewHelpcard();
                 return true;
+            case R.id.action_keyboard_temp_state:
+                keyboardManagerTempState();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -91,6 +95,8 @@ public class AddCardFragment extends Fragment {
         binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
         binding.numberPickerPriority.setMinValue(1);
         binding.numberPickerPriority.setMaxValue(10);
+
+        setupKeyboardTempState();
     }
 
     private void saveNewHelpcard() {
@@ -138,6 +144,24 @@ public class AddCardFragment extends Fragment {
     //todo: move to main act after add eventBus
     private void showMessage(int message) {
         Snackbar.make(binding.scrollAddcard, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    //-----------------------------------------------------
+
+    private void keyboardManagerTempState() {
+        if (binding.keyboardAddcard.getVisibility() == View.VISIBLE) {
+            binding.keyboardAddcard.setVisibility(View.GONE);
+        } else {
+            binding.keyboardAddcard.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setupKeyboardTempState() {
+        binding.editTextVictoryCondition.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextVictoryCondition.setTextIsSelectable(true);
+
+        InputConnection inputConnection = binding.editTextVictoryCondition.onCreateInputConnection(new EditorInfo());
+        binding.keyboardAddcard.setInputConnection(inputConnection);
     }
 
 }

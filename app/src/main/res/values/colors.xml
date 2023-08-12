@@ -14,6 +14,7 @@
     <color name="colorGreyPrimaryBackground">#4D000000</color>
     <color name="colorGreyCardBackground">#73000000</color>
     <color name="colorTextWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
 
 
 
@@ -28,6 +29,9 @@
     <color name="colorBlack60">#99000000</color>
 <!--    <color name="colorAccent">#32000000</color>-->
     <color name="colorBlack5">#0C000000</color>
+
+    <color name="colorGrey">#E6E6E6</color>
+    <color name="colorGrey2">#D5D5D5</color>
 
 
 

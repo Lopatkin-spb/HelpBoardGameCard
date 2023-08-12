@@ -6,9 +6,10 @@
 
 
 --- TODAY:
-1) binding views
-2) custom icons keyboard
-3) set full one game to card
+1) custom icons keyboard
+2) set full one game to card
+3) merge to prod - up app versions to gradle
+3) add eventBus
 
 
 
@@ -21,8 +22,8 @@
 - add game variants
 - add in description split to speed / agression/ mehanics
 - REFACTORING: rework methods hide keyboard / renames classes & nameApp /
-  rework xml layouts (to constraint) / move repeating code to abstract class (for fragments)
-
+  rework xml layouts (to constraint) / move repeating code to abstract class (for fragments) /
+  extract strings from code to res / pass data from viewModel to frag (good practices)
 
 
 
