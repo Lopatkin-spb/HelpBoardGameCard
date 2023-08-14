@@ -72,7 +72,7 @@
                     android:textColor="@color/colorTextWhite"
                     android:text="Victory condition"/>
 
-            <TextView
+            <space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.IconTextView
                     android:id="@+id/text_victory_condition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

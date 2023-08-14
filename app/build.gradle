@@ -22,6 +22,11 @@ android {
     viewBinding {
         enabled true
     }
+    sourceSets {
+        main {
+            res.srcDirs 'src/main/res-keyboard'
+        }
+    }
 }
 
 dependencies {
