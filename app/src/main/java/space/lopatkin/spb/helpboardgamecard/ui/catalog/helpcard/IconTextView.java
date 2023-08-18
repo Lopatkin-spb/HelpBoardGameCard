@@ -6,85 +6,76 @@ import android.text.SpannableString;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
-import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import org.jetbrains.annotations.NotNull;
-import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardButton;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardView;
 
+import java.util.stream.IntStream;
+
 public class IconTextView extends AppCompatTextView {
 
+    private static final char SEPARATOR = KeyboardView.SEPARATOR.charAt(0);
     private Context context;
 
     public IconTextView(@NonNull @NotNull Context context) {
         super(context);
         this.context = context;
-//        setTextTempState(context);
     }
 
     public IconTextView(@NonNull @NotNull Context context, @Nullable @org.jetbrains.annotations.Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-
-//        setTextTempState(context);
     }
 
     public IconTextView(@NonNull @NotNull Context context, @Nullable @org.jetbrains.annotations.Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
-
-//        setTextTempState(context);
     }
 
     @Override
     public void setText(CharSequence text, BufferType type) {
+        Spannable textWithImages = new SpannableString(text);
 
-        Log.d("myLogs", "IconTextView setText start: text = " + text + "; type = " + type);
-
-        CharSequence textOutput = "";
-
-        Spannable image = new SpannableString(text);
-
-        if (!text.toString().isEmpty() && isSeparator(text)) {
-
-            Log.d("myLogs", "IconTextView setText if start: text with separator = " + text);
-
-            StringBuffer buffer = new StringBuffer(text);
-            int indexSeparator = buffer.indexOf(KeyboardView.SEPARATOR);
-            textOutput = buffer.substring(indexSeparator + 1);
-
-            Log.d("myLogs", "IconTextView setText: text without separator = " + textOutput);
-
-            ImageSpan span = new ImageSpan(context, KeyboardButton.getDrawableFrom((String) textOutput), DynamicDrawableSpan.ALIGN_BASELINE);
-
-
-            image = new SpannableString(KeyboardView.SEPARATOR + textOutput);
-            image.setSpan(span, 0, image.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
+        if (!text.toString().isEmpty() && countImagesIn(text) > 0) {
+            setImagesToText(textWithImages, text);
         }
 
-        super.setText(image, type);
+        super.setText(textWithImages, type);
     }
 
+    private void setImagesToText(Spannable textWithImages, CharSequence rawText) {
+        String text = (String) rawText;
 
-    private void setTextTempState(Context context) {
+        for (int numberImage = 0; numberImage < countImagesIn(rawText); numberImage++) {
+            int firstCharIndex = getIndexSeparator(text, numberImage);
+            int lastCharIndex = firstCharIndex + KeyboardButton.getLength();
 
-        ImageSpan span = new ImageSpan(getContext(), R.drawable.ic_menu_slideshow, DynamicDrawableSpan.ALIGN_BASELINE);
+            String name = text.substring(firstCharIndex + 1, lastCharIndex);
+            ImageSpan span = new ImageSpan(context,
+                    KeyboardButton.getDrawableFrom(name),
+                    DynamicDrawableSpan.ALIGN_BASELINE);
 
-        Spannable image = new SpannableString(KeyboardView.SEPARATOR + "play");
-        image.setSpan(span, 2, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        setText(image);
+            textWithImages.setSpan(span, firstCharIndex, lastCharIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
     }
 
-    private boolean isSeparator(CharSequence text) {
-        StringBuffer buffer = new StringBuffer(text);
-        int indexLastSeparator = buffer.lastIndexOf(KeyboardView.SEPARATOR);
-        return indexLastSeparator >= 0 ? true : false;
+    private long countImagesIn(CharSequence text) {
+        return text.chars()
+                .filter(character -> character == SEPARATOR)
+                .count();
+    }
+
+    private int getIndexSeparator(String text, int numberImage) {
+        char[] characters = text.toCharArray();
+
+        int[] indexes = IntStream.range(0, characters.length)
+                .filter(index -> characters[index] == SEPARATOR)
+                .toArray();
+
+        return indexes[numberImage];
     }
 
 }

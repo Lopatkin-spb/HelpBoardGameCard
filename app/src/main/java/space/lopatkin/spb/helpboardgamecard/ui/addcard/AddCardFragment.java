@@ -162,6 +162,53 @@ public class AddCardFragment extends Fragment {
 
         InputConnection inputConnection = binding.editTextVictoryCondition.onCreateInputConnection(new EditorInfo());
         binding.keyboardAddcard.setInputConnection(inputConnection);
+
+
+//        binding.editTextVictoryCondition.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View view, boolean b) {
+//                binding.keyboardAddcard.setVisibility(View.VISIBLE);
+//
+//                if (view.requestFocus()) {
+//                    InputMethodManager inputManager = getActivity().getSystemService(InputMethodManager.class);
+//
+//                    inputManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//
+//                }
+//            }
+//        });
+
+//        binding.editTextVictoryCondition.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//
+//                binding.editTextVictoryCondition.setFocusable(true);
+//
+//                binding.keyboardAddcard.setVisibility(View.VISIBLE);
+//
+//
+//
+//
+//                return false;
+//            }
+//        });
+
+
+//        binding.editTextVictoryCondition.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                binding.keyboardAddcard.setVisibility(View.VISIBLE);
+//
+//                if (view.requestFocus()) {
+//                    InputMethodManager inputManager = getActivity().getSystemService(InputMethodManager.class);
+//
+//                    inputManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//
+//                }
+//            }
+//        });
+
+
     }
 
 }

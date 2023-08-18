@@ -9,6 +9,7 @@
 
 
 
+
 --- TODAY:
 1) custom icons keyboard
 2) set full one game to card

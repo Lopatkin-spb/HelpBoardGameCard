@@ -26,25 +26,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.33"/>
+            app:layout_constraintGuide_percent="0.25"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_vertical_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.66"/>
+            app:layout_constraintGuide_percent="0.75"/>
 
 
     <Button
-            android:id="@+id/action_1"
+            android:id="@+id/action_chair"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:text="1"
-            android:textColor="@color/colorBlack"
-            android:textSize="30sp"
-            android:background="@drawable/selector_button_keyboard"
+            android:background="@drawable/ic_keyboard_baseline_chair_34"
+            android:backgroundTint="@color/material_dynamic_primary50"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -52,30 +57,37 @@
             app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_top"/>
 
     <Button
-            android:id="@+id/action_2"
+            android:id="@+id/action_breakfast"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:text="2"
-            android:textColor="@color/colorBlack"
-            android:textSize="30sp"
-            android:background="@drawable/selector_button_keyboard"
+            android:background="@drawable/ic_keyboard_baseline_free_breakfast_34"
+            android:backgroundTint="@color/material_dynamic_primary50"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_start"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_mid"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_top"/>
+
+    <Button
+            android:id="@+id/action_stop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_keyboard_baseline_pan_tool_34"
+            android:backgroundTint="@color/material_dynamic_primary50"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical_mid"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
             app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_top"/>
 
     <Button
-            android:id="@+id/action_3"
-
+            android:id="@+id/action_backspace"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:text="3"
-            android:textColor="@color/colorBlack"
-            android:textSize="30sp"
-            android:background="@drawable/selector_button_keyboard"
+            android:background="@drawable/ic_keyboard_baseline_backspace_34"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_end"
             app:layout_constraintTop_toTopOf="parent"
@@ -83,14 +95,12 @@
             app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_top"/>
 
     <Button
-            android:id="@+id/action_car"
-
+            android:id="@+id/action_smartphone"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:textColor="@color/colorBlack"
-            android:textSize="30sp"
-            android:background="@drawable/ic_keyboard_round_directions_car_34"
+            android:background="@drawable/ic_keyboard_baseline_smartphone_34"
+            android:backgroundTint="@color/material_dynamic_primary50"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_top"
@@ -98,77 +108,87 @@
             app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_bottom"/>
 
     <Button
-            android:id="@+id/action_store"
-
+            android:id="@+id/action_volume"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:textColor="@color/colorBlack"
-            android:textSize="30sp"
-            android:background="@drawable/ic_keyboard_round_storefront_24"
+            android:background="@drawable/ic_keyboard_baseline_volume_off_34"
+            android:backgroundTint="@color/material_dynamic_primary50"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_start"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_top"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_mid"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_bottom"/>
+
+    <Button
+            android:id="@+id/action_right"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_keyboard_baseline_east_34"
+            android:backgroundTint="@color/material_dynamic_primary50"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical_mid"
+            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_top"
             app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
             app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_bottom"/>
-
-    <Button
-            android:id="@+id/action_style"
-
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:textColor="@color/colorBlack"
-            android:textSize="30sp"
-            android:background="@drawable/ic_keyboard_round_style_44"
-
-            app:layout_constraintStart_toStartOf="@id/guideline_vertical_end"
-            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_bottom"/>
-
-    <Button
-            android:id="@+id/action_icon"
-
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:textColor="@color/colorBlack"
-            android:textSize="30sp"
-            android:background="@drawable/ic_menu_slideshow"
-
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_bottom"
-            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_start"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
             android:id="@+id/action_enter"
-
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:text="enter"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
-            android:background="@drawable/selector_button_keyboard"
+            android:background="@drawable/ic_keyboard_baseline_subdirectory_arrow_left_34"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical_end"
+            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal_bottom"/>
+
+    <Button
+            android:id="@+id/action_down"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_keyboard_baseline_reply_34"
+            android:backgroundTint="@color/material_dynamic_primary50"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_bottom"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_start"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_distance"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_keyboard_baseline_6_ft_apart_34"
+            android:backgroundTint="@color/material_dynamic_primary50"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_start"
+            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_bottom"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical_mid"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_space"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_keyboard_baseline_space_bar_34"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_vertical_mid"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_bottom"
             app:layout_constraintEnd_toEndOf="@id/guideline_vertical_end"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
-            android:id="@+id/action_del"
-
+            android:id="@+id/action_done"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:text="Del"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
-            android:background="@drawable/selector_button_keyboard"
+            android:background="@drawable/ic_keyboard_baseline_file_download_done_34"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_end"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_bottom"
