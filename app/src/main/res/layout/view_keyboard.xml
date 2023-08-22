@@ -50,6 +50,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_chair_34"
             android:backgroundTint="@color/material_dynamic_primary50"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -63,6 +64,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_free_breakfast_34"
             android:backgroundTint="@color/material_dynamic_primary50"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_start"
             app:layout_constraintTop_toTopOf="parent"
@@ -76,6 +78,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_pan_tool_34"
             android:backgroundTint="@color/material_dynamic_primary50"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_mid"
             app:layout_constraintTop_toTopOf="parent"
@@ -88,6 +91,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_backspace_34"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_end"
             app:layout_constraintTop_toTopOf="parent"
@@ -101,6 +105,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_smartphone_34"
             android:backgroundTint="@color/material_dynamic_primary50"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_top"
@@ -114,6 +119,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_volume_off_34"
             android:backgroundTint="@color/material_dynamic_primary50"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_start"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_top"
@@ -127,6 +133,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_east_34"
             android:backgroundTint="@color/material_dynamic_primary50"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_mid"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_top"
@@ -139,6 +146,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_subdirectory_arrow_left_34"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_end"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_top"
@@ -152,6 +160,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_reply_34"
             android:backgroundTint="@color/material_dynamic_primary50"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_bottom"
@@ -165,6 +174,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_6_ft_apart_34"
             android:backgroundTint="@color/material_dynamic_primary50"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_start"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_bottom"
@@ -177,6 +187,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_space_bar_34"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_mid"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_bottom"
@@ -189,6 +200,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/ic_keyboard_baseline_file_download_done_34"
+            android:foreground="?android:selectableItemBackground"
 
             app:layout_constraintStart_toStartOf="@id/guideline_vertical_end"
             app:layout_constraintTop_toTopOf="@id/guideline_horizontal_bottom"

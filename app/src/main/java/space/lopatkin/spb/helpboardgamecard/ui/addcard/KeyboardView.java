@@ -1,7 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.ui.addcard;
 
 import android.content.Context;
-import android.inputmethodservice.Keyboard;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -13,11 +12,13 @@ import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewKeyboardBinding;
@@ -139,40 +140,15 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         if (inputConnection == null)
             return;
 
-//        Drawable drawable = ResourcesCompat.getDrawable(getResources(), keyValuesImage.get(view.getId()), null);
-//        if (drawable == null)
-//            return;
-//        drawable.setBounds(0,0,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight());
-
-
-//        ImageSpan span = new ImageSpan(context, keyValuesImage.get(view.getId()), DynamicDrawableSpan.ALIGN_BASELINE);
-//
-//        Spannable value = new SpannableString("play");
-//        value.setSpan(span, 2, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        inputConnection.commitText(value, 1);
-//
-//        Log.d("myLogs", "CustomKeyboard onClickImage end:  ");
-
-
-
-
         switch (view.getId()) {
             case R.id.action_backspace:
-                CharSequence selectedText = inputConnection.getSelectedText(0);
                 CharSequence currentText = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text;
 
-//                if (TextUtils.isEmpty(selectedText)) {
-//                    //no selection, so delete previous character
-//                    inputConnection.deleteSurroundingText(1, 0);
-//                } else
-                    if (isSeparator(currentText)) {
-
+                if (isSeparator(currentText)) {
                         StringBuffer buffer = new StringBuffer(currentText);
                         buffer.reverse();
                         int indexLastSeparator = buffer.indexOf(SEPARATOR);
-
                         inputConnection.deleteSurroundingText(indexLastSeparator + 1, 0);
-
                 } else {
                     // Delete selection text
                     inputConnection.commitText("", MOVE_CURSOR_TO_THE_END);
@@ -183,7 +159,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
                 inputConnection.commitText(keyValues.get(view.getId()), MOVE_CURSOR_TO_THE_END);
                 break;
             case R.id.action_done:
-//                inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.A));
+                EventBus.getDefault().post(new KeyboardDoneEvent());
                 break;
             default:
                 ImageSpan span = new ImageSpan(
@@ -205,8 +181,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
     private boolean isSeparator(CharSequence text) {
         StringBuffer buffer = new StringBuffer(text);
         int indexLastSeparator = buffer.lastIndexOf(SEPARATOR);
-        return indexLastSeparator > 0 ? true : false;
+        return indexLastSeparator >= 0 ? true : false;
     }
-
 
 }

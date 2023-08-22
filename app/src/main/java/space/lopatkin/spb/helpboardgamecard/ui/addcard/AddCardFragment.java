@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -20,6 +21,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.Snackbar;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentAddcardBinding;
@@ -28,7 +32,7 @@ import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
 import javax.inject.Inject;
 
-public class AddCardFragment extends Fragment {
+public class AddCardFragment extends Fragment implements View.OnTouchListener {
     @Inject
     ViewModelFactory viewModelFactory;
     private AddCardViewModel viewModel;
@@ -63,6 +67,18 @@ public class AddCardFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.addcard_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -73,9 +89,6 @@ public class AddCardFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveNewHelpcard();
-                return true;
-            case R.id.action_keyboard_temp_state:
-                keyboardManagerTempState();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -88,6 +101,39 @@ public class AddCardFragment extends Fragment {
         binding = null;
     }
 
+    private InputConnection inputConnection;
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        view.requestFocus();
+        if (inputConnection != null) {
+            inputConnection.closeConnection();
+        }
+        inputConnection = view.onCreateInputConnection(new EditorInfo());
+        binding.keyboardAddcard.setInputConnection(inputConnection);
+        binding.keyboardAddcard.setVisibility(View.VISIBLE);
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onKeyboardDoneEvent(KeyboardDoneEvent event) {
+        if (binding.editTextVictoryCondition.isFocused()) {
+            binding.editTextVictoryCondition.clearFocus();
+        }
+        if (binding.editTextEndGame.isFocused()) {
+            binding.editTextEndGame.clearFocus();
+        }
+        if (binding.editTextPreparation.isFocused()) {
+            binding.editTextPreparation.clearFocus();
+        }
+        if (binding.editTextPlayerTurn.isFocused()) {
+            binding.editTextPlayerTurn.clearFocus();
+        }
+        if (binding.editTextEffects.isFocused()) {
+            binding.editTextEffects.clearFocus();
+        }
+        binding.keyboardAddcard.setVisibility(View.GONE);
+    }
+
     private void setupViews() {
         binding.editTextTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
         binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
@@ -96,7 +142,7 @@ public class AddCardFragment extends Fragment {
         binding.numberPickerPriority.setMinValue(1);
         binding.numberPickerPriority.setMaxValue(10);
 
-        setupKeyboardTempState();
+        setupKeyboard();
     }
 
     private void saveNewHelpcard() {
@@ -146,69 +192,26 @@ public class AddCardFragment extends Fragment {
         Snackbar.make(binding.scrollAddcard, message, Snackbar.LENGTH_SHORT).show();
     }
 
-    //-----------------------------------------------------
-
-    private void keyboardManagerTempState() {
-        if (binding.keyboardAddcard.getVisibility() == View.VISIBLE) {
-            binding.keyboardAddcard.setVisibility(View.GONE);
-        } else {
-            binding.keyboardAddcard.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void setupKeyboardTempState() {
+    private void setupKeyboard() {
         binding.editTextVictoryCondition.setRawInputType(InputType.TYPE_CLASS_TEXT);
         binding.editTextVictoryCondition.setTextIsSelectable(true);
+        binding.editTextVictoryCondition.setOnTouchListener(this);
 
-        InputConnection inputConnection = binding.editTextVictoryCondition.onCreateInputConnection(new EditorInfo());
-        binding.keyboardAddcard.setInputConnection(inputConnection);
+        binding.editTextEndGame.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextEndGame.setTextIsSelectable(true);
+        binding.editTextEndGame.setOnTouchListener(this);
 
+        binding.editTextPreparation.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextPreparation.setTextIsSelectable(true);
+        binding.editTextPreparation.setOnTouchListener(this);
 
-//        binding.editTextVictoryCondition.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean b) {
-//                binding.keyboardAddcard.setVisibility(View.VISIBLE);
-//
-//                if (view.requestFocus()) {
-//                    InputMethodManager inputManager = getActivity().getSystemService(InputMethodManager.class);
-//
-//                    inputManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//
-//                }
-//            }
-//        });
+        binding.editTextPlayerTurn.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextPlayerTurn.setTextIsSelectable(true);
+        binding.editTextPlayerTurn.setOnTouchListener(this);
 
-//        binding.editTextVictoryCondition.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//
-//                binding.editTextVictoryCondition.setFocusable(true);
-//
-//                binding.keyboardAddcard.setVisibility(View.VISIBLE);
-//
-//
-//
-//
-//                return false;
-//            }
-//        });
-
-
-//        binding.editTextVictoryCondition.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                binding.keyboardAddcard.setVisibility(View.VISIBLE);
-//
-//                if (view.requestFocus()) {
-//                    InputMethodManager inputManager = getActivity().getSystemService(InputMethodManager.class);
-//
-//                    inputManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//
-//                }
-//            }
-//        });
-
-
+        binding.editTextEffects.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextEffects.setTextIsSelectable(true);
+        binding.editTextEffects.setOnTouchListener(this);
     }
 
 }

@@ -47,8 +47,6 @@
     <string name="action_save">Save</string>
     <string name="action_card_save">Card save</string>
     <string name="action_card_edit">Card edit</string>
-    <string name="action_keyboard_temp_state">keyboard</string>
-
 
     <string name="message_helpcard_saved">Helpcard saved</string>
     <string name="message_card_updated">Card updated</string>
