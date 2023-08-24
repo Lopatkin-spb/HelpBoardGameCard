@@ -1,0 +1,21 @@
+<resources>
+
+    <style name="KeyboardButtonSymbol">
+        <item name="android:layout_marginHorizontal">4dp</item>
+        <item name="android:layout_marginVertical">5dp</item>
+
+        <item name="android:textSize">25sp</item>
+
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:background">@drawable/bg_button_keyboard_default</item>
+    </style>
+
+    <style name="KeyboardButtonIcon">
+        <item name="android:layout_marginHorizontal">4dp</item>
+        <item name="android:layout_marginVertical">5dp</item>
+
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:background">@drawable/bg_button_keyboard_default</item>
+    </style>
+
+</resources>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container_keyboard_number"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:paddingVertical="10dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:background="@color/colorGrey">
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_row_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.33"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_row_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.66"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.14"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.28"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.42"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.56"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.84"/>
+
+
+    <Button
+            android:id="@+id/action_symbol_one"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="1"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+    <Button
+            android:id="@+id/action_symbol_two"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="2"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+    <Button
+            android:id="@+id/action_symbol_three"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="3"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+    <Button
+            android:id="@+id/action_symbol_four"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="4"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+    <Button
+            android:id="@+id/action_symbol_five"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="5"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+    <Button
+            android:id="@+id/action_symbol_six"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="6"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+    <Button
+            android:id="@+id/action_symbol_seven"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="7"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+    <Button
+            android:id="@+id/action_symbol_eight"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="8"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+    <Button
+            android:id="@+id/action_symbol_nine"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="9"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+    <Button
+            android:id="@+id/action_symbol_zero"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="0"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+    <Button
+            android:id="@+id/action_symbol_plus"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="+"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+    <Button
+            android:id="@+id/action_symbol_minus"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="-"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+    <Button
+            android:id="@+id/action_symbol_multiply"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="*"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+    <Button
+            android:id="@+id/action_symbol_divide"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="/"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+    <Button
+            android:id="@+id/action_symbol_colon"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text=":"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_symbol_equal"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="="
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_symbol_parentheses_open"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="("
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_symbol_parentheses_close"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text=")"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_symbol_arrow_left"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="..."
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_symbol_arrow_right"
+            style="@style/KeyboardButtonSymbol"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="..."
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

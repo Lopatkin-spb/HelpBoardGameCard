@@ -10,6 +10,12 @@
 
 
 --- TODAY:
+- закинуть знаков в клавиатуры
+- доделать высоту толщину кнопок клавиатур
+- высоту иконок и символов сделать одинаковой во вью
+
+
+
 1) custom icons keyboard
 2) set full one game to card
 3) merge to prod - up app versions to gradle
