@@ -63,7 +63,7 @@
     <include
             android:id="@+id/keyboard_icon"
             android:layout_width="0dp"
-            android:layout_height="190dp"
+            android:layout_height="0dp"
             layout="@layout/keyboard_icon"
             android:visibility="visible"
             tools:visibility="visible"

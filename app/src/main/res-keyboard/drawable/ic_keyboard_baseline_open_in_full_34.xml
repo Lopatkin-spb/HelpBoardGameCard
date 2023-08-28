@@ -9,7 +9,7 @@
 
     <path
             android:fillColor="@color/keyboard_shadow_icon_black50"
-            android:pathData="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7,-7L15,5z"/>
+            android:pathData="M21,11l0,-8l-8,0l3.29,3.29l-10,10l-3.29,-3.29l0,8l8,0l-3.29,-3.29l10,-10z"/>
 
     <group
             android:translateX="-0.5"
@@ -17,7 +17,7 @@
 
         <path
                 android:fillColor="@android:color/white"
-                android:pathData="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7,-7L15,5z"/>
+                android:pathData="M21,11l0,-8l-8,0l3.29,3.29l-10,10l-3.29,-3.29l0,8l8,0l-3.29,-3.29l10,-10z"/>
 
     </group>
 

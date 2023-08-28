@@ -24,15 +24,15 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
 
     private static final int MOVE_CURSOR_TO_THE_END = 1;
     private static final int SPANNABLE_TEXT_LENGTH = KeyboardButton.getLength();
-
+    public static final int DYNAMIC_DRAWABLE_SPAN = DynamicDrawableSpan.ALIGN_BOTTOM;
     public static final String SEPARATOR = "#";
     private static KeyboardType VISIBLE_TYPE;
     private ViewKeyboardBinding binding;
 
     //this will the button resource id to the String value that we want to
     // input when that button is clicked
-    private final SparseArray<String> keyValues = new SparseArray<>();
-    private final SparseArray<String> keyNumbers = new SparseArray<>();
+    private final SparseArray<String> keyBasicValue = new SparseArray<>();
+    private final SparseArray<String> keySymbolValue = new SparseArray<>();
     private Context context;
 
     //communication link to the EditText
@@ -62,14 +62,14 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             ImageSpan span = new ImageSpan(
                     context,
                     KeyboardButton.getDrawableFrom(view.getId()),
-                    DynamicDrawableSpan.ALIGN_BASELINE);
-            Spannable image = new SpannableString(SEPARATOR + KeyboardButton.getNameFrom(view.getId()));
+                    DYNAMIC_DRAWABLE_SPAN);
+            Spannable icon = new SpannableString(SEPARATOR + KeyboardButton.getNameFrom(view.getId()));
 
             //todo: разобраться с вариантами SPAN_EXCLUSIVE_EXCLUSIVE
-            image.setSpan(span, 0, image.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            inputConnection.commitText(image, MOVE_CURSOR_TO_THE_END);
+            icon.setSpan(span, 0, icon.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            inputConnection.commitText(icon, MOVE_CURSOR_TO_THE_END);
         } else {
-            String symbol = keyNumbers.get(view.getId());
+            String symbol = keySymbolValue.get(view.getId());
             inputConnection.commitText(symbol, MOVE_CURSOR_TO_THE_END);
         }
     }
@@ -93,19 +93,51 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         onActionSpace();
         onActionDone();
 
-        keyValues.put(R.id.action_enter, "\n");
-        keyValues.put(R.id.action_space, " ");
+        keyBasicValue.put(R.id.action_enter, "\n");
+        keyBasicValue.put(R.id.action_space, " ");
     }
 
     private void setupKeyboardIcon() {
+        //blue
         binding.keyboardIcon.actionChair.setOnClickListener(this);
         binding.keyboardIcon.actionBreakfast.setOnClickListener(this);
         binding.keyboardIcon.actionStop.setOnClickListener(this);
+        binding.keyboardIcon.actionFastfood.setOnClickListener(this);
+        binding.keyboardIcon.actionHammer.setOnClickListener(this);
+        binding.keyboardIcon.actionHouse.setOnClickListener(this);
+        binding.keyboardIcon.actionPawn.setOnClickListener(this);
         binding.keyboardIcon.actionSmartphone.setOnClickListener(this);
         binding.keyboardIcon.actionVolume.setOnClickListener(this);
+        binding.keyboardIcon.actionScull.setOnClickListener(this);
+        binding.keyboardIcon.actionTileDeck.setOnClickListener(this);
+        binding.keyboardIcon.actionMeeple.setOnClickListener(this);
+        binding.keyboardIcon.actionDice.setOnClickListener(this);
+        binding.keyboardIcon.actionTable.setOnClickListener(this);
+        binding.keyboardIcon.actionCardsDeck.setOnClickListener(this);
+        binding.keyboardIcon.actionOut2.setOnClickListener(this);
+        binding.keyboardIcon.actionRelax.setOnClickListener(this);
+        binding.keyboardIcon.actionPlayerTablet.setOnClickListener(this);
+        binding.keyboardIcon.actionCar.setOnClickListener(this);
+        binding.keyboardIcon.actionBoat.setOnClickListener(this);
+        binding.keyboardIcon.actionClock.setOnClickListener(this);
+        binding.keyboardIcon.actionPerson.setOnClickListener(this);
+        binding.keyboardIcon.actionPersons.setOnClickListener(this);
+        binding.keyboardIcon.actionDoor.setOnClickListener(this);
+
+//green
+        binding.keyboardIcon.actionArrowDown.setOnClickListener(this);
+        binding.keyboardIcon.actionOut.setOnClickListener(this);
+        binding.keyboardIcon.actionDistance3.setOnClickListener(this);
+        binding.keyboardIcon.actionSwap.setOnClickListener(this);
+        binding.keyboardIcon.actionSwap2.setOnClickListener(this);
+        binding.keyboardIcon.actionArrowRight.setOnClickListener(this);
+        binding.keyboardIcon.actionMix.setOnClickListener(this);
         binding.keyboardIcon.actionRight.setOnClickListener(this);
-        binding.keyboardIcon.actionDown.setOnClickListener(this);
-        binding.keyboardIcon.actionDistance.setOnClickListener(this);
+        binding.keyboardIcon.actionDistance2.setOnClickListener(this);
+        binding.keyboardIcon.actionMoveRight.setOnClickListener(this);
+//red
+        binding.keyboardIcon.actionWarning.setOnClickListener(this);
+        binding.keyboardIcon.actionDangerous.setOnClickListener(this);
     }
 
     private void setupKeyboardNumber() {
@@ -129,25 +161,25 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.keyboardNumber.actionSymbolParenthesesOpen.setOnClickListener(this);
         binding.keyboardNumber.actionSymbolParenthesesClose.setOnClickListener(this);
 
-        keyNumbers.put(R.id.action_symbol_one, "1");
-        keyNumbers.put(R.id.action_symbol_two, "2");
-        keyNumbers.put(R.id.action_symbol_three, "3");
-        keyNumbers.put(R.id.action_symbol_four, "4");
-        keyNumbers.put(R.id.action_symbol_five, "5");
-        keyNumbers.put(R.id.action_symbol_six, "6");
-        keyNumbers.put(R.id.action_symbol_seven, "7");
-        keyNumbers.put(R.id.action_symbol_eight, "8");
-        keyNumbers.put(R.id.action_symbol_nine, "9");
-        keyNumbers.put(R.id.action_symbol_zero, "0");
+        keySymbolValue.put(R.id.action_symbol_one, "1");
+        keySymbolValue.put(R.id.action_symbol_two, "2");
+        keySymbolValue.put(R.id.action_symbol_three, "3");
+        keySymbolValue.put(R.id.action_symbol_four, "4");
+        keySymbolValue.put(R.id.action_symbol_five, "5");
+        keySymbolValue.put(R.id.action_symbol_six, "6");
+        keySymbolValue.put(R.id.action_symbol_seven, "7");
+        keySymbolValue.put(R.id.action_symbol_eight, "8");
+        keySymbolValue.put(R.id.action_symbol_nine, "9");
+        keySymbolValue.put(R.id.action_symbol_zero, "0");
 
-        keyNumbers.put(R.id.action_symbol_plus, "+");
-        keyNumbers.put(R.id.action_symbol_minus, "-");
-        keyNumbers.put(R.id.action_symbol_multiply, "*");
-        keyNumbers.put(R.id.action_symbol_divide, "/");
-        keyNumbers.put(R.id.action_symbol_colon, ":");
-        keyNumbers.put(R.id.action_symbol_equal, "=");
-        keyNumbers.put(R.id.action_symbol_parentheses_open, "(");
-        keyNumbers.put(R.id.action_symbol_parentheses_close, ")");
+        keySymbolValue.put(R.id.action_symbol_plus, "+");
+        keySymbolValue.put(R.id.action_symbol_minus, "-");
+        keySymbolValue.put(R.id.action_symbol_multiply, "*");
+        keySymbolValue.put(R.id.action_symbol_divide, "/");
+        keySymbolValue.put(R.id.action_symbol_colon, ":");
+        keySymbolValue.put(R.id.action_symbol_equal, "=");
+        keySymbolValue.put(R.id.action_symbol_parentheses_open, "(");
+        keySymbolValue.put(R.id.action_symbol_parentheses_close, ")");
     }
 
     private void onActionBackspace() {
@@ -157,8 +189,8 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             }
             CharSequence text = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text;
 
-            if (isImage(text)) {
-                deleteImage(text);
+            if (isIcon(text)) {
+                deleteIcon(text);
             } else {
                 deleteSymbol(text);
             }
@@ -170,7 +202,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             if (inputConnection == null) {
                 return;
             }
-            inputConnection.commitText(keyValues.get(view.getId()), MOVE_CURSOR_TO_THE_END);
+            inputConnection.commitText(keyBasicValue.get(view.getId()), MOVE_CURSOR_TO_THE_END);
         });
     }
 
@@ -198,7 +230,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             if (inputConnection == null) {
                 return;
             }
-            inputConnection.commitText(keyValues.get(view.getId()), MOVE_CURSOR_TO_THE_END);
+            inputConnection.commitText(keyBasicValue.get(view.getId()), MOVE_CURSOR_TO_THE_END);
         });
     }
 
@@ -217,7 +249,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         return indexLastSeparator >= 0 ? true : false;
     }
 
-    private boolean isImage(CharSequence text) {
+    private boolean isIcon(CharSequence text) {
         if (TextUtils.isEmpty(text)) {
             return false;
         }
@@ -230,12 +262,12 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         return symbol.equalsIgnoreCase(SEPARATOR);
     }
 
-    private void deleteImage(CharSequence text) {
+    private void deleteIcon(CharSequence text) {
         if (isSeparator(text)) {
             StringBuffer buffer = new StringBuffer(text);
             buffer.reverse();
-            int indexLastSeparator = buffer.indexOf(SEPARATOR);
-            inputConnection.deleteSurroundingText(indexLastSeparator + 1, 0);
+            int indexLastIconSeparator = buffer.indexOf(SEPARATOR);
+            inputConnection.deleteSurroundingText(indexLastIconSeparator + 1, 0);
         } else {
             // Delete selection text
             inputConnection.commitText("", MOVE_CURSOR_TO_THE_END);

@@ -1,25 +1,20 @@
 
 
 --- GLOBAL:
-- feature: custom icons keyboard
-   -доделать установку во вью: разделить входящий текст на строки\ проверить строки на разделители\ отрисовать
-   -доработать записанные баги
-   -сделать иконки целевые
-
+- клава
+- рефакторинг
+- котлин
 
 
 
 --- TODAY:
-- закинуть знаков в клавиатуры
-- доделать высоту толщину кнопок клавиатур
-- высоту иконок и символов сделать одинаковой во вью
+- change basic button icons to basic system, add button стереть всю строку
+- добавить keyboard буквы
+   -добавить клавиатуру в редактирование
+- добавить checkbox в опции включение стандартной клавы
 
-
-
-1) custom icons keyboard
 2) set full one game to card
 3) merge to prod - up app versions to gradle
-3) add eventBus
 
 
 
@@ -27,7 +22,7 @@
 
 
 --- TOMORROW:
-- change name app to "Help Cards for Board Games" , setup
+- change name app to "Help Cards for Board Game" , setup
 - clean architecture
 - add game variants
 - add in description split to speed / agression/ mehanics
@@ -62,7 +57,7 @@
 - feature: add header collapse
 - feature: load image game from net/ site
 - feature: screen for add game statistics
-
+- icons (возможно добавить иконки )= скобки
 
 
 bugs (for simulation search and fix in "release" branch)
@@ -116,7 +111,9 @@ setup
 
 
 
-- Bug fix: Helpcard title;
+- Keyboard icon: create icons, create colors & dimens, add colors and shadow to icons,
+add icons to keyboard, delete redundant icons, set scroll, set dimens to icon views;
+- Keyboard: create basic constant DrawableSpan & set to custom views, little refactoring;
 - Plan: update;
 
 

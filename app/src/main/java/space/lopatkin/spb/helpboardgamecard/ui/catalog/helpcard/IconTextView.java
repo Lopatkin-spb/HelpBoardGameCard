@@ -3,7 +3,6 @@ package space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import androidx.annotation.NonNull;
@@ -56,7 +55,7 @@ public class IconTextView extends AppCompatTextView {
             String name = text.substring(firstCharIndex + 1, lastCharIndex);
             ImageSpan span = new ImageSpan(context,
                     KeyboardButton.getDrawableFrom(name),
-                    DynamicDrawableSpan.ALIGN_BASELINE);
+                    KeyboardView.DYNAMIC_DRAWABLE_SPAN);
 
             textWithImages.setSpan(span, firstCharIndex, lastCharIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }

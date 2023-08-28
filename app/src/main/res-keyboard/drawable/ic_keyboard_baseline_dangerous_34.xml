@@ -1,6 +1,6 @@
 <vector
         android:height="34dp"
-        android:tint="@color/keyboard_color_icon_green_test"
+        android:tint="@color/keyboard_color_icon_pink_test"
         android:tintMode="multiply"
         android:viewportHeight="24"
         android:viewportWidth="24"
@@ -9,7 +9,7 @@
 
     <path
             android:fillColor="@color/keyboard_shadow_icon_black50"
-            android:pathData="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7,-7L15,5z"/>
+            android:pathData="M15.73,3H8.27L3,8.27v7.46L8.27,21h7.46L21,15.73V8.27L15.73,3zM17,15.74L15.74,17 12,13.26 8.26,17 7,15.74 10.74,12 7,8.26 8.26,7 12,10.74 15.74,7 17,8.26 13.26,12 17,15.74z"/>
 
     <group
             android:translateX="-0.5"
@@ -17,7 +17,7 @@
 
         <path
                 android:fillColor="@android:color/white"
-                android:pathData="M15,5l-1.41,1.41L18.17,11H2V13h16.17l-4.59,4.59L15,19l7,-7L15,5z"/>
+                android:pathData="M15.73,3H8.27L3,8.27v7.46L8.27,21h7.46L21,15.73V8.27L15.73,3zM17,15.74L15.74,17 12,13.26 8.26,17 7,15.74 10.74,12 7,8.26 8.26,7 12,10.74 15.74,7 17,8.26 13.26,12 17,15.74z"/>
 
     </group>
 
