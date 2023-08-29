@@ -8,13 +8,18 @@
 
 
 --- TODAY:
-- change basic button icons to basic system, add button стереть всю строку
+  добавить иконку переключения на буквы,
+
 - добавить keyboard буквы
    -добавить клавиатуру в редактирование
 - добавить checkbox в опции включение стандартной клавы
 
 2) set full one game to card
 3) merge to prod - up app versions to gradle
+
+- icons (возможно добавить иконки) =
+квадратные скобки (зеленые или желтые?), другую дверь, рынок, стопка, карта рубашкой, сброс, мин\макс,
+остаток, все;
 
 
 
@@ -57,7 +62,6 @@
 - feature: add header collapse
 - feature: load image game from net/ site
 - feature: screen for add game statistics
-- icons (возможно добавить иконки )= скобки
 
 
 bugs (for simulation search and fix in "release" branch)
@@ -69,6 +73,8 @@ bugs (for simulation search and fix in "release" branch)
 (нижнюю границу иконки сделать боттом, а подправлять уже высоту)
 -при нажатии на кнопочные промежутки кастомной клавы надо чтобы клик не проходил в едитВью под клавой
 -при прокрутке фрагмента надо чтобы фокус не появлялся в EditText если его нет
+-при появлении клавы надо сделаь, чтобы вид клавы был стандартный (без запоминания)
+-вид клавы при появлении сделать зависящим от вида текстВью
 
 --------------------------------reference---------------------------
 
@@ -115,6 +121,5 @@ setup
 add icons to keyboard, delete redundant icons, set scroll, set dimens to icon views;
 - Keyboard: create basic constant DrawableSpan & set to custom views, little refactoring;
 - Plan: update;
-
 
 

@@ -5,8 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/container_keyboard_number"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:paddingVertical="10dp"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         tools:visibility="visible"
         android:background="@color/colorGrey">
@@ -71,8 +70,8 @@
     <Button
             android:id="@+id/action_symbol_one"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="1"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -83,8 +82,8 @@
     <Button
             android:id="@+id/action_symbol_two"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="2"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_1"
@@ -95,8 +94,8 @@
     <Button
             android:id="@+id/action_symbol_three"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="3"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_2"
@@ -107,8 +106,8 @@
     <Button
             android:id="@+id/action_symbol_four"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="4"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_3"
@@ -119,8 +118,8 @@
     <Button
             android:id="@+id/action_symbol_five"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="5"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_4"
@@ -131,8 +130,8 @@
     <Button
             android:id="@+id/action_symbol_six"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="6"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_5"
@@ -143,8 +142,8 @@
     <Button
             android:id="@+id/action_symbol_seven"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="7"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_6"
@@ -155,8 +154,8 @@
     <Button
             android:id="@+id/action_symbol_eight"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="8"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -167,8 +166,8 @@
     <Button
             android:id="@+id/action_symbol_nine"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="9"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_1"
@@ -179,8 +178,8 @@
     <Button
             android:id="@+id/action_symbol_zero"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="0"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_2"
@@ -191,8 +190,8 @@
     <Button
             android:id="@+id/action_symbol_plus"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="+"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_3"
@@ -203,8 +202,8 @@
     <Button
             android:id="@+id/action_symbol_minus"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="-"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_4"
@@ -215,8 +214,8 @@
     <Button
             android:id="@+id/action_symbol_multiply"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="*"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_5"
@@ -227,8 +226,8 @@
     <Button
             android:id="@+id/action_symbol_divide"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text="/"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_6"
@@ -239,21 +238,9 @@
     <Button
             android:id="@+id/action_symbol_colon"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
             android:text=":"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_row_2"
-            app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <Button
-            android:id="@+id/action_symbol_equal"
-            style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="="
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_1"
             app:layout_constraintTop_toTopOf="@id/guideline_row_2"
@@ -261,11 +248,11 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
-            android:id="@+id/action_symbol_parentheses_open"
+            android:id="@+id/action_symbol_equal"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="("
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="="
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_2"
             app:layout_constraintTop_toTopOf="@id/guideline_row_2"
@@ -273,11 +260,11 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
-            android:id="@+id/action_symbol_parentheses_close"
+            android:id="@+id/action_symbol_parentheses_open"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text=")"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="("
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_3"
             app:layout_constraintTop_toTopOf="@id/guideline_row_2"
@@ -285,27 +272,15 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
-            android:id="@+id/action_symbol_arrow_left"
+            android:id="@+id/action_symbol_parentheses_close"
             style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="..."
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text=")"
 
             app:layout_constraintStart_toStartOf="@id/guideline_column_4"
             app:layout_constraintTop_toTopOf="@id/guideline_row_2"
             app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <Button
-            android:id="@+id/action_symbol_arrow_right"
-            style="@style/KeyboardButtonSymbol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="..."
-
-            app:layout_constraintStart_toStartOf="@id/guideline_column_5"
-            app:layout_constraintTop_toTopOf="@id/guideline_row_2"
-            app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

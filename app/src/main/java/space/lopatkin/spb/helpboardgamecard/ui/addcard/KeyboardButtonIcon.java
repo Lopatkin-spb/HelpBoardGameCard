@@ -2,7 +2,7 @@ package space.lopatkin.spb.helpboardgamecard.ui.addcard;
 
 import space.lopatkin.spb.helpboardgamecard.R;
 
-public enum KeyboardButton {
+public enum KeyboardButtonIcon {
 
     l1000(R.id.action_chair, R.drawable.ic_keyboard_baseline_chair_34),
     l1001(R.id.action_breakfast, R.drawable.ic_keyboard_baseline_free_breakfast_34),
@@ -40,19 +40,19 @@ public enum KeyboardButton {
     l1033(R.id.action_move_right, R.drawable.ic_keyboard_baseline_sync_alt_2_34),
     l1034(R.id.action_warning, R.drawable.ic_keyboard_baseline_error_34),
     l1035(R.id.action_dangerous, R.drawable.ic_keyboard_baseline_dangerous_34);
-
-    private static final String length = KeyboardView.SEPARATOR + l1000.name();
+    public static final String SEPARATOR = "#";
+    private static final String length = SEPARATOR + l1000.name();
 
     private int id;
     private int drawable;
 
-    KeyboardButton(int id, int drawable) {
+    KeyboardButtonIcon(int id, int drawable) {
         this.id = id;
         this.drawable = drawable;
     }
 
     public static int getDrawableFrom(int resourceId) {
-        for (KeyboardButton button : values()) {
+        for (KeyboardButtonIcon button : values()) {
             if (button.id == resourceId) {
                 return button.drawable;
             }
@@ -61,7 +61,7 @@ public enum KeyboardButton {
     }
 
     public static int getDrawableFrom(String name) {
-        for (KeyboardButton button : values()) {
+        for (KeyboardButtonIcon button : values()) {
             if (button.name().equals(name)) {
                 return button.drawable;
             }
@@ -70,7 +70,7 @@ public enum KeyboardButton {
     }
 
     public static String getNameFrom(int resourceId) {
-        for (KeyboardButton button : values()) {
+        for (KeyboardButtonIcon button : values()) {
             if (button.id == resourceId) {
                 return button.name();
             }

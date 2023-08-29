@@ -3,6 +3,9 @@
        android:shape="rectangle">
 
     <solid
-            android:color="@color/colorGrey2"/>
+            android:color="@color/keyboard_button_white"/>
+
+    <corners
+            android:radius="@dimen/keyboard_button_corners_radius"/>
 
 </shape>

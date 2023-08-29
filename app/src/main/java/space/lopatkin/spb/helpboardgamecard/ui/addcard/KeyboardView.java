@@ -23,16 +23,15 @@ import space.lopatkin.spb.helpboardgamecard.databinding.ViewKeyboardBinding;
 public class KeyboardView extends ConstraintLayout implements View.OnClickListener {
 
     private static final int MOVE_CURSOR_TO_THE_END = 1;
-    private static final int SPANNABLE_TEXT_LENGTH = KeyboardButton.getLength();
+    private static final int SPANNABLE_TEXT_LENGTH = KeyboardButtonIcon.getLength();
     public static final int DYNAMIC_DRAWABLE_SPAN = DynamicDrawableSpan.ALIGN_BOTTOM;
-    public static final String SEPARATOR = "#";
+    private static final String SEPARATOR = KeyboardButtonIcon.SEPARATOR;
     private static KeyboardType VISIBLE_TYPE;
     private ViewKeyboardBinding binding;
 
     //this will the button resource id to the String value that we want to
     // input when that button is clicked
     private final SparseArray<String> keyBasicValue = new SparseArray<>();
-    private final SparseArray<String> keySymbolValue = new SparseArray<>();
     private Context context;
 
     //communication link to the EditText
@@ -61,15 +60,15 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         if (VISIBLE_TYPE == KeyboardType.ICON) {
             ImageSpan span = new ImageSpan(
                     context,
-                    KeyboardButton.getDrawableFrom(view.getId()),
+                    KeyboardButtonIcon.getDrawableFrom(view.getId()),
                     DYNAMIC_DRAWABLE_SPAN);
-            Spannable icon = new SpannableString(SEPARATOR + KeyboardButton.getNameFrom(view.getId()));
+            Spannable icon = new SpannableString(SEPARATOR + KeyboardButtonIcon.getNameFrom(view.getId()));
 
             //todo: разобраться с вариантами SPAN_EXCLUSIVE_EXCLUSIVE
             icon.setSpan(span, 0, icon.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             inputConnection.commitText(icon, MOVE_CURSOR_TO_THE_END);
         } else {
-            String symbol = keySymbolValue.get(view.getId());
+            String symbol = KeyboardButtonSymbol.getStringFrom(view.getId());
             inputConnection.commitText(symbol, MOVE_CURSOR_TO_THE_END);
         }
     }
@@ -88,6 +87,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         setupKeyboardNumber();
 
         onActionBackspace();
+        onActionBackspaceFull();
         onActionEnter();
         onActionSwitch();
         onActionSpace();
@@ -160,26 +160,6 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.keyboardNumber.actionSymbolEqual.setOnClickListener(this);
         binding.keyboardNumber.actionSymbolParenthesesOpen.setOnClickListener(this);
         binding.keyboardNumber.actionSymbolParenthesesClose.setOnClickListener(this);
-
-        keySymbolValue.put(R.id.action_symbol_one, "1");
-        keySymbolValue.put(R.id.action_symbol_two, "2");
-        keySymbolValue.put(R.id.action_symbol_three, "3");
-        keySymbolValue.put(R.id.action_symbol_four, "4");
-        keySymbolValue.put(R.id.action_symbol_five, "5");
-        keySymbolValue.put(R.id.action_symbol_six, "6");
-        keySymbolValue.put(R.id.action_symbol_seven, "7");
-        keySymbolValue.put(R.id.action_symbol_eight, "8");
-        keySymbolValue.put(R.id.action_symbol_nine, "9");
-        keySymbolValue.put(R.id.action_symbol_zero, "0");
-
-        keySymbolValue.put(R.id.action_symbol_plus, "+");
-        keySymbolValue.put(R.id.action_symbol_minus, "-");
-        keySymbolValue.put(R.id.action_symbol_multiply, "*");
-        keySymbolValue.put(R.id.action_symbol_divide, "/");
-        keySymbolValue.put(R.id.action_symbol_colon, ":");
-        keySymbolValue.put(R.id.action_symbol_equal, "=");
-        keySymbolValue.put(R.id.action_symbol_parentheses_open, "(");
-        keySymbolValue.put(R.id.action_symbol_parentheses_close, ")");
     }
 
     private void onActionBackspace() {
@@ -197,6 +177,22 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         });
     }
 
+    private void onActionBackspaceFull() {
+        binding.actionBackspaceFull.setOnClickListener(view -> {
+            if (inputConnection == null) {
+                return;
+            }
+            CharSequence currentText = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text;
+            if (!TextUtils.isEmpty(currentText)) {
+
+                CharSequence textBeforeCursor = inputConnection.getTextBeforeCursor(currentText.length(), 0);
+                CharSequence textAfterCursor = inputConnection.getTextAfterCursor(currentText.length(), 0);
+
+                inputConnection.deleteSurroundingText(textBeforeCursor.length(), textAfterCursor.length());
+            }
+        });
+    }
+
     private void onActionEnter() {
         binding.actionEnter.setOnClickListener(view -> {
             if (inputConnection == null) {
@@ -207,7 +203,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void onActionSwitch() {
-        binding.actionSwitch.setOnClickListener(view -> {
+        binding.actionSwitchToNumbers.setOnClickListener(view -> {
             if (inputConnection == null) {
                 return;
             }
@@ -215,12 +211,20 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
                 binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.GONE);
                 binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.VISIBLE);
                 VISIBLE_TYPE = KeyboardType.NUMBER;
-                binding.actionSwitch.setText("icons");
-            } else {
+                binding.actionSwitchToIcons.setVisibility(View.VISIBLE);
+                binding.actionSwitchToNumbers.setVisibility(View.GONE);
+            }
+        });
+        binding.actionSwitchToIcons.setOnClickListener(view -> {
+            if (inputConnection == null) {
+                return;
+            }
+            if (VISIBLE_TYPE == KeyboardType.NUMBER) {
                 binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.GONE);
                 binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.VISIBLE);
                 VISIBLE_TYPE = KeyboardType.ICON;
-                binding.actionSwitch.setText("123");
+                binding.actionSwitchToIcons.setVisibility(View.GONE);
+                binding.actionSwitchToNumbers.setVisibility(View.VISIBLE);
             }
         });
     }

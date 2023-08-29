@@ -9,14 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import org.jetbrains.annotations.NotNull;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardButton;
+import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardButtonIcon;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardView;
 
 import java.util.stream.IntStream;
 
 public class IconTextView extends AppCompatTextView {
 
-    private static final char SEPARATOR = KeyboardView.SEPARATOR.charAt(0);
+    private static final char SEPARATOR = KeyboardButtonIcon.SEPARATOR.charAt(0);
     private Context context;
 
     public IconTextView(@NonNull @NotNull Context context) {
@@ -50,11 +50,11 @@ public class IconTextView extends AppCompatTextView {
 
         for (int numberImage = 0; numberImage < countImagesIn(rawText); numberImage++) {
             int firstCharIndex = getIndexSeparator(text, numberImage);
-            int lastCharIndex = firstCharIndex + KeyboardButton.getLength();
+            int lastCharIndex = firstCharIndex + KeyboardButtonIcon.getLength();
 
             String name = text.substring(firstCharIndex + 1, lastCharIndex);
             ImageSpan span = new ImageSpan(context,
-                    KeyboardButton.getDrawableFrom(name),
+                    KeyboardButtonIcon.getDrawableFrom(name),
                     KeyboardView.DYNAMIC_DRAWABLE_SPAN);
 
             textWithImages.setSpan(span, firstCharIndex, lastCharIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
