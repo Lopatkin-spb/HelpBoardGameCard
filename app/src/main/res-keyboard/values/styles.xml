@@ -25,6 +25,23 @@
         <item name="android:background">@drawable/bg_button_keyboard_white</item>
     </style>
 
+    <style name="KeyboardButtonQwerty">
+        <item name="android:layout_marginHorizontal">2dp</item>
+        <item name="android:layout_marginVertical">5dp</item>
+
+        <item name="android:textSize">25sp</item>
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:background">@drawable/bg_button_keyboard_white</item>
+    </style>
+
+    <style name="KeyboardButtonQwertyBasic">
+        <item name="android:layout_marginHorizontal">2dp</item>
+        <item name="android:layout_marginVertical">5dp</item>
+
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:background">@drawable/bg_button_keyboard_grey</item>
+    </style>
+
     <style name="KeyboardButtonIcon">
         <item name="android:layout_marginHorizontal">4dp</item>
         <item name="android:layout_marginVertical">5dp</item>

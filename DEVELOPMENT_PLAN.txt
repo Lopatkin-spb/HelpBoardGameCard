@@ -8,18 +8,20 @@
 
 
 --- TODAY:
-  добавить иконку переключения на буквы,
 
-- добавить keyboard буквы
+- добавить клаву ко вью, при открытии показывать нужный вид клавы
+-разобраться с енклюзив инклюзив
    -добавить клавиатуру в редактирование
 - добавить checkbox в опции включение стандартной клавы
+
 
 2) set full one game to card
 3) merge to prod - up app versions to gradle
 
 - icons (возможно добавить иконки) =
-квадратные скобки (зеленые или желтые?), другую дверь, рынок, стопка, карта рубашкой, сброс, мин\макс,
-остаток, все;
+квадратные скобки (зеленые или желтые?), другую дверь, рынок, стопка, карта рубашкой, карту лицом (с ромбом),
+сброс, мин\макс, остаток, все, тайл 3 фигур с буквой Т, игроки надо сделать больше фигур,
+собрать (несколько стрелочек в одну), перемешать (по две стрелочки друг в друга расческой), shield,
 
 
 
@@ -117,9 +119,8 @@ setup
 
 
 
-- Keyboard icon: create icons, create colors & dimens, add colors and shadow to icons,
-add icons to keyboard, delete redundant icons, set scroll, set dimens to icon views;
-- Keyboard: create basic constant DrawableSpan & set to custom views, little refactoring;
+- Create KeyboardQwerty, add to keyboards;
+- Keyboard basic: rework switch buttons;
 - Plan: update;
 
 
