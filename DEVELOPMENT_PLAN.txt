@@ -9,10 +9,10 @@
 
 --- TODAY:
 
-- добавить клаву ко вью, при открытии показывать нужный вид клавы
--разобраться с енклюзив инклюзив
+
+- попробовать кликабельную иконку
    -добавить клавиатуру в редактирование
-- добавить checkbox в опции включение стандартной клавы
+- добавить опции i checkbox на включение стандартной клавы
 
 
 2) set full one game to card
@@ -75,8 +75,6 @@ bugs (for simulation search and fix in "release" branch)
 (нижнюю границу иконки сделать боттом, а подправлять уже высоту)
 -при нажатии на кнопочные промежутки кастомной клавы надо чтобы клик не проходил в едитВью под клавой
 -при прокрутке фрагмента надо чтобы фокус не появлялся в EditText если его нет
--при появлении клавы надо сделаь, чтобы вид клавы был стандартный (без запоминания)
--вид клавы при появлении сделать зависящим от вида текстВью
 
 --------------------------------reference---------------------------
 
@@ -119,8 +117,11 @@ setup
 
 
 
-- Create KeyboardQwerty, add to keyboards;
-- Keyboard basic: rework switch buttons;
+- AddcardFrag: delete implement listener and set individual listener to every EditText views (SOLID),
+set open type keyboard to every EditTexts, add clear focus to every EditTexts,
+delete setup softKeyboard;
+- KeyboardView: add auto setting to Caps, set span to exclusive/exclusive, fix bug to onActionSpace,
+move code to SOLID;
 - Plan: update;
 
 

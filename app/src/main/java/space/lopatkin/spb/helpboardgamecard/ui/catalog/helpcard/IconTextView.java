@@ -57,7 +57,7 @@ public class IconTextView extends AppCompatTextView {
                     KeyboardButtonIcon.getDrawableFrom(name),
                     KeyboardView.DYNAMIC_DRAWABLE_SPAN);
 
-            textWithImages.setSpan(span, firstCharIndex, lastCharIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textWithImages.setSpan(span, firstCharIndex, lastCharIndex, KeyboardView.SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
 

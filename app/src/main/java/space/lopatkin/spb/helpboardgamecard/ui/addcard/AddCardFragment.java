@@ -32,12 +32,13 @@ import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
 import javax.inject.Inject;
 
-public class AddCardFragment extends Fragment implements View.OnTouchListener {
+public class AddCardFragment extends Fragment {
     @Inject
     ViewModelFactory viewModelFactory;
     private AddCardViewModel viewModel;
     private FragmentAddcardBinding binding;
     private NavController navController;
+    private InputConnection inputConnection;
 
     //todo: move to abstract fragment
     @Override
@@ -101,21 +102,14 @@ public class AddCardFragment extends Fragment implements View.OnTouchListener {
         binding = null;
     }
 
-    private InputConnection inputConnection;
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        view.requestFocus();
-        if (inputConnection != null) {
-            inputConnection.closeConnection();
-        }
-        inputConnection = view.onCreateInputConnection(new EditorInfo());
-        binding.keyboardAddcard.setInputConnection(inputConnection);
-        binding.keyboardAddcard.setVisibility(View.VISIBLE);
-        return true;
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKeyboardDoneEvent(KeyboardDoneEvent event) {
+        if (binding.editTextTitle.isFocused()) {
+            binding.editTextTitle.clearFocus();
+        }
+        if (binding.editTextDescription.isFocused()) {
+            binding.editTextDescription.clearFocus();
+        }
         if (binding.editTextVictoryCondition.isFocused()) {
             binding.editTextVictoryCondition.clearFocus();
         }
@@ -135,14 +129,30 @@ public class AddCardFragment extends Fragment implements View.OnTouchListener {
     }
 
     private void setupViews() {
-        binding.editTextTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-        binding.editTextDescription.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
         binding.numberPickerPriority.setMinValue(1);
         binding.numberPickerPriority.setMaxValue(10);
 
-        setupKeyboard();
+        binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextTitle.setTextIsSelectable(true);
+        binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextDescription.setTextIsSelectable(true);
+        binding.editTextVictoryCondition.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextVictoryCondition.setTextIsSelectable(true);
+        binding.editTextEndGame.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextEndGame.setTextIsSelectable(true);
+        binding.editTextPreparation.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextPreparation.setTextIsSelectable(true);
+        binding.editTextPlayerTurn.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextPlayerTurn.setTextIsSelectable(true);
+        binding.editTextEffects.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextEffects.setTextIsSelectable(true);
+        onActionTitle();
+        onActionDescription();
+        onActionVictoryCondition();
+        onActionEndGame();
+        onActionPreparation();
+        onActionPlayerTurn();
+        onActionEffects();
     }
 
     private void saveNewHelpcard() {
@@ -192,26 +202,65 @@ public class AddCardFragment extends Fragment implements View.OnTouchListener {
         Snackbar.make(binding.scrollAddcard, message, Snackbar.LENGTH_SHORT).show();
     }
 
-    private void setupKeyboard() {
-        binding.editTextVictoryCondition.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextVictoryCondition.setTextIsSelectable(true);
-        binding.editTextVictoryCondition.setOnTouchListener(this);
+    private void onActionTitle() {
+        binding.editTextTitle.setOnTouchListener((view, motionEvent) -> {
+            onActionTouch(view, motionEvent, KeyboardType.QWERTY);
+            return true;
+        });
+    }
 
-        binding.editTextEndGame.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextEndGame.setTextIsSelectable(true);
-        binding.editTextEndGame.setOnTouchListener(this);
+    private void onActionDescription() {
+        binding.editTextDescription.setOnTouchListener((view, motionEvent) -> {
+            onActionTouch(view, motionEvent, KeyboardType.QWERTY);
+            return true;
+        });
+    }
 
-        binding.editTextPreparation.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextPreparation.setTextIsSelectable(true);
-        binding.editTextPreparation.setOnTouchListener(this);
+    private void onActionVictoryCondition() {
+        binding.editTextVictoryCondition.setOnTouchListener((view, motionEvent) -> {
+            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            return true;
+        });
+    }
 
-        binding.editTextPlayerTurn.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextPlayerTurn.setTextIsSelectable(true);
-        binding.editTextPlayerTurn.setOnTouchListener(this);
+    private void onActionEndGame() {
+        binding.editTextEndGame.setOnTouchListener((view, motionEvent) -> {
+            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            return true;
+        });
+    }
 
-        binding.editTextEffects.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextEffects.setTextIsSelectable(true);
-        binding.editTextEffects.setOnTouchListener(this);
+    private void onActionPreparation() {
+        binding.editTextPreparation.setOnTouchListener((view, motionEvent) -> {
+            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            return true;
+        });
+    }
+
+    private void onActionPlayerTurn() {
+        binding.editTextPlayerTurn.setOnTouchListener((view, motionEvent) -> {
+            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            return true;
+        });
+    }
+
+    private void onActionEffects() {
+        binding.editTextEffects.setOnTouchListener((view, motionEvent) -> {
+            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            return true;
+
+        });
+    }
+
+    private void onActionTouch(View view, MotionEvent motionEvent, KeyboardType keyboardType) {
+        view.requestFocus();
+        if (inputConnection != null) {
+            inputConnection.closeConnection();
+        }
+        inputConnection = view.onCreateInputConnection(new EditorInfo());
+        binding.keyboardAddcard.setInputConnection(inputConnection);
+        binding.keyboardAddcard.setEnabledKeyboardType(keyboardType);
+        binding.keyboardAddcard.setVisibility(View.VISIBLE);
     }
 
 }

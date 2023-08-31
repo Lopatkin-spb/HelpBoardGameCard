@@ -21,13 +21,16 @@ import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewKeyboardBinding;
 
 public class KeyboardView extends ConstraintLayout implements View.OnClickListener {
-
     private static final int MOVE_CURSOR_TO_THE_END = 1;
     private static final int SPANNABLE_TEXT_LENGTH = KeyboardButtonIcon.getLength();
-    private static boolean CAPS = true;
+    private static final boolean UPPER_CASE = true;
+    private static final boolean LOWER_CASE = false;
+    private static boolean CAPS = UPPER_CASE;
     public static final int DYNAMIC_DRAWABLE_SPAN = DynamicDrawableSpan.ALIGN_BOTTOM;
+    public static final int SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE;
     private static final String SEPARATOR = KeyboardButtonIcon.SEPARATOR;
-    private static KeyboardType VISIBLE_TYPE;
+    private static KeyboardType ENABLED_KEYBOARD_TYPE = KeyboardType.QWERTY;
+    private static String previousChar = "";
     private ViewKeyboardBinding binding;
 
     //this will the button resource id to the String value that we want to
@@ -58,23 +61,23 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         if (inputConnection == null) {
             return;
         }
-        if (VISIBLE_TYPE == KeyboardType.ICON) {
+        if (ENABLED_KEYBOARD_TYPE == KeyboardType.ICON) {
             ImageSpan span = new ImageSpan(
                     context,
                     KeyboardButtonIcon.getDrawableFrom(view.getId()),
                     DYNAMIC_DRAWABLE_SPAN);
             Spannable icon = new SpannableString(SEPARATOR + KeyboardButtonIcon.getNameFrom(view.getId()));
 
-            //todo: разобраться с вариантами SPAN_EXCLUSIVE_EXCLUSIVE
-            icon.setSpan(span, 0, icon.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            icon.setSpan(span, 0, icon.length(), SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE);
             inputConnection.commitText(icon, MOVE_CURSOR_TO_THE_END);
         } else {
             String symbol = "";
-            if (CAPS) {
+            if (CAPS == UPPER_CASE) {
                 symbol = KeyboardButtonSymbol.getStringFrom(view.getId()).toUpperCase();
             } else {
                 symbol = KeyboardButtonSymbol.getStringFrom(view.getId()).toLowerCase();
             }
+            capsToLowerCase(view);
             inputConnection.commitText(symbol, MOVE_CURSOR_TO_THE_END);
         }
     }
@@ -84,10 +87,14 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         this.inputConnection = inputConnection;
     }
 
+    public void setEnabledKeyboardType(KeyboardType enabledKeyboardType) {
+        ENABLED_KEYBOARD_TYPE = enabledKeyboardType;
+        displayKeyboard();
+    }
+
     private void init(Context context) {
         this.context = context;
         binding = ViewKeyboardBinding.inflate(LayoutInflater.from(context), this, true);
-        VISIBLE_TYPE = KeyboardType.ICON;
 
         setupKeyboardIcon();
         setupKeyboardNumber();
@@ -255,6 +262,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
 
     private void onActionShift() {
         binding.keyboardQwerty.actionQwertyShift.setOnClickListener(view -> {
+            CAPS = !CAPS;
             changeCapsOnButtons();
         });
     }
@@ -264,25 +272,13 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             if (inputConnection == null) {
                 return;
             }
-            if (VISIBLE_TYPE == KeyboardType.ICON && binding.actionSwitchQwertyNumber.getText().equals("абв")
-                    || VISIBLE_TYPE == KeyboardType.NUMBER) {
-                binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.GONE);
-                binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.GONE);
-                binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.VISIBLE);
-                VISIBLE_TYPE = KeyboardType.QWERTY;
-                binding.actionSwitchQwertyNumber.setText("123");
-                binding.actionBackspace.setVisibility(View.GONE);
-                binding.actionBackspaceFull.setVisibility(View.GONE);
-                binding.actionEnter.setVisibility(View.GONE);
+            if (ENABLED_KEYBOARD_TYPE == KeyboardType.ICON && binding.actionSwitchQwertyNumber.getText().equals("абв")
+                    || ENABLED_KEYBOARD_TYPE == KeyboardType.NUMBER) {
+                ENABLED_KEYBOARD_TYPE = KeyboardType.QWERTY;
+                displayKeyboardQwerty();
             } else {
-                binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.GONE);
-                binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.GONE);
-                binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.VISIBLE);
-                VISIBLE_TYPE = KeyboardType.NUMBER;
-                binding.actionSwitchQwertyNumber.setText("абв");
-                binding.actionBackspace.setVisibility(View.VISIBLE);
-                binding.actionBackspaceFull.setVisibility(View.VISIBLE);
-                binding.actionEnter.setVisibility(View.VISIBLE);
+                ENABLED_KEYBOARD_TYPE = KeyboardType.NUMBER;
+                displayKeyboardNumber();
             }
         });
     }
@@ -292,14 +288,9 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             if (inputConnection == null) {
                 return;
             }
-            if (VISIBLE_TYPE == KeyboardType.QWERTY || VISIBLE_TYPE == KeyboardType.NUMBER) {
-                binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.GONE);
-                binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.GONE);
-                binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.VISIBLE);
-                VISIBLE_TYPE = KeyboardType.ICON;
-                binding.actionBackspace.setVisibility(View.VISIBLE);
-                binding.actionBackspaceFull.setVisibility(View.VISIBLE);
-                binding.actionEnter.setVisibility(View.VISIBLE);
+            if (ENABLED_KEYBOARD_TYPE == KeyboardType.QWERTY || ENABLED_KEYBOARD_TYPE == KeyboardType.NUMBER) {
+                ENABLED_KEYBOARD_TYPE = KeyboardType.ICON;
+                displayKeyboardIcon();
             }
         });
     }
@@ -309,6 +300,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             if (inputConnection == null) {
                 return;
             }
+            CAPS = UPPER_CASE;
             changeCapsOnButtons();
             inputConnection.commitText(keyBasicValue.get(view.getId()), MOVE_CURSOR_TO_THE_END);
         });
@@ -361,6 +353,10 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         if (!TextUtils.isEmpty(currentText)) {
             //no selection, so delete previous character
             inputConnection.deleteSurroundingText(1, 0);
+            if (currentText.length() == 1) {
+                CAPS = UPPER_CASE;
+                changeCapsOnButtons();
+            }
         } else {
             //delete selection
             inputConnection.commitText("", MOVE_CURSOR_TO_THE_END);
@@ -368,8 +364,6 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void changeCapsOnButtons() {
-        CAPS = !CAPS;
-
         binding.keyboardQwerty.actionQwerty1.setAllCaps(CAPS);
         binding.keyboardQwerty.actionQwerty2.setAllCaps(CAPS);
         binding.keyboardQwerty.actionQwerty3.setAllCaps(CAPS);
@@ -402,11 +396,67 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.keyboardQwerty.actionQwerty30.setAllCaps(CAPS);
         binding.keyboardQwerty.actionQwerty31.setAllCaps(CAPS);
 
-        if (CAPS) {
+        if (CAPS == UPPER_CASE) {
             binding.keyboardQwerty.actionQwertyShift.setImageResource(R.drawable.ic_keyboard_baseline_upload_34);
         } else {
             binding.keyboardQwerty.actionQwertyShift.setImageResource(R.drawable.ic_keyboard_outline_upload_34);
         }
+    }
+
+    private void displayKeyboard() {
+        if (ENABLED_KEYBOARD_TYPE == KeyboardType.QWERTY) {
+            displayKeyboardQwerty();
+            CAPS = UPPER_CASE;
+            changeCapsOnButtons();
+        } else if (ENABLED_KEYBOARD_TYPE == KeyboardType.ICON) {
+            displayKeyboardIcon();
+            binding.actionSwitchQwertyNumber.setText("абв");
+            CAPS = UPPER_CASE;
+            changeCapsOnButtons();
+        } else {
+            displayKeyboardNumber();
+        }
+    }
+
+    private void displayKeyboardQwerty() {
+        binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.GONE);
+        binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.GONE);
+        binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.VISIBLE);
+
+        binding.actionBackspace.setVisibility(View.GONE);
+        binding.actionBackspaceFull.setVisibility(View.GONE);
+        binding.actionEnter.setVisibility(View.GONE);
+        binding.actionSwitchQwertyNumber.setText("123");
+    }
+
+    private void displayKeyboardIcon() {
+        binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.GONE);
+        binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.GONE);
+        binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.VISIBLE);
+
+        binding.actionBackspace.setVisibility(View.VISIBLE);
+        binding.actionBackspaceFull.setVisibility(View.VISIBLE);
+        binding.actionEnter.setVisibility(View.VISIBLE);
+    }
+
+    private void displayKeyboardNumber() {
+        binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.GONE);
+        binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.GONE);
+        binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.VISIBLE);
+
+        binding.actionBackspace.setVisibility(View.VISIBLE);
+        binding.actionBackspaceFull.setVisibility(View.VISIBLE);
+        binding.actionEnter.setVisibility(View.VISIBLE);
+        binding.actionSwitchQwertyNumber.setText("абв");
+    }
+
+    private void capsToLowerCase(View view) {
+        String currentChar = KeyboardButtonSymbol.getStringFrom(view.getId());
+        if (!previousChar.isEmpty()) {
+            CAPS = LOWER_CASE;
+            changeCapsOnButtons();
+        }
+        previousChar = currentChar;
     }
 
 }
