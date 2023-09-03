@@ -10,7 +10,9 @@
 --- TODAY:
 
 
-- попробовать кликабельную иконку
+- лейбл: проверить ресурсы в KeyboardButtonIcon;
+
+- отключить иконки у клавы у двух текстовых вью
    -добавить клавиатуру в редактирование
 - добавить опции i checkbox на включение стандартной клавы
 
@@ -117,11 +119,9 @@ setup
 
 
 
-- AddcardFrag: delete implement listener and set individual listener to every EditText views (SOLID),
-set open type keyboard to every EditTexts, add clear focus to every EditTexts,
-delete setup softKeyboard;
-- KeyboardView: add auto setting to Caps, set span to exclusive/exclusive, fix bug to onActionSpace,
-move code to SOLID;
+- HelpCardFragment: create LabelPopupView, add listeners with LabelPopupView to TextViews;
+- KeyboardButtonIcon: add strings and method;
+- IconTextView: small edit to SOLID;
 - Plan: update;
 
 

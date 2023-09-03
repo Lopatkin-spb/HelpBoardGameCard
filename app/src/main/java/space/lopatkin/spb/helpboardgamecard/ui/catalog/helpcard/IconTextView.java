@@ -35,34 +35,37 @@ public class IconTextView extends AppCompatTextView {
     }
 
     @Override
-    public void setText(CharSequence text, BufferType type) {
+    public void setText(CharSequence charSequence, BufferType type) {
+        String text = String.valueOf(charSequence);
         Spannable textWithImages = new SpannableString(text);
 
-        if (!text.toString().isEmpty() && countImagesIn(text) > 0) {
-            setImagesToText(textWithImages, text);
+        if (!text.isEmpty() && countImagesIn(text) > 0) {
+            setSpansToText(textWithImages, text);
         }
-
         super.setText(textWithImages, type);
     }
 
-    private void setImagesToText(Spannable textWithImages, CharSequence rawText) {
-        String text = (String) rawText;
-
-        for (int numberImage = 0; numberImage < countImagesIn(rawText); numberImage++) {
+    private void setSpansToText(Spannable textWithImages, String text) {
+        for (int numberImage = 0; numberImage < countImagesIn(text); numberImage++) {
             int firstCharIndex = getIndexSeparator(text, numberImage);
             int lastCharIndex = firstCharIndex + KeyboardButtonIcon.getLength();
 
-            String name = text.substring(firstCharIndex + 1, lastCharIndex);
-            ImageSpan span = new ImageSpan(context,
-                    KeyboardButtonIcon.getDrawableFrom(name),
-                    KeyboardView.DYNAMIC_DRAWABLE_SPAN);
-
-            textWithImages.setSpan(span, firstCharIndex, lastCharIndex, KeyboardView.SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE);
+            setImageToWord(textWithImages, text, firstCharIndex, lastCharIndex);
         }
     }
 
-    private long countImagesIn(CharSequence text) {
-        return text.chars()
+    private void setImageToWord(Spannable textWithImages, String text, int firstCharIndex, int lastCharIndex) {
+        String name = text.substring(firstCharIndex + 1, lastCharIndex);
+        ImageSpan image = new ImageSpan(context,
+                KeyboardButtonIcon.getDrawableFrom(name),
+                KeyboardView.DYNAMIC_DRAWABLE_SPAN);
+
+        textWithImages.setSpan(image, firstCharIndex, lastCharIndex, KeyboardView.SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
+    private long countImagesIn(String text) {
+        CharSequence charSequence = text;
+        return charSequence.chars()
                 .filter(character -> character == SEPARATOR)
                 .count();
     }

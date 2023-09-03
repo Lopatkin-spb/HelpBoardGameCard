@@ -1,13 +1,16 @@
 package space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,7 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 
 import javax.inject.Inject;
+
 
 public class HelpcardFragment extends Fragment {
 
@@ -48,6 +52,11 @@ public class HelpcardFragment extends Fragment {
 
         setScreenTitle(R.string.title_helpcard_details);
         setHasOptionsMenu(true);
+        onVictoryCondition();
+        onEndGame();
+        onPreparation();
+        onPlayerTurn();
+        onEffects();
         return view;
     }
 
@@ -122,6 +131,55 @@ public class HelpcardFragment extends Fragment {
                 navController.navigate(action);
             }
         });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void onVictoryCondition() {
+        binding.textVictoryCondition.setOnTouchListener((view, motionEvent) -> {
+            snowLabel(view, motionEvent, binding.textVictoryCondition);
+            return false;
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void onEndGame() {
+        binding.textEndGame.setOnTouchListener((view, motionEvent) -> {
+            snowLabel(view, motionEvent, binding.textEndGame);
+            return false;
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void onPreparation() {
+        binding.textPreparation.setOnTouchListener((view, motionEvent) -> {
+            snowLabel(view, motionEvent, binding.textPreparation);
+            return false;
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void onPlayerTurn() {
+        binding.textPlayerTurn.setOnTouchListener((view, motionEvent) -> {
+            snowLabel(view, motionEvent, binding.textPlayerTurn);
+            return false;
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void onEffects() {
+        binding.textEffects.setOnTouchListener((view, motionEvent) -> {
+            snowLabel(view, motionEvent, binding.textEffects);
+            return false;
+        });
+    }
+
+    private void snowLabel(View view, MotionEvent motionEvent, TextView textView) {
+        // Binding create this. If binding create inside LabelPopupView then bug in draw background.
+        space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding bindingLabel =
+                space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding.inflate(LayoutInflater.from(getContext()));
+
+        LabelPopupView label = new LabelPopupView(bindingLabel);
+        label.show(view, motionEvent, textView);
     }
 
 }
