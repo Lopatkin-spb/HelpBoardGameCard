@@ -17,8 +17,8 @@ public class LabelPopupView extends PopupWindow {
     private ViewLabelPopupBinding binding;
     private static final char SEPARATOR = KeyboardButtonIcon.SEPARATOR.charAt(0);
     public static final int TEXT_LABEL_POPUP_HEIGHT = 53;
-    private static final int ICON_WIDTH = 90; // ~ 80 - 100
-    private static final int SYMBOL_WIDTH = 40; // ~ 30 - 60
+    private static final int ICON_WIDTH = 88; // ~ 80 - 100
+    private static final int SYMBOL_WIDTH = 38; // ~ 30 - 50
 
     public LabelPopupView(ViewLabelPopupBinding binding) {
         this.binding = binding;
@@ -61,7 +61,7 @@ public class LabelPopupView extends PopupWindow {
 
     private int getImageNumber(String textInLine, int xOffset) {
         List<Integer> sections = getSectionsWidth(textInLine);
-        
+
         int imageNumber = 0;
         int widthSum = 0;
 
@@ -160,7 +160,7 @@ public class LabelPopupView extends PopupWindow {
         for (int index = 0; index < characters.length; index++) {
             if (characters[index] != SEPARATOR && !streamSeparator) {
 
-                if (sectionsWidth.isEmpty()) {
+                if (sectionsWidth.isEmpty() || sectionCount >= sectionsWidth.size()) {
                     int sectionWidth = SYMBOL_WIDTH;
                     sectionsWidth.add(sectionCount, sectionWidth);
                 } else {
