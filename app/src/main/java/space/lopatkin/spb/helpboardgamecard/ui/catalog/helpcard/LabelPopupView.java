@@ -9,12 +9,16 @@ import android.widget.TextView;
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardButtonIcon;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class LabelPopupView extends PopupWindow {
     private ViewLabelPopupBinding binding;
     private static final char SEPARATOR = KeyboardButtonIcon.SEPARATOR.charAt(0);
     public static final int TEXT_LABEL_POPUP_HEIGHT = 53;
+    private static final int ICON_WIDTH = 90; // ~ 80 - 100
+    private static final int SYMBOL_WIDTH = 40; // ~ 30 - 60
 
     public LabelPopupView(ViewLabelPopupBinding binding) {
         this.binding = binding;
@@ -32,19 +36,18 @@ public class LabelPopupView extends PopupWindow {
         int yOffset = (int) motionEvent.getY();
         int cursorLine = getCursorLine(textView, yOffset);
 
-        if (!text.isEmpty() && cursorLine > 0 && xOffset < getLineWidth(text, cursorLine)) {
-            int iconWidth = 90; // ~ 80 - 100
-
+        if (!text.isEmpty() && cursorLine > 0) {
             String textInLine = getTextInLine(text, cursorLine);
-            long imagesCount = countImagesIn(textInLine);
 
-            int indexImage = getNumberImage(xOffset, iconWidth, imagesCount);
+            if (xOffset < getLineWidth(textInLine)) {
+                int imageNumber = getImageNumber(textInLine, xOffset);
+                String nameFull = getNameFull(textInLine, imageNumber);
+                if (!nameFull.isEmpty()) {
+                    binding.textLabelPopup.setText(nameFull);
+                    int yOffsetPopup = getYOffsetPopup(textView, yOffset);
+                    showAsDropDown(view, xOffset, yOffsetPopup);
+                }
 
-            String nameFull = getNameFull(textInLine, indexImage);
-            if (!nameFull.isEmpty()) {
-                binding.textLabelPopup.setText(nameFull);
-                int yOffsetPopup = getYOffsetPopup(textView, yOffset);
-                showAsDropDown(view, xOffset, yOffsetPopup);
             }
         }
     }
@@ -56,21 +59,41 @@ public class LabelPopupView extends PopupWindow {
                 .count();
     }
 
-    private int getNumberImage(int x, int iconWidth, long images) {
-        int target = x / iconWidth;
-        int result = target + 1;
-        if (result > images) {
-            result = 0;
+    private int getImageNumber(String textInLine, int xOffset) {
+        List<Integer> sections = getSectionsWidth(textInLine);
+        
+        int imageNumber = 0;
+        int widthSum = 0;
+
+        for (int index = 0; index < sections.size(); index++) {
+            int widthSection = sections.get(index);
+            if (index == 0) {
+                widthSum = widthSection;
+            } else {
+                widthSum = widthSum + widthSection;
+            }
+            if (xOffset > widthSum) {
+                if (widthSection == ICON_WIDTH) {
+                    imageNumber = imageNumber + 1;
+                }
+            } else {
+                if (widthSection < ICON_WIDTH || widthSection > ICON_WIDTH) {
+                    imageNumber = 0;
+                } else {
+                    imageNumber = imageNumber + 1;
+                }
+                break;
+            }
         }
-        return result;
+        return imageNumber;
     }
 
-    private String getNameFull(String text, int target) {
+    private String getNameFull(String text, int imageNumber) {
         String nameFull = "";
-        for (int numberImage = 0; numberImage < countImagesIn(text); numberImage++) {
-            if (numberImage + 1 == target) {
+        for (int imageIndex = 0; imageIndex < countImagesIn(text); imageIndex++) {
+            if (imageIndex + 1 == imageNumber) {
 
-                int firstCharIndex = getIndexSeparator(text, numberImage);
+                int firstCharIndex = getIndexSeparator(text, imageIndex);
                 int lastCharIndex = firstCharIndex + KeyboardButtonIcon.getLength();
                 String name = text.substring(firstCharIndex + 1, lastCharIndex);
 
@@ -110,16 +133,62 @@ public class LabelPopupView extends PopupWindow {
         return cursorLine;
     }
 
-    private int getLineWidth(String text, int cursorLine) {
-        long imagesInLine = countImagesIn(getTextInLine(text, cursorLine));
-        int iconWidth = 90; // ~ 80 - 100
-        int lineWidth = (int) (imagesInLine * iconWidth);
+    private int getLineWidth(String text) {
+        int widthInChars = text.chars()
+                .map(symbol -> SYMBOL_WIDTH)
+                .sum();
+        long imagesInLine = countImagesIn(text);
+        int widthImagesInChars = (int) (imagesInLine * KeyboardButtonIcon.getLength() * SYMBOL_WIDTH);
+        int widthIcons = (int) (imagesInLine * ICON_WIDTH);
+        int lineWidth = widthInChars - widthImagesInChars + widthIcons;
         return lineWidth;
     }
 
     private String getTextInLine(String text, int cursorLine) {
         String[] lines = text.split("\n");
         return lines[cursorLine - 1];
+    }
+
+    private ArrayList<Integer> getSectionsWidth(String textInLine) {
+        char[] characters = textInLine.toCharArray();
+        ArrayList<Integer> sectionsWidth = new ArrayList<>();
+
+        int sectionCount = 0;
+        boolean streamSeparator = false;
+        int symbolIconCount = 0;
+
+        for (int index = 0; index < characters.length; index++) {
+            if (characters[index] != SEPARATOR && !streamSeparator) {
+
+                if (sectionsWidth.isEmpty()) {
+                    int sectionWidth = SYMBOL_WIDTH;
+                    sectionsWidth.add(sectionCount, sectionWidth);
+                } else {
+                    int sectionWidth = sectionsWidth.get(sectionCount);
+                    sectionWidth = sectionWidth + SYMBOL_WIDTH;
+                    sectionsWidth.set(sectionCount, sectionWidth);
+                }
+                if (index + 1 < characters.length && characters[index + 1] == SEPARATOR) {
+                    sectionCount = sectionCount + 1;
+                }
+
+            } else {
+                streamSeparator = true;
+                symbolIconCount = symbolIconCount + 1;
+                if (symbolIconCount == 1) {
+                    sectionsWidth.add(sectionCount, ICON_WIDTH);
+                }
+                if (symbolIconCount == KeyboardButtonIcon.getLength()) {
+                    streamSeparator = false;
+                    symbolIconCount = 0;
+                    if (index + 1 < characters.length) {
+                        sectionCount = sectionCount + 1;
+                    }
+                }
+
+            }
+        }
+        return sectionsWidth;
     }
 
 }
