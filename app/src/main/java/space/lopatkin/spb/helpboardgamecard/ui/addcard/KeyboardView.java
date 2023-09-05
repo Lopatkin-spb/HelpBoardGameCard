@@ -29,7 +29,9 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
     public static final int DYNAMIC_DRAWABLE_SPAN = DynamicDrawableSpan.ALIGN_BOTTOM;
     public static final int SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE;
     private static final String SEPARATOR = KeyboardButtonIcon.SEPARATOR;
-    private static KeyboardType ENABLED_KEYBOARD_TYPE = KeyboardType.QWERTY;
+    private static KeyboardPart ENABLED_KEYBOARD_PART = KeyboardPart.QWERTY;
+    private static KeyboardType VISIBLE_KEYBOARD_TYPE = KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS;
+
     private static String previousChar = "";
     private ViewKeyboardBinding binding;
 
@@ -61,7 +63,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         if (inputConnection == null) {
             return;
         }
-        if (ENABLED_KEYBOARD_TYPE == KeyboardType.ICON) {
+        if (ENABLED_KEYBOARD_PART == KeyboardPart.ICON) {
             ImageSpan span = new ImageSpan(
                     context,
                     KeyboardButtonIcon.getDrawableFrom(view.getId()),
@@ -87,9 +89,14 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         this.inputConnection = inputConnection;
     }
 
-    public void setEnabledKeyboardType(KeyboardType enabledKeyboardType) {
-        ENABLED_KEYBOARD_TYPE = enabledKeyboardType;
-        displayKeyboard();
+    public void setEnabledKeyboardPart(KeyboardPart part) {
+        ENABLED_KEYBOARD_PART = part;
+        displayKeyboardPart();
+    }
+
+    public void setKeyboardType(KeyboardType type) {
+        VISIBLE_KEYBOARD_TYPE = type;
+        displayKeyboardType();
     }
 
     private void init(Context context) {
@@ -272,12 +279,12 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             if (inputConnection == null) {
                 return;
             }
-            if (ENABLED_KEYBOARD_TYPE == KeyboardType.ICON && binding.actionSwitchQwertyNumber.getText().equals("абв")
-                    || ENABLED_KEYBOARD_TYPE == KeyboardType.NUMBER) {
-                ENABLED_KEYBOARD_TYPE = KeyboardType.QWERTY;
+            if (ENABLED_KEYBOARD_PART == KeyboardPart.ICON && binding.actionSwitchQwertyNumber.getText().equals("абв")
+                    || ENABLED_KEYBOARD_PART == KeyboardPart.NUMBER) {
+                ENABLED_KEYBOARD_PART = KeyboardPart.QWERTY;
                 displayKeyboardQwerty();
             } else {
-                ENABLED_KEYBOARD_TYPE = KeyboardType.NUMBER;
+                ENABLED_KEYBOARD_PART = KeyboardPart.NUMBER;
                 displayKeyboardNumber();
             }
         });
@@ -288,8 +295,8 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             if (inputConnection == null) {
                 return;
             }
-            if (ENABLED_KEYBOARD_TYPE == KeyboardType.QWERTY || ENABLED_KEYBOARD_TYPE == KeyboardType.NUMBER) {
-                ENABLED_KEYBOARD_TYPE = KeyboardType.ICON;
+            if (ENABLED_KEYBOARD_PART == KeyboardPart.QWERTY || ENABLED_KEYBOARD_PART == KeyboardPart.NUMBER) {
+                ENABLED_KEYBOARD_PART = KeyboardPart.ICON;
                 displayKeyboardIcon();
             }
         });
@@ -403,18 +410,31 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         }
     }
 
-    private void displayKeyboard() {
-        if (ENABLED_KEYBOARD_TYPE == KeyboardType.QWERTY) {
+    private void displayKeyboardPart() {
+        if (ENABLED_KEYBOARD_PART == KeyboardPart.QWERTY) {
             displayKeyboardQwerty();
             CAPS = UPPER_CASE;
             changeCapsOnButtons();
-        } else if (ENABLED_KEYBOARD_TYPE == KeyboardType.ICON) {
+        } else if (ENABLED_KEYBOARD_PART == KeyboardPart.ICON) {
             displayKeyboardIcon();
             binding.actionSwitchQwertyNumber.setText("абв");
             CAPS = UPPER_CASE;
             changeCapsOnButtons();
         } else {
             displayKeyboardNumber();
+        }
+    }
+
+    private void displayKeyboardType() {
+        if (VISIBLE_KEYBOARD_TYPE == KeyboardType.QWERTY_AND_NUMBERS) {
+            displayKeyboardWithSymbols();
+            CAPS = UPPER_CASE;
+            changeCapsOnButtons();
+        } else {
+            displayKeyboardsWithIconsAndSymbols();
+            binding.actionSwitchQwertyNumber.setText("абв");
+            CAPS = UPPER_CASE;
+            changeCapsOnButtons();
         }
     }
 
@@ -429,6 +449,12 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.actionSwitchQwertyNumber.setText("123");
     }
 
+    private void displayKeyboardWithSymbols() {
+        displayKeyboardQwerty();
+
+        binding.actionSwitchToIcons.setVisibility(View.GONE);
+    }
+
     private void displayKeyboardIcon() {
         binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.GONE);
         binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.GONE);
@@ -437,6 +463,12 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.actionBackspace.setVisibility(View.VISIBLE);
         binding.actionBackspaceFull.setVisibility(View.VISIBLE);
         binding.actionEnter.setVisibility(View.VISIBLE);
+    }
+
+    private void displayKeyboardsWithIconsAndSymbols() {
+        displayKeyboardIcon();
+
+        binding.actionSwitchToIcons.setVisibility(View.VISIBLE);
     }
 
     private void displayKeyboardNumber() {

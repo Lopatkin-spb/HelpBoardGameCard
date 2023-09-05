@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -87,6 +86,7 @@ public class AddCardFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        onKeyboardDoneEvent(new KeyboardDoneEvent());
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveNewHelpcard();
@@ -204,62 +204,62 @@ public class AddCardFragment extends Fragment {
 
     private void onActionTitle() {
         binding.editTextTitle.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, motionEvent, KeyboardType.QWERTY);
+            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS);
             return true;
         });
     }
 
     private void onActionDescription() {
         binding.editTextDescription.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, motionEvent, KeyboardType.QWERTY);
+            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS);
             return true;
         });
     }
 
     private void onActionVictoryCondition() {
         binding.editTextVictoryCondition.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
             return true;
         });
     }
 
     private void onActionEndGame() {
         binding.editTextEndGame.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
             return true;
         });
     }
 
     private void onActionPreparation() {
         binding.editTextPreparation.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
             return true;
         });
     }
 
     private void onActionPlayerTurn() {
         binding.editTextPlayerTurn.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
             return true;
         });
     }
 
     private void onActionEffects() {
         binding.editTextEffects.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, motionEvent, KeyboardType.ICON);
+            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
             return true;
 
         });
     }
 
-    private void onActionTouch(View view, MotionEvent motionEvent, KeyboardType keyboardType) {
+    private void onActionTouch(View view, KeyboardType type) {
         view.requestFocus();
         if (inputConnection != null) {
             inputConnection.closeConnection();
         }
         inputConnection = view.onCreateInputConnection(new EditorInfo());
         binding.keyboardAddcard.setInputConnection(inputConnection);
-        binding.keyboardAddcard.setEnabledKeyboardType(keyboardType);
+        binding.keyboardAddcard.setKeyboardType(type);
         binding.keyboardAddcard.setVisibility(View.VISIBLE);
     }
 
