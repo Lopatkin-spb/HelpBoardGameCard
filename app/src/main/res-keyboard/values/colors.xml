@@ -6,8 +6,11 @@
     <color name="keyboard_button_blue">#5874F8</color>
 
     <color name="keyboard_color_icon_blue_test">#00E5FF</color>
-    <color name="keyboard_color_icon_green_test">#6BE603</color>
+    <color name="keyboard_color_icon_green_test">#75FF00</color>
     <color name="keyboard_color_icon_pink_test">#FF6199</color>
+    <color name="keyboard_color_icon_pink2_test">#FF4081</color>
+    <color name="keyboard_color_icon_yellow_test">#F8EA73</color>
+    <color name="keyboard_color_icon_black_test">#000000</color>
 
     <color name="keyboard_shadow_icon_black50">#80000000</color>
 

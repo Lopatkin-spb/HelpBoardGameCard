@@ -1,6 +1,6 @@
 <vector
         android:height="34dp"
-        android:tint="@color/keyboard_color_icon_blue_test"
+        android:tint="@color/keyboard_color_icon_green_test"
         android:tintMode="multiply"
         android:viewportHeight="24"
         android:viewportWidth="24"

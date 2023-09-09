@@ -7,17 +7,118 @@
         android:width="34dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <path
-            android:fillColor="@color/keyboard_shadow_icon_black50"
-            android:pathData="M6.99,11L3,15l3.99,4v-3H14v-2H6.99v-3zM21,9l-3.99,-4v3H10v2h7.01v3L21,9z"/>
+    <group
+            android:name="arrow_up"
+            android:scaleY="1.3"
+            android:translateY="-0.5"
+
+            android:pivotX="12"
+            android:pivotY="12"
+            android:rotation="180">
+
+
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M6.99,11L3,15l3.99,4v-3H14v-2H6.99v-3zM21,9l-3.99,9z"/>
+    </group>
+
+
+    <group
+            android:name="triangle_up"
+            android:translateX="3"
+            android:translateY="-4.5"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+
+            android:pivotX="12"
+            android:pivotY="12"
+            android:rotation="180">
+
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+    </group>
+
+
+    <group
+            android:name="arrow_down"
+            android:scaleY="1.3"
+            android:translateY="-2.5">
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M6.99,11L3,15l3.99,4v-3H14v-2H6.99v-3zM21,9l-3.99,9z"/>
+    </group>
+
+
+    <group
+            android:name="triangle_down"
+            android:translateX="-2"
+            android:translateY="6"
+            android:scaleX="0.9"
+            android:scaleY="0.9">
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+    </group>
+
 
     <group
             android:translateX="-0.5"
             android:translateY="-1">
 
-        <path
-                android:fillColor="@android:color/white"
-                android:pathData="M6.99,11L3,15l3.99,4v-3H14v-2H6.99v-3zM21,9l-3.99,-4v3H10v2h7.01v3L21,9z"/>
+        <group
+                android:name="arrow_up"
+                android:scaleY="1.3"
+                android:translateY="-0.5"
+
+                android:pivotX="12"
+                android:pivotY="12"
+                android:rotation="180">
+
+
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M6.99,11L3,15l3.99,4v-3H14v-2H6.99v-3zM21,9l-3.99,9z"/>
+        </group>
+
+
+        <group
+                android:name="triangle_up"
+                android:translateX="3"
+                android:translateY="-4.5"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+
+                android:pivotX="12"
+                android:pivotY="12"
+                android:rotation="180">
+
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+        </group>
+
+
+        <group
+                android:name="arrow_down"
+                android:scaleY="1.3"
+                android:translateY="-2.5">
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M6.99,11L3,15l3.99,4v-3H14v-2H6.99v-3zM21,9l-3.99,9z"/>
+        </group>
+
+
+        <group
+                android:name="triangle_down"
+                android:translateX="-2"
+                android:translateY="6"
+                android:scaleX="0.9"
+                android:scaleY="0.9">
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+        </group>
 
     </group>
 
