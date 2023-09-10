@@ -41,6 +41,9 @@ public enum KeyboardButtonIcon {
     l0031(R.id.action_deck_2, R.drawable._baseline_drag_handle_34, "deck"),
     l0032(R.id.action_tile_1, R.drawable.ic_keyboard_baseline_hexagon_34, "tile"),
     l0033(R.id.action_deck_3, R.drawable._baseline_format_align_justify_34_test_2, "deck"),
+    l0034(R.id.action_shirt_1, R.drawable._baseline_graphic_eq_34_for_target, "shirt"),
+    l0035(R.id.action_shirt_2, R.drawable._sharp_texture_34, "shirt"),
+    l0036(R.id.action_tiles, R.drawable._baseline_hexagon_34_lots, "tiles"),
 
     /**
      * Green icons - actions.
@@ -58,6 +61,9 @@ public enum KeyboardButtonIcon {
     l0111(R.id.action_distance, R.drawable.ic_keyboard_baseline_settings_ethernet_34, "distance"),
     l0114(R.id.action_relax, R.drawable.ic_keyboard_baseline_self_improvement_34, "relax"),
     l0115(R.id.action_out_2, R.drawable.ic_keyboard_baseline_pan_tool_alt_34, "right"),
+    l0116(R.id.action_every, R.drawable._outline_brightness_1_34, "every/all"),
+    l0117(R.id.action_repeat, R.drawable._sharp_repeat_34, "repeat"),
+
 
     /**
      * Red icons - prohibiting.
@@ -67,8 +73,7 @@ public enum KeyboardButtonIcon {
     l0202(R.id.action_dangerous_2, R.drawable._baseline_cancel_34, "block"),
     l0203(R.id.action_dangerous_3, R.drawable._outline_cancel_34, "block"),
     l0204(R.id.action_dangerous_4, R.drawable._baseline_block_34, "block"),
-    l0205(R.id.action_shirt_1, R.drawable._baseline_graphic_eq_34_for_target, "shirt"),
-    l0206(R.id.action_shirt_2, R.drawable._sharp_texture_34, "shirt"),
+    l0205(R.id.action_dangerous_5, R.drawable._baseline_trip_origin_34, "block"),
 
     /**
      * White icons - information.
@@ -78,7 +83,12 @@ public enum KeyboardButtonIcon {
     l0302(R.id.action_color_black, R.drawable.ic_keyboard_twotone_color_lens_34_black, "black"),
     l0303(R.id.action_color_green, R.drawable.ic_keyboard_twotone_color_lens_34_green, "green"),
     l0304(R.id.action_color_yellow, R.drawable.ic_keyboard_twotone_color_lens_34_yellow, "yellow"),
-    l0305(R.id.action_commit, R.drawable.ic_keyboard_baseline_commit_34, "");
+    l0305(R.id.action_commit, R.drawable.ic_keyboard_baseline_commit_34, ""),
+    l0306(R.id.action_all, R.drawable._baseline_workspaces_34, "all"),
+    l0307(R.id.action_min, R.drawable._baseline_forward_34_min, "min"),
+    l0308(R.id.action_max, R.drawable._baseline_forward_34_max, "max");
+
+
 
 
     public static final String SEPARATOR = "#";

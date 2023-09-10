@@ -156,6 +156,10 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.keyboardIcon.actionDeck2.setOnClickListener(this);
         binding.keyboardIcon.actionTile1.setOnClickListener(this);
         binding.keyboardIcon.actionDeck3.setOnClickListener(this);
+        binding.keyboardIcon.actionShirt1.setOnClickListener(this);
+        binding.keyboardIcon.actionShirt2.setOnClickListener(this);
+        binding.keyboardIcon.actionTiles.setOnClickListener(this);
+
 
 //green
         binding.keyboardIcon.actionArrowGive.setOnClickListener(this);
@@ -171,14 +175,16 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.keyboardIcon.actionDistance.setOnClickListener(this);
         binding.keyboardIcon.actionRelax.setOnClickListener(this);
         binding.keyboardIcon.actionOut2.setOnClickListener(this);
+        binding.keyboardIcon.actionEvery.setOnClickListener(this);
+        binding.keyboardIcon.actionRepeat.setOnClickListener(this);
+
 //red
         binding.keyboardIcon.actionWarning.setOnClickListener(this);
         binding.keyboardIcon.actionDangerous.setOnClickListener(this);
         binding.keyboardIcon.actionDangerous2.setOnClickListener(this);
         binding.keyboardIcon.actionDangerous3.setOnClickListener(this);
         binding.keyboardIcon.actionDangerous4.setOnClickListener(this);
-        binding.keyboardIcon.actionShirt1.setOnClickListener(this);
-        binding.keyboardIcon.actionShirt2.setOnClickListener(this);
+        binding.keyboardIcon.actionDangerous5.setOnClickListener(this);
 
 //white
         binding.keyboardIcon.actionColorBlack.setOnClickListener(this);
@@ -187,6 +193,10 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.keyboardIcon.actionColorRed.setOnClickListener(this);
         binding.keyboardIcon.actionColorYellow.setOnClickListener(this);
         binding.keyboardIcon.actionCommit.setOnClickListener(this);
+        binding.keyboardIcon.actionAll.setOnClickListener(this);
+        binding.keyboardIcon.actionMin.setOnClickListener(this);
+        binding.keyboardIcon.actionMax.setOnClickListener(this);
+
     }
 
     private void setupKeyboardNumber() {

@@ -1,0 +1,81 @@
+<vector
+        android:height="34dp"
+        android:tint="@color/keyboard_color_icon_green_test"
+        android:tintMode="multiply"
+        android:viewportHeight="24"
+        android:viewportWidth="24"
+        android:width="34dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            android:translateX="2"
+            android:translateY="2">
+
+
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M7,7h10v3l4,-4 -4,-4v3L5,5v6h2L7,7zM17,17L7,17v-3l-4,4 4,4v-3h12v-6h-2v4z"/>
+        <group
+                android:name="triangle_bottom"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                android:translateX="-1"
+                android:translateY="7">
+            <path
+                    android:fillColor="@color/keyboard_shadow_icon_black50"
+                    android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+        </group>
+        <group
+                android:name="triangle_top"
+
+                android:pivotX="12"
+                android:pivotY="12"
+                android:rotation="180"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                android:translateX="2"
+                android:translateY="-6">
+            <path
+                    android:fillColor="@color/keyboard_shadow_icon_black50"
+                    android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+        </group>
+
+
+        <group
+                android:translateX="-0.5"
+                android:translateY="-1">
+
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M7,7h10v3l4,-4 -4,-4v3L5,5v6h2L7,7zM17,17L7,17v-3l-4,4 4,4v-3h12v-6h-2v4z"/>
+            <group
+                    android:name="triangle_bottom"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9"
+                    android:translateX="-1"
+                    android:translateY="7">
+                <path
+                        android:fillColor="@android:color/white"
+                        android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+            </group>
+            <group
+                    android:name="triangle_top"
+
+                    android:pivotX="12"
+                    android:pivotY="12"
+                    android:rotation="180"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9"
+                    android:translateX="2"
+                    android:translateY="-6">
+                <path
+                        android:fillColor="@android:color/white"
+                        android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+            </group>
+        </group>
+
+    </group>
+
+</vector>

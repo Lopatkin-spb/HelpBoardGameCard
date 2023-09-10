@@ -533,6 +533,18 @@
                 app:layout_constraintBottom_toBottomOf="@id/guideline_row_5"/>
 
         <ImageButton
+                android:id="@+id/action_tiles"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_hexagon_34_lots"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_5"/>
+
+        <ImageButton
                 android:id="@+id/action_arrow_give"
                 style="@style/KeyboardButtonIcon"
                 android:layout_width="@dimen/keyboard_button_width"
@@ -686,6 +698,68 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_column_1"
                 app:layout_constraintTop_toTopOf="@id/guideline_row_7"
                 app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_every"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_outline_brightness_1_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_repeat"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_sharp_repeat_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_min"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_forward_34_min"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_max"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_forward_34_max"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_dangerous_5"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_trip_origin_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
 
         <ImageButton
@@ -844,6 +918,19 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_column_5"
                 app:layout_constraintTop_toTopOf="@id/guideline_row_9"
                 app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_all"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_workspaces_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_9"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

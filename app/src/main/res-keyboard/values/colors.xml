@@ -11,6 +11,8 @@
     <color name="keyboard_color_icon_pink2_test">#FF4081</color>
     <color name="keyboard_color_icon_yellow_test">#F8EA73</color>
     <color name="keyboard_color_icon_black_test">#000000</color>
+    <color name="keyboard_color_icon_white_test">#FFFFFF</color>
+
 
     <color name="keyboard_shadow_icon_black50">#80000000</color>
 
