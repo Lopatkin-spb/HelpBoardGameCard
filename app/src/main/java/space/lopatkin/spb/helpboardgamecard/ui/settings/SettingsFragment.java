@@ -54,7 +54,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.getKeyboardVariant().observe(getActivity(), data -> {
+        viewModel.getKeyboardVariant().observe(this, data -> {
             if (binding != null) {
                 binding.actionSpinnerKeyboards.setSelection(data.ordinal());
             }

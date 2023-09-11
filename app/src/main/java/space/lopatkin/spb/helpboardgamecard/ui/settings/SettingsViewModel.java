@@ -8,9 +8,9 @@ import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardVariantUs
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardVariant;
 
 public class SettingsViewModel extends ViewModel {
-    private MutableLiveData<KeyboardVariant> keyboardVariant;
     private SaveKeyboardVariantUseCase saveKeyboardVariantUseCase;
     private GetKeyboardVariantUseCase getKeyboardVariantUseCase;
+    private MutableLiveData<KeyboardVariant> keyboardVariant;
 
     public SettingsViewModel(SaveKeyboardVariantUseCase saveKeyboardVariantUseCase,
                              GetKeyboardVariantUseCase getKeyboardVariantUseCase) {
@@ -21,7 +21,7 @@ public class SettingsViewModel extends ViewModel {
         setKeyboardVariant(this.getKeyboardVariantUseCase.execute());
     }
 
-    public void setKeyboardVariant(KeyboardVariant variant) {
+    private void setKeyboardVariant(KeyboardVariant variant) {
         this.keyboardVariant.setValue(variant);
     }
 

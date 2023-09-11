@@ -53,7 +53,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     deleteHelpcardByIdUseCase, updateHelpcardByObjectUseCase,
                     deleteHelpcardsByLockUseCase);
         } else if (modelClass.isAssignableFrom(AddCardViewModel.class)) {
-            return (T) new AddCardViewModel(saveNewHelpcardUseCase);
+            return (T) new AddCardViewModel(saveNewHelpcardUseCase, getKeyboardVariableUseCase);
         } else if (modelClass.isAssignableFrom(CardEditViewModel.class)) {
             return (T) new CardEditViewModel(getDetailsHelpcardByBoardGameIdUseCase, updateHelpcardByObjectUseCase);
         } else if (modelClass.isAssignableFrom(SettingsViewModel.class)) {

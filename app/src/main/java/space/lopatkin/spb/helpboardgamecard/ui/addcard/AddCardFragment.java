@@ -73,6 +73,16 @@ public class AddCardFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.getKeyboardVariant().observe(this, data -> {
+            if (data == KeyboardVariant.CUSTOM) {
+                setupViewsForCustomKeyboard();
+            }
+        });
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
@@ -131,7 +141,9 @@ public class AddCardFragment extends Fragment {
     private void setupViews() {
         binding.numberPickerPriority.setMinValue(1);
         binding.numberPickerPriority.setMaxValue(10);
+    }
 
+    private void setupViewsForCustomKeyboard() {
         binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT);
         binding.editTextTitle.setTextIsSelectable(true);
         binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
@@ -154,6 +166,7 @@ public class AddCardFragment extends Fragment {
         onActionPlayerTurn();
         onActionEffects();
     }
+
 
     private void saveNewHelpcard() {
         Helpcard newHelpcard = getData();

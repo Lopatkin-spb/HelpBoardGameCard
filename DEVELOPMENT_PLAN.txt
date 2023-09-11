@@ -45,6 +45,9 @@
   rework xml layouts (to constraint) / move repeating code to abstract class (for fragments) /
   extract strings from code to res / pass data from viewModel to frag (good practices) /
   add version app to bottom drawer / share update menu and text (soon) /
+  delete setTitleDynamically from all fragment /
+  SaveNewHelpcard in AddcardViewModel set to MutableLiveData and dont move after save if error save /
+  all obsevers from ViewModels set this instead getActivity /
 
 
 
@@ -129,10 +132,8 @@ setup
 
 
 
-- Settings: create xml's, icon, strings, fragment, view model, usecases, navigation, keyboard variant,
-repository, package data and storage and repository, add to DI;
-- Repository: add save/load states keyboard variant to SharedPrefs;
-- Drawer menu: add tint, set settings icon;
+- AddcardFragment/ vm: add enabling default keyboard, update VMFactory;
+- SettingsFragment/ vm: set method to private to vm, observer set to this;
 - Plan: update;
 
 
