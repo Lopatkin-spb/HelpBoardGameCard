@@ -31,6 +31,8 @@
     <string name="title_addcard">Add New Helpcard</string>
     <string name="title_helpcard_details">Helpcard details</string>
     <string name="title_card_edit">Card edit</string>
+    <string name="title_settings">Settings</string>
+
 
     <string name="hint_title">title</string>
     <string name="hint_description">description</string>
@@ -51,5 +53,14 @@
     <string name="message_helpcard_saved">Helpcard saved</string>
     <string name="message_card_updated">Card updated</string>
     <string name="message_insert_title">Please insert a title</string>
+
+    <string name="header_keyboard">Keyboard:</string>
+
+    <string-array name="action_spinner_keyboards">
+        <item>Custom</item>
+        <item>Default</item>
+    </string-array>
+
+    <string name="title_others">OTHERS:</string>
 
 </resources>

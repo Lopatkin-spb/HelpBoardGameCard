@@ -4,6 +4,7 @@ package space.lopatkin.spb.helpboardgamecard.dataRoom;
 import android.app.Application;
 import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
+import space.lopatkin.spb.helpboardgamecard.data.repository.SettingsRepository;
 import space.lopatkin.spb.helpboardgamecard.domain.repository.HelpcardRepository;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 
@@ -14,12 +15,16 @@ public class HelpcardRepositoryImpl implements HelpcardRepository {
     private HelpcardDao helpcardDao;
     private LiveData<List<Helpcard>> allHelpcards;
     private LiveData<List<Helpcard>> allFavoritesHelpcards;
+    private SettingsRepository settingsRepository;
 
-    public HelpcardRepositoryImpl(Application application) {
+
+    public HelpcardRepositoryImpl(Application application, SettingsRepository settingsRepository) {
         HelpcardDatabase database = HelpcardDatabase.getInstance(application);
         helpcardDao = database.helpcardDao();
         allHelpcards = helpcardDao.getAllHelpcards();
         allFavoritesHelpcards = helpcardDao.getAllFavoritesHelpcards();
+
+        this.settingsRepository = settingsRepository;
     }
 
     @Override
@@ -48,6 +53,14 @@ public class HelpcardRepositoryImpl implements HelpcardRepository {
     @Override
     public void saveNewHelpcard(Helpcard helpcard) {
         new InsertHelpcardAsyncTask(helpcardDao).execute(helpcard);
+    }
+    @Override
+    public void saveKeyboardVariant(int keyboardVariant) {
+        settingsRepository.saveKeyboardVariant(keyboardVariant);
+    }
+    @Override
+    public int getKeyboardVariant() {
+        return settingsRepository.getKeyboardVariant();
     }
 
 

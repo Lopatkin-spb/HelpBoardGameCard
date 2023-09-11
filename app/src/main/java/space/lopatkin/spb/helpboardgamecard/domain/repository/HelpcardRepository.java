@@ -42,4 +42,14 @@ public interface HelpcardRepository {
      */
     void saveNewHelpcard(Helpcard helpcard);
 
+    /**
+     * Сохранить вариант включенной клавиатуры: кастомная или дефолтная.
+     */
+    void saveKeyboardVariant(int keyboardVariant);
+
+    /**
+     * Получить вариант включенной клавиатуры: кастомная или дефолтная.
+     */
+    int getKeyboardVariant();
+
 }

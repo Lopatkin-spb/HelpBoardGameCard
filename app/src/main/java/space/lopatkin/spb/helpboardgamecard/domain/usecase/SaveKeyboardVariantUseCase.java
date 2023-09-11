@@ -1,0 +1,19 @@
+package space.lopatkin.spb.helpboardgamecard.domain.usecase;
+
+import android.util.Log;
+import space.lopatkin.spb.helpboardgamecard.domain.repository.HelpcardRepository;
+import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardVariant;
+
+public class SaveKeyboardVariantUseCase {
+
+    private HelpcardRepository repository;
+
+    public SaveKeyboardVariantUseCase(HelpcardRepository repository) {
+        this.repository = repository;
+    }
+
+    public void execute(KeyboardVariant keyboardVariant) {
+        repository.saveKeyboardVariant(keyboardVariant.ordinal());
+    }
+
+}

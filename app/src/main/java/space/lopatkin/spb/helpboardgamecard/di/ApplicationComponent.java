@@ -5,6 +5,7 @@ import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment;
 import space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogFragment;
 import space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.cardedit.CardEditFragment;
 import space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.HelpcardFragment;
+import space.lopatkin.spb.helpboardgamecard.ui.settings.SettingsFragment;
 
 import javax.inject.Singleton;
 
@@ -24,5 +25,6 @@ public interface ApplicationComponent {
 
     void inject(CardEditFragment fragment);
 
+    void inject(SettingsFragment fragment);
 
 }
