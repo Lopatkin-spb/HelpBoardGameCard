@@ -139,25 +139,33 @@ public class AddCardFragment extends Fragment {
     }
 
     private void setupViews() {
+        binding.editTextTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        binding.editTextDescription.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+
         binding.numberPickerPriority.setMinValue(1);
         binding.numberPickerPriority.setMaxValue(10);
     }
 
     private void setupViewsForCustomKeyboard() {
         binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextTitle.setTextIsSelectable(true);
         binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextDescription.setTextIsSelectable(true);
         binding.editTextVictoryCondition.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextVictoryCondition.setTextIsSelectable(true);
         binding.editTextEndGame.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextEndGame.setTextIsSelectable(true);
         binding.editTextPreparation.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextPreparation.setTextIsSelectable(true);
         binding.editTextPlayerTurn.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextPlayerTurn.setTextIsSelectable(true);
         binding.editTextEffects.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        binding.editTextEffects.setTextIsSelectable(true);
+
+        binding.editTextTitle.setShowSoftInputOnFocus(false);
+        binding.editTextDescription.setShowSoftInputOnFocus(false);
+        binding.editTextVictoryCondition.setShowSoftInputOnFocus(false);
+        binding.editTextEndGame.setShowSoftInputOnFocus(false);
+        binding.editTextPreparation.setShowSoftInputOnFocus(false);
+        binding.editTextPlayerTurn.setShowSoftInputOnFocus(false);
+        binding.editTextEffects.setShowSoftInputOnFocus(false);
+
         onActionTitle();
         onActionDescription();
         onActionVictoryCondition();
@@ -216,57 +224,62 @@ public class AddCardFragment extends Fragment {
     }
 
     private void onActionTitle() {
-        binding.editTextTitle.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS);
-            return true;
+        binding.editTextTitle.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS);
+            }
         });
     }
 
     private void onActionDescription() {
-        binding.editTextDescription.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS);
-            return true;
+        binding.editTextDescription.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS);
+            }
         });
     }
 
     private void onActionVictoryCondition() {
-        binding.editTextVictoryCondition.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
-            return true;
+        binding.editTextVictoryCondition.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+            }
         });
     }
 
     private void onActionEndGame() {
-        binding.editTextEndGame.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
-            return true;
+        binding.editTextEndGame.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+            }
         });
     }
 
     private void onActionPreparation() {
-        binding.editTextPreparation.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
-            return true;
+        binding.editTextPreparation.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+            }
         });
     }
 
     private void onActionPlayerTurn() {
-        binding.editTextPlayerTurn.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
-            return true;
+        binding.editTextPlayerTurn.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+            }
         });
     }
 
     private void onActionEffects() {
-        binding.editTextEffects.setOnTouchListener((view, motionEvent) -> {
-            onActionTouch(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
-            return true;
-
+        binding.editTextEffects.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+            }
         });
     }
 
-    private void onActionTouch(View view, KeyboardType type) {
-        view.requestFocus();
+    private void startWorkToCustomKeyboard(View view, KeyboardType type) {
         if (inputConnection != null) {
             inputConnection.closeConnection();
         }

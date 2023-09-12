@@ -10,12 +10,11 @@
 
 --- TODAY:
 
-- добавить опции i checkbox на включение дефолтной клавы (1 день) пока без записи в преференсы(~2 дня)
-(icon settings)
-- keyboard variant change to keyboard type
+- исправить баги(~3 день)
+
+- keyboard variant change to keyboard type (refactoring)
 
 - добавить клавиатуру к редактированию(пол дня)
-- исправить баги(~3 день)
 - move code Keyboard to other module
 - привести в порядок код: - лейбл: проверить ресурсы в KeyboardButtonIcon; - все тексты перенести в ресурсы (1 день),
 перенести классы клавы в одну папку; - заменить кнопку enter на другую (shortcut);
@@ -44,7 +43,7 @@
 - REFACTORING: rework methods hide keyboard / renames classes & nameApp /
   rework xml layouts (to constraint) / move repeating code to abstract class (for fragments) /
   extract strings from code to res / pass data from viewModel to frag (good practices) /
-  add version app to bottom drawer / share update menu and text (soon) /
+  add version app to bottom drawer / update share fragment to text (soon) / edit drawer menu /
   delete setTitleDynamically from all fragment /
   SaveNewHelpcard in AddcardViewModel set to MutableLiveData and dont move after save if error save /
   all obsevers from ViewModels set this instead getActivity /
@@ -78,18 +77,21 @@
 - feature: screen for add game statistics
 
 
+--------------------------------bugs---------------------------
+
+
+
 bugs (for simulation search and fix in "release" branch)
 - dont showed stub in text views when data null in screens
 - design: shadow, corners, primary secondary color tones
 
+
 1) bugs: custom icons keyboard
 -перед рисовкой иконки в едитВью надо проставлять иконке размер заранее, зависящий от размера текста в едитВью
 (нижнюю границу иконки сделать боттом, а подправлять уже высоту)
--при нажатии на кнопочные промежутки кастомной клавы надо чтобы клик не проходил в едитВью под клавой
--при прокрутке фрагмента надо чтобы фокус не появлялся в EditText если его нет
--при включении клавы с иконками идет торможение включения (возможно надо вставить ресайкл вью на иконки)
--по возможности добавить перемещение курсора на эдит текст вью
--верхний регистр глючит - доделать
+-при включении клавы с иконками идет торможение включения (возможно надо вставить ресайкл вью на иконки)(оптимизация)
+- label: выключить появление при прокрутке, включить появление лейбла с другой стороны (если не хватает екрана)
+
 
 --------------------------------reference---------------------------
 
@@ -132,8 +134,10 @@ setup
 
 
 
-- AddcardFragment/ vm: add enabling default keyboard, update VMFactory;
-- SettingsFragment/ vm: set method to private to vm, observer set to this;
+- AddcardFragment fix bug: enabled move cursor in text, enabled scrolling without show keyboard,
+clean redundant feature (delete selected text), set actionDone for default keyboard in two EditTexts;
+- KeyboardView fix bug: auto change caps to lower after press upper character,
+disable all touches to keyboard without buttons;
 - Plan: update;
 
 

@@ -31,6 +31,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_title"
                     android:maxLength="30"
+                    android:inputType="textMultiLine"
                     android:textColor="@color/colorTextWhite"
                     android:textColorHint="@color/colorTextWhite"
                     android:layout_below="@+id/separator_0"
@@ -47,6 +48,7 @@
                     android:textSize="@dimen/edit_text_size_description"
                     android:textColor="@color/colorTextWhite"
                     android:maxLength="25"
+                    android:inputType="textMultiLine"
                     android:textColorHint="@color/colorTextWhite"/>
 
             <View

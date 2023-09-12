@@ -9,6 +9,7 @@ import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
@@ -76,10 +77,12 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             String symbol = "";
             if (CAPS == UPPER_CASE) {
                 symbol = KeyboardButtonSymbol.getStringFrom(view.getId()).toUpperCase();
+                CAPS = LOWER_CASE;
+                changeCapsOnButtons();
             } else {
                 symbol = KeyboardButtonSymbol.getStringFrom(view.getId()).toLowerCase();
             }
-            capsToLowerCase(view);
+//            capsToLowerCase(view);
             inputConnection.commitText(symbol, MOVE_CURSOR_TO_THE_END);
         }
     }
@@ -400,10 +403,11 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
                 CAPS = UPPER_CASE;
                 changeCapsOnButtons();
             }
-        } else {
-            //delete selection
-            inputConnection.commitText("", MOVE_CURSOR_TO_THE_END);
         }
+//        else {
+//            //delete selection
+//            inputConnection.commitText("", MOVE_CURSOR_TO_THE_END);
+//        }
     }
 
     private void changeCapsOnButtons() {
@@ -520,13 +524,20 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.actionSwitchQwertyNumber.setText("абв");
     }
 
-    private void capsToLowerCase(View view) {
-        String currentChar = KeyboardButtonSymbol.getStringFrom(view.getId());
-        if (!previousChar.isEmpty()) {
-            CAPS = LOWER_CASE;
-            changeCapsOnButtons();
-        }
-        previousChar = currentChar;
+//    private void capsToLowerCase(View view) {
+//        String currentChar = KeyboardButtonSymbol.getStringFrom(view.getId());
+//        if (!previousChar.isEmpty()) {
+//            CAPS = LOWER_CASE;
+//            changeCapsOnButtons();
+//        }
+//        previousChar = currentChar;
+//    }
+
+
+    // Disable all touchs to keyboard.
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return true;
     }
 
 }
