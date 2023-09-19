@@ -135,51 +135,44 @@ public class HelpcardFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void onVictoryCondition() {
-        binding.textVictoryCondition.setOnTouchListener((view, motionEvent) -> {
-            snowLabel(view, motionEvent, binding.textVictoryCondition);
-            return false;
-        });
+        binding.textVictoryCondition.setOnTouchListener((view, motionEvent) ->
+                showLabel(view, motionEvent, binding.textVictoryCondition));
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void onEndGame() {
-        binding.textEndGame.setOnTouchListener((view, motionEvent) -> {
-            snowLabel(view, motionEvent, binding.textEndGame);
-            return false;
-        });
+        binding.textEndGame.setOnTouchListener((view, motionEvent) ->
+                showLabel(view, motionEvent, binding.textEndGame));
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void onPreparation() {
-        binding.textPreparation.setOnTouchListener((view, motionEvent) -> {
-            snowLabel(view, motionEvent, binding.textPreparation);
-            return false;
-        });
+        binding.textPreparation.setOnTouchListener((view, motionEvent) ->
+                showLabel(view, motionEvent, binding.textPreparation));
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void onPlayerTurn() {
-        binding.textPlayerTurn.setOnTouchListener((view, motionEvent) -> {
-            snowLabel(view, motionEvent, binding.textPlayerTurn);
-            return false;
-        });
+        binding.textPlayerTurn.setOnTouchListener((view, motionEvent) ->
+                showLabel(view, motionEvent, binding.textPlayerTurn));
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void onEffects() {
-        binding.textEffects.setOnTouchListener((view, motionEvent) -> {
-            snowLabel(view, motionEvent, binding.textEffects);
-            return false;
-        });
+        binding.textEffects.setOnTouchListener((view, motionEvent) ->
+                showLabel(view, motionEvent, binding.textEffects));
     }
 
-    private void snowLabel(View view, MotionEvent motionEvent, TextView textView) {
-        // Binding create this. If binding create inside LabelPopupView then bug in draw background.
-        space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding bindingLabel =
-                space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding.inflate(LayoutInflater.from(getContext()));
+    private boolean showLabel(View view, MotionEvent motionEvent, TextView textView) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+            // Binding create this. If binding create inside LabelPopupView then bug in draw background.
+            space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding bindingLabel =
+                    space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding.inflate(LayoutInflater.from(getContext()));
 
-        LabelPopupView label = new LabelPopupView(getContext(), bindingLabel, getViewLifecycleOwner());
-        label.show(view, motionEvent, textView);
+            LabelPopupView label = new LabelPopupView(getContext(), bindingLabel, getViewLifecycleOwner());
+            label.show(view, motionEvent, textView);
+        }
+        return true;
     }
 
 }
