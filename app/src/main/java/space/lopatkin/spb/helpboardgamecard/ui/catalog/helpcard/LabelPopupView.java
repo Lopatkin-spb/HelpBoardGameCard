@@ -1,33 +1,55 @@
 package space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardButtonIcon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
+import static androidx.work.WorkManager.getInstance;
+
 public class LabelPopupView extends PopupWindow {
-    private ViewLabelPopupBinding binding;
     private static final char SEPARATOR = KeyboardButtonIcon.SEPARATOR.charAt(0);
+    private static final String LABEL_POPUP_VIEW = LabelPopupView.class.getSimpleName();
+    private static final int VISIBILITY_DURATION = 2;
     public static final int TEXT_LABEL_POPUP_HEIGHT = 53;
     private static final int ICON_WIDTH = 88; // ~ 80 - 100
     private static final int SYMBOL_WIDTH = 38; // ~ 30 - 50
+    private ViewLabelPopupBinding binding;
+    private LifecycleOwner lifecycleOwner;
+    private Context context;
 
-    public LabelPopupView(ViewLabelPopupBinding binding) {
+    public LabelPopupView(Context context, ViewLabelPopupBinding binding, LifecycleOwner lifecycleOwner) {
+        this.context = context;
         this.binding = binding;
+        this.lifecycleOwner = lifecycleOwner;
 
         setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
         setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         setOutsideTouchable(true);
         setElevation(10);
         setContentView(binding.getRoot());
+    }
+
+    @Override
+    public void showAsDropDown(View anchor, int xoff, int yoff) {
+        super.showAsDropDown(anchor, xoff, yoff);
+        timer();
     }
 
     public void show(View view, MotionEvent motionEvent, TextView textView) {
@@ -189,6 +211,27 @@ public class LabelPopupView extends PopupWindow {
             }
         }
         return sectionsWidth;
+    }
+
+    private void timer() {
+        WorkManager workManager = getInstance(context);
+
+        workManager.cancelAllWorkByTag(LABEL_POPUP_VIEW);
+
+        WorkRequest newTimer = new OneTimeWorkRequest.Builder(LabelTimerWorker.class)
+                .addTag(LABEL_POPUP_VIEW)
+                .setInitialDelay(VISIBILITY_DURATION, TimeUnit.SECONDS)
+                .build();
+
+        workManager.enqueue(newTimer);
+
+        LiveData<WorkInfo> status = workManager.getWorkInfoByIdLiveData(newTimer.getId());
+
+        status.observe(lifecycleOwner, timer -> {
+            if (timer.getState() == WorkInfo.State.SUCCEEDED) {
+                dismiss();
+            }
+        });
     }
 
 }

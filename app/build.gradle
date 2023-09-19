@@ -75,7 +75,7 @@ dependencies {
     /*
      * Android Jetpack: Room
      */
-    def room_version = "2.2.5"
+    def room_version = "2.5.2"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
@@ -99,5 +99,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    /*
+     * For work synchronously on background threads
+     */
+    implementation 'androidx.work:work-runtime:2.8.1'
 
 }

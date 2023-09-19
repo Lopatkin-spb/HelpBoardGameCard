@@ -178,7 +178,7 @@ public class HelpcardFragment extends Fragment {
         space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding bindingLabel =
                 space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding.inflate(LayoutInflater.from(getContext()));
 
-        LabelPopupView label = new LabelPopupView(bindingLabel);
+        LabelPopupView label = new LabelPopupView(getContext(), bindingLabel, getViewLifecycleOwner());
         label.show(view, motionEvent, textView);
     }
 
