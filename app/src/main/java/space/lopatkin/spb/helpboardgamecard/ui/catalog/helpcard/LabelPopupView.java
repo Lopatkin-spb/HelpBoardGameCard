@@ -2,17 +2,21 @@ package space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.text.TextPaint;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
+import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardButtonIcon;
 
@@ -27,17 +31,25 @@ public class LabelPopupView extends PopupWindow {
     private static final char SEPARATOR = KeyboardButtonIcon.SEPARATOR.charAt(0);
     private static final String LABEL_POPUP_VIEW = LabelPopupView.class.getSimpleName();
     private static final int VISIBILITY_DURATION = 2;
-    public static final int TEXT_LABEL_POPUP_HEIGHT = 53;
+    private static final int DEFAULT_VALUE = 0;
     private static final int ICON_WIDTH = 88; // ~ 80 - 100
     private static final int SYMBOL_WIDTH = 38; // ~ 30 - 50
     private ViewLabelPopupBinding binding;
     private LifecycleOwner lifecycleOwner;
     private Context context;
+    private int layoutHeight;
+    private int layoutPadding;
+    private int textSize;
 
     public LabelPopupView(Context context, ViewLabelPopupBinding binding, LifecycleOwner lifecycleOwner) {
         this.context = context;
         this.binding = binding;
         this.lifecycleOwner = lifecycleOwner;
+
+        layoutHeight = 0;
+        layoutPadding = 0;
+        textSize = 0;
+        obtainStyledAttributes();
 
         setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
         setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
@@ -66,8 +78,10 @@ public class LabelPopupView extends PopupWindow {
                 String nameFull = getNameFull(textInLine, imageNumber);
                 if (!nameFull.isEmpty()) {
                     binding.textLabelPopup.setText(nameFull);
+                    setBackgroundWindow(xOffset, textView);
                     int yOffsetPopup = getYOffsetPopup(textView, yOffset);
-                    showAsDropDown(view, xOffset, yOffsetPopup);
+                    int xOffsetPopup = getXOffsetPopup(xOffset, textView, nameFull);
+                    showAsDropDown(view, xOffsetPopup, yOffsetPopup);
                 }
 
             }
@@ -138,7 +152,7 @@ public class LabelPopupView extends PopupWindow {
     private int getYOffsetPopup(TextView textView, int yOffset) {
         int lineHeight = textView.getHeight() / textView.getLineCount();
         int sumLinesHeight = textView.getHeight() - ((getCursorLine(textView, yOffset) - 1) * lineHeight);
-        int popupHeight = dpTpPx(TEXT_LABEL_POPUP_HEIGHT);
+        int popupHeight = layoutHeight;
         int yOffsetPopup = -sumLinesHeight - popupHeight;
         return yOffsetPopup;
     }
@@ -232,6 +246,56 @@ public class LabelPopupView extends PopupWindow {
                 dismiss();
             }
         });
+    }
+
+    private void setBackgroundWindow(int xOffset, TextView textView) {
+        int textViewWidth = textView.getWidth();
+        if (isNeedRedraw(xOffset, textViewWidth)) {
+            binding.layoutPopup.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_label_popup_left));
+        } else {
+            binding.layoutPopup.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_label_popup_right));
+        }
+    }
+
+    private boolean isNeedRedraw(int xOffset, int textViewWidth) {
+        if (xOffset > textViewWidth / 2) {
+            return true;
+        }
+        return false;
+    }
+
+    private int getXOffsetPopup(int xOffset, TextView textView, String nameFull) {
+        int xOffsetMirror = xOffset;
+        int textViewWidth = textView.getWidth();
+        if (isNeedRedraw(xOffset, textViewWidth)) {
+            TextPaint paint = new TextPaint();
+            paint.setTextSize(textSize);
+            float textWidthPx = paint.measureText(nameFull);
+            int horizontalPaddingsPx = layoutPadding + layoutPadding;
+            int popupWidth = (int) (horizontalPaddingsPx + textWidthPx);
+            xOffsetMirror = xOffset - popupWidth;
+        }
+        return xOffsetMirror;
+    }
+
+    private void obtainStyledAttributes() {
+        int[] arrayLayouts = new int[]{android.R.attr.layout_width, android.R.attr.layout_height};
+        int[] arrayPaddings = new int[]{android.R.attr.padding};
+        int[] arrayTexts = new int[]{android.R.attr.textSize};
+
+        TypedArray attributesLayouts = context.obtainStyledAttributes(R.style.TextLabelPopup, arrayLayouts);
+        TypedArray attributesPaddings = context.obtainStyledAttributes(R.style.TextLabelPopup, arrayPaddings);
+        TypedArray attributesTexts = context.obtainStyledAttributes(R.style.TextLabelPopup, arrayTexts);
+
+        try {
+            layoutHeight = attributesLayouts.getDimensionPixelSize(1, DEFAULT_VALUE);
+            layoutPadding = attributesPaddings.getDimensionPixelOffset(0, DEFAULT_VALUE);
+            textSize = attributesTexts.getDimensionPixelOffset(0, DEFAULT_VALUE);
+        } finally {
+            attributesLayouts.recycle();
+            attributesPaddings.recycle();
+            attributesTexts.recycle();
+        }
     }
 
 }
