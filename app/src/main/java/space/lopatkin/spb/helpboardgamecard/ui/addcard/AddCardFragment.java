@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -224,62 +225,67 @@ public class AddCardFragment extends Fragment {
     }
 
     private void onActionTitle() {
-        binding.editTextTitle.setOnFocusChangeListener((v, hasFocus) -> {
+        binding.editTextTitle.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS);
+                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS);
             }
         });
     }
 
     private void onActionDescription() {
-        binding.editTextDescription.setOnFocusChangeListener((v, hasFocus) -> {
+        binding.editTextDescription.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS);
+                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS);
             }
         });
     }
 
     private void onActionVictoryCondition() {
-        binding.editTextVictoryCondition.setOnFocusChangeListener((v, hasFocus) -> {
+        binding.editTextVictoryCondition.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextVictoryCondition);
             }
         });
     }
 
     private void onActionEndGame() {
-        binding.editTextEndGame.setOnFocusChangeListener((v, hasFocus) -> {
+        binding.editTextEndGame.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextEndGame);
             }
         });
     }
 
     private void onActionPreparation() {
-        binding.editTextPreparation.setOnFocusChangeListener((v, hasFocus) -> {
+        binding.editTextPreparation.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextPreparation);
             }
         });
     }
 
     private void onActionPlayerTurn() {
-        binding.editTextPlayerTurn.setOnFocusChangeListener((v, hasFocus) -> {
+        binding.editTextPlayerTurn.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextPlayerTurn);
             }
         });
     }
 
     private void onActionEffects() {
-        binding.editTextEffects.setOnFocusChangeListener((v, hasFocus) -> {
+        binding.editTextEffects.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                startWorkToCustomKeyboard(v, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextEffects);
             }
         });
     }
 
-    private void startWorkToCustomKeyboard(View view, KeyboardType type) {
+    private void enableCustomKeyboard(View view, KeyboardType type) {
         if (inputConnection != null) {
             inputConnection.closeConnection();
         }
@@ -287,6 +293,12 @@ public class AddCardFragment extends Fragment {
         binding.keyboardAddcard.setInputConnection(inputConnection);
         binding.keyboardAddcard.setKeyboardType(type);
         binding.keyboardAddcard.setVisibility(View.VISIBLE);
+    }
+
+    private void scrollTo(EditText view) {
+        binding.keyboardAddcard.setHeightFragment(binding.containerAddcard.getHeight());
+        binding.keyboardAddcard.setScrollView(binding.scrollAddcard);
+        binding.keyboardAddcard.scrollEditTextToKeyboard(view);
     }
 
 }

@@ -10,11 +10,10 @@
 
 --- TODAY:
 
-- исправить баги(~3 день)
-
+- добавить клавиатуру к редактированию(пол дня)
+- optimize enable icon keyboard (set recycle view)
 - keyboard variant change to keyboard type (refactoring)
 
-- добавить клавиатуру к редактированию(пол дня)
 - move code Keyboard to other module
 - привести в порядок код: - лейбл: проверить ресурсы в KeyboardButtonIcon; - все тексты перенести в ресурсы (1 день),
 перенести классы клавы в одну папку; - заменить кнопку enter на другую (shortcut);
@@ -134,10 +133,8 @@ setup
 
 
 
-- AddcardFragment fix bug: enabled move cursor in text, enabled scrolling without show keyboard,
-clean redundant feature (delete selected text), set actionDone for default keyboard in two EditTexts;
-- KeyboardView fix bug: auto change caps to lower after press upper character,
-disable all touches to keyboard without buttons;
-- Plan: update;
+
+- KeyboardView: add scroll screen to focused text;
+- Refactoring Addcard: rename method;
 
 

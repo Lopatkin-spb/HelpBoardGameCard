@@ -4,10 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/keyboard"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="10dp"
+        style="@style/KeyboardView"
         android:background="@color/colorGrey">
 
     <androidx.constraintlayout.widget.Guideline

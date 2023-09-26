@@ -1,6 +1,9 @@
 package space.lopatkin.spb.helpboardgamecard.ui.addcard;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Insets;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -8,11 +11,16 @@ import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowMetrics;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
+import android.widget.EditText;
+import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,15 +32,20 @@ import space.lopatkin.spb.helpboardgamecard.databinding.ViewKeyboardBinding;
 public class KeyboardView extends ConstraintLayout implements View.OnClickListener {
     private static final int MOVE_CURSOR_TO_THE_END = 1;
     private static final int SPANNABLE_TEXT_LENGTH = KeyboardButtonIcon.getLength();
+    private static final int DEFAULT_VALUE = 0;
     private static final boolean UPPER_CASE = true;
     private static final boolean LOWER_CASE = false;
     private static boolean CAPS = UPPER_CASE;
     public static final int DYNAMIC_DRAWABLE_SPAN = DynamicDrawableSpan.ALIGN_BOTTOM;
     public static final int SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE;
     private static final String SEPARATOR = KeyboardButtonIcon.SEPARATOR;
+    private int keyboardHeight;
+    private int currentLinesCount = 0;
+    private int heightFragment;
+    private ScrollView scrollView;
+    private EditText currentEnableEditTextView;
     private static KeyboardPart ENABLED_KEYBOARD_PART = KeyboardPart.QWERTY;
     private static KeyboardType VISIBLE_KEYBOARD_TYPE = KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS;
-
     private static String previousChar = "";
     private ViewKeyboardBinding binding;
 
@@ -85,11 +98,13 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
 //            capsToLowerCase(view);
             inputConnection.commitText(symbol, MOVE_CURSOR_TO_THE_END);
         }
+        scrollEditTextToKeyboard();
     }
 
     //reference to the current EditText's InputConnection
     public void setInputConnection(InputConnection inputConnection) {
         this.inputConnection = inputConnection;
+        currentLinesCount = 0;
     }
 
     public void setEnabledKeyboardPart(KeyboardPart part) {
@@ -303,6 +318,8 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
                 return;
             }
             inputConnection.commitText(keyBasicValue.get(view.getId()), MOVE_CURSOR_TO_THE_END);
+
+            scrollEditTextToKeyboard();
         });
     }
 
@@ -534,10 +551,94 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
 //    }
 
 
-    // Disable all touchs to keyboard.
+    // Disable all touchs to keyboard except buttons.
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return true;
+    }
+
+    public void setHeightFragment(int heightFragment) {
+        this.heightFragment = heightFragment;
+    }
+
+    public void setScrollView(ScrollView scrollView) {
+        this.scrollView = scrollView;
+    }
+
+    private int getLinesFromView() {
+        return currentEnableEditTextView.getLineCount();
+    }
+
+    private void scrollEditTextToKeyboard() {
+        if (currentLinesCount == 0) {
+            currentLinesCount = getLinesFromView();
+        } else if (getLinesFromView() > currentLinesCount) {
+            obtainStyledAttributes();
+            int yTopKeyboard = heightFragment - keyboardHeight;
+            int heightView = currentEnableEditTextView.getHeight() + currentEnableEditTextView.getLineHeight();
+
+            int[] yTopViewTouch = new int[2];
+            currentEnableEditTextView.getLocationOnScreen(yTopViewTouch);
+            int yBottomViewTouchInFragment = yTopViewTouch[1] - getStatusBarHeight() - getToolbarHeight() + heightView;
+
+            if (yBottomViewTouchInFragment > yTopKeyboard) {
+                int scrollingDelta = yBottomViewTouchInFragment - yTopKeyboard;
+                scrollView.smoothScrollBy(0, +scrollingDelta);
+            } else {
+                int scrollingDelta = yTopKeyboard - yBottomViewTouchInFragment;
+                scrollView.smoothScrollBy(0, -scrollingDelta);
+            }
+        }
+        currentLinesCount = getLinesFromView();
+    }
+
+    public void scrollEditTextToKeyboard(EditText view) {
+        currentEnableEditTextView = view;
+        obtainStyledAttributes();
+        int yTopKeyboard = heightFragment - keyboardHeight;
+        int heightView = view.getHeight();
+        int[] viewCoordinates = new int[2];
+        view.getLocationOnScreen(viewCoordinates);
+        int yBottomViewTouchInFragment = viewCoordinates[1] - getStatusBarHeight() - getToolbarHeight() + heightView;
+
+        if (yBottomViewTouchInFragment > yTopKeyboard) {
+            int scrollingDelta = yBottomViewTouchInFragment - yTopKeyboard;
+            scrollView.smoothScrollBy(0, +scrollingDelta);
+        } else {
+            int scrollingDelta = yTopKeyboard - yBottomViewTouchInFragment;
+            scrollView.smoothScrollBy(0, -scrollingDelta);
+        }
+    }
+
+    private int getToolbarHeight() {
+        int toolbarHeight = 0;
+        TypedValue attributes = new TypedValue();
+
+        if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, attributes, true)) {
+            toolbarHeight = TypedValue.complexToDimensionPixelSize(attributes.data, getResources().getDisplayMetrics());
+        }
+        return toolbarHeight;
+    }
+
+    private int getStatusBarHeight() {
+        int statusBarHeight = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            WindowMetrics metrics = ((Activity) context).getWindowManager().getCurrentWindowMetrics();
+            Insets insets = metrics.getWindowInsets().getInsetsIgnoringVisibility(WindowInsets.Type.systemBars());
+            statusBarHeight = insets.top;
+        }
+        return statusBarHeight;
+    }
+
+    private void obtainStyledAttributes() {
+        int[] arrayLayouts = new int[]{android.R.attr.layout_width, android.R.attr.layout_height};
+
+        TypedArray attributes = context.obtainStyledAttributes(R.style.KeyboardView, arrayLayouts);
+        try {
+            keyboardHeight = attributes.getDimensionPixelSize(1, DEFAULT_VALUE);
+        } finally {
+            attributes.recycle();
+        }
     }
 
 }
