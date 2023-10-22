@@ -182,7 +182,12 @@ public class LabelPopupView extends PopupWindow {
 
     private String getTextInLine(String text, int cursorLine) {
         String[] lines = text.split("\n");
-        return lines[cursorLine - 1];
+
+        String textInRow = "";
+        if (cursorLine - 1 < lines.length) {
+            textInRow = lines[cursorLine - 1];
+        }
+        return textInRow;
     }
 
     private ArrayList<Integer> getSectionsWidth(String textInLine) {

@@ -1,0 +1,77 @@
+<vector
+        android:height="34dp"
+        android:tint="@color/keyboard_color_icon_white_test"
+        android:tintMode="multiply"
+        android:viewportHeight="256"
+        android:viewportWidth="256"
+        android:width="34dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+            android:pivotX="130"
+            android:pivotY="140"
+            android:rotation="35">
+
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M104.5,28.02C20.46,38.64 -13.8,142.88 47.63,201.06c57.18,54.16 146.53,23.39 146.8,-50.56 0.16,-42.11 -30.45,-74.87 -72.93,-78.09 -37.77,-2.86 -67.61,31.8 -58.96,68.49C74.44,191.4 149.5,199.69 149.5,150.5c0,-18.42 -12.15,-31.82 -30.16,-33.26 -6.13,-0.49 -6.36,-0.42 -9.81,3.03 -6.71,6.71 -2.6,18.73 6.42,18.73 12.59,0 16.51,16.23 5.22,21.59 -6.52,3.09 -18.64,-0.43 -26.63,-7.74 -22.08,-20.18 -10.19,-55.05 19.95,-58.46 13.09,-1.48 30.99,5.72 41.94,16.89 35.46,36.16 10.11,94.9 -40.92,94.82 -57.06,-0.09 -94.1,-60.54 -68.98,-112.6 29.01,-60.12 117.28,-57.8 156.05,4.1 8.18,13.06 12.77,26.79 14.46,43.31 1.81,17.57 3.23,20.1 11.34,20.1 9.77,0 12.53,-5.71 10.78,-22.29 -7.18,-67.91 -69.27,-118.94 -134.66,-110.69"/>
+
+    </group>
+
+    <group
+
+            android:scaleX="6"
+            android:scaleY="6"
+            android:translateX="200"
+            android:translateY="190"
+
+            android:pivotX="12"
+            android:pivotY="12"
+            android:rotation="-55">
+
+        <path
+                android:name="triangle"
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+
+    </group>
+
+
+    <group
+            android:translateX="-5"
+            android:translateY="-10">
+
+
+        <group
+                android:pivotX="130"
+                android:pivotY="140"
+                android:rotation="35">
+
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M104.5,28.02C20.46,38.64 -13.8,142.88 47.63,201.06c57.18,54.16 146.53,23.39 146.8,-50.56 0.16,-42.11 -30.45,-74.87 -72.93,-78.09 -37.77,-2.86 -67.61,31.8 -58.96,68.49C74.44,191.4 149.5,199.69 149.5,150.5c0,-18.42 -12.15,-31.82 -30.16,-33.26 -6.13,-0.49 -6.36,-0.42 -9.81,3.03 -6.71,6.71 -2.6,18.73 6.42,18.73 12.59,0 16.51,16.23 5.22,21.59 -6.52,3.09 -18.64,-0.43 -26.63,-7.74 -22.08,-20.18 -10.19,-55.05 19.95,-58.46 13.09,-1.48 30.99,5.72 41.94,16.89 35.46,36.16 10.11,94.9 -40.92,94.82 -57.06,-0.09 -94.1,-60.54 -68.98,-112.6 29.01,-60.12 117.28,-57.8 156.05,4.1 8.18,13.06 12.77,26.79 14.46,43.31 1.81,17.57 3.23,20.1 11.34,20.1 9.77,0 12.53,-5.71 10.78,-22.29 -7.18,-67.91 -69.27,-118.94 -134.66,-110.69"/>
+
+        </group>
+
+        <group
+
+                android:scaleX="6"
+                android:scaleY="6"
+                android:translateX="200"
+                android:translateY="190"
+
+                android:pivotX="12"
+                android:pivotY="12"
+                android:rotation="-55">
+
+            <path
+                    android:name="triangle"
+                    android:fillColor="@android:color/white"
+                    android:pathData="M8.5,12L8.5,8.62M10,5l-7,7l7,7V5L10,5zM14,-7L14,5z"/>
+
+        </group>
+
+    </group>
+
+
+</vector>

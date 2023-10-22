@@ -177,6 +177,9 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.keyboardIcon.actionShirt1.setOnClickListener(this);
         binding.keyboardIcon.actionShirt2.setOnClickListener(this);
         binding.keyboardIcon.actionTiles.setOnClickListener(this);
+        binding.keyboardIcon.actionAircraft.setOnClickListener(this);
+        binding.keyboardIcon.actionVictoryPoint1.setOnClickListener(this);
+        binding.keyboardIcon.actionVictoryPoint2.setOnClickListener(this);
 
 
 //green
@@ -195,6 +198,10 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.keyboardIcon.actionOut2.setOnClickListener(this);
         binding.keyboardIcon.actionEvery.setOnClickListener(this);
         binding.keyboardIcon.actionRepeat.setOnClickListener(this);
+        binding.keyboardIcon.actionFlip.setOnClickListener(this);
+        binding.keyboardIcon.actionCalculate1.setOnClickListener(this);
+        binding.keyboardIcon.actionCalculate2.setOnClickListener(this);
+
 
 //red
         binding.keyboardIcon.actionWarning.setOnClickListener(this);
@@ -214,6 +221,13 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         binding.keyboardIcon.actionAll.setOnClickListener(this);
         binding.keyboardIcon.actionMin.setOnClickListener(this);
         binding.keyboardIcon.actionMax.setOnClickListener(this);
+        binding.keyboardIcon.actionInfinitely.setOnClickListener(this);
+        binding.keyboardIcon.actionTotal.setOnClickListener(this);
+        binding.keyboardIcon.actionRandom.setOnClickListener(this);
+        binding.keyboardIcon.actionAll2.setOnClickListener(this);
+        binding.keyboardIcon.actionEvery2.setOnClickListener(this);
+        binding.keyboardIcon.actionAll3.setOnClickListener(this);
+
 
     }
 
@@ -566,6 +580,9 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
     }
 
     private int getLinesFromView() {
+        if (currentEnableEditTextView == null) {
+            return 1;
+        }
         return currentEnableEditTextView.getLineCount();
     }
 

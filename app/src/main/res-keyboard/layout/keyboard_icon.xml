@@ -20,63 +20,77 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.1"/>
+                app:layout_constraintGuide_percent="0.08"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_row_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.2"/>
+                app:layout_constraintGuide_percent="0.16"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_row_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.3"/>
+                app:layout_constraintGuide_percent="0.24"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_row_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.4"/>
+                app:layout_constraintGuide_percent="0.32"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_row_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.5"/>
+                app:layout_constraintGuide_percent="0.4"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_row_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.6"/>
+                app:layout_constraintGuide_percent="0.48"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_row_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.7"/>
+                app:layout_constraintGuide_percent="0.56"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_row_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.8"/>
+                app:layout_constraintGuide_percent="0.64"/>
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_row_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.9"/>
+                app:layout_constraintGuide_percent="0.72"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.88"/>
 
         <!--  Column   -->
 
@@ -857,7 +871,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/guideline_row_9"
                 app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
 
         <ImageButton
                 android:id="@+id/action_color_green"
@@ -869,7 +883,7 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_column_1"
                 app:layout_constraintTop_toTopOf="@id/guideline_row_9"
                 app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
 
         <ImageButton
                 android:id="@+id/action_color_blue"
@@ -881,7 +895,7 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_column_2"
                 app:layout_constraintTop_toTopOf="@id/guideline_row_9"
                 app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
 
         <ImageButton
                 android:id="@+id/action_color_yellow"
@@ -893,7 +907,7 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_column_3"
                 app:layout_constraintTop_toTopOf="@id/guideline_row_9"
                 app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
 
         <ImageButton
                 android:id="@+id/action_color_black"
@@ -905,7 +919,7 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_column_4"
                 app:layout_constraintTop_toTopOf="@id/guideline_row_9"
                 app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
 
         <ImageButton
                 android:id="@+id/action_commit"
@@ -918,7 +932,7 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_column_5"
                 app:layout_constraintTop_toTopOf="@id/guideline_row_9"
                 app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
 
         <ImageButton
                 android:id="@+id/action_all"
@@ -931,6 +945,158 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_column_6"
                 app:layout_constraintTop_toTopOf="@id/guideline_row_9"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
+
+        <ImageButton
+                android:id="@+id/action_infinitely"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_all_inclusive_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_total"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_functions_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_random"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_outline_help_center_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_all_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_update_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_every_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_auto_mode_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_all_3"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_flaticon_spiral_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+
+
+        <ImageButton
+                android:id="@+id/action_aircraft"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_sharp_airplanemode_active_34"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_victory_point_1"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_workspace_premium_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_victory_point_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_military_tech_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_flip"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_u_turn_right_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_calculate_1"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_calculate_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_calculate_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_outline_calculate_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

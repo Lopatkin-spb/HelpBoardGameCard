@@ -5,6 +5,12 @@ import space.lopatkin.spb.helpboardgamecard.R;
 public enum KeyboardButtonIcon {
 
     /**
+     * Yellow icons - warnings.
+     */
+    defaultIcon1(0, R.drawable._baseline_warning_amber_34, "error icon link"),
+    defaultIcon2(0, R.drawable._sharp_broken_image_34, "error icon link"),
+
+    /**
      * Blue icons - items.
      */
     l0000(R.id.action_pawn, R.drawable.ic_keyboard_flaticon_strategy_34, "pawn"),
@@ -44,6 +50,9 @@ public enum KeyboardButtonIcon {
     l0034(R.id.action_shirt_1, R.drawable._baseline_graphic_eq_34_for_target, "shirt"),
     l0035(R.id.action_shirt_2, R.drawable._sharp_texture_34, "shirt"),
     l0036(R.id.action_tiles, R.drawable._baseline_hexagon_34_lots, "tiles"),
+    l0037(R.id.action_aircraft, R.drawable._sharp_airplanemode_active_34, "aircraft"),
+    l0038(R.id.action_victory_point_1, R.drawable._baseline_workspace_premium_34, "victory point"),
+    l0039(R.id.action_victory_point_2, R.drawable._baseline_military_tech_34, "victory point"),
 
     /**
      * Green icons - actions.
@@ -63,6 +72,10 @@ public enum KeyboardButtonIcon {
     l0115(R.id.action_out_2, R.drawable.ic_keyboard_baseline_pan_tool_alt_34, "right"),
     l0116(R.id.action_every, R.drawable._outline_brightness_1_34, "every/all"),
     l0117(R.id.action_repeat, R.drawable._sharp_repeat_34, "repeat"),
+    l0118(R.id.action_flip, R.drawable._baseline_u_turn_right_34, "flip"),
+    l0119(R.id.action_calculate_1, R.drawable._baseline_calculate_34, "calculate"),
+    l0120(R.id.action_calculate_2, R.drawable._outline_calculate_34, "calculate"),
+
 
 
     /**
@@ -86,7 +99,13 @@ public enum KeyboardButtonIcon {
     l0305(R.id.action_commit, R.drawable.ic_keyboard_baseline_commit_34, ""),
     l0306(R.id.action_all, R.drawable._baseline_workspaces_34, "all"),
     l0307(R.id.action_min, R.drawable._baseline_forward_34_min, "min"),
-    l0308(R.id.action_max, R.drawable._baseline_forward_34_max, "max");
+    l0308(R.id.action_max, R.drawable._baseline_forward_34_max, "max"),
+    l0309(R.id.action_infinitely, R.drawable._baseline_all_inclusive_34, "infinitely"),
+    l0310(R.id.action_total, R.drawable._baseline_functions_34, "total"),
+    l0311(R.id.action_random, R.drawable._outline_help_center_34, "random"),
+    l0312(R.id.action_all_2, R.drawable._baseline_update_34, "all"),
+    l0313(R.id.action_every_2, R.drawable._baseline_auto_mode_34, "every"),
+    l0314(R.id.action_all_3, R.drawable._flaticon_spiral_34, "all");
 
 
 
@@ -110,7 +129,7 @@ public enum KeyboardButtonIcon {
                 return button.drawable;
             }
         }
-        throw new IllegalArgumentException("Unknown KeyboardButton resourceId: " + resourceId);
+        throw new IllegalArgumentException("Unknown icon resourceId: " + resourceId + " (" + KeyboardButtonIcon.class.getSimpleName() + ")");
     }
 
     public static int getDrawableFrom(String name) {
@@ -119,7 +138,8 @@ public enum KeyboardButtonIcon {
                 return button.drawable;
             }
         }
-        throw new IllegalArgumentException("Unknown KeyboardButton name: " + name);
+//        throw new IllegalArgumentException("Unknown icon name: " + name + " (" + KeyboardButtonIcon.class.getSimpleName() + ")");
+        return defaultIcon1.drawable;
     }
 
     public static String getNameFrom(int resourceId) {
@@ -128,7 +148,7 @@ public enum KeyboardButtonIcon {
                 return button.name();
             }
         }
-        throw new IllegalArgumentException("Unknown KeyboardButton resourceId: " + resourceId);
+        throw new IllegalArgumentException("Unknown icon resourceId: " + resourceId + " (" + KeyboardButtonIcon.class.getSimpleName() + ")");
     }
 
     public static String getNameFullFrom(String name) {
@@ -137,7 +157,7 @@ public enum KeyboardButtonIcon {
                 return button.nameFull;
             }
         }
-        throw new IllegalArgumentException("Unknown KeyboardButton name: " + name);
+        throw new IllegalArgumentException("Unknown icon name: " + name + " (" + KeyboardButtonIcon.class.getSimpleName() + ")");
     }
 
     public static int getLength() {
