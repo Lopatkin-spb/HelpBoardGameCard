@@ -3,7 +3,15 @@ package space.lopatkin.spb.helpboardgamecard.ui;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.*;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetAllHelpcardsUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardVariantUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardVariantUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardViewModel;
 import space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogViewModel;
 import space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.HelpcardViewModel;
@@ -55,7 +63,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         } else if (modelClass.isAssignableFrom(AddCardViewModel.class)) {
             return (T) new AddCardViewModel(saveNewHelpcardUseCase, getKeyboardVariableUseCase);
         } else if (modelClass.isAssignableFrom(CardEditViewModel.class)) {
-            return (T) new CardEditViewModel(getDetailsHelpcardByBoardGameIdUseCase, updateHelpcardByObjectUseCase);
+            return (T) new CardEditViewModel(getDetailsHelpcardByBoardGameIdUseCase, updateHelpcardByObjectUseCase, getKeyboardVariableUseCase);
         } else if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
             return (T) new SettingsViewModel(saveKeyboardVariableUseCase, getKeyboardVariableUseCase);
         }

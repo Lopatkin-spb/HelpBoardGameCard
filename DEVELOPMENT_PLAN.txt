@@ -10,8 +10,6 @@
 
 --- TODAY:
 
-- добавить клавиатуру к редактированию(пол дня)
-
 - optimize long time enable icon keyboard (set recycle view)
 
 - keyboard variant change to keyboard type (refactoring)
@@ -143,4 +141,5 @@ setup
 - KeyboardView fix crash: if title empty when create new helpcard;
 
 
+- CardEdit: added keyboards, added set icons to edit views;
 
