@@ -28,7 +28,10 @@ import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentAddcardBinding;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.ui.KeyboardDoneEvent;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
+import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardCapabilities;
+import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardVariant;
 
 import javax.inject.Inject;
 

@@ -1,7 +1,7 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase;
 
 import space.lopatkin.spb.helpboardgamecard.domain.repository.HelpcardRepository;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardVariant;
+import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardVariant;
 
 public class GetKeyboardVariantUseCase {
 

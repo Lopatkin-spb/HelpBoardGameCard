@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardVariantUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardVariant;
 
 public class AddCardViewModel extends ViewModel {
 

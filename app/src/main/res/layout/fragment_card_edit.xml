@@ -174,7 +174,7 @@
 
     </ScrollView>
 
-    <space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardView
+    <space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardView
             android:id="@+id/keyboard_card_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

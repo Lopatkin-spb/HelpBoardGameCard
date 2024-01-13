@@ -8,7 +8,7 @@ import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByB
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardVariantUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardVariant;
+import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardVariant;
 
 public class CardEditViewModel extends ViewModel {
 

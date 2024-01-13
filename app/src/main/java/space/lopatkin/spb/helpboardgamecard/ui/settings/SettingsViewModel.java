@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardVariantUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardVariantUseCase;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardVariant;
+import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardVariant;
 
 public class SettingsViewModel extends ViewModel {
     private SaveKeyboardVariantUseCase saveKeyboardVariantUseCase;

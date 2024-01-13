@@ -18,7 +18,7 @@ import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardButtonIcon;
+import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardButtonIcon;
 
 import java.util.ArrayList;
 import java.util.List;

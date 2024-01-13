@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.addcard;
+package space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewKeyboardBinding;
+import space.lopatkin.spb.helpboardgamecard.ui.KeyboardDoneEvent;
 
 public class KeyboardView extends ConstraintLayout implements View.OnClickListener {
     private static final int MOVE_CURSOR_TO_THE_END = 1;

@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import org.jetbrains.annotations.NotNull;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardButtonIcon;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardView;
+import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardButtonIcon;
+import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardView;
 
 import java.util.stream.IntStream;
 

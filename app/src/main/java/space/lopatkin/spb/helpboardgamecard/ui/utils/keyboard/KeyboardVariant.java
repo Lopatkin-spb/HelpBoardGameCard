@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.addcard;
+package space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard;
 
 public enum KeyboardVariant {
     CUSTOM, DEFAULT;
