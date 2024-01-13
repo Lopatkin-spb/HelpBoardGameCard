@@ -68,7 +68,7 @@
             android:id="@+id/keyboard_icon"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            layout="@layout/keyboard_icon"
+            layout="@layout/view_part_icons"
             android:visibility="visible"
             tools:visibility="gone"
 
@@ -81,7 +81,7 @@
             android:id="@+id/keyboard_number"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            layout="@layout/keyboard_number"
+            layout="@layout/view_part_numbers"
             android:visibility="gone"
             tools:visibility="gone"
 
@@ -94,7 +94,7 @@
             android:id="@+id/keyboard_qwerty"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            layout="@layout/keyboard_qwerty"
+            layout="@layout/view_part_letters"
             android:visibility="gone"
             tools:visibility="visible"
 

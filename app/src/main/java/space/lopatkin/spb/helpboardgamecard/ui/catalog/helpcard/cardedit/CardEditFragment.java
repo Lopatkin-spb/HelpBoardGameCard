@@ -30,7 +30,7 @@ import space.lopatkin.spb.helpboardgamecard.databinding.FragmentCardEditBinding;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardDoneEvent;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardType;
+import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardCapabilities;
 import space.lopatkin.spb.helpboardgamecard.ui.addcard.KeyboardVariant;
 
 import javax.inject.Inject;
@@ -248,7 +248,7 @@ public class CardEditFragment extends Fragment {
     private void onActionTitle() {
         binding.editTitle.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS);
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS);
             }
         });
     }
@@ -256,7 +256,7 @@ public class CardEditFragment extends Fragment {
     private void onActionDescription() {
         binding.editDescription.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS);
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS);
             }
         });
     }
@@ -264,7 +264,7 @@ public class CardEditFragment extends Fragment {
     private void onActionVictoryCondition() {
         binding.editVictoryCondition.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS);
                 scrollTo(binding.editVictoryCondition);
             }
         });
@@ -273,7 +273,7 @@ public class CardEditFragment extends Fragment {
     private void onActionEndGame() {
         binding.editEndGame.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS);
                 scrollTo(binding.editEndGame);
             }
         });
@@ -282,7 +282,7 @@ public class CardEditFragment extends Fragment {
     private void onActionPreparation() {
         binding.editPreparation.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS);
                 scrollTo(binding.editPreparation);
             }
         });
@@ -291,19 +291,19 @@ public class CardEditFragment extends Fragment {
     private void onActionPlayerTurn() {
         binding.editPlayerTurn.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                enableCustomKeyboard(view, KeyboardType.QWERTY_AND_NUMBERS_AND_ICONS);
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS);
                 scrollTo(binding.editPlayerTurn);
             }
         });
     }
 
-    private void enableCustomKeyboard(View view, KeyboardType type) {
+    private void enableCustomKeyboard(View view, KeyboardCapabilities capabilities) {
         if (inputConnection != null) {
             inputConnection.closeConnection();
         }
         inputConnection = view.onCreateInputConnection(new EditorInfo());
         binding.keyboardCardEdit.setInputConnection(inputConnection);
-        binding.keyboardCardEdit.setKeyboardType(type);
+        binding.keyboardCardEdit.setCapabilities(capabilities);
         binding.keyboardCardEdit.setVisibility(View.VISIBLE);
     }
 
