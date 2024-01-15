@@ -55,12 +55,12 @@ public class HelpcardRepositoryImpl implements HelpcardRepository {
         new InsertHelpcardAsyncTask(helpcardDao).execute(helpcard);
     }
     @Override
-    public void saveKeyboardVariant(int keyboardVariant) {
-        settingsRepository.saveKeyboardVariant(keyboardVariant);
+    public void saveKeyboardType(int type) {
+        settingsRepository.saveKeyboardType(type);
     }
     @Override
-    public int getKeyboardVariant() {
-        return settingsRepository.getKeyboardVariant();
+    public int getKeyboardType() {
+        return settingsRepository.getKeyboardType();
     }
 
 

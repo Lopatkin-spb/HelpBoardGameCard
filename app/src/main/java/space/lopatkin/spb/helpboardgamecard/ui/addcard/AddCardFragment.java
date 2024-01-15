@@ -31,7 +31,7 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.KeyboardDoneEvent;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardCapabilities;
-import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardVariant;
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
 
 import javax.inject.Inject;
 
@@ -58,7 +58,6 @@ public class AddCardFragment extends Fragment {
         setScreenTitle(R.string.title_addcard);
         //разрешает верхнее правое меню
         setHasOptionsMenu(true);
-        setupViews();
         return view;
     }
 
@@ -68,28 +67,20 @@ public class AddCardFragment extends Fragment {
         navController = Navigation.findNavController(getView());
 
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(AddCardViewModel.class);
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
+        loadKeyboardType();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        viewModel.getKeyboardVariant().observe(this, data -> {
-            if (data == KeyboardVariant.CUSTOM) {
-                setupViewsForCustomKeyboard();
-            }
-        });
+        EventBus.getDefault().register(this);
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
         EventBus.getDefault().unregister(this);
+        super.onPause();
     }
 
     @Override
@@ -140,6 +131,18 @@ public class AddCardFragment extends Fragment {
             binding.editTextEffects.clearFocus();
         }
         binding.keyboardAddcard.setVisibility(View.GONE);
+    }
+
+    private void loadKeyboardType() {
+        viewModel.loadKeyboardType();
+
+        viewModel.keyboardType.observe(getViewLifecycleOwner(), keyboardType -> {
+            if (keyboardType == KeyboardType.CUSTOM) {
+                setupViewsForCustomKeyboard();
+            } else {
+                setupViews();
+            }
+        });
     }
 
     private void setupViews() {

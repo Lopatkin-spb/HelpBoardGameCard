@@ -43,13 +43,15 @@ public interface HelpcardRepository {
     void saveNewHelpcard(Helpcard helpcard);
 
     /**
-     * Сохранить вариант включенной клавиатуры: кастомная или дефолтная.
+     * Сохранить тип включенной клавиатуры в настройках: кастомная или дефолтная.
+     *
+     * @param type выбранный пользователем тип.
      */
-    void saveKeyboardVariant(int keyboardVariant);
+    void saveKeyboardType(int type);
 
     /**
-     * Получить вариант включенной клавиатуры: кастомная или дефолтная.
+     * Получить тип включенной клавиатуры в настройках: кастомная или дефолтная.
      */
-    int getKeyboardVariant();
+    int getKeyboardType();
 
 }

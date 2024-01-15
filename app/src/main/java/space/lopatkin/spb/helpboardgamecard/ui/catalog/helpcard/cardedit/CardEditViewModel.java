@@ -5,27 +5,26 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardVariantUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardVariant;
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
 
 public class CardEditViewModel extends ViewModel {
 
     private GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase;
     private UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase;
-    private GetKeyboardVariantUseCase getKeyboardVariantUseCase;
+    private GetKeyboardTypeUseCase getKeyboardTypeUseCase;
     private MutableLiveData<Integer> cardId = new MutableLiveData<>();
-    private MutableLiveData<KeyboardVariant> keyboardVariant;
+    private MutableLiveData<KeyboardType> keyboardTypeMutable = new MutableLiveData<>();
+    LiveData<KeyboardType> keyboardType = keyboardTypeMutable;
 
     public CardEditViewModel(GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase,
                              UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase,
-                             GetKeyboardVariantUseCase getKeyboardVariantUseCase) {
+                             GetKeyboardTypeUseCase getKeyboardTypeUseCase) {
         this.getDetailsHelpcardByBoardGameIdUseCase = getDetailsHelpcardByBoardGameIdUseCase;
         this.updateHelpcardByObjectUseCase = updateHelpcardByObjectUseCase;
-        this.getKeyboardVariantUseCase = getKeyboardVariantUseCase;
-
-        keyboardVariant = new MutableLiveData<>();
+        this.getKeyboardTypeUseCase = getKeyboardTypeUseCase;
     }
 
     public void setCardId(int id) {
@@ -39,13 +38,8 @@ public class CardEditViewModel extends ViewModel {
         updateHelpcardByObjectUseCase.execute(helpcard);
     }
 
-    public LiveData<KeyboardVariant> getKeyboardVariant() {
-        setKeyboardVariant(this.getKeyboardVariantUseCase.execute());
-        return keyboardVariant;
-    }
-
-    private void setKeyboardVariant(KeyboardVariant variant) {
-        this.keyboardVariant.setValue(variant);
+    public void loadKeyboardType() {
+        keyboardTypeMutable.setValue(getKeyboardTypeUseCase.execute());
     }
 
 }

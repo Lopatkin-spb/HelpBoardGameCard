@@ -10,11 +10,10 @@
 
 --- TODAY:
 
+- move code Keyboard to other module
+
 - optimize long time enable icon keyboard (set recycle view)
 
-- keyboard variant change to keyboard type (refactoring)
-
-- move code Keyboard to other module
 - привести в порядок код: - лейбл: проверить ресурсы в KeyboardButtonIcon; - все тексты перенести в ресурсы (1 день),
 перенести классы клавы в одну папку; - заменить кнопку enter на другую (shortcut);
 
@@ -135,11 +134,11 @@ setup
 
 
 
-- KeyboardView: add more new icons;
-- KeyboardButtonIcon fix crash: change throw error to set default icons when open Helpcard with erroneous text;
-- LabelPopupView fix crash: if not correctly calculated rows when display label in Helpcard;
-- KeyboardView fix crash: if title empty when create new helpcard;
 
+- Settings: cleaning code, added handler null to save, added message,
+fixed bug show message after turn device, fixed bug enabled save keyboard when open screen without user action;
 
-- CardEdit: added keyboards, added set icons to edit views;
+- Glossary: update;
+
+- AddCard & EdieCard: edit keyboard setter, register eventBus move to another method;
 

@@ -8,8 +8,8 @@ import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetAllHelpcardsUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardVariantUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardVariantUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardTypeByUserChoiceUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
@@ -40,8 +40,8 @@ public class ApplicationModule {
                                                     UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase,
                                                     DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase,
                                                     SaveNewHelpcardUseCase saveNewHelpcardUseCase,
-                                                    SaveKeyboardVariantUseCase saveKeyboardVariantUseCase,
-                                                    GetKeyboardVariantUseCase getKeyboardVariantUseCase) {
+                                                    SaveKeyboardTypeByUserChoiceUseCase saveKeyboardTypeByUserChoiceUseCase,
+                                                    GetKeyboardTypeUseCase getKeyboardTypeUseCase) {
         return new ViewModelFactory(getDetailsHelpcardByBoardGameIdUseCase,
                 getAllHelpcardsUseCase,
                 deleteHelpcardUseCase,
@@ -49,8 +49,8 @@ public class ApplicationModule {
                 updateHelpcardByObjectUseCase,
                 deleteHelpcardsByLockUseCase,
                 saveNewHelpcardUseCase,
-                saveKeyboardVariantUseCase,
-                getKeyboardVariantUseCase
+                saveKeyboardTypeByUserChoiceUseCase,
+                getKeyboardTypeUseCase
         );
     }
 

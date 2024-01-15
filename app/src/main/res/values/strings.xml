@@ -54,7 +54,7 @@
     <string name="message_card_updated">Card updated</string>
     <string name="message_insert_title">Please insert a title</string>
 
-    <string name="header_keyboard">Keyboard:</string>
+    <string name="text_keyboard">Keyboard:</string>
 
     <string-array name="action_spinner_keyboards">
         <item>Custom</item>
@@ -62,5 +62,9 @@
     </string-array>
 
     <string name="title_others">OTHERS:</string>
+
+    <string name="message_action_ended_success">Success</string>
+    <string name="error_action_ended">Error</string>
+
 
 </resources>

@@ -3,36 +3,33 @@ package space.lopatkin.spb.helpboardgamecard.ui.settings;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardVariantUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardVariantUseCase;
-import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardVariant;
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardTypeByUserChoiceUseCase;
 
 public class SettingsViewModel extends ViewModel {
-    private SaveKeyboardVariantUseCase saveKeyboardVariantUseCase;
-    private GetKeyboardVariantUseCase getKeyboardVariantUseCase;
-    private MutableLiveData<KeyboardVariant> keyboardVariant;
+    private SaveKeyboardTypeByUserChoiceUseCase saveKeyboardTypeByUserChoiceUseCase;
+    private GetKeyboardTypeUseCase getKeyboardTypeUseCase;
+    private MutableLiveData<KeyboardType> keyboardTypeMutable = new MutableLiveData<>();
+    private MutableLiveData<Message> messageMutable = new MutableLiveData<>();
+    LiveData<Message> message = messageMutable;
+    LiveData<KeyboardType> keyboardType = keyboardTypeMutable;
 
-    public SettingsViewModel(SaveKeyboardVariantUseCase saveKeyboardVariantUseCase,
-                             GetKeyboardVariantUseCase getKeyboardVariantUseCase) {
-        this.saveKeyboardVariantUseCase = saveKeyboardVariantUseCase;
-        this.getKeyboardVariantUseCase = getKeyboardVariantUseCase;
-
-        keyboardVariant = new MutableLiveData<>();
-        setKeyboardVariant(this.getKeyboardVariantUseCase.execute());
+    public SettingsViewModel(SaveKeyboardTypeByUserChoiceUseCase saveKeyboardTypeByUserChoiceUseCase,
+                             GetKeyboardTypeUseCase getKeyboardTypeUseCase) {
+        this.saveKeyboardTypeByUserChoiceUseCase = saveKeyboardTypeByUserChoiceUseCase;
+        this.getKeyboardTypeUseCase = getKeyboardTypeUseCase;
     }
 
-    private void setKeyboardVariant(KeyboardVariant variant) {
-        this.keyboardVariant.setValue(variant);
+    public void loadKeyboardType() {
+        keyboardTypeMutable.setValue(getKeyboardTypeUseCase.execute());
     }
 
-    public LiveData<KeyboardVariant> getKeyboardVariant() {
-        return keyboardVariant;
-    }
-
-    public void saveKeyboardVariant(Object variant) {
-        KeyboardVariant spinner = KeyboardVariant.getOrdinalFrom(variant.toString());
-        setKeyboardVariant(spinner);
-        saveKeyboardVariantUseCase.execute(spinner);
+    public void saveKeyboardType(Object userChoice) {
+        Message messageResponse = saveKeyboardTypeByUserChoiceUseCase.execute(userChoice);
+        messageMutable.setValue(messageResponse);
+        messageMutable.setValue(Message.DEFAULT);
     }
 
 }

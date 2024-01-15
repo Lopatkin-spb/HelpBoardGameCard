@@ -31,7 +31,7 @@ import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
 import space.lopatkin.spb.helpboardgamecard.ui.KeyboardDoneEvent;
 import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardCapabilities;
-import space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard.KeyboardVariant;
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
 
 import javax.inject.Inject;
 
@@ -62,7 +62,6 @@ public class CardEditFragment extends Fragment {
 
         setScreenTitle(R.string.title_card_edit);
         setHasOptionsMenu(true);
-        setupEditViews();
         return view;
     }
 
@@ -80,6 +79,8 @@ public class CardEditFragment extends Fragment {
                 loadCardDetails(cardId);
             }
         }
+
+        loadKeyboardType();
     }
 
     @Override
@@ -102,25 +103,15 @@ public class CardEditFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         EventBus.getDefault().register(this);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        viewModel.getKeyboardVariant().observe(this, data -> {
-            if (data == KeyboardVariant.CUSTOM) {
-                setupViewsForCustomKeyboard();
-            }
-        });
-    }
-
-    @Override
-    public void onStop() {
+    public void onPause() {
         EventBus.getDefault().unregister(this);
-        super.onStop();
+        super.onPause();
     }
 
     @Override
@@ -152,7 +143,19 @@ public class CardEditFragment extends Fragment {
         binding.keyboardCardEdit.setVisibility(View.GONE);
     }
 
-    private void setupEditViews() {
+    private void loadKeyboardType() {
+        viewModel.loadKeyboardType();
+
+        viewModel.keyboardType.observe(getViewLifecycleOwner(), keyboardType -> {
+            if (keyboardType == KeyboardType.CUSTOM) {
+                setupViewsForCustomKeyboard();
+            } else {
+                setupViews();
+            }
+        });
+    }
+
+    private void setupViews() {
         binding.editTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
         binding.editDescription.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
