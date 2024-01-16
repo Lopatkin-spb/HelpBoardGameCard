@@ -35,4 +35,12 @@
             android:text="@string/nav_header_subtitle"
             android:id="@+id/textView"/>
 
+    <TextView
+            android:id="@+id/text_app_version"
+            android:textAppearance="@style/TextBaseSmallStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/text_app_version"/>
+
 </LinearLayout>

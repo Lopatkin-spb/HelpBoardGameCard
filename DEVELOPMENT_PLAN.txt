@@ -10,9 +10,12 @@
 
 --- TODAY:
 
-- move code Keyboard to other module
+- add readme, add loading indicator, bug show previous helpcard if enter to new helpcard;
 
+- move code Keyboard to other module
+- add exit, hide share
 - optimize long time enable icon keyboard (set recycle view)
+- bug: delete openDrower in activity
 
 - привести в порядок код: - лейбл: проверить ресурсы в KeyboardButtonIcon; - все тексты перенести в ресурсы (1 день),
 перенести классы клавы в одну папку; - заменить кнопку enter на другую (shortcut);
@@ -135,10 +138,6 @@ setup
 
 
 
-- Settings: cleaning code, added handler null to save, added message,
-fixed bug show message after turn device, fixed bug enabled save keyboard when open screen without user action;
-
-- Glossary: update;
-
-- AddCard & EdieCard: edit keyboard setter, register eventBus move to another method;
+- MainMenu: changed app version, added app version;
+- Cleaning code to activity;
 

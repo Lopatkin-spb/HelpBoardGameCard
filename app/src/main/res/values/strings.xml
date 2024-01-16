@@ -6,6 +6,7 @@
     <string name="nav_header_subtitle">lopatkin.spb@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_tools">Tools</string>
+    <string name="text_app_version">App version: %1$s.</string>
 
 
     <string name="menu_catalog">Helpcards Catalog</string>

@@ -23,4 +23,16 @@
         <item name="android:textSize">25sp</item>
     </style>
 
+    <style name="TextBaseSmallStyle" parent="TextShadowSmallStyle">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/colorGreyCardBackground</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextShadowSmallStyle">
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowColor">@color/colorBlack</item>
+    </style>
+
 </resources>
