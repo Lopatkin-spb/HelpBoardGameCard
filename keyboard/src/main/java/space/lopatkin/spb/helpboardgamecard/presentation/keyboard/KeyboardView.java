@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard;
+package space.lopatkin.spb.helpboardgamecard.presentation.keyboard;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,11 +24,9 @@ import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewKeyboardBinding;
-import space.lopatkin.spb.helpboardgamecard.ui.KeyboardDoneEvent;
 
 public class KeyboardView extends ConstraintLayout implements View.OnClickListener {
     private static final int MOVE_CURSOR_TO_THE_END = 1;
@@ -254,9 +252,13 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             if (inputConnection == null) {
                 return;
             }
-            EventBus.getDefault().post(new KeyboardDoneEvent());
+            createDoneEvent();
         });
     }
+
+    protected void createDoneEvent() {
+
+    };
 
     private boolean isSeparator(CharSequence text) {
         StringBuffer buffer = new StringBuffer(text);

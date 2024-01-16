@@ -16,4 +16,8 @@
 
     <color name="keyboard_shadow_icon_black50">#80000000</color>
 
+    <color name="colorGrey">#E6E6E6</color>
+    <color name="colorBlack">#000000</color>
+
+
 </resources>

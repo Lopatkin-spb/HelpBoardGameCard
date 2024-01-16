@@ -31,16 +31,12 @@ android {
         enabled true
     }
 
-    sourceSets {
-        main {
-            res.srcDirs 'src/main/res-keyboard'
-        }
-    }
-
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(path: ':keyboard')
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 

@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.ui.utils.keyboard;
+package space.lopatkin.spb.helpboardgamecard.presentation.keyboard;
 
 import space.lopatkin.spb.helpboardgamecard.R;
 
