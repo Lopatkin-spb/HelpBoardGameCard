@@ -49,7 +49,7 @@ public enum SymbolLetter {
                 return value.stringResource;
             }
         }
-        throw new IllegalArgumentException("Unknown letter action: " + action);
+        throw new IllegalArgumentException("Unknown symbol letter action: " + action);
     }
 
 }

@@ -8,7 +8,7 @@
         <item name="android:paddingVertical">10dp</item>
     </style>
 
-    <style name="KeyboardButtonBasic">
+    <style name="KeyboardButtonSpecialMain">
         <item name="android:layout_marginHorizontal">4dp</item>
         <item name="android:layout_marginVertical">5dp</item>
 
@@ -16,7 +16,7 @@
         <item name="android:background">@drawable/bg_button_keyboard_grey</item>
     </style>
 
-    <style name="KeyboardButtonBasicBlue">
+    <style name="KeyboardButtonSpecialMainBlue">
         <item name="android:layout_marginHorizontal">4dp</item>
         <item name="android:layout_marginVertical">5dp</item>
 
@@ -24,7 +24,7 @@
         <item name="android:background">@drawable/bg_button_keyboard_blue</item>
     </style>
 
-    <style name="KeyboardButtonSymbol">
+    <style name="KeyboardButtonNumber">
         <item name="android:layout_marginHorizontal">4dp</item>
         <item name="android:layout_marginVertical">5dp</item>
 

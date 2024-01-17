@@ -36,4 +36,28 @@
     <string name="action_enter_specials">\n</string>
     <string name="action_space_specials">" "</string>
 
+    <string name="action_one_numbers">1</string>
+    <string name="action_two_numbers">2</string>
+    <string name="action_three_numbers">3</string>
+    <string name="action_four_numbers">4</string>
+    <string name="action_five_numbers">5</string>
+    <string name="action_six_numbers">6</string>
+    <string name="action_seven_numbers">7</string>
+    <string name="action_eight_numbers">8</string>
+    <string name="action_nine_numbers">9</string>
+    <string name="action_zero_numbers">0</string>
+    <string name="action_plus_numbers">+</string>
+    <string name="action_minus_numbers">-</string>
+    <string name="action_multiply_numbers">*</string>
+    <string name="action_divide_numbers">/</string>
+    <string name="action_colon_numbers">:</string>
+    <string name="action_equal_numbers">=</string>
+    <string name="action_parentheses_open_numbers">(</string>
+    <string name="action_parentheses_close_numbers">)</string>
+
+
+    <string name="action_switch_to_letter_keyboard">абв</string>
+    <string name="action_switch_to_number_keyboard">123</string>
+
+
 </resources>

@@ -3,8 +3,8 @@ package space.lopatkin.spb.keyboard;
 
 public enum SymbolSpecial {
 
-    SPECIAL_1(R.id.action_enter, R.string.action_enter_specials),
-    SPECIAL_2(R.id.action_space, R.string.action_space_specials);
+    SPECIAL_1(R.id.action_enter_keyboard, R.string.action_enter_specials),
+    SPECIAL_2(R.id.action_space_keyboard, R.string.action_space_specials);
 
     private int action;
     private int stringResource;

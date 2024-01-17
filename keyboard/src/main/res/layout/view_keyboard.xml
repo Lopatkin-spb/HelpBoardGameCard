@@ -3,61 +3,60 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/keyboard"
         style="@style/KeyboardView"
         android:background="@color/colorGrey">
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_row_1"
+            android:id="@+id/guideline_row_1_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.25"/>
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_row_2"
+            android:id="@+id/guideline_row_2_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5"/>
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_row_3"
+            android:id="@+id/guideline_row_3_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.75"/>
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_column_1"
+            android:id="@+id/guideline_column_1_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.16"/>
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_column_2"
+            android:id="@+id/guideline_column_2_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.32"/>
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_column_3"
+            android:id="@+id/guideline_column_3_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.48"/>
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_column_4"
+            android:id="@+id/guideline_column_4_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.64"/>
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_column_5"
+            android:id="@+id/guideline_column_5_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -65,7 +64,7 @@
 
 
     <include
-            android:id="@+id/keyboard_icon"
+            android:id="@+id/include_part_icons_keyboard"
             android:layout_width="0dp"
             android:layout_height="0dp"
             layout="@layout/view_part_icons"
@@ -74,11 +73,11 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5_keyboard"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_3_keyboard"/>
 
     <include
-            android:id="@+id/keyboard_number"
+            android:id="@+id/include_part_numbers_keyboard"
             android:layout_width="0dp"
             android:layout_height="0dp"
             layout="@layout/view_part_numbers"
@@ -87,11 +86,11 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5_keyboard"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_3_keyboard"/>
 
     <include
-            android:id="@+id/keyboard_qwerty"
+            android:id="@+id/include_part_letters_keyboard"
             android:layout_width="0dp"
             android:layout_height="0dp"
             layout="@layout/view_part_letters"
@@ -101,96 +100,96 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_3_keyboard"/>
 
 
     <ImageButton
-            android:id="@+id/action_backspace"
-            style="@style/KeyboardButtonBasic"
+            android:id="@+id/action_backspace_keyboard"
+            style="@style/KeyboardButtonSpecialMain"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_keyboard_outline_backspace_34"
             android:visibility="visible"
             tools:visibility="gone"
 
-            app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5_keyboard"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_keyboard"/>
 
     <ImageButton
-            android:id="@+id/action_backspace_full"
-            style="@style/KeyboardButtonBasic"
+            android:id="@+id/action_backspace_full_keyboard"
+            style="@style/KeyboardButtonSpecialMain"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_keyboard_baseline_u_turn_left_34"
             android:visibility="visible"
             tools:visibility="gone"
 
-            app:layout_constraintStart_toStartOf="@id/guideline_column_5"
-            app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5_keyboard"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_keyboard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_keyboard"/>
 
     <ImageButton
-            android:id="@+id/action_enter"
-            style="@style/KeyboardButtonBasic"
+            android:id="@+id/action_enter_keyboard"
+            style="@style/KeyboardButtonSpecialMain"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_keyboard_baseline_subdirectory_arrow_left_34"
             android:visibility="visible"
             tools:visibility="gone"
 
-            app:layout_constraintStart_toStartOf="@id/guideline_column_5"
-            app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5_keyboard"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_keyboard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_3_keyboard"/>
 
     <Button
-            android:id="@+id/action_switch_qwerty_number"
-            style="@style/KeyboardButtonBasic"
+            android:id="@+id/action_switch_letter_number_keyboard"
+            style="@style/KeyboardButtonSpecialMain"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:textSize="25sp"
-            android:text="абв"
+            android:text="@string/action_switch_to_letter_keyboard"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_row_3"
-            app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_3_keyboard"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_1_keyboard"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton
-            android:id="@+id/action_switch_to_icons"
-            style="@style/KeyboardButtonBasic"
+            android:id="@+id/action_switch_to_icons_keyboard"
+            style="@style/KeyboardButtonSpecialMain"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_keyboard_baseline_category_34"
 
-            app:layout_constraintStart_toStartOf="@id/guideline_column_1"
-            app:layout_constraintTop_toTopOf="@id/guideline_row_3"
-            app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1_keyboard"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_3_keyboard"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2_keyboard"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton
-            android:id="@+id/action_space"
+            android:id="@+id/action_space_keyboard"
             style="@style/KeyboardButtonIcon"
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            app:layout_constraintStart_toStartOf="@id/guideline_column_2"
-            app:layout_constraintTop_toTopOf="@id/guideline_row_3"
-            app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2_keyboard"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_3_keyboard"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4_keyboard"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton
-            android:id="@+id/action_done"
-            style="@style/KeyboardButtonBasicBlue"
+            android:id="@+id/action_done_keyboard"
+            style="@style/KeyboardButtonSpecialMainBlue"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_keyboard_baseline_done_34"
 
-            app:layout_constraintStart_toStartOf="@id/guideline_column_5"
-            app:layout_constraintTop_toTopOf="@id/guideline_row_3"
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5_keyboard"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_3_keyboard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
