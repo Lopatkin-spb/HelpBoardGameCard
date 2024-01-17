@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="action_1_letters">й</string>
+    <string name="action_2_letters">ц</string>
+    <string name="action_3_letters">у</string>
+    <string name="action_4_letters">к</string>
+    <string name="action_5_letters">е</string>
+    <string name="action_6_letters">н</string>
+    <string name="action_7_letters">г</string>
+    <string name="action_8_letters">ш</string>
+    <string name="action_9_letters">щ</string>
+    <string name="action_10_letters">з</string>
+    <string name="action_11_letters">х</string>
+    <string name="action_12_letters">ф</string>
+    <string name="action_13_letters">ы</string>
+    <string name="action_14_letters">в</string>
+    <string name="action_15_letters">а</string>
+    <string name="action_16_letters">п</string>
+    <string name="action_17_letters">р</string>
+    <string name="action_18_letters">о</string>
+    <string name="action_19_letters">л</string>
+    <string name="action_20_letters">д</string>
+    <string name="action_21_letters">ж</string>
+    <string name="action_22_letters">э</string>
+    <string name="action_23_letters">я</string>
+    <string name="action_24_letters">ч</string>
+    <string name="action_25_letters">с</string>
+    <string name="action_26_letters">м</string>
+    <string name="action_27_letters">и</string>
+    <string name="action_28_letters">т</string>
+    <string name="action_29_letters">ь</string>
+    <string name="action_30_letters">б</string>
+    <string name="action_31_letters">ю</string>
+
+    <string name="action_enter_specials">\n</string>
+    <string name="action_space_specials">" "</string>
+
+</resources>

@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.keyboard;
+package space.lopatkin.spb.keyboard;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
-import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,8 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import org.jetbrains.annotations.NotNull;
-import space.lopatkin.spb.helpboardgamecard.R;
-import space.lopatkin.spb.helpboardgamecard.databinding.ViewKeyboardBinding;
+import space.lopatkin.spb.keyboard.databinding.ViewKeyboardBinding;
 
 public class KeyboardView extends ConstraintLayout implements View.OnClickListener {
     private static final int MOVE_CURSOR_TO_THE_END = 1;
@@ -48,9 +46,6 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
     private static String previousChar = "";
     private ViewKeyboardBinding binding;
 
-    //this will the button resource id to the String value that we want to
-    // input when that button is clicked
-    private final SparseArray<String> specialSymbol = new SparseArray<>();
     private Context context;
 
     //communication link to the EditText
@@ -94,14 +89,19 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
 
             icon.setSpan(span, 0, icon.length(), SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE);
             inputConnection.commitText(icon, MOVE_CURSOR_TO_THE_END);
+
+        } else if (ENABLED_LAYOUT == KeyboardLayout.NUMBERS) {
+            String symbol = KeyboardButtonSymbol.getStringFrom(view.getId());
+            inputConnection.commitText(symbol, MOVE_CURSOR_TO_THE_END);
+
         } else {
             String symbol = "";
             if (CAPS == UPPER_CASE) {
-                symbol = KeyboardButtonSymbol.getStringFrom(view.getId()).toUpperCase();
+                symbol = getResources().getString(SymbolLetter.getStringResourceFrom(view.getId())).toUpperCase();
                 CAPS = LOWER_CASE;
                 changeCapsOnButtons();
             } else {
-                symbol = KeyboardButtonSymbol.getStringFrom(view.getId()).toLowerCase();
+                symbol = getResources().getString(SymbolLetter.getStringResourceFrom(view.getId())).toLowerCase();
             }
             inputConnection.commitText(symbol, MOVE_CURSOR_TO_THE_END);
         }
@@ -146,9 +146,6 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         onActionSwitchToIcons();
         onActionSpace();
         onActionDone();
-
-        specialSymbol.put(R.id.action_enter, "\n");
-        specialSymbol.put(R.id.action_space, " ");
     }
 
     private void onActionBackspace() {
@@ -164,7 +161,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
                 deleteSymbol(text);
             }
         });
-        binding.keyboardQwerty.actionQwertyBackspace.setOnClickListener(view -> {
+        binding.keyboardQwerty.actionBackspaceLetters.setOnClickListener(view -> {
             if (inputConnection == null) {
                 return;
             }
@@ -181,7 +178,6 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             }
             CharSequence currentText = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text;
             if (!TextUtils.isEmpty(currentText)) {
-
                 CharSequence textBeforeCursor = inputConnection.getTextBeforeCursor(currentText.length(), 0);
                 CharSequence textAfterCursor = inputConnection.getTextAfterCursor(currentText.length(), 0);
 
@@ -195,14 +191,15 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             if (inputConnection == null) {
                 return;
             }
-            inputConnection.commitText(specialSymbol.get(view.getId()), MOVE_CURSOR_TO_THE_END);
+            String symbol = getResources().getString(SymbolSpecial.getStringResourceFrom(view.getId()));
+            inputConnection.commitText(symbol, MOVE_CURSOR_TO_THE_END);
 
             scrollEditTextToKeyboard();
         });
     }
 
     private void onActionShift() {
-        binding.keyboardQwerty.actionQwertyShift.setOnClickListener(view -> {
+        binding.keyboardQwerty.actionShiftLetters.setOnClickListener(view -> {
             CAPS = !CAPS;
             changeCapsOnButtons();
         });
@@ -243,7 +240,9 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
             }
             CAPS = UPPER_CASE;
             changeCapsOnButtons();
-            inputConnection.commitText(specialSymbol.get(view.getId()), MOVE_CURSOR_TO_THE_END);
+
+            String symbol = getResources().getString(SymbolSpecial.getStringResourceFrom(view.getId()));
+            inputConnection.commitText(symbol, MOVE_CURSOR_TO_THE_END);
         });
     }
 
@@ -310,49 +309,49 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void changeCapsOnButtons() {
-        binding.keyboardQwerty.actionQwerty1.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty2.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty3.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty4.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty5.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty6.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty7.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty8.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty9.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty10.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty11.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty12.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty13.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty14.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty15.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty16.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty17.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty18.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty19.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty20.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty21.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty22.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty23.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty24.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty25.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty26.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty27.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty28.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty29.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty30.setAllCaps(CAPS);
-        binding.keyboardQwerty.actionQwerty31.setAllCaps(CAPS);
+        binding.keyboardQwerty.action1Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action2Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action3Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action4Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action5Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action6Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action7Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action8Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action9Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action10Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action11Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action12Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action13Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action14Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action15Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action16Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action17Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action18Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action19Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action20Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action21Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action22Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action23Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action24Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action25Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action26Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action27Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action28Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action29Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action30Letters.setAllCaps(CAPS);
+        binding.keyboardQwerty.action31Letters.setAllCaps(CAPS);
 
         if (CAPS == UPPER_CASE) {
-            binding.keyboardQwerty.actionQwertyShift.setImageResource(R.drawable.ic_keyboard_baseline_upload_34);
+            binding.keyboardQwerty.actionShiftLetters.setImageResource(R.drawable.ic_keyboard_baseline_upload_34);
         } else {
-            binding.keyboardQwerty.actionQwertyShift.setImageResource(R.drawable.ic_keyboard_outline_upload_34);
+            binding.keyboardQwerty.actionShiftLetters.setImageResource(R.drawable.ic_keyboard_outline_upload_34);
         }
     }
 
     private void displayLetterLayout() {
         binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.GONE);
         binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.GONE);
-        binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.VISIBLE);
+        binding.keyboardQwerty.layoutPartLetters.setVisibility(View.VISIBLE);
 
         binding.actionBackspace.setVisibility(View.GONE);
         binding.actionBackspaceFull.setVisibility(View.GONE);
@@ -367,7 +366,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
 
     private void displayIconLayout() {
         binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.GONE);
-        binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.GONE);
+        binding.keyboardQwerty.layoutPartLetters.setVisibility(View.GONE);
         binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.VISIBLE);
 
         binding.actionBackspace.setVisibility(View.VISIBLE);
@@ -378,7 +377,7 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void displayNumberLayout() {
-        binding.keyboardQwerty.containerKeyboardQwerty.setVisibility(View.GONE);
+        binding.keyboardQwerty.layoutPartLetters.setVisibility(View.GONE);
         binding.keyboardIcon.containerKeyboardIcon.setVisibility(View.GONE);
         binding.keyboardNumber.containerKeyboardNumber.setVisibility(View.VISIBLE);
 
@@ -602,37 +601,37 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void setListenerToLetterButtons() {
-        binding.keyboardQwerty.actionQwerty1.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty2.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty3.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty4.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty5.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty6.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty7.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty8.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty9.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty10.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty11.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty12.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty13.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty14.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty15.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty16.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty17.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty18.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty19.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty20.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty21.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty22.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty23.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty24.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty25.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty26.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty27.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty28.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty29.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty30.setOnClickListener(this);
-        binding.keyboardQwerty.actionQwerty31.setOnClickListener(this);
+        binding.keyboardQwerty.action1Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action2Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action3Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action4Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action5Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action6Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action7Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action8Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action9Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action10Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action11Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action12Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action13Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action14Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action15Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action16Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action17Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action18Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action19Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action20Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action21Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action22Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action23Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action24Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action25Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action26Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action27Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action28Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action29Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action30Letters.setOnClickListener(this);
+        binding.keyboardQwerty.action31Letters.setOnClickListener(this);
     }
 
 }

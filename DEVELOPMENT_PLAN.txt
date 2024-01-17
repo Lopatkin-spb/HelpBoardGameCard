@@ -10,15 +10,22 @@
 
 --- TODAY:
 
+- cleaning code keyboard - по минимому привести в порядок код и перейти на релиз
+- привести в порядок код: - лейбл: проверить ресурсы в KeyboardButtonIcon; - все тексты перенести в ресурсы (1 день),
+заменить кнопку enter на другую (shortcut);
+
+
+- рефакторинг: доделка чистого кода
+
+- рефакторинг: легкий рефакторинг приложения (имена, вьюмодели,
+- запушить проект и обновить резюме
+- рефакторинг: возможно исаправить легкие баги и убрать лишние елементы
+
 - add readme, add loading indicator, bug show previous helpcard if enter to new helpcard;
 
-- move code Keyboard to other module
 - add exit, hide share
 - optimize long time enable icon keyboard (set recycle view)
 - bug: delete openDrower in activity
-
-- привести в порядок код: - лейбл: проверить ресурсы в KeyboardButtonIcon; - все тексты перенести в ресурсы (1 день),
-перенести классы клавы в одну папку; - заменить кнопку enter на другую (shortcut);
 
 - баг при показе лейбла: текст иногда неверно передается в лейбл для рассчетов - одна линия вместо двух
 (если нарисовать иконки без перехода на след строку);

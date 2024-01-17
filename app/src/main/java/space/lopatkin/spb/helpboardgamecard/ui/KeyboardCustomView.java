@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
-import space.lopatkin.spb.helpboardgamecard.presentation.keyboard.KeyboardView;
+import space.lopatkin.spb.keyboard.KeyboardView;
 
 public class KeyboardCustomView extends KeyboardView {
     public KeyboardCustomView(@NonNull @NotNull Context context) {

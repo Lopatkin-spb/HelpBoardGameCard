@@ -1,6 +1,5 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.keyboard;
+package space.lopatkin.spb.keyboard;
 
-import space.lopatkin.spb.helpboardgamecard.R;
 
 public enum KeyboardButtonIcon {
 
