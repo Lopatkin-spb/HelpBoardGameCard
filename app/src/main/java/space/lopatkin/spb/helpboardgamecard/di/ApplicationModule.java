@@ -12,7 +12,7 @@ import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCas
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardTypeByUserChoiceUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
-import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
+import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory;
 
 import javax.inject.Singleton;
 

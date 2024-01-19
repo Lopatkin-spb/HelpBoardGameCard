@@ -2,7 +2,7 @@ package space.lopatkin.spb.helpboardgamecard.di;
 
 import dagger.Module;
 import dagger.Provides;
-import space.lopatkin.spb.helpboardgamecard.domain.repository.HelpcardRepository;
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
@@ -20,62 +20,55 @@ public class DomainModule {
 
     @Singleton
     @Provides
-    public GetDetailsHelpcardByBoardGameIdUseCase provideGetDetailsHelpcardByBoardGameIdUseCase(
-            HelpcardRepository repository) {
+    public GetDetailsHelpcardByBoardGameIdUseCase provideGetDetailsHelpcardByBoardGameIdUseCase(AppRepository repository) {
         return new GetDetailsHelpcardByBoardGameIdUseCase(repository);
     }
 
     @Singleton
     @Provides
-    public DeleteHelpcardUseCase provideDeleteHelpcardUseCase(
-            HelpcardRepository repository) {
+    public DeleteHelpcardUseCase provideDeleteHelpcardUseCase(AppRepository repository) {
         return new DeleteHelpcardUseCase(repository);
     }
 
     @Singleton
     @Provides
-    public DeleteHelpcardByIdUseCase provideDeleteHelpcardByIdUseCase(
-            HelpcardRepository repository) {
+    public DeleteHelpcardByIdUseCase provideDeleteHelpcardByIdUseCase(AppRepository repository) {
         return new DeleteHelpcardByIdUseCase(repository);
     }
 
     @Singleton
     @Provides
-    public GetAllHelpcardsUseCase provideGetAllHelpcardsUseCase(
-            HelpcardRepository repository) {
+    public GetAllHelpcardsUseCase provideGetAllHelpcardsUseCase(AppRepository repository) {
         return new GetAllHelpcardsUseCase(repository);
     }
 
     @Singleton
     @Provides
-    public UpdateHelpcardByObjectUseCase provideUpdateHelpcardByObjectUseCase(
-            HelpcardRepository repository) {
+    public UpdateHelpcardByObjectUseCase provideUpdateHelpcardByObjectUseCase(AppRepository repository) {
         return new UpdateHelpcardByObjectUseCase(repository);
     }
 
     @Singleton
     @Provides
-    public DeleteHelpcardsByLockUseCase provideDeleteHelpcardsByLockUseCase(
-            HelpcardRepository repository) {
+    public DeleteHelpcardsByLockUseCase provideDeleteHelpcardsByLockUseCase(AppRepository repository) {
         return new DeleteHelpcardsByLockUseCase(repository);
     }
 
     @Singleton
     @Provides
-    public SaveNewHelpcardUseCase provideSaveNewHelpcardUseCase(
-            HelpcardRepository repository) {
+    public SaveNewHelpcardUseCase provideSaveNewHelpcardUseCase(AppRepository repository) {
         return new SaveNewHelpcardUseCase(repository);
     }
 
     @Singleton
     @Provides
-    public SaveKeyboardTypeByUserChoiceUseCase provideSaveKeyboardTypeByUserChoiceUseCase(HelpcardRepository repository) {
+    public SaveKeyboardTypeByUserChoiceUseCase provideSaveKeyboardTypeByUserChoiceUseCase(AppRepository repository) {
         return new SaveKeyboardTypeByUserChoiceUseCase(repository);
     }
 
     @Singleton
     @Provides
-    public GetKeyboardTypeUseCase provideGetKeyboardTypeUseCase(HelpcardRepository repository) {
+    public GetKeyboardTypeUseCase provideGetKeyboardTypeUseCase(AppRepository repository) {
         return new GetKeyboardTypeUseCase(repository);
     }
 

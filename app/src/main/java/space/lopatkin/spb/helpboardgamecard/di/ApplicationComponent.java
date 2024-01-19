@@ -1,11 +1,11 @@
 package space.lopatkin.spb.helpboardgamecard.di;
 
 import dagger.Component;
-import space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment;
-import space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogFragment;
-import space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.cardedit.CardEditFragment;
-import space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.HelpcardFragment;
-import space.lopatkin.spb.helpboardgamecard.ui.settings.SettingsFragment;
+import space.lopatkin.spb.helpboardgamecard.presentation.addcard.AddCardFragment;
+import space.lopatkin.spb.helpboardgamecard.presentation.catalog.CatalogFragment;
+import space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.cardedit.CardEditFragment;
+import space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.HelpcardFragment;
+import space.lopatkin.spb.helpboardgamecard.presentation.settings.SettingsFragment;
 
 import javax.inject.Singleton;
 

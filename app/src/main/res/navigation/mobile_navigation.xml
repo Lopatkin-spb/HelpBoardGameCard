@@ -8,7 +8,7 @@
 
     <fragment
             android:id="@+id/nav_catalog"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.catalog.CatalogFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.presentation.catalog.CatalogFragment"
             android:label="@string/menu_catalog"
             tools:layout="@layout/fragment_catalog">
         <action
@@ -19,14 +19,14 @@
                 app:destination="@+id/nav_helpcard"/>
         <argument
                 android:name="helpcard"
-                app:argType="space.lopatkin.spb.helpboardgamecard.model.Helpcard"
+                app:argType="space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard"
                 app:nullable="true"
                 android:defaultValue="@null"/>
     </fragment>
 
     <fragment
             android:id="@+id/nav_addcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.addcard.AddCardFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.presentation.addcard.AddCardFragment"
             android:label="@string/title_addcard"
             tools:layout="@layout/fragment_addcard">
         <action
@@ -37,7 +37,7 @@
 
     <fragment
             android:id="@+id/nav_helpcard"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.HelpcardFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.HelpcardFragment"
             android:label="helpcard"
             tools:layout="@layout/fragment_helpcard">
         <action
@@ -53,7 +53,7 @@
 
     <fragment
             android:id="@+id/nav_card_edit"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.cardedit.CardEditFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.cardedit.CardEditFragment"
             android:label="@string/title_card_edit"
             tools:layout="@layout/fragment_card_edit">
         <argument
@@ -71,13 +71,13 @@
 
     <fragment
             android:id="@+id/nav_share"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.share.ShareFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.presentation.share.ShareFragment"
             android:label="@string/menu_share"
             tools:layout="@layout/fragment_share"/>
 
     <fragment
             android:id="@+id/nav_settings"
-            android:name="space.lopatkin.spb.helpboardgamecard.ui.settings.SettingsFragment"
+            android:name="space.lopatkin.spb.helpboardgamecard.presentation.settings.SettingsFragment"
             android:label="@string/title_settings"
             tools:layout="@layout/fragment_settings"/>
 

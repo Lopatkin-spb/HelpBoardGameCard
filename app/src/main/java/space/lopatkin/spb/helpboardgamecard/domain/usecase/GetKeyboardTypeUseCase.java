@@ -1,13 +1,13 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase;
 
-import space.lopatkin.spb.helpboardgamecard.domain.repository.HelpcardRepository;
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
 
 public class GetKeyboardTypeUseCase {
 
-    private HelpcardRepository repository;
+    private AppRepository repository;
 
-    public GetKeyboardTypeUseCase(HelpcardRepository repository) {
+    public GetKeyboardTypeUseCase(AppRepository repository) {
         this.repository = repository;
     }
 

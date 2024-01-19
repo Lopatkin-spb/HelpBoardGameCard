@@ -1,13 +1,13 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase;
 
-import space.lopatkin.spb.helpboardgamecard.domain.repository.HelpcardRepository;
-import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
 
 public class SaveNewHelpcardUseCase {
 
-    private HelpcardRepository repository;
+    private AppRepository repository;
 
-    public SaveNewHelpcardUseCase(HelpcardRepository repository) {
+    public SaveNewHelpcardUseCase(AppRepository repository) {
         this.repository = repository;
     }
 

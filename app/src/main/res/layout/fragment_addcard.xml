@@ -18,7 +18,7 @@
                 android:background="@drawable/bg_item_card"
                 android:padding="16dp"
                 android:layout_margin="10dp"
-                tools:context=".ui.addcard.AddCardFragment">
+                tools:context=".presentation.addcard.AddCardFragment">
 
             <View
                     android:id="@+id/separator_0"
@@ -238,7 +238,7 @@
 
     </ScrollView>
 
-    <space.lopatkin.spb.helpboardgamecard.ui.KeyboardCustomView
+    <space.lopatkin.spb.helpboardgamecard.presentation.KeyboardCustomView
             android:id="@+id/keyboard_addcard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

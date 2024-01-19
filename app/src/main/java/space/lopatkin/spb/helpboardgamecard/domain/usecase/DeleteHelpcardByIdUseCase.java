@@ -1,13 +1,12 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase;
 
-import space.lopatkin.spb.helpboardgamecard.domain.repository.HelpcardRepository;
-import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
 
 public class DeleteHelpcardByIdUseCase {
 
-    private HelpcardRepository repository;
+    private AppRepository repository;
 
-    public DeleteHelpcardByIdUseCase(HelpcardRepository repository) {
+    public DeleteHelpcardByIdUseCase(AppRepository repository) {
         this.repository = repository;
     }
 

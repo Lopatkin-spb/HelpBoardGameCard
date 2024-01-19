@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorTextWhite"
-        tools:context="ui.catalog.CatalogFragment">
+        tools:context="presentation.catalog.CatalogFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
