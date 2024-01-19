@@ -55,9 +55,91 @@
     <string name="action_parentheses_open_numbers">(</string>
     <string name="action_parentheses_close_numbers">)</string>
 
-
     <string name="action_switch_to_letter_keyboard">абв</string>
     <string name="action_switch_to_number_keyboard">123</string>
 
+    <string name="text_icon_default">error icon link</string>
+    <string name="text_icon_000">pawn</string>
+    <string name="text_icon_001">hammer</string>
+    <string name="text_icon_002">house</string>
+    <string name="text_icon_003">scull</string>
+    <string name="text_icon_004">cap</string>
+    <string name="text_icon_005">meeple</string>
+    <string name="text_icon_006">table</string>
+    <string name="text_icon_007">boat</string>
+    <string name="text_icon_008">clock</string>
+    <string name="text_icon_009">car</string>
+    <string name="text_icon_010">rocket</string>
+    <string name="text_icon_011">fast-food</string>
+    <string name="text_icon_012">flask</string>
+    <string name="text_icon_013">jewel</string>
+    <string name="text_icon_014">shield</string>
+    <string name="text_icon_015">player</string>
+    <string name="text_icon_016">players</string>
+    <string name="text_icon_017">door</string>
+    <string name="text_icon_018">tablet</string>
+    <string name="text_icon_019">curtain</string>
+    <string name="text_icon_020">chair</string>
+    <string name="text_icon_021">stop</string>
+    <string name="text_icon_022">smartphone</string>
+    <string name="text_icon_023">volume</string>
+    <string name="text_icon_024">tile deck</string>
+    <string name="text_icon_025">school</string>
+    <string name="text_icon_026">dice</string>
+    <string name="text_icon_027">cards deck</string>
+    <string name="text_icon_028">dice</string>
+    <string name="text_icon_029">target</string>
+    <string name="text_icon_030">deck</string>
+    <string name="text_icon_031">deck</string>
+    <string name="text_icon_032">tile</string>
+    <string name="text_icon_033">deck</string>
+    <string name="text_icon_034">shirt</string>
+    <string name="text_icon_035">shirt</string>
+    <string name="text_icon_036">tiles</string>
+    <string name="text_icon_037">aircraft</string>
+    <string name="text_icon_038">victory point</string>
+    <string name="text_icon_039">victory point</string>
+
+    <string name="text_icon_100">give</string>
+    <string name="text_icon_101">take</string>
+    <string name="text_icon_102">put</string>
+    <string name="text_icon_103">raise</string>
+    <string name="text_icon_104">shuffle</string>
+    <string name="text_icon_105">shuffle</string>
+    <string name="text_icon_106">swap</string>
+    <string name="text_icon_107">split</string>
+    <string name="text_icon_108">merge</string>
+    <string name="text_icon_109">fast</string>
+    <string name="text_icon_110">distance</string>
+    <string name="text_icon_111">relax</string>
+    <string name="text_icon_112">right</string>
+    <string name="text_icon_113">every/all</string>
+    <string name="text_icon_114">repeat</string>
+    <string name="text_icon_115">flip</string>
+    <string name="text_icon_116">calculate</string>
+    <string name="text_icon_117">calculate</string>
+
+    <string name="text_icon_200">warning</string>
+    <string name="text_icon_201">dangerous</string>
+    <string name="text_icon_202">block</string>
+    <string name="text_icon_203">block</string>
+    <string name="text_icon_204">block</string>
+    <string name="text_icon_205">block</string>
+
+    <string name="text_icon_300">red</string>
+    <string name="text_icon_301">blue</string>
+    <string name="text_icon_302">black</string>
+    <string name="text_icon_303">green</string>
+    <string name="text_icon_304">yellow</string>
+    <string name="text_icon_305">"?"</string>
+    <string name="text_icon_306">all</string>
+    <string name="text_icon_307">min</string>
+    <string name="text_icon_308">max</string>
+    <string name="text_icon_309">infinitely</string>
+    <string name="text_icon_310">total</string>
+    <string name="text_icon_311">random</string>
+    <string name="text_icon_312">all</string>
+    <string name="text_icon_313">every</string>
+    <string name="text_icon_314">all</string>
 
 </resources>

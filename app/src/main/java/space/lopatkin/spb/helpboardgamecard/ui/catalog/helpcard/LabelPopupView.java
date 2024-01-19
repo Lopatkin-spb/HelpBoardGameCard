@@ -18,7 +18,7 @@ import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding;
-import space.lopatkin.spb.keyboard.KeyboardButtonIcon;
+import space.lopatkin.spb.keyboard.SymbolIcon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
 import static androidx.work.WorkManager.getInstance;
 
 public class LabelPopupView extends PopupWindow {
-    private static final char SEPARATOR = KeyboardButtonIcon.SEPARATOR.charAt(0);
+    private static final char SEPARATOR = SymbolIcon.SEPARATOR.charAt(0);
     private static final String LABEL_POPUP_VIEW = LabelPopupView.class.getSimpleName();
     private static final int VISIBILITY_DURATION = 2;
     private static final int DEFAULT_VALUE = 0;
@@ -75,12 +75,12 @@ public class LabelPopupView extends PopupWindow {
 
             if (xOffset < getLineWidth(textInLine)) {
                 int imageNumber = getImageNumber(textInLine, xOffset);
-                String nameFull = getNameFull(textInLine, imageNumber);
-                if (!nameFull.isEmpty()) {
-                    binding.textLabelPopup.setText(nameFull);
+                String labelText = getLabelText(textInLine, imageNumber);
+                if (!labelText.isEmpty()) {
+                    binding.textLabelPopup.setText(labelText);
                     setBackgroundWindow(xOffset, textView);
                     int yOffsetPopup = getYOffsetPopup(textView, yOffset);
-                    int xOffsetPopup = getXOffsetPopup(xOffset, textView, nameFull);
+                    int xOffsetPopup = getXOffsetPopup(xOffset, textView, labelText);
                     showAsDropDown(view, xOffsetPopup, yOffsetPopup);
                 }
 
@@ -124,19 +124,19 @@ public class LabelPopupView extends PopupWindow {
         return imageNumber;
     }
 
-    private String getNameFull(String text, int imageNumber) {
-        String nameFull = "";
-        for (int imageIndex = 0; imageIndex < countImagesIn(text); imageIndex++) {
+    private String getLabelText(String textInLine, int imageNumber) {
+        String labelText = "";
+        for (int imageIndex = 0; imageIndex < countImagesIn(textInLine); imageIndex++) {
             if (imageIndex + 1 == imageNumber) {
 
-                int firstCharIndex = getIndexSeparator(text, imageIndex);
-                int lastCharIndex = firstCharIndex + KeyboardButtonIcon.getLength();
-                String name = text.substring(firstCharIndex + 1, lastCharIndex);
+                int firstCharIndex = getIndexSeparator(textInLine, imageIndex);
+                int lastCharIndex = firstCharIndex + SymbolIcon.CODENAME_LENGTH;
+                String codename = textInLine.substring(firstCharIndex, lastCharIndex);
 
-                nameFull = KeyboardButtonIcon.getNameFullFrom(name);
+                labelText = context.getResources().getString(SymbolIcon.getStringResourceFrom(codename));
             }
         }
-        return nameFull;
+        return labelText;
     }
 
     private int getIndexSeparator(String text, int numberImage) {
@@ -174,7 +174,7 @@ public class LabelPopupView extends PopupWindow {
                 .map(symbol -> SYMBOL_WIDTH)
                 .sum();
         long imagesInLine = countImagesIn(text);
-        int widthImagesInChars = (int) (imagesInLine * KeyboardButtonIcon.getLength() * SYMBOL_WIDTH);
+        int widthImagesInChars = (int) (imagesInLine * SymbolIcon.CODENAME_LENGTH * SYMBOL_WIDTH);
         int widthIcons = (int) (imagesInLine * ICON_WIDTH);
         int lineWidth = widthInChars - widthImagesInChars + widthIcons;
         return lineWidth;
@@ -219,7 +219,7 @@ public class LabelPopupView extends PopupWindow {
                 if (symbolIconCount == 1) {
                     sectionsWidth.add(sectionCount, ICON_WIDTH);
                 }
-                if (symbolIconCount == KeyboardButtonIcon.getLength()) {
+                if (symbolIconCount == SymbolIcon.CODENAME_LENGTH) {
                     streamSeparator = false;
                     symbolIconCount = 0;
                     if (index + 1 < characters.length) {

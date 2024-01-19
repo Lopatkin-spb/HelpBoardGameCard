@@ -9,14 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import org.jetbrains.annotations.NotNull;
-import space.lopatkin.spb.keyboard.KeyboardButtonIcon;
+import space.lopatkin.spb.keyboard.SymbolIcon;
 import space.lopatkin.spb.keyboard.KeyboardView;
 
 import java.util.stream.IntStream;
 
 public class IconTextView extends AppCompatTextView {
 
-    private static final char SEPARATOR = KeyboardButtonIcon.SEPARATOR.charAt(0);
+    private static final char SEPARATOR = SymbolIcon.SEPARATOR.charAt(0);
     private Context context;
 
     public IconTextView(@NonNull @NotNull Context context) {
@@ -48,16 +48,17 @@ public class IconTextView extends AppCompatTextView {
     private void setSpansToText(Spannable textWithImages, String text) {
         for (int numberImage = 0; numberImage < countImagesIn(text); numberImage++) {
             int firstCharIndex = getIndexSeparator(text, numberImage);
-            int lastCharIndex = firstCharIndex + KeyboardButtonIcon.getLength();
+            int lastCharIndex = firstCharIndex + SymbolIcon.CODENAME_LENGTH;
 
             setImageToWord(textWithImages, text, firstCharIndex, lastCharIndex);
         }
     }
 
     private void setImageToWord(Spannable textWithImages, String text, int firstCharIndex, int lastCharIndex) {
-        String name = text.substring(firstCharIndex + 1, lastCharIndex);
+        String codename = text.substring(firstCharIndex, lastCharIndex);
+
         ImageSpan image = new ImageSpan(context,
-                KeyboardButtonIcon.getDrawableFrom(name),
+                SymbolIcon.getDrawableResourceFrom(codename),
                 KeyboardView.DYNAMIC_DRAWABLE_SPAN);
 
         textWithImages.setSpan(image, firstCharIndex, lastCharIndex, KeyboardView.SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE);

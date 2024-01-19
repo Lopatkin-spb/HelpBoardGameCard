@@ -28,14 +28,14 @@ import space.lopatkin.spb.keyboard.databinding.ViewKeyboardBinding;
 
 public class KeyboardView extends ConstraintLayout implements View.OnClickListener {
     private static final int MOVE_CURSOR_TO_THE_END = 1;
-    private static final int SPANNABLE_TEXT_LENGTH = KeyboardButtonIcon.getLength();
+    private static final int SPANNABLE_TEXT_LENGTH = SymbolIcon.CODENAME_LENGTH;
     private static final int DEFAULT_VALUE = 0;
     private static final boolean UPPER_CASE = true;
     private static final boolean LOWER_CASE = false;
     private static boolean CAPS = UPPER_CASE;
     public static final int DYNAMIC_DRAWABLE_SPAN = DynamicDrawableSpan.ALIGN_BOTTOM;
     public static final int SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE;
-    private static final String SEPARATOR = KeyboardButtonIcon.SEPARATOR;
+    private static final String SEPARATOR = SymbolIcon.SEPARATOR;
     private int keyboardHeight;
     private int currentLinesCount = 0;
     private int heightFragment;
@@ -83,9 +83,9 @@ public class KeyboardView extends ConstraintLayout implements View.OnClickListen
         if (ENABLED_LAYOUT == KeyboardLayout.ICONS) {
             ImageSpan span = new ImageSpan(
                     context,
-                    KeyboardButtonIcon.getDrawableFrom(view.getId()),
+                    SymbolIcon.getDrawableResourceFrom(view.getId()),
                     DYNAMIC_DRAWABLE_SPAN);
-            Spannable icon = new SpannableString(SEPARATOR + KeyboardButtonIcon.getNameFrom(view.getId()));
+            Spannable icon = new SpannableString(SymbolIcon.getCodenameFrom(view.getId()));
 
             icon.setSpan(span, 0, icon.length(), SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE);
             inputConnection.commitText(icon, MOVE_CURSOR_TO_THE_END);
