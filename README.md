@@ -1,11 +1,17 @@
-project GIT strategy: GitFlow
+пара слов о приложении.
 
-- "production": only stable versions, pull request only from "release".
-  create "hotfixes" branches for fast fix bugs search users after last post version.
-  commit loaded in "hotfixes" load in "production" and "development".
 
-- "development": for development, may not stable versions.
-  create "release" and "feature" branches.
+записная книжка для правил настольных игр.
 
-- "release": for fix bugs after pull request only from "development".
+позволяет записать правила в виде иконок. присутствует своя клавиатура со своими иконками.
+
+- хранение всех правил в одном месте
+- быстрый доступ к любой части правил
+- общий язык в виде иконок
+- быстрый поиск нужных правил по ключевым словам (в будущем)
+- сохранение дополнительных вариантов (в будущем)
+- возможность передачи правил по связи, если правила отсутствуют в месте игры 
+(или если правил не хватает) (в будущем)
+- дополнительных фич можно собрать много (ведение статистики, определение очередности хода, и тд)
+
 
