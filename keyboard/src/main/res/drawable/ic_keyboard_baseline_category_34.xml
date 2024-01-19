@@ -1,0 +1,38 @@
+<vector
+        android:height="34dp"
+        android:viewportHeight="24"
+        android:viewportWidth="24"
+        android:width="34dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <path
+            android:fillColor="@color/keyboard_shadow_icon_black50"
+            android:pathData="M12,2l-5.5,9h11z"/>
+
+    <path
+            android:fillColor="@color/keyboard_shadow_icon_black50"
+            android:pathData="M17.5,17.5m-4.5,0a4.5,4.5 0,1 1,9 0a4.5,4.5 0,1 1,-9 0"/>
+
+    <path
+            android:fillColor="@color/keyboard_shadow_icon_black50"
+            android:pathData="M3,13.5h8v8H3z"/>
+
+    <group
+            android:translateX="-0.5"
+            android:translateY="-1">
+
+        <path
+                android:fillColor="@color/keyboard_color_icon_blue_test"
+                android:pathData="M12,2l-5.5,9h11z"/>
+
+        <path
+                android:fillColor="@color/keyboard_color_icon_pink_test"
+                android:pathData="M17.5,17.5m-4.5,0a4.5,4.5 0,1 1,9 0a4.5,4.5 0,1 1,-9 0"/>
+
+        <path
+                android:fillColor="@color/keyboard_color_icon_green_test"
+                android:pathData="M3,13.5h8v8H3z"/>
+
+    </group>
+
+</vector>

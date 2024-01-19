@@ -72,7 +72,7 @@
                     android:textColor="@color/colorTextWhite"
                     android:text="Victory condition"/>
 
-            <TextView
+            <space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.IconTextView
                     android:id="@+id/text_victory_condition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                     android:textSize="@dimen/header_text_size"
                     android:text="End game"/>
 
-            <TextView
+            <space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.IconTextView
                     android:id="@+id/text_end_game"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                     android:textSize="@dimen/header_text_size"
                     android:text="Preparation"/>
 
-            <TextView
+            <space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.IconTextView
                     android:id="@+id/text_preparation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
                     android:textSize="@dimen/header_text_size"
                     android:text="Player turn"/>
 
-            <TextView
+            <space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.IconTextView
                     android:id="@+id/text_player_turn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
                     android:textSize="@dimen/header_text_size"
                     android:text="Effects"/>
 
-            <TextView
+            <space.lopatkin.spb.helpboardgamecard.ui.catalog.helpcard.IconTextView
                     android:id="@+id/text_effects"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

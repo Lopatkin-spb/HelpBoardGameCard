@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_part_numbers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:background="@color/colorGrey">
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_row_1_numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.33"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_row_2_numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.66"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_1_numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.14"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_2_numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.28"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_3_numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.42"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_4_numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.56"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_5_numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_6_numbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.84"/>
+
+
+    <Button
+            android:id="@+id/action_one_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_one_numbers"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_1_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_numbers"/>
+
+    <Button
+            android:id="@+id/action_two_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_two_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1_numbers"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_numbers"/>
+
+    <Button
+            android:id="@+id/action_three_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_three_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2_numbers"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_3_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_numbers"/>
+
+    <Button
+            android:id="@+id/action_four_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_four_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_3_numbers"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_numbers"/>
+
+    <Button
+            android:id="@+id/action_five_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_five_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_4_numbers"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_numbers"/>
+
+    <Button
+            android:id="@+id/action_six_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_six_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5_numbers"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_6_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_numbers"/>
+
+    <Button
+            android:id="@+id/action_seven_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_seven_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_6_numbers"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_numbers"/>
+
+    <Button
+            android:id="@+id/action_eight_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_eight_numbers"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_1_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_numbers"/>
+
+    <Button
+            android:id="@+id/action_nine_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_nine_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_numbers"/>
+
+    <Button
+            android:id="@+id/action_zero_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_zero_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_3_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_numbers"/>
+
+    <Button
+            android:id="@+id/action_plus_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_plus_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_3_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_numbers"/>
+
+    <Button
+            android:id="@+id/action_minus_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_minus_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_4_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_numbers"/>
+
+    <Button
+            android:id="@+id/action_multiply_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_multiply_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_6_numbers"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_numbers"/>
+
+    <Button
+            android:id="@+id/action_divide_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_divide_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_6_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_numbers"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_numbers"/>
+
+    <Button
+            android:id="@+id/action_colon_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_colon_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2_numbers"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_equal_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_equal_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_3_numbers"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_parentheses_open_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_parentheses_open_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_3_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4_numbers"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_parentheses_close_numbers"
+            style="@style/KeyboardButtonNumber"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_parentheses_close_numbers"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_4_numbers"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_numbers"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5_numbers"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

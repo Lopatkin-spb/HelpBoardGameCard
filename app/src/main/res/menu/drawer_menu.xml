@@ -26,4 +26,16 @@
         </menu>
     </item>
 
+    <item android:title="@string/title_others">
+        <menu>
+            <group
+                    android:checkableBehavior="single">
+                <item
+                        android:id="@+id/nav_settings"
+                        android:icon="@drawable/ic_menu_baseline_flip_to_back_24_with_settings"
+                        android:title="@string/title_settings"/>
+            </group>
+        </menu>
+    </item>
+
 </menu>

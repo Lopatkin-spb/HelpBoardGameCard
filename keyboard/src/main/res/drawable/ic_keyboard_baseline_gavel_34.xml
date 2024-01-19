@@ -1,0 +1,48 @@
+<vector
+        android:height="34dp"
+        android:tint="@color/keyboard_color_icon_blue_test"
+        android:tintMode="multiply"
+        android:viewportHeight="24"
+        android:viewportWidth="24"
+        android:width="34dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            android:translateX="1"
+            android:translateY="2">
+
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M5.25,8.069l2.83,-2.827l14.134,14.15l-2.83,2.827z"/>
+
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M9.486,3.827l2.828,-2.829l5.658,5.656l-2.828,2.829z"/>
+
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M0.999,12.315l2.828,-2.828l5.657,5.657l-2.828,2.828z"/>
+
+        <group
+                android:translateX="-0.5"
+                android:translateY="-1">
+
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M5.25,8.069l2.83,-2.827l14.134,14.15l-2.83,2.827z"/>
+
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M9.486,3.827l2.828,-2.829l5.658,5.656l-2.828,2.829z"/>
+
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M0.999,12.315l2.828,-2.828l5.657,5.657l-2.828,2.828z"/>
+
+        </group>
+
+    </group>
+
+</vector>

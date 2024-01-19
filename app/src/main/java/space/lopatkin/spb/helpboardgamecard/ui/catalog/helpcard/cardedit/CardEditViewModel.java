@@ -5,18 +5,26 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
 
 public class CardEditViewModel extends ViewModel {
 
     private GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase;
     private UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase;
+    private GetKeyboardTypeUseCase getKeyboardTypeUseCase;
     private MutableLiveData<Integer> cardId = new MutableLiveData<>();
+    private MutableLiveData<KeyboardType> keyboardTypeMutable = new MutableLiveData<>();
+    LiveData<KeyboardType> keyboardType = keyboardTypeMutable;
 
-    public CardEditViewModel(GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase, UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase) {
+    public CardEditViewModel(GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase,
+                             UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase,
+                             GetKeyboardTypeUseCase getKeyboardTypeUseCase) {
         this.getDetailsHelpcardByBoardGameIdUseCase = getDetailsHelpcardByBoardGameIdUseCase;
         this.updateHelpcardByObjectUseCase = updateHelpcardByObjectUseCase;
+        this.getKeyboardTypeUseCase = getKeyboardTypeUseCase;
     }
 
     public void setCardId(int id) {
@@ -28,6 +36,10 @@ public class CardEditViewModel extends ViewModel {
 
     public void update(Helpcard helpcard) {
         updateHelpcardByObjectUseCase.execute(helpcard);
+    }
+
+    public void loadKeyboardType() {
+        keyboardTypeMutable.setValue(getKeyboardTypeUseCase.execute());
     }
 
 }

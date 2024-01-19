@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_part_letters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:background="@color/colorGrey">
+
+    <!--  Row  -->
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_row_1_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.33"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_row_2_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.66"/>
+
+<!--  Column  -->
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_1_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.09"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_2_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.18"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_3_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.27"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_4_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.36"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_5_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_6_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.54"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_7_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.63"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_8_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.72"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_9_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.81"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_column_10_letters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.90"/>
+
+    <!--  Button  -->
+    <Button
+            android:id="@+id/action_1_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_1_letters"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_1_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+    <Button
+            android:id="@+id/action_2_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_2_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+    <Button
+            android:id="@+id/action_3_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_3_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_3_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+    <Button
+            android:id="@+id/action_4_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_4_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_3_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+    <Button
+            android:id="@+id/action_5_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_5_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_4_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+    <Button
+            android:id="@+id/action_6_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_6_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_6_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+    <Button
+            android:id="@+id/action_7_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_7_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_6_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_7_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+    <Button
+            android:id="@+id/action_8_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_8_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_7_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_8_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+    <Button
+            android:id="@+id/action_9_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_9_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_8_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_9_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+
+    <Button
+            android:id="@+id/action_10_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_10_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_9_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_10_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+    <Button
+            android:id="@+id/action_11_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_11_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_10_letters"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_1_letters"/>
+
+<!--  Qwerty row 2  -->
+    <Button
+            android:id="@+id/action_12_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_12_letters"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_1_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_13_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_13_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_14_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_14_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_3_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_15_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_15_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_3_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_16_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_16_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_4_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_17_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_17_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_6_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_18_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_18_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_6_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_7_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_19_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_19_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_7_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_8_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_20_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_20_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_8_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_9_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_21_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_21_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_9_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_10_letters"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <Button
+            android:id="@+id/action_22_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_22_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_10_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_1_letters"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_row_2_letters"/>
+
+    <!--  Qwerty row 3  -->
+    <ImageButton
+            android:id="@+id/action_shift_letters"
+            style="@style/KeyboardButtonLetterSpecial"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:src="@drawable/ic_keyboard_baseline_upload_34"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_1_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_23_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_23_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_1_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_2_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_24_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_24_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_2_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_3_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_25_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_25_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_3_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_4_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_26_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_26_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_4_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_5_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_27_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_27_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_5_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_6_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_28_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_28_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_6_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_7_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_29_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_29_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_7_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_8_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_30_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_30_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_8_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_9_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+            android:id="@+id/action_31_letters"
+            style="@style/KeyboardButtonLetter"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:text="@string/action_31_letters"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_9_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="@id/guideline_column_10_letters"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageButton
+            android:id="@+id/action_backspace_letters"
+            style="@style/KeyboardButtonLetterSpecial"
+            android:layout_width="@dimen/keyboard_button_width"
+            android:layout_height="@dimen/keyboard_button_height"
+            android:src="@drawable/ic_keyboard_outline_backspace_34"
+
+            app:layout_constraintStart_toStartOf="@id/guideline_column_10_letters"
+            app:layout_constraintTop_toTopOf="@id/guideline_row_2_letters"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

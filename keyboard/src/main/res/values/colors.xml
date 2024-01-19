@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="keyboard_button_white">#FFFFFF</color>
+    <color name="keyboard_button_grey">#CCCCCC</color>
+    <color name="keyboard_button_blue">#5874F8</color>
+
+    <color name="keyboard_color_icon_blue_test">#00E5FF</color>
+    <color name="keyboard_color_icon_green_test">#75FF00</color>
+    <color name="keyboard_color_icon_pink_test">#FF6199</color>
+    <color name="keyboard_color_icon_pink2_test">#FF4081</color>
+    <color name="keyboard_color_icon_yellow_test">#F8EA73</color>
+    <color name="keyboard_color_icon_black_test">#000000</color>
+    <color name="keyboard_color_icon_white_test">#FFFFFF</color>
+
+
+    <color name="keyboard_shadow_icon_black50">#80000000</color>
+
+    <color name="colorGrey">#E6E6E6</color>
+    <color name="colorBlack">#000000</color>
+
+
+</resources>

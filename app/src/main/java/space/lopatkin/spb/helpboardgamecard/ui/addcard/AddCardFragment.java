@@ -10,7 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +21,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.Snackbar;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentAddcardBinding;
 import space.lopatkin.spb.helpboardgamecard.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.ui.KeyboardDoneEvent;
 import space.lopatkin.spb.helpboardgamecard.ui.ViewModelFactory;
+import space.lopatkin.spb.keyboard.KeyboardCapabilities;
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
 
 import javax.inject.Inject;
 
@@ -33,6 +41,7 @@ public class AddCardFragment extends Fragment {
     private AddCardViewModel viewModel;
     private FragmentAddcardBinding binding;
     private NavController navController;
+    private InputConnection inputConnection;
 
     //todo: move to abstract fragment
     @Override
@@ -49,7 +58,6 @@ public class AddCardFragment extends Fragment {
         setScreenTitle(R.string.title_addcard);
         //разрешает верхнее правое меню
         setHasOptionsMenu(true);
-        setupViews();
         return view;
     }
 
@@ -59,6 +67,20 @@ public class AddCardFragment extends Fragment {
         navController = Navigation.findNavController(getView());
 
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(AddCardViewModel.class);
+
+        loadKeyboardType();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        EventBus.getDefault().unregister(this);
+        super.onPause();
     }
 
     @Override
@@ -69,6 +91,7 @@ public class AddCardFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        onKeyboardDoneEvent(new KeyboardDoneEvent());
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveNewHelpcard();
@@ -84,14 +107,81 @@ public class AddCardFragment extends Fragment {
         binding = null;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onKeyboardDoneEvent(KeyboardDoneEvent event) {
+        if (binding.editTextTitle.isFocused()) {
+            binding.editTextTitle.clearFocus();
+        }
+        if (binding.editTextDescription.isFocused()) {
+            binding.editTextDescription.clearFocus();
+        }
+        if (binding.editTextVictoryCondition.isFocused()) {
+            binding.editTextVictoryCondition.clearFocus();
+        }
+        if (binding.editTextEndGame.isFocused()) {
+            binding.editTextEndGame.clearFocus();
+        }
+        if (binding.editTextPreparation.isFocused()) {
+            binding.editTextPreparation.clearFocus();
+        }
+        if (binding.editTextPlayerTurn.isFocused()) {
+            binding.editTextPlayerTurn.clearFocus();
+        }
+        if (binding.editTextEffects.isFocused()) {
+            binding.editTextEffects.clearFocus();
+        }
+        binding.keyboardAddcard.setVisibility(View.GONE);
+    }
+
+    private void loadKeyboardType() {
+        viewModel.loadKeyboardType();
+
+        viewModel.keyboardType.observe(getViewLifecycleOwner(), keyboardType -> {
+            if (keyboardType == KeyboardType.CUSTOM) {
+                setupViewsForCustomKeyboard();
+            } else {
+                setupViews();
+            }
+        });
+    }
+
     private void setupViews() {
         binding.editTextTitle.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         binding.editTextDescription.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
+
+        binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+
         binding.numberPickerPriority.setMinValue(1);
         binding.numberPickerPriority.setMaxValue(10);
     }
+
+    private void setupViewsForCustomKeyboard() {
+        binding.editTextTitle.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextDescription.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextVictoryCondition.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextEndGame.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextPreparation.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextPlayerTurn.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        binding.editTextEffects.setRawInputType(InputType.TYPE_CLASS_TEXT);
+
+        binding.editTextTitle.setShowSoftInputOnFocus(false);
+        binding.editTextDescription.setShowSoftInputOnFocus(false);
+        binding.editTextVictoryCondition.setShowSoftInputOnFocus(false);
+        binding.editTextEndGame.setShowSoftInputOnFocus(false);
+        binding.editTextPreparation.setShowSoftInputOnFocus(false);
+        binding.editTextPlayerTurn.setShowSoftInputOnFocus(false);
+        binding.editTextEffects.setShowSoftInputOnFocus(false);
+
+        onActionTitle();
+        onActionDescription();
+        onActionVictoryCondition();
+        onActionEndGame();
+        onActionPreparation();
+        onActionPlayerTurn();
+        onActionEffects();
+    }
+
 
     private void saveNewHelpcard() {
         Helpcard newHelpcard = getData();
@@ -138,6 +228,83 @@ public class AddCardFragment extends Fragment {
     //todo: move to main act after add eventBus
     private void showMessage(int message) {
         Snackbar.make(binding.scrollAddcard, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void onActionTitle() {
+        binding.editTextTitle.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS);
+            }
+        });
+    }
+
+    private void onActionDescription() {
+        binding.editTextDescription.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS);
+            }
+        });
+    }
+
+    private void onActionVictoryCondition() {
+        binding.editTextVictoryCondition.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextVictoryCondition);
+            }
+        });
+    }
+
+    private void onActionEndGame() {
+        binding.editTextEndGame.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextEndGame);
+            }
+        });
+    }
+
+    private void onActionPreparation() {
+        binding.editTextPreparation.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextPreparation);
+            }
+        });
+    }
+
+    private void onActionPlayerTurn() {
+        binding.editTextPlayerTurn.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextPlayerTurn);
+            }
+        });
+    }
+
+    private void onActionEffects() {
+        binding.editTextEffects.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS);
+                scrollTo(binding.editTextEffects);
+            }
+        });
+    }
+
+    private void enableCustomKeyboard(View view, KeyboardCapabilities capabilities) {
+        if (inputConnection != null) {
+            inputConnection.closeConnection();
+        }
+        inputConnection = view.onCreateInputConnection(new EditorInfo());
+        binding.keyboardAddcard.setInputConnection(inputConnection);
+        binding.keyboardAddcard.setCapabilities(capabilities);
+        binding.keyboardAddcard.setVisibility(View.VISIBLE);
+    }
+
+    private void scrollTo(EditText view) {
+        binding.keyboardAddcard.setHeightFragment(binding.containerAddcard.getHeight());
+        binding.keyboardAddcard.setScrollView(binding.scrollAddcard);
+        binding.keyboardAddcard.scrollEditTextToKeyboard(view);
     }
 
 }

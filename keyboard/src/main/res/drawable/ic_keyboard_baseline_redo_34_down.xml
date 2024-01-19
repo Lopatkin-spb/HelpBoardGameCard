@@ -1,0 +1,59 @@
+<vector
+        android:height="34dp"
+        android:tint="@color/keyboard_color_icon_green_test"
+        android:tintMode="multiply"
+        android:viewportHeight="24"
+        android:viewportWidth="24"
+        android:width="34dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+            android:pivotX="12"
+            android:pivotY="12"
+            android:rotation="45">
+
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M18.4,10.6C16.55,8.99 14.15,8 11.5,8c-4.65,0 -8.58,3.03 -9.96,7.22L3.9,16c1.05,-3.19 4.05,-5.5 7.6,-5.5 1.95,0 3.73,0.72 5.12,1.88L13,16h9V7l-3.6,3.6z"/>
+
+    </group>
+
+    <group
+            android:translateX="-12"
+            android:translateY="-11">
+
+        <path
+                android:fillColor="@color/keyboard_shadow_icon_black50"
+                android:pathData="M17.5,17.5m-4.5,0a4.5,4.5 0,1 1,9 0a4.5,4.5 0,1 1,-9 0"/>
+
+    </group>
+
+    <group
+            android:translateX="-0.5"
+            android:translateY="-1">
+
+
+        <group
+                android:pivotX="12"
+                android:pivotY="12"
+                android:rotation="45">
+
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M18.4,10.6C16.55,8.99 14.15,8 11.5,8c-4.65,0 -8.58,3.03 -9.96,7.22L3.9,16c1.05,-3.19 4.05,-5.5 7.6,-5.5 1.95,0 3.73,0.72 5.12,1.88L13,16h9V7l-3.6,3.6z"/>
+
+        </group>
+
+        <group
+                android:translateX="-12"
+                android:translateY="-11">
+
+            <path
+                    android:fillColor="@android:color/white"
+                    android:pathData="M17.5,17.5m-4.5,0a4.5,4.5 0,1 1,9 0a4.5,4.5 0,1 1,-9 0"/>
+
+        </group>
+
+    </group>
+
+</vector>

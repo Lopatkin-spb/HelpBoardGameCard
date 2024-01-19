@@ -1,0 +1,1104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_keyboard_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:background="@color/colorGrey">
+
+        <!--  Row   -->
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.08"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.16"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.24"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.32"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.4"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.48"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.56"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.64"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.72"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_row_11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.88"/>
+
+        <!--  Column   -->
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_column_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.14"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_column_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.28"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_column_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.42"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_column_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.56"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_column_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.7"/>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_column_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.84"/>
+
+        <!--  Icon    -->
+
+        <ImageButton
+                android:id="@+id/action_pawn"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_flaticon_strategy_34"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+        <ImageButton
+                android:id="@+id/action_hammer"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_gavel_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+        <ImageButton
+                android:id="@+id/action_house"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_home_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+        <ImageButton
+                android:id="@+id/action_scull"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_scull_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+        <ImageButton
+                android:id="@+id/action_breakfast"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_free_breakfast_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+        <ImageButton
+                android:id="@+id/action_meeple"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_flaticon_pawn_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+        <ImageButton
+                android:id="@+id/action_table"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_table_restaurant_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_1"/>
+
+        <ImageButton
+                android:id="@+id/action_boat"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_flaticon_sailing_boat_34"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+        <ImageButton
+                android:id="@+id/action_clock"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_access_time_filled_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+        <ImageButton
+                android:id="@+id/action_car"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_flaticon_car_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+        <ImageButton
+                android:id="@+id/action_rocket"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_rocket_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+        <ImageButton
+                android:id="@+id/action_fastfood"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_fastfood_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+        <ImageButton
+                android:id="@+id/action_flask"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_science_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+        <ImageButton
+                android:id="@+id/action_jewel"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_diamond_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_2"/>
+
+        <ImageButton
+                android:id="@+id/action_shield"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_shield_34"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+
+        <ImageButton
+                android:id="@+id/action_person"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_person_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+
+        <ImageButton
+                android:id="@+id/action_persons"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_people_alt_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+
+        <ImageButton
+                android:id="@+id/action_door"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_meeting_room_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+
+        <ImageButton
+                android:id="@+id/action_tablet"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_fact_check_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+
+        <ImageButton
+                android:id="@+id/action_curtain"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_sharp_map_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+
+        <ImageButton
+                android:id="@+id/action_chair"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_chair_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_3"/>
+
+        <ImageButton
+                android:id="@+id/action_stop"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_front_hand_34"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_3"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_4"/>
+
+        <ImageButton
+                android:id="@+id/action_smartphone"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_smartphone_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_3"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_4"/>
+
+        <ImageButton
+                android:id="@+id/action_volume"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_volume_off_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_3"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_4"/>
+
+        <ImageButton
+                android:id="@+id/action_tile_deck"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_collections_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_3"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_4"/>
+
+        <ImageButton
+                android:id="@+id/action_school"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_school_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_3"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_4"/>
+
+        <ImageButton
+                android:id="@+id/action_dice_1"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_flaticon_dice_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_3"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_4"/>
+
+        <ImageButton
+                android:id="@+id/action_cards_deck"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_flaticon_playing_cards_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_4"/>
+
+        <ImageButton
+                android:id="@+id/action_dice_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_sharp_view_in_ar_34_dice"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_4"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_5"/>
+
+        <ImageButton
+                android:id="@+id/action_target"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_my_location_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_4"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_5"/>
+
+        <ImageButton
+                android:id="@+id/action_deck_1"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_format_align_justify_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_4"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_5"/>
+
+        <ImageButton
+                android:id="@+id/action_deck_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_drag_handle_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_4"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_5"/>
+
+        <ImageButton
+                android:id="@+id/action_tile_1"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_hexagon_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_4"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_5"/>
+
+        <ImageButton
+                android:id="@+id/action_deck_3"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_format_align_justify_34_test_2"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_4"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_5"/>
+
+        <ImageButton
+                android:id="@+id/action_tiles"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_hexagon_34_lots"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_5"/>
+
+        <ImageButton
+                android:id="@+id/action_arrow_give"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_sync_alt_34_give"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_5"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_6"/>
+
+        <ImageButton
+                android:id="@+id/action_arrow_take"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_sync_alt_34_take"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_5"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_6"/>
+
+        <ImageButton
+                android:id="@+id/action_arrow_down"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_redo_34_down"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_5"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_6"/>
+
+        <ImageButton
+                android:id="@+id/action_arrow_left"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_redo_34_raise"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_5"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_6"/>
+
+        <ImageButton
+                android:id="@+id/action_arrow_shuffle_1"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_sync_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_5"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_6"/>
+
+        <ImageButton
+                android:id="@+id/action_arrow_shuffle_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_redo_34_test"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_5"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_6"/>
+
+        <ImageButton
+                android:id="@+id/action_swap"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_swap_horiz_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_6"/>
+
+        <ImageButton
+                android:id="@+id/action_split"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_call_split_34"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_6"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_7"/>
+
+        <ImageButton
+                android:id="@+id/action_merge"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_call_merge_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_6"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_7"/>
+
+        <ImageButton
+                android:id="@+id/action_fast"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_sharp_electric_bolt_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_6"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_7"/>
+
+        <ImageButton
+                android:id="@+id/action_distance"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_settings_ethernet_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_6"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_7"/>
+
+        <ImageButton
+                android:id="@+id/action_relax"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_self_improvement_34"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_out_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_pan_tool_alt_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_every"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_outline_brightness_1_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_repeat"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_sharp_repeat_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_min"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_forward_34_min"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_max"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_forward_34_max"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_dangerous_5"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_trip_origin_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_8"/>
+
+        <ImageButton
+                android:id="@+id/action_warning"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_error_34"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_8"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_9"/>
+
+        <ImageButton
+                android:id="@+id/action_dangerous"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_dangerous_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_8"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_9"/>
+
+        <ImageButton
+                android:id="@+id/action_dangerous_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_cancel_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_8"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_9"/>
+
+        <ImageButton
+                android:id="@+id/action_dangerous_3"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_outline_cancel_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_8"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_9"/>
+
+        <ImageButton
+                android:id="@+id/action_dangerous_4"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_block_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_8"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_9"/>
+
+        <ImageButton
+                android:id="@+id/action_shirt_1"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_graphic_eq_34_for_target"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_8"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_9"/>
+
+        <ImageButton
+                android:id="@+id/action_shirt_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_sharp_texture_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_9"/>
+
+
+        <ImageButton
+                android:id="@+id/action_color_red"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_twotone_color_lens_34_red"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_9"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
+
+        <ImageButton
+                android:id="@+id/action_color_green"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_twotone_color_lens_34_green"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_9"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
+
+        <ImageButton
+                android:id="@+id/action_color_blue"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_twotone_color_lens_34_blue"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_9"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
+
+        <ImageButton
+                android:id="@+id/action_color_yellow"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_twotone_color_lens_34_yellow"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_9"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
+
+        <ImageButton
+                android:id="@+id/action_color_black"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_twotone_color_lens_34_black"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_9"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
+
+        <ImageButton
+                android:id="@+id/action_commit"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/ic_keyboard_baseline_commit_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_9"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
+
+        <ImageButton
+                android:id="@+id/action_all"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_workspaces_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_6"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_10"/>
+
+        <ImageButton
+                android:id="@+id/action_infinitely"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_all_inclusive_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_total"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_functions_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_random"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_outline_help_center_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_all_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_update_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_every_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_auto_mode_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+        <ImageButton
+                android:id="@+id/action_all_3"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_flaticon_spiral_34"
+                app:tint="@color/colorBlack"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_row_11"/>
+
+
+
+        <ImageButton
+                android:id="@+id/action_aircraft"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_sharp_airplanemode_active_34"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_1"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_victory_point_1"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_workspace_premium_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_1"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_2"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_victory_point_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_military_tech_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_2"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_3"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_flip"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_u_turn_right_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_3"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_4"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_calculate_1"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_baseline_calculate_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_4"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_5"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/action_calculate_2"
+                style="@style/KeyboardButtonIcon"
+                android:layout_width="@dimen/keyboard_button_width"
+                android:layout_height="@dimen/keyboard_button_height"
+                android:src="@drawable/_outline_calculate_34"
+
+                app:layout_constraintStart_toStartOf="@id/guideline_column_5"
+                app:layout_constraintTop_toTopOf="@id/guideline_row_11"
+                app:layout_constraintEnd_toEndOf="@id/guideline_column_6"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

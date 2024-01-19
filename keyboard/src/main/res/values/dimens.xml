@@ -1,0 +1,8 @@
+<resources>
+
+    <dimen name="keyboard_button_width">0dp</dimen>
+    <dimen name="keyboard_button_height">46dp</dimen>
+
+    <dimen name="keyboard_button_corners_radius">10dp</dimen>
+
+</resources>

@@ -54,9 +54,16 @@ public abstract class HelpcardDatabase extends RoomDatabase {
             helpcardDao.insert(new Helpcard("Title 1", "victory_condition 1",
                     "end_game 1", "preparation 1", "Description 1",
                     "player_turn 1", "effects 1", false, false, 1));
-            helpcardDao.insert(new Helpcard("Title 2", "victory_condition 2",
-                    "end_game 2", "preparation 2", "Description 2",
-                    "player_turn 2", "effects 2", false, false, 2));
+            helpcardDao.insert(new Helpcard("Илос 3варик", "",
+                    "", "-#l0105#l0312#l0027\n" +
+                    "-#l0027#l01081#l0031#l0102#l0006\n" +
+                    "-#l0105#l0314#l0036\n" +
+                    "-#l0313#l0015#l0101(#l0019+#l0018+10#l0005+5#l0007)/#l0117#l0305#l0015\n" +
+                    "1)#l0107#l0306#l00362#l0031=\n" +
+                    "(1:#l0031=4#l0032*#l0016)#l0102#l0006\n" +
+                    "(2:#l0031)#l0115#l0017\n" +
+                    "2) #l0031#l0036#l01023#l0204#l0035", "безкризисная, управляемый рандом",
+                    "", "", false, false, 2));
             helpcardDao.insert(new Helpcard("Илос 1вар", "victory_condition 3",
                     "end_game 3", "1) \uD83D\uDD03\uD83C\uDF9F️\uD83D\uDC49\uD83D\uDC655️⃣\uD83C\uDF9F️\uD83D\uDC64\n2) \uD83D\uDC655️⃣⛵\uD83D\uDC64\n3) \uD83D\uDC65\uD83D\uDD1F\uD83D\uDD74️\uD83D\uDC64\n4) \uD83D\uDD03\uD83E\uDDE9",
                     "евро, семейка",

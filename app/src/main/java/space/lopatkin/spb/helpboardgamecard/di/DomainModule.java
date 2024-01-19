@@ -3,8 +3,15 @@ package space.lopatkin.spb.helpboardgamecard.di;
 import dagger.Module;
 import dagger.Provides;
 import space.lopatkin.spb.helpboardgamecard.domain.repository.HelpcardRepository;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.*;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetAllHelpcardsUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardTypeByUserChoiceUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
 
 import javax.inject.Singleton;
 
@@ -58,6 +65,18 @@ public class DomainModule {
     public SaveNewHelpcardUseCase provideSaveNewHelpcardUseCase(
             HelpcardRepository repository) {
         return new SaveNewHelpcardUseCase(repository);
+    }
+
+    @Singleton
+    @Provides
+    public SaveKeyboardTypeByUserChoiceUseCase provideSaveKeyboardTypeByUserChoiceUseCase(HelpcardRepository repository) {
+        return new SaveKeyboardTypeByUserChoiceUseCase(repository);
+    }
+
+    @Singleton
+    @Provides
+    public GetKeyboardTypeUseCase provideGetKeyboardTypeUseCase(HelpcardRepository repository) {
+        return new GetKeyboardTypeUseCase(repository);
     }
 
 }
