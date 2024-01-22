@@ -16,15 +16,16 @@
 
     </group>
 
-    <item android:title="communicate">
-        <menu>
-            <item
-                    android:id="@+id/nav_share"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="@string/menu_share"/>
+<!--    временно скрыто-->
+<!--    <item android:title="communicate">-->
+<!--        <menu>-->
+<!--            <item-->
+<!--                    android:id="@+id/nav_share"-->
+<!--                    android:icon="@drawable/ic_menu_share"-->
+<!--                    android:title="@string/menu_share"/>-->
 
-        </menu>
-    </item>
+<!--        </menu>-->
+<!--    </item>-->
 
     <item android:title="@string/title_others">
         <menu>

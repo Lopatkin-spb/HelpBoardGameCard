@@ -14,20 +14,19 @@ import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import com.google.android.material.snackbar.Snackbar;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentCardEditBinding;
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
+import space.lopatkin.spb.helpboardgamecard.presentation.AbstractFragment;
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory;
 import space.lopatkin.spb.helpboardgamecard.presentation.KeyboardDoneEvent;
 import space.lopatkin.spb.keyboard.KeyboardCapabilities;
@@ -35,67 +34,59 @@ import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
 
 import javax.inject.Inject;
 
-public class CardEditFragment extends Fragment {
+public class CardEditFragment extends AbstractFragment {
     @Inject
     ViewModelFactory viewModelFactory;
     private CardEditViewModel viewModel;
     private FragmentCardEditBinding binding;
+    private NavController navController;
+    private InputConnection inputConnection;
     private int idCard = 0;
     private String effects = "";
     private boolean favorites = false;
     private boolean lock = false;
     private int priority = 0;
-    private NavController navController;
-    private InputConnection inputConnection;
 
-    //todo: move to absFrag
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(@NonNull @NotNull Context context) {
         ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
         super.onAttach(context);
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentCardEditBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-
-        setScreenTitle(R.string.title_card_edit);
-        setHasOptionsMenu(true);
-        return view;
-    }
-
+    @Nullable
+    @org.jetbrains.annotations.Nullable
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        navController = Navigation.findNavController(getView());
-
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater,
+                             @Nullable @org.jetbrains.annotations.Nullable ViewGroup container,
+                             @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        binding = FragmentCardEditBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(CardEditViewModel.class);
 
         if (getArguments() != null) {
             CardEditFragmentArgs args = CardEditFragmentArgs.fromBundle(getArguments());
-            int cardId = args.getId();
-            if (cardId > 0) {
-                loadCardDetails(cardId);
+            int helpcardId = args.getId();
+            if (helpcardId > 0) {
+                loadHelpcard(helpcardId);
             }
         }
 
         loadKeyboardType();
+
+        return binding.getRoot();
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu,
+                                    @NonNull @NotNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_card_edit, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        onKeyboardDoneEvent(new KeyboardDoneEvent());
-
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_card_save:
-                cardSave();
+                viewModel.update(getEditedData());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -103,9 +94,16 @@ public class CardEditFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        navController = Navigation.findNavController(getView());
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
+        resultListener();
     }
 
     @Override
@@ -120,8 +118,20 @@ public class CardEditFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    protected void showMessage(View parentView, int message) {
+        super.showMessage(parentView, message);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKeyboardDoneEvent(KeyboardDoneEvent event) {
+        clearFocus();
+        if (binding != null) {
+            binding.keyboardCardEdit.setVisibility(View.GONE);
+        }
+    }
+
+    private void clearFocus() {
         if (binding.editTitle.isFocused()) {
             binding.editTitle.clearFocus();
         }
@@ -140,7 +150,6 @@ public class CardEditFragment extends Fragment {
         if (binding.editPlayerTurn.isFocused()) {
             binding.editPlayerTurn.clearFocus();
         }
-        binding.keyboardCardEdit.setVisibility(View.GONE);
     }
 
     private void loadKeyboardType() {
@@ -186,38 +195,25 @@ public class CardEditFragment extends Fragment {
         onActionPlayerTurn();
     }
 
-    private void loadCardDetails(int cardId) {
-        viewModel.setCardId(cardId);
-        viewModel.getCardDetails.observe(getViewLifecycleOwner(), new Observer<Helpcard>() {
-            @Override
-            public void onChanged(Helpcard card) {
-                if (card != null) {
-                    binding.editTitle.setText(card.getTitle());
-                    binding.editDescription.setText(card.getDescription());
-                    binding.editVictoryCondition.setText(card.getVictoryCondition());
-                    binding.editEndGame.setText(card.getEndGame());
-                    binding.editPreparation.setText(card.getPreparation());
-                    binding.editPlayerTurn.setText(card.getPlayerTurn());
+    private void loadHelpcard(int helpcardId) {
+        viewModel.loadHelpcard(helpcardId);
 
-                    idCard = card.getId();
-                    effects = card.getEffects();
-                    favorites = card.isFavorites();
-                    lock = card.isLock();
-                    priority = card.getPriority();
-                }
+        viewModel.helpcard.observe(getViewLifecycleOwner(), helpcard -> {
+            if (helpcard != null) {
+                binding.editTitle.setText(helpcard.getTitle());
+                binding.editDescription.setText(helpcard.getDescription());
+                binding.editVictoryCondition.setText(helpcard.getVictoryCondition());
+                binding.editEndGame.setText(helpcard.getEndGame());
+                binding.editPreparation.setText(helpcard.getPreparation());
+                binding.editPlayerTurn.setText(helpcard.getPlayerTurn());
+
+                idCard = helpcard.getId();
+                effects = helpcard.getEffects();
+                favorites = helpcard.isFavorites();
+                lock = helpcard.isLock();
+                priority = helpcard.getPriority();
             }
         });
-    }
-
-    private void cardSave() {
-        Helpcard editedCard = getEditedData();
-        if (editedCard.getTitle().isEmpty()) {
-            showMessage(R.string.message_insert_title);
-            return;
-        }
-        viewModel.update(editedCard);
-        showMessage(R.string.message_card_updated);
-        navigateToCatalog();
     }
 
     private Helpcard getEditedData() {
@@ -233,15 +229,6 @@ public class CardEditFragment extends Fragment {
                 favorites,
                 lock,
                 priority);
-    }
-
-    //todo: move to activity
-    private void showMessage(int message) {
-        Snackbar.make(binding.scrollCardEdit, message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    private void setScreenTitle(int toolbarTitle) {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(toolbarTitle);
     }
 
     private void navigateToCatalog() {
@@ -314,6 +301,29 @@ public class CardEditFragment extends Fragment {
         binding.keyboardCardEdit.setHeightFragment(binding.layoutCardEdit.getHeight());
         binding.keyboardCardEdit.setScrollView(binding.scrollCardEdit);
         binding.keyboardCardEdit.scrollEditTextToKeyboard(view);
+    }
+
+    private void resultListener() {
+        viewModel.message.observe(this, messageType -> {
+            if (messageType != Message.POOL_EMPTY) {
+                selectingTextFrom(messageType);
+            }
+        });
+    }
+
+    private void selectingTextFrom(Message type) {
+        switch (type) {
+            case ACTION_STOPPED:
+                showMessage(binding.scrollCardEdit, R.string.message_insert_title);
+                break;
+            case ACTION_ENDED_SUCCESS:
+                showMessage(binding.scrollCardEdit, R.string.message_card_updated);
+                navigateToCatalog();
+                break;
+            case ACTION_ENDED_ERROR:
+                showMessage(binding.scrollCardEdit, R.string.error_action_ended);
+                break;
+        }
     }
 
 }

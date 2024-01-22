@@ -29,7 +29,7 @@ public class SettingsViewModel extends ViewModel {
     public void saveKeyboardType(Object userChoice) {
         Message messageResponse = saveKeyboardTypeByUserChoiceUseCase.execute(userChoice);
         messageMutable.setValue(messageResponse);
-        messageMutable.setValue(Message.DEFAULT);
+        messageMutable.setValue(Message.POOL_EMPTY);
     }
 
 }

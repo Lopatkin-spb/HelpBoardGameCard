@@ -1,8 +1,11 @@
 
 
 --- GLOBAL: KOTLIN!!!
-- клава
 - рефакторинг
+- нужно: нейминги -> вьюМоделс -> лоадинг -> баги клавы ->
+
+
+
 - котлин
 
 
@@ -10,6 +13,8 @@
 
 --- TODAY:
 
+- xml: add click animations, add fields empty to full data animations, add loading indicator;
+- db: add return int to void room methods;
 
 - рефакторинг: доделка чистого кода
 
@@ -47,6 +52,11 @@
 
 
 --- TOMORROW:
+
+
+- RENAMING: -> presenter, addcard -> create helpcard, ...
+
+
 - change name app to "Help Cards for Board Game" , setup
 - clean architecture
 - add game variants
@@ -146,6 +156,12 @@ setup
 
 
 
-- MainMenu: changed app version, added app version;
-- Cleaning code to activity;
+- MainMenu/ AddCard/ CardEdit: updated hide keyboards;
+- AddCard/ CardEdit/ Catalog: added message, moved message code to usecase and viewModel;
+- CardEdit/Helpcard fixed bug: fast show data from previous fragment before load actual fragment;
+- MainMenu: hide share item;
 
+- Refactoring: created parent fragment, renamed fields & methods & usecases,
+cleaning viewModels code, deleted deprecation methods from fragments, moved fields & methods to guideline,
+deleted return values in viewModels, corrected annotations to override methods,
+move code to parent in fragments, split usecases, added method to dbRepo;

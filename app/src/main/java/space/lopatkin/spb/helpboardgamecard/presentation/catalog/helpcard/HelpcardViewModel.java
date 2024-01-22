@@ -5,27 +5,23 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByHelpcardIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
 
 public class HelpcardViewModel extends ViewModel {
 
-    private GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase;
-    private MutableLiveData<Integer> idMutableLiveData = new MutableLiveData<>();
+    private GetHelpcardByHelpcardIdUseCase getHelpcardByHelpcardIdUseCase;
+    private MutableLiveData<Integer> helpcardIdMutable = new MutableLiveData<>();
+    LiveData<Helpcard> helpcard;
+    LiveData<Integer> helpcardId = helpcardIdMutable;
 
-    public HelpcardViewModel(GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase) {
-        this.getDetailsHelpcardByBoardGameIdUseCase = getDetailsHelpcardByBoardGameIdUseCase;
+    public HelpcardViewModel(GetHelpcardByHelpcardIdUseCase getHelpcardByHelpcardIdUseCase) {
+        this.getHelpcardByHelpcardIdUseCase = getHelpcardByHelpcardIdUseCase;
     }
 
-    public void setId(int boardGameId) {
-        idMutableLiveData.setValue(boardGameId);
-    }
-
-    public LiveData<Helpcard> helpcardLiveData = Transformations
-            .switchMap(idMutableLiveData, (id) -> getDetailsHelpcardByBoardGameIdUseCase.execute(id));
-
-    public LiveData<Integer> getCardId() {
-        return idMutableLiveData;
+    public void loadHelpcard(int helpcardId) {
+        helpcardIdMutable.setValue(helpcardId);
+        helpcard = Transformations.switchMap(helpcardIdMutable, (thisId) -> getHelpcardByHelpcardIdUseCase.execute(thisId));
     }
 
 }

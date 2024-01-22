@@ -13,22 +13,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import org.jetbrains.annotations.NotNull;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentHelpcardBinding;
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.presentation.AbstractFragment;
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory;
 
 import javax.inject.Inject;
 
 
-public class HelpcardFragment extends Fragment {
+public class HelpcardFragment extends AbstractFragment {
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -36,22 +36,31 @@ public class HelpcardFragment extends Fragment {
     private FragmentHelpcardBinding binding;
     private NavController navController;
 
-    //todo: create abstractFragment, move code to abstractFragment, extends from absFrag
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(@NonNull @NotNull Context context) {
         ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
         super.onAttach(context);
     }
 
     @Nullable
+    @org.jetbrains.annotations.Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater,
+                             @Nullable @org.jetbrains.annotations.Nullable ViewGroup container,
+                             @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         binding = FragmentHelpcardBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        setScreenTitle(R.string.title_helpcard_details);
-        setHasOptionsMenu(true);
+        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(HelpcardViewModel.class);
+
+        if (getArguments() != null) {
+            HelpcardFragmentArgs args = HelpcardFragmentArgs.fromBundle(getArguments());
+            int helpcardId = args.getId();
+            if (helpcardId > 0) {
+                loadHelpcard(helpcardId);
+            }
+        }
+
         onVictoryCondition();
         onEndGame();
         onPreparation();
@@ -60,31 +69,15 @@ public class HelpcardFragment extends Fragment {
         return view;
     }
 
-    //safeargs + parcelable
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        navController = Navigation.findNavController(getView());
-
-        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(HelpcardViewModel.class);
-
-        if (getArguments() != null) {
-            HelpcardFragmentArgs args = HelpcardFragmentArgs.fromBundle(getArguments());
-            int id = args.getId();
-            if (id > 0) {
-                loadDetails(id);
-            }
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu,
+                                    @NonNull @NotNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_card_details, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_card_edit:
                 navigateToCardEdit();
@@ -95,14 +88,20 @@ public class HelpcardFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        navController = Navigation.findNavController(getView());
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
-    private void loadDetails(int id) {
-        viewModel.setId(id);
-        viewModel.helpcardLiveData.observe(getViewLifecycleOwner(), new Observer<Helpcard>() {
+    private void loadHelpcard(int helpcardId) {
+        viewModel.loadHelpcard(helpcardId);
+        viewModel.helpcard.observe(getViewLifecycleOwner(), new Observer<Helpcard>() {
             @Override
             public void onChanged(Helpcard helpcard) {
                 if (helpcard != null) {
@@ -118,16 +117,12 @@ public class HelpcardFragment extends Fragment {
         });
     }
 
-    private void setScreenTitle(int toolbarTitle) {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(toolbarTitle);
-    }
-
     private void navigateToCardEdit() {
-        viewModel.getCardId().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        viewModel.helpcardId.observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
-            public void onChanged(Integer integer) {
+            public void onChanged(Integer helpcardId) {
                 HelpcardFragmentDirections.ActionNavHelpcardToNavCardEdit action =
-                        HelpcardFragmentDirections.actionNavHelpcardToNavCardEdit().setId(integer);
+                        HelpcardFragmentDirections.actionNavHelpcardToNavCardEdit().setId(helpcardId);
                 navController.navigate(action);
             }
         });

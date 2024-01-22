@@ -3,15 +3,17 @@ package space.lopatkin.spb.helpboardgamecard.presentation;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUnlockedByHelpcardIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByUnlockStateUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetAllHelpcardsUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByHelpcardIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveHelpcardNewByHelpcardIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardTypeByUserChoiceUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByHelpcardIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardFavoriteByHelpcardIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardLockingByHelpcardIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.presentation.addcard.AddCardViewModel;
 import space.lopatkin.spb.helpboardgamecard.presentation.catalog.CatalogViewModel;
 import space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.HelpcardViewModel;
@@ -20,52 +22,65 @@ import space.lopatkin.spb.helpboardgamecard.presentation.settings.SettingsViewMo
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-    private GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase;
+    private GetHelpcardByHelpcardIdUseCase getHelpcardByHelpcardIdUseCase;
     private GetAllHelpcardsUseCase getAllHelpcardsUseCase;
-    private DeleteHelpcardUseCase deleteHelpcardUseCase;
-    private DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase;
-    private UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase;
-    private DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase;
-    private SaveNewHelpcardUseCase saveNewHelpcardUseCase;
+    private DeleteHelpcardUnlockedByHelpcardIdUseCase deleteHelpcardUnlockedByHelpcardIdUseCase;
+    private UpdateHelpcardByHelpcardIdUseCase updateHelpcardByHelpcardIdUseCase;
+    private UpdateHelpcardFavoriteByHelpcardIdUseCase updateHelpcardFavoriteByHelpcardIdUseCase;
+    private UpdateHelpcardLockingByHelpcardIdUseCase updateHelpcardLockingByHelpcardIdUseCase;
+    private DeleteHelpcardsByUnlockStateUseCase deleteHelpcardsByUnlockStateUseCase;
+    private SaveHelpcardNewByHelpcardIdUseCase saveHelpcardNewByHelpcardIdUseCase;
     private SaveKeyboardTypeByUserChoiceUseCase saveKeyboardTypeByUserChoiceUseCase;
     private GetKeyboardTypeUseCase getKeyboardTypeUseCase;
 
-    public ViewModelFactory(GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase,
+
+    private DeleteHelpcardUseCase deleteHelpcardUseCase;
+
+    public ViewModelFactory(GetHelpcardByHelpcardIdUseCase getHelpcardByHelpcardIdUseCase,
                             GetAllHelpcardsUseCase getAllHelpcardsUseCase,
                             DeleteHelpcardUseCase deleteHelpcardUseCase,
-                            DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase,
-                            UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase,
-                            DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase,
-                            SaveNewHelpcardUseCase saveNewHelpcardUseCase,
+                            DeleteHelpcardUnlockedByHelpcardIdUseCase deleteHelpcardUnlockedByHelpcardIdUseCase,
+                            UpdateHelpcardByHelpcardIdUseCase updateHelpcardByHelpcardIdUseCase,
+                            UpdateHelpcardFavoriteByHelpcardIdUseCase updateHelpcardFavoriteByHelpcardIdUseCase,
+                            UpdateHelpcardLockingByHelpcardIdUseCase updateHelpcardLockingByHelpcardIdUseCase,
+                            DeleteHelpcardsByUnlockStateUseCase deleteHelpcardsByUnlockStateUseCase,
+                            SaveHelpcardNewByHelpcardIdUseCase saveHelpcardNewByHelpcardIdUseCase,
                             SaveKeyboardTypeByUserChoiceUseCase saveKeyboardTypeByUserChoiceUseCase,
                             GetKeyboardTypeUseCase getKeyboardTypeUseCase) {
-        this.getDetailsHelpcardByBoardGameIdUseCase = getDetailsHelpcardByBoardGameIdUseCase;
+        this.getHelpcardByHelpcardIdUseCase = getHelpcardByHelpcardIdUseCase;
         this.getAllHelpcardsUseCase = getAllHelpcardsUseCase;
         this.deleteHelpcardUseCase = deleteHelpcardUseCase;
-        this.deleteHelpcardByIdUseCase = deleteHelpcardByIdUseCase;
-        this.updateHelpcardByObjectUseCase = updateHelpcardByObjectUseCase;
-        this.deleteHelpcardsByLockUseCase = deleteHelpcardsByLockUseCase;
-        this.saveNewHelpcardUseCase = saveNewHelpcardUseCase;
+        this.deleteHelpcardUnlockedByHelpcardIdUseCase = deleteHelpcardUnlockedByHelpcardIdUseCase;
+        this.updateHelpcardByHelpcardIdUseCase = updateHelpcardByHelpcardIdUseCase;
+        this.updateHelpcardFavoriteByHelpcardIdUseCase = updateHelpcardFavoriteByHelpcardIdUseCase;
+        this.updateHelpcardLockingByHelpcardIdUseCase = updateHelpcardLockingByHelpcardIdUseCase;
+        this.deleteHelpcardsByUnlockStateUseCase = deleteHelpcardsByUnlockStateUseCase;
+        this.saveHelpcardNewByHelpcardIdUseCase = saveHelpcardNewByHelpcardIdUseCase;
         this.saveKeyboardTypeByUserChoiceUseCase = saveKeyboardTypeByUserChoiceUseCase;
         this.getKeyboardTypeUseCase = getKeyboardTypeUseCase;
     }
 
-    //возможно переделать в дженерик в будущем
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(HelpcardViewModel.class)) {
-            return (T) new HelpcardViewModel(getDetailsHelpcardByBoardGameIdUseCase);
+            return (T) new HelpcardViewModel(getHelpcardByHelpcardIdUseCase);
         } else if (modelClass.isAssignableFrom(CatalogViewModel.class)) {
-            return (T) new CatalogViewModel(getAllHelpcardsUseCase, deleteHelpcardUseCase,
-                    deleteHelpcardByIdUseCase, updateHelpcardByObjectUseCase,
-                    deleteHelpcardsByLockUseCase);
+            return (T) new CatalogViewModel(getAllHelpcardsUseCase,
+                    deleteHelpcardUnlockedByHelpcardIdUseCase,
+                    updateHelpcardFavoriteByHelpcardIdUseCase,
+                    updateHelpcardLockingByHelpcardIdUseCase,
+                    deleteHelpcardsByUnlockStateUseCase);
         } else if (modelClass.isAssignableFrom(AddCardViewModel.class)) {
-            return (T) new AddCardViewModel(saveNewHelpcardUseCase, getKeyboardTypeUseCase);
+            return (T) new AddCardViewModel(saveHelpcardNewByHelpcardIdUseCase,
+                    getKeyboardTypeUseCase);
         } else if (modelClass.isAssignableFrom(CardEditViewModel.class)) {
-            return (T) new CardEditViewModel(getDetailsHelpcardByBoardGameIdUseCase, updateHelpcardByObjectUseCase, getKeyboardTypeUseCase);
+            return (T) new CardEditViewModel(getHelpcardByHelpcardIdUseCase,
+                    updateHelpcardByHelpcardIdUseCase,
+                    getKeyboardTypeUseCase);
         } else if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
-            return (T) new SettingsViewModel(saveKeyboardTypeByUserChoiceUseCase, getKeyboardTypeUseCase);
+            return (T) new SettingsViewModel(saveKeyboardTypeByUserChoiceUseCase,
+                    getKeyboardTypeUseCase);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass);
     }

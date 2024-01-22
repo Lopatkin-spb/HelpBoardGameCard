@@ -37,6 +37,7 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
     }
     @Override
     public void delete(int id) {
+        new DeleteHelpcardByIdAsyncTask(helpcardDao).execute(id);
     }
     @Override
     public void update(Helpcard helpcard) {
@@ -62,7 +63,6 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
     }
 
 
-    //todo: move to db repo -------
     private static class InsertHelpcardAsyncTask extends AsyncTask<Helpcard, Void, Void> {
         private HelpcardDao helpcardDao;
 
@@ -106,6 +106,19 @@ public class DatabaseRepositoryImpl implements DatabaseRepository {
         }
     }
 
+    private static class DeleteHelpcardByIdAsyncTask extends AsyncTask<Integer, Void, Void> {
+        private HelpcardDao helpcardDao;
+
+        private DeleteHelpcardByIdAsyncTask(HelpcardDao helpcardDao) {
+            this.helpcardDao = helpcardDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            helpcardDao.delete(integers[0]);
+            return null;
+        }
+    }
 
     private static class DeleteAllHelpcardsAsyncTask extends AsyncTask<Void, Void, Void> {
         private HelpcardDao helpcardDao;

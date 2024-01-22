@@ -3,15 +3,17 @@ package space.lopatkin.spb.helpboardgamecard.di;
 import android.app.Application;
 import dagger.Module;
 import dagger.Provides;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardByIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUnlockedByHelpcardIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByLockUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByUnlockStateUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetAllHelpcardsUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetDetailsHelpcardByBoardGameIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByHelpcardIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveHelpcardNewByHelpcardIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardTypeByUserChoiceUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveNewHelpcardUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByObjectUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByHelpcardIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardFavoriteByHelpcardIdUseCase;
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardLockingByHelpcardIdUseCase;
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory;
 
 import javax.inject.Singleton;
@@ -33,22 +35,26 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public ViewModelFactory provideViewModelFactory(GetDetailsHelpcardByBoardGameIdUseCase getDetailsHelpcardByBoardGameIdUseCase,
+    public ViewModelFactory provideViewModelFactory(GetHelpcardByHelpcardIdUseCase getHelpcardByHelpcardIdUseCase,
                                                     GetAllHelpcardsUseCase getAllHelpcardsUseCase,
                                                     DeleteHelpcardUseCase deleteHelpcardUseCase,
-                                                    DeleteHelpcardByIdUseCase deleteHelpcardByIdUseCase,
-                                                    UpdateHelpcardByObjectUseCase updateHelpcardByObjectUseCase,
-                                                    DeleteHelpcardsByLockUseCase deleteHelpcardsByLockUseCase,
-                                                    SaveNewHelpcardUseCase saveNewHelpcardUseCase,
+                                                    DeleteHelpcardUnlockedByHelpcardIdUseCase deleteHelpcardUnlockedByHelpcardIdUseCase,
+                                                    UpdateHelpcardByHelpcardIdUseCase updateHelpcardByHelpcardIdUseCase,
+                                                    UpdateHelpcardFavoriteByHelpcardIdUseCase updateHelpcardFavoriteByHelpcardIdUseCase,
+                                                    UpdateHelpcardLockingByHelpcardIdUseCase updateHelpcardLockingByHelpcardIdUseCase,
+                                                    DeleteHelpcardsByUnlockStateUseCase deleteHelpcardsByUnlockStateUseCase,
+                                                    SaveHelpcardNewByHelpcardIdUseCase saveHelpcardNewByHelpcardIdUseCase,
                                                     SaveKeyboardTypeByUserChoiceUseCase saveKeyboardTypeByUserChoiceUseCase,
                                                     GetKeyboardTypeUseCase getKeyboardTypeUseCase) {
-        return new ViewModelFactory(getDetailsHelpcardByBoardGameIdUseCase,
+        return new ViewModelFactory(getHelpcardByHelpcardIdUseCase,
                 getAllHelpcardsUseCase,
                 deleteHelpcardUseCase,
-                deleteHelpcardByIdUseCase,
-                updateHelpcardByObjectUseCase,
-                deleteHelpcardsByLockUseCase,
-                saveNewHelpcardUseCase,
+                deleteHelpcardUnlockedByHelpcardIdUseCase,
+                updateHelpcardByHelpcardIdUseCase,
+                updateHelpcardFavoriteByHelpcardIdUseCase,
+                updateHelpcardLockingByHelpcardIdUseCase,
+                deleteHelpcardsByUnlockStateUseCase,
+                saveHelpcardNewByHelpcardIdUseCase,
                 saveKeyboardTypeByUserChoiceUseCase,
                 getKeyboardTypeUseCase
         );

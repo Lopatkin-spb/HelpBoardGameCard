@@ -1,14 +1,14 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase;
 
 import androidx.lifecycle.LiveData;
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
 
-public class GetDetailsHelpcardByBoardGameIdUseCase {
+public class GetHelpcardByHelpcardIdUseCase {
 
     private AppRepository repository;
 
-    public GetDetailsHelpcardByBoardGameIdUseCase(AppRepository repository) {
+    public GetHelpcardByHelpcardIdUseCase(AppRepository repository) {
         this.repository = repository;
     }
 

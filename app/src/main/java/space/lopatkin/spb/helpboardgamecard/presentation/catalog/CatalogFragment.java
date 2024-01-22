@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -18,17 +17,19 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.snackbar.Snackbar;
+import org.jetbrains.annotations.NotNull;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentCatalogBinding;
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
+import space.lopatkin.spb.helpboardgamecard.presentation.AbstractFragment;
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory;
 
 import javax.inject.Inject;
 import java.util.List;
 
-public class CatalogFragment extends Fragment {
+public class CatalogFragment extends AbstractFragment {
     @Inject
     ViewModelFactory viewModelFactory;
     private CatalogViewModel viewModel;
@@ -36,29 +37,23 @@ public class CatalogFragment extends Fragment {
     private HelpcardAdapter adapter;
     private NavController navController;
 
-    //todo: extract strings to res
-    private String allCardDelete = "All unlock helpcards deleted";
-    private String update = "Helpcard updated";
-    private String lock = "Helpcard is lock";
-    private String unlock = "Helpcard unlock";
-    private String favorites = "Helpcard is favorites";
-    private String unfavorites = "Helpcard unfavorites";
-    private String delete = "Helpcard delete";
-    private String notDelete = "Helpcard not delete";
-
-    //todo: move to absFrag
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(@NonNull @NotNull Context context) {
         ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
         super.onAttach(context);
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    @Nullable
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater,
+                             @Nullable @org.jetbrains.annotations.Nullable ViewGroup container,
+                             @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         binding = FragmentCatalogBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        //разрешение на создание верхнего меню
-        setHasOptionsMenu(true);
+
+        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(CatalogViewModel.class);
+
 //инициализация ресайкл вью
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recyclerView.setHasFixedSize(true);
@@ -66,45 +61,44 @@ public class CatalogFragment extends Fragment {
         adapter = new HelpcardAdapter();
         binding.recyclerView.setAdapter(adapter);
 
-        setSwipeDelete(adapter);
-        setEditFavoritesItem(adapter);
-        setEditLockItem(adapter);
-        navigateToShowItem(adapter);
+        onActionSwipe(adapter);
+        onActionFavorite(adapter);
+        onActionLock(adapter);
+        navigateToHelpcard(adapter);
+
+        loadHelpcardsList();
+
         return view;
     }
 
-    //todo: upgrade dependencies in gradle (add fragment last vers)
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        navController = Navigation.findNavController(getView());
-
-        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(CatalogViewModel.class);
-        viewModel.getListHelpcards().observe(getActivity(), new Observer<List<Helpcard>>() {
-            @Override
-            public void onChanged(@Nullable List<Helpcard> helpcards) {
-                adapter.setListHelpcards(helpcards);
-            }
-        });
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu,
+                                    @NonNull @NotNull MenuInflater inflater) {
         inflater.inflate(R.menu.app_bar_right_side_main_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete_all_unlock_helpcards:
                 viewModel.deleteAllUnlockHelpcards();
-                showMessage(allCardDelete);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        navController = Navigation.findNavController(getView());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resultListener();
     }
 
     @Override
@@ -113,7 +107,22 @@ public class CatalogFragment extends Fragment {
         binding = null;
     }
 
-    private void setSwipeDelete(HelpcardAdapter adapter) {
+    @Override
+    protected void showMessage(View parentView, int message) {
+        super.showMessage(parentView, message);
+    }
+
+    private void loadHelpcardsList() {
+        viewModel.loadHelpcardsList();
+        viewModel.listHelpcards.observe(getViewLifecycleOwner(), new Observer<List<Helpcard>>() {
+            @Override
+            public void onChanged(@Nullable List<Helpcard> helpcards) {
+                adapter.setListHelpcards(helpcards);
+            }
+        });
+    }
+
+    private void onActionSwipe(HelpcardAdapter adapter) {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -122,87 +131,78 @@ public class CatalogFragment extends Fragment {
                                   @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                boolean lock = adapter.getHelpcardAt(viewHolder.getAdapterPosition()).isLock();
-                if (!lock) {
-                    Helpcard helpcard = adapter.getHelpcardAt(viewHolder.getAdapterPosition());
-                    viewModel.delete(helpcard);
-                    showMessage(delete);
-                } else {
-                    showMessage(notDelete);
-                }
+                Helpcard helpcard = adapter.getHelpcardAt(viewHolder.getAdapterPosition());
+                viewModel.delete(helpcard);
             }
         }).attachToRecyclerView(binding.recyclerView);
     }
 
-    private void setEditFavoritesItem(HelpcardAdapter adapter) {
+    private void onActionFavorite(HelpcardAdapter adapter) {
         adapter.setOnItemCheckboxListenerTest(new HelpcardAdapter.OnItemCheckboxListenerTest() {
             @Override
             public void onItemCheckboxTest(Helpcard helpcard, boolean b) {
                 helpcard.setFavorites(b);
-                viewModel.update(helpcard);
-                if (b) {
-                    showMessage(favorites);
-                } else {
-                    showMessage(unfavorites);
-                }
+                viewModel.updateFavorite(helpcard);
             }
         });
     }
 
-    private void setEditLockItem(HelpcardAdapter adapter) {
+    private void onActionLock(HelpcardAdapter adapter) {
         adapter.setOnItemCheckboxListenerLock(new HelpcardAdapter.OnItemCheckboxListenerLock() {
             @Override
             public void onItemCheckboxLock(Helpcard helpcard, boolean b) {
                 helpcard.setLock(b);
-                viewModel.update(helpcard);
-                if (b) {
-                    showMessage(lock);
-                } else {
-                    showMessage(unlock);
-                }
+                viewModel.updateLocking(helpcard);
             }
         });
     }
 
-    private void navigateToShowItem(HelpcardAdapter adapter) {
+    private void navigateToHelpcard(HelpcardAdapter adapter) {
         adapter.setOnItemClickListener(new HelpcardAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Helpcard helpcard) {
-                Helpcard helpcardToViewcard = getData(helpcard);
-                Integer id = helpcardToViewcard.getId();
-                //отправка данных (parcelable)
                 CatalogFragmentDirections.ActionNavCatalogToNavHelpcard action =
-                        CatalogFragmentDirections.actionNavCatalogToNavHelpcard().setId(id);
+                        CatalogFragmentDirections.actionNavCatalogToNavHelpcard().setId(helpcard.getId());
                 navController.navigate(action);
             }
         });
     }
 
-    //todo: redundant method - delete
-    private Helpcard getData(Helpcard data) {
-        int editId = data.getId();
-        String editTitle = data.getTitle();
-        String editVictoryCondition = data.getVictoryCondition();
-        String editEndGame = data.getEndGame();
-        String editPreparation = data.getPreparation();
-        String editDescription = data.getDescription();
-        String editPlayerTurn = data.getPlayerTurn();
-        String editEffects = data.getEffects();
-        boolean editFavorites = data.isFavorites();
-        boolean editLock = data.isLock();
-        int editPriority = data.getPriority();
-        Helpcard h = new Helpcard(editId, editTitle,
-                editVictoryCondition, editEndGame, editPreparation,
-                editDescription, editPlayerTurn, editEffects,
-                editFavorites, editLock, editPriority);
-        return h;
+    private void resultListener() {
+        viewModel.message.observe(this, messageType -> {
+            if (messageType != Message.POOL_EMPTY) {
+                selectingTextFrom(messageType);
+            }
+        });
     }
 
-    //todo: move method to activity and send message from EventBus
-    private void showMessage(String message) {
-        Snackbar.make(binding.recyclerView, message, Snackbar.LENGTH_SHORT).show();
+    private void selectingTextFrom(Message type) {
+        switch (type) {
+            case ACTION_ENDED_SUCCESS:
+                showMessage(binding.recyclerView, R.string.message_action_ended_success);
+                break;
+            case ACTION_ENDED_ERROR:
+                showMessage(binding.recyclerView, R.string.error_action_ended);
+                break;
+            case DELETE_ITEM_ACTION_ENDED_SUCCESS:
+                showMessage(binding.recyclerView, R.string.message_helpcard_deleted);
+                break;
+            case DELETE_ITEM_ACTION_STOPPED:
+                showMessage(binding.recyclerView, R.string.message_helpcard_not_deleted);
+                break;
+            case FAVORITE_ITEM_ACTION_ENDED_SUCCESS:
+                showMessage(binding.recyclerView, R.string.message_helpcard_favorite_updated);
+                break;
+            case FAVORITE_ITEM_ACTION_STOPPED:
+                showMessage(binding.recyclerView, R.string.message_helpcard_favorite_not_updated);
+                break;
+            case LOCKING_ITEM_ACTION_ENDED_SUCCESS:
+                showMessage(binding.recyclerView, R.string.message_helpcard_locking_updated);
+                break;
+        }
     }
 
 }

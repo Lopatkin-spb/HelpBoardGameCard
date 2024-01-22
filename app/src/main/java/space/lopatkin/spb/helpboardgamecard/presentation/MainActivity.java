@@ -3,9 +3,11 @@ package space.lopatkin.spb.helpboardgamecard.presentation;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import org.greenrobot.eventbus.EventBus;
 import space.lopatkin.spb.helpboardgamecard.BuildConfig;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.databinding.DrawerActivityMainBinding;
@@ -27,18 +30,15 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DrawerActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
         setToolbar();
-
         setNavigation();
-
         setApplicationVersion();
-
         onActionOpenDrawer();
     }
 
@@ -49,27 +49,45 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private void setToolbar() {
-//        тулбар должен быть инициализирован, чтоб на фрагментах можно было их установить
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        hideCustomKeyboard(); //Maybe move code to keyboard util
+        hideDeviceKeyboard(binding.drawerLayout); //Maybe move code to keyboard util
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        hideCustomKeyboard(); //Maybe move code to keyboard util
+        super.onBackPressed();
     }
 
     private void onActionOpenDrawer() {
         binding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-                hideKeyboard(drawerView);
+                hideCustomKeyboard(); //Maybe move code to keyboard util
+                hideDeviceKeyboard(drawerView); //Maybe move code to keyboard util
             }
         });
     }
 
-    private void hideKeyboard(View view) {
-        if (view.getWindowToken() != null) {
+    private void setToolbar() {
+//        тулбар должен быть инициализирован, чтоб на фрагментах можно было их установить
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    private void hideDeviceKeyboard(View view) {
+        if (view != null && view.getWindowToken() != null) {
             InputMethodManager inputManager =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    private void hideCustomKeyboard() {
+        EventBus.getDefault().post(new KeyboardDoneEvent());
     }
 
     private void setApplicationVersion() {

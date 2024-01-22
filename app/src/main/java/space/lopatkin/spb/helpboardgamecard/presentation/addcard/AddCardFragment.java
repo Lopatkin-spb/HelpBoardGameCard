@@ -11,31 +11,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import com.google.android.material.snackbar.Snackbar;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 import space.lopatkin.spb.helpboardgamecard.R;
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication;
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentAddcardBinding;
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
+import space.lopatkin.spb.helpboardgamecard.presentation.AbstractFragment;
 import space.lopatkin.spb.helpboardgamecard.presentation.KeyboardDoneEvent;
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory;
 import space.lopatkin.spb.keyboard.KeyboardCapabilities;
-import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
 
 import javax.inject.Inject;
 
-public class AddCardFragment extends Fragment {
+public class AddCardFragment extends AbstractFragment {
     @Inject
     ViewModelFactory viewModelFactory;
     private AddCardViewModel viewModel;
@@ -43,38 +42,55 @@ public class AddCardFragment extends Fragment {
     private NavController navController;
     private InputConnection inputConnection;
 
-    //todo: move to abstract fragment
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(@NonNull @NotNull Context context) {
         ((HelpBoardGameCardApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
         super.onAttach(context);
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    @Nullable
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater,
+                             @Nullable @org.jetbrains.annotations.Nullable ViewGroup container,
+                             @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         binding = FragmentAddcardBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
 
-        setScreenTitle(R.string.title_addcard);
-        //разрешает верхнее правое меню
-        setHasOptionsMenu(true);
-        return view;
+        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(AddCardViewModel.class);
+        loadKeyboardType();
+
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu,
+                                    @NonNull @NotNull MenuInflater inflater) {
+        inflater.inflate(R.menu.addcard_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                viewModel.saveNewHelpcard(getData());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         navController = Navigation.findNavController(getView());
-
-        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(AddCardViewModel.class);
-
-        loadKeyboardType();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
+        resultListener();
     }
 
     @Override
@@ -84,31 +100,25 @@ public class AddCardFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.addcard_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        onKeyboardDoneEvent(new KeyboardDoneEvent());
-        switch (item.getItemId()) {
-            case R.id.action_save:
-                saveNewHelpcard();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
+    @Override
+    protected void showMessage(View parentView, int message) {
+        super.showMessage(parentView, message);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKeyboardDoneEvent(KeyboardDoneEvent event) {
+        clearFocus();
+        if (binding != null) {
+            binding.keyboardAddcard.setVisibility(View.GONE);
+        }
+    }
+
+    private void clearFocus() {
         if (binding.editTextTitle.isFocused()) {
             binding.editTextTitle.clearFocus();
         }
@@ -130,7 +140,6 @@ public class AddCardFragment extends Fragment {
         if (binding.editTextEffects.isFocused()) {
             binding.editTextEffects.clearFocus();
         }
-        binding.keyboardAddcard.setVisibility(View.GONE);
     }
 
     private void loadKeyboardType() {
@@ -182,20 +191,6 @@ public class AddCardFragment extends Fragment {
         onActionEffects();
     }
 
-
-    private void saveNewHelpcard() {
-        Helpcard newHelpcard = getData();
-        if (newHelpcard.getTitle().isEmpty()) {
-            showMessage(R.string.message_insert_title);
-            return;
-        }
-        viewModel.saveNewHelpcard(newHelpcard);
-        showMessage(R.string.message_helpcard_saved);
-        //todo: move to onOptionsItemSel
-        hideKeyboard();
-        navigateToCatalog();
-    }
-
     private Helpcard getData() {
         return new Helpcard(
                 binding.editTextTitle.getText().toString(),
@@ -212,22 +207,6 @@ public class AddCardFragment extends Fragment {
 
     private void navigateToCatalog() {
         navController.navigate(AddCardFragmentDirections.actionNavAddcardToNavCatalog());
-    }
-
-    //todo: rework to delete focus to
-    private void hideKeyboard() {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    private void setScreenTitle(int toolbarTitle) {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(toolbarTitle);
-    }
-
-    //todo: move to main act after add eventBus
-    private void showMessage(int message) {
-        Snackbar.make(binding.scrollAddcard, message, Snackbar.LENGTH_SHORT).show();
     }
 
     private void onActionTitle() {
@@ -305,6 +284,29 @@ public class AddCardFragment extends Fragment {
         binding.keyboardAddcard.setHeightFragment(binding.containerAddcard.getHeight());
         binding.keyboardAddcard.setScrollView(binding.scrollAddcard);
         binding.keyboardAddcard.scrollEditTextToKeyboard(view);
+    }
+
+    private void resultListener() {
+        viewModel.message.observe(this, messageType -> {
+            if (messageType != Message.POOL_EMPTY) {
+                selectingTextFrom(messageType);
+            }
+        });
+    }
+
+    private void selectingTextFrom(Message type) {
+        switch (type) {
+            case ACTION_STOPPED:
+                showMessage(binding.scrollAddcard, R.string.message_insert_title);
+                break;
+            case ACTION_ENDED_SUCCESS:
+                showMessage(binding.scrollAddcard, R.string.message_helpcard_saved);
+                navigateToCatalog();
+                break;
+            case ACTION_ENDED_ERROR:
+                showMessage(binding.scrollAddcard, R.string.error_action_ended);
+                break;
+        }
     }
 
 }
