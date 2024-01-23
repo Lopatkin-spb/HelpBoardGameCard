@@ -8,6 +8,7 @@
         android:layout_marginHorizontal="@dimen/application_margin"
         android:layout_marginTop="@dimen/application_margin"
         android:background="@drawable/bg_item_card"
+        android:foreground="?android:attr/selectableItemBackground"
         android:elevation="8dp">
 
     <androidx.constraintlayout.widget.Guideline

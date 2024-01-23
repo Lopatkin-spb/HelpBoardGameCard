@@ -1,5 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.cardedit;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
@@ -71,6 +72,7 @@ public class CardEditFragment extends AbstractFragment {
         }
 
         loadKeyboardType();
+        setAnimationSizeForExpandableViews();
 
         return binding.getRoot();
     }
@@ -324,6 +326,12 @@ public class CardEditFragment extends AbstractFragment {
                 showMessage(binding.scrollCardEdit, R.string.error_action_ended);
                 break;
         }
+    }
+
+    private void setAnimationSizeForExpandableViews() {
+        LayoutTransition layoutTransition = new LayoutTransition();
+        layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+        binding.layoutExpandableCardedit.setLayoutTransition(layoutTransition);
     }
 
 }

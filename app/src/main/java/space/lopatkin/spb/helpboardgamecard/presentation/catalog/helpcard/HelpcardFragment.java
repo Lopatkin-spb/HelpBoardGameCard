@@ -1,5 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard;
 
+import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -66,6 +67,9 @@ public class HelpcardFragment extends AbstractFragment {
         onPreparation();
         onPlayerTurn();
         onEffects();
+
+        setAnimationSizeForExpandableViews();
+
         return view;
     }
 
@@ -168,6 +172,12 @@ public class HelpcardFragment extends AbstractFragment {
             label.show(view, motionEvent, textView);
         }
         return true;
+    }
+
+    private void setAnimationSizeForExpandableViews() {
+        LayoutTransition layoutTransition = new LayoutTransition();
+        layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+        binding.layoutExpandableHelpcard.setLayoutTransition(layoutTransition);
     }
 
 }

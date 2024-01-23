@@ -1,34 +1,28 @@
 
 
---- GLOBAL: KOTLIN!!!
+--- GLOBAL TASKS: KOTLIN!!!
+
 - рефакторинг
-- нужно: нейминги -> вьюМоделс -> лоадинг -> баги клавы ->
-
-
-
 - котлин
+- coroutines
 
 
 
 
---- TODAY:
 
-- xml: add click animations, add fields empty to full data animations, add loading indicator;
-- db: add return int to void room methods;
 
-- рефакторинг: доделка чистого кода
+--- TODAY TASKS:
+
+- db: add return int to void room methods, add messages to fragments;
+- models: add item model, add lombok, edit names to model, handling error to fragment getArgs;
 
 - cleaning code keyboard - по минимому привести в порядок код и перейти на релиз
 - запушить проект и обновить резюме
 
-- рефакторинг: легкий рефакторинг приложения (имена, вьюмодели,
 - рефакторинг: возможно исаправить легкие баги и убрать лишние елементы
 
-- add loading indicator, bug show previous helpcard if enter to new helpcard;
-
-- add exit, hide share (или забрать из другого проекта решение через ShareService)
+- add exit, share (забрать из другого проекта решение через ShareService)
 - optimize long time enable icon keyboard (set recycle view)
-- bug: delete openDrower in activity
 
 - баг при показе лейбла: текст иногда неверно передается в лейбл для рассчетов - одна линия вместо двух
 (если нарисовать иконки без перехода на след строку);
@@ -51,32 +45,27 @@
 
 
 
---- TOMORROW:
-
-
-- RENAMING: -> presenter, addcard -> create helpcard, ...
+--- TOMORROW TASKS:
 
 
 - change name app to "Help Cards for Board Game" , setup
-- clean architecture
 - add game variants
 - add in description split to speed / agression/ mehanics
 
-- REFACTORING: rework methods hide keyboard / renames classes & nameApp /
-  rework xml layouts (to constraint) / move repeating code to abstract class (for fragments) /
-  extract strings from code to res / pass data from viewModel to frag (good practices) /
-  add version app to bottom drawer / update share fragment to text (soon) / edit drawer menu /
-  delete setTitleDynamically from all fragment /
-  SaveNewHelpcard in AddcardViewModel set to MutableLiveData and dont move after save if error save /
-  all obsevers from ViewModels set this instead getActivity /
+- REFACTORING GLOBAL: rework methods hide keyboard / renames classes & nameApp /
+  rework xml layouts (to constraint) / extract strings from xml to res / pass data from viewModel to frag (good practices) /
+  update share fragment to text (soon) /
+
+- REFACTORING RENAMING: -> presenter, addcard -> create helpcard, keyboard -> app custom/ device default,
+  -> Boardgames List, -> boardgame item, -> boardgame helpcard ...
 
 
 
 
 
---- FUTURE:
+
+--- FUTURE TASKS:
 1) migrate to kotlin
-
 
 - global: create text style...
 - global: renames classes
@@ -156,12 +145,6 @@ setup
 
 
 
-- MainMenu/ AddCard/ CardEdit: updated hide keyboards;
-- AddCard/ CardEdit/ Catalog: added message, moved message code to usecase and viewModel;
-- CardEdit/Helpcard fixed bug: fast show data from previous fragment before load actual fragment;
-- MainMenu: hide share item;
-
-- Refactoring: created parent fragment, renamed fields & methods & usecases,
-cleaning viewModels code, deleted deprecation methods from fragments, moved fields & methods to guideline,
-deleted return values in viewModels, corrected annotations to override methods,
-move code to parent in fragments, split usecases, added method to dbRepo;
+- CardEdit/ Helpcard: add expandable animations for views;
+- CardEdit/ Addcard: add displaying animations for keyboard;
+- Catalog: add click animation to items;
