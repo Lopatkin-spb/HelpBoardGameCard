@@ -14,7 +14,7 @@ buildscript {
 
 
         // KGP added for NavigationSafeArgsGradlePlugin. Must set upper NSAGP.
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20'
         def nav_version = "2.3.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
 

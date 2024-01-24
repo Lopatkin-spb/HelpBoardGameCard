@@ -1,6 +1,8 @@
-apply plugin: 'com.android.application'
-apply plugin: "androidx.navigation.safeargs"
-
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs'
+}
 
 android {
     compileSdk 33
@@ -12,12 +14,8 @@ android {
         targetSdk 33
         versionCode 1
         versionName "0.2.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -27,8 +25,13 @@ android {
         }
     }
 
-    viewBinding {
-        enabled true
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
 }
@@ -40,23 +43,30 @@ dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //kotlin
+    implementation 'androidx.core:core-ktx:1.7.0'
+
     /*
      * Android Jetpack: Appcompat (+ material design)
      */
+    //kotlin
     def appcompat_version = "1.6.1"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
 
     /*
-     * Android Jetpack: Lifecycle
+     * Android Jetpack: ViewModel & Lifecycle
      */
     def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    // Noinspection LifecycleAnnotationProcessorWithJava8
+    //kotlin
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     /*
      * Xml
      */
+    //kotlin
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -67,6 +77,9 @@ dependencies {
     def navigation_version = "2.3.0"
     implementation "androidx.navigation:navigation-fragment:$navigation_version"
     implementation "androidx.navigation:navigation-ui:$navigation_version"
+//kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     /*
      * Android Jetpack: Room
