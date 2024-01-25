@@ -1,37 +1,32 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.addcard;
+package space.lopatkin.spb.helpboardgamecard.presentation.addcard
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveHelpcardNewByHelpcardIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveHelpcardNewByHelpcardIdUseCase
 
-public class AddCardViewModel extends ViewModel {
+class AddCardViewModel(
+    private val saveHelpcardNewByHelpcardIdUseCase: SaveHelpcardNewByHelpcardIdUseCase,
+    private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
+) : ViewModel() {
 
-    private SaveHelpcardNewByHelpcardIdUseCase saveHelpcardNewByHelpcardIdUseCase;
-    private GetKeyboardTypeUseCase getKeyboardTypeUseCase;
-    private MutableLiveData<KeyboardType> keyboardTypeMutable = new MutableLiveData<>();
-    private MutableLiveData<Message> messageMutable = new MutableLiveData<>();
-    LiveData<KeyboardType> keyboardType = keyboardTypeMutable;
-    LiveData<Message> message = messageMutable;
+    private val keyboardTypeMutable = MutableLiveData<KeyboardType>()
+    private val messageMutable = MutableLiveData<Message>()
+    val keyboardType: LiveData<KeyboardType> = keyboardTypeMutable
+    val message: LiveData<Message> = messageMutable
 
-    public AddCardViewModel(SaveHelpcardNewByHelpcardIdUseCase saveHelpcardNewByHelpcardIdUseCase,
-                            GetKeyboardTypeUseCase getKeyboardTypeUseCase) {
-        this.saveHelpcardNewByHelpcardIdUseCase = saveHelpcardNewByHelpcardIdUseCase;
-        this.getKeyboardTypeUseCase = getKeyboardTypeUseCase;
+    fun loadKeyboardType() {
+        keyboardTypeMutable.value = getKeyboardTypeUseCase.execute()
     }
 
-    public void loadKeyboardType() {
-        keyboardTypeMutable.setValue(getKeyboardTypeUseCase.execute());
-    }
-
-    public void saveNewHelpcard(Helpcard helpcard) {
-        Message messageResponse = saveHelpcardNewByHelpcardIdUseCase.execute(helpcard);
-        messageMutable.setValue(messageResponse);
-        messageMutable.setValue(Message.POOL_EMPTY);
+    fun saveNewHelpcard(helpcard: Helpcard?) {
+        val messageResponse: Message = saveHelpcardNewByHelpcardIdUseCase.execute(helpcard)
+        messageMutable.value = messageResponse
+        messageMutable.value = Message.POOL_EMPTY
     }
 
 }
