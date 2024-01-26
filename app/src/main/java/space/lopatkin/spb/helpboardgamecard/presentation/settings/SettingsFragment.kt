@@ -82,12 +82,16 @@ class SettingsFragment : AbstractFragment() {
     }
 
     private fun onActionSpinner() {
-        val listener = SpinnerInteractionListener(viewModel)
+        val spinnerListener = SpinnerInteractionListener()
 
         if (binding != null) {
-            binding!!.actionSpinnerKeyboards.setOnTouchListener(listener)
-            binding!!.actionSpinnerKeyboards.onItemSelectedListener = listener
+            binding!!.actionSpinnerKeyboards.setOnTouchListener(spinnerListener)
+            binding!!.actionSpinnerKeyboards.onItemSelectedListener = spinnerListener
         }
+
+        spinnerListener.setEndActionListener(SpinnerInteractionListener.OnEndActionListener { userSelection ->
+            viewModel.saveKeyboardType(userSelection)
+        })
 
     }
 
