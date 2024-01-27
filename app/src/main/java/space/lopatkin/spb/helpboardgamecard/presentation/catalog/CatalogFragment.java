@@ -54,18 +54,7 @@ public class CatalogFragment extends AbstractFragment {
 
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(CatalogViewModel.class);
 
-//инициализация ресайкл вью
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.recyclerView.setHasFixedSize(true);
-//подключение адаптера к ресайкл вью
-        adapter = new HelpcardAdapter();
-        binding.recyclerView.setAdapter(adapter);
-
-        onActionSwipe(adapter);
-        onActionFavorite(adapter);
-        onActionLock(adapter);
-        navigateToHelpcard(adapter);
-
+        setupList();
         loadHelpcardsList();
 
         return view;
@@ -117,9 +106,20 @@ public class CatalogFragment extends AbstractFragment {
         viewModel.listHelpcards.observe(getViewLifecycleOwner(), new Observer<List<Helpcard>>() {
             @Override
             public void onChanged(@Nullable List<Helpcard> helpcards) {
-                adapter.setListHelpcards(helpcards);
+                adapter.setList(helpcards);
             }
         });
+    }
+
+    private void setupList() {
+        //инициализация ресайкл вью
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyclerView.setHasFixedSize(true);
+//подключение адаптера к ресайкл вью
+        adapter = new HelpcardAdapter(this);
+        binding.recyclerView.setAdapter(adapter);
+
+        onActionSwipe(adapter);
     }
 
     private void onActionSwipe(HelpcardAdapter adapter) {
@@ -140,35 +140,18 @@ public class CatalogFragment extends AbstractFragment {
         }).attachToRecyclerView(binding.recyclerView);
     }
 
-    private void onActionFavorite(HelpcardAdapter adapter) {
-        adapter.setOnItemCheckboxListenerTest(new HelpcardAdapter.OnItemCheckboxListenerTest() {
-            @Override
-            public void onItemCheckboxTest(Helpcard helpcard, boolean b) {
-                helpcard.setFavorites(b);
-                viewModel.updateFavorite(helpcard);
-            }
-        });
+    public void notifyToUpdateFavorite(Helpcard helpcard) {
+        viewModel.updateFavorite(helpcard);
     }
 
-    private void onActionLock(HelpcardAdapter adapter) {
-        adapter.setOnItemCheckboxListenerLock(new HelpcardAdapter.OnItemCheckboxListenerLock() {
-            @Override
-            public void onItemCheckboxLock(Helpcard helpcard, boolean b) {
-                helpcard.setLock(b);
-                viewModel.updateLocking(helpcard);
-            }
-        });
+    public void notifyToUpdateLocking(Helpcard helpcard) {
+        viewModel.updateLocking(helpcard);
     }
 
-    private void navigateToHelpcard(HelpcardAdapter adapter) {
-        adapter.setOnItemClickListener(new HelpcardAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Helpcard helpcard) {
-                CatalogFragmentDirections.ActionNavCatalogToNavHelpcard action =
-                        CatalogFragmentDirections.actionNavCatalogToNavHelpcard().setId(helpcard.getId());
-                navController.navigate(action);
-            }
-        });
+    public void notifyToNavigateToHelpcard(int helpcardId) {
+        CatalogFragmentDirections.ActionNavCatalogToNavHelpcard action =
+                CatalogFragmentDirections.actionNavCatalogToNavHelpcard().setId(helpcardId);
+        navController.navigate(action);
     }
 
     private void resultListener() {
