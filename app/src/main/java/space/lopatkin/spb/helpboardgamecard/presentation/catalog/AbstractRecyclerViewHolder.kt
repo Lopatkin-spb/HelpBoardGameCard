@@ -1,21 +1,15 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.catalog;
+package space.lopatkin.spb.helpboardgamecard.presentation.catalog
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewbinding.ViewBinding;
-import org.jetbrains.annotations.NotNull;
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
-public abstract class AbstractRecyclerViewHolder<E> extends RecyclerView.ViewHolder {
+abstract class AbstractRecyclerViewHolder<E>(
+    binding: ViewBinding, parent: Fragment?
+) : RecyclerView.ViewHolder(binding.root) {
 
-    public AbstractRecyclerViewHolder(@NonNull @NotNull ViewBinding binding, Fragment parent) {
-        super(binding.getRoot());
-    }
-
-    protected abstract void onActionItem();
-
-    protected abstract void setData(E data);
-
-    protected abstract void updateItem();
+    protected abstract fun onActionItem()
+    abstract fun setData(data: E)
+    protected abstract fun updateItem()
 
 }

@@ -1,66 +1,48 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.catalog;
+package space.lopatkin.spb.helpboardgamecard.presentation.catalog
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.*
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardUnlockedByHelpcardIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.DeleteHelpcardsByUnlockStateUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetAllHelpcardsUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardFavoriteByHelpcardIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardLockingByHelpcardIdUseCase;
+class CatalogViewModel(
+    private val getAllHelpcardsUseCase: GetAllHelpcardsUseCase,
+    private val deleteHelpcardUnlockedByHelpcardIdUseCase: DeleteHelpcardUnlockedByHelpcardIdUseCase,
+    private val updateHelpcardFavoriteByHelpcardIdUseCase: UpdateHelpcardFavoriteByHelpcardIdUseCase,
+    private val updateHelpcardLockingByHelpcardIdUseCase: UpdateHelpcardLockingByHelpcardIdUseCase,
+    private val deleteHelpcardsByUnlockStateUseCase: DeleteHelpcardsByUnlockStateUseCase
+) : ViewModel() {
 
-import java.util.List;
+    private val messageMutable = MutableLiveData<Message>()
+    val message: LiveData<Message> = messageMutable
+    var listHelpcards: LiveData<List<Helpcard>>? = null
 
-public class CatalogViewModel extends ViewModel {
-
-    private GetAllHelpcardsUseCase getAllHelpcardsUseCase;
-    private DeleteHelpcardUnlockedByHelpcardIdUseCase deleteHelpcardUnlockedByHelpcardIdUseCase;
-    private UpdateHelpcardFavoriteByHelpcardIdUseCase updateHelpcardFavoriteByHelpcardIdUseCase;
-    private UpdateHelpcardLockingByHelpcardIdUseCase updateHelpcardLockingByHelpcardIdUseCase;
-    private DeleteHelpcardsByUnlockStateUseCase deleteHelpcardsByUnlockStateUseCase;
-    private MutableLiveData<Message> messageMutable = new MutableLiveData<>();
-    LiveData<Message> message = messageMutable;
-    LiveData<List<Helpcard>> listHelpcards;
-
-    public CatalogViewModel(GetAllHelpcardsUseCase getAllHelpcardsUseCase,
-                            DeleteHelpcardUnlockedByHelpcardIdUseCase deleteHelpcardUnlockedByHelpcardIdUseCase,
-                            UpdateHelpcardFavoriteByHelpcardIdUseCase updateHelpcardFavoriteByHelpcardIdUseCase,
-                            UpdateHelpcardLockingByHelpcardIdUseCase updateHelpcardLockingByHelpcardIdUseCase,
-                            DeleteHelpcardsByUnlockStateUseCase deleteHelpcardsByUnlockStateUseCase) {
-        this.getAllHelpcardsUseCase = getAllHelpcardsUseCase;
-        this.deleteHelpcardUnlockedByHelpcardIdUseCase = deleteHelpcardUnlockedByHelpcardIdUseCase;
-        this.updateHelpcardFavoriteByHelpcardIdUseCase = updateHelpcardFavoriteByHelpcardIdUseCase;
-        this.updateHelpcardLockingByHelpcardIdUseCase = updateHelpcardLockingByHelpcardIdUseCase;
-        this.deleteHelpcardsByUnlockStateUseCase = deleteHelpcardsByUnlockStateUseCase;
+    fun loadHelpcardsList() {
+        listHelpcards = getAllHelpcardsUseCase.execute()
     }
 
-    public void loadHelpcardsList() {
-        listHelpcards = getAllHelpcardsUseCase.execute();
+    fun deleteAllUnlockHelpcards() {
+        deleteHelpcardsByUnlockStateUseCase.execute()
     }
 
-    public void deleteAllUnlockHelpcards() {
-        deleteHelpcardsByUnlockStateUseCase.execute();
+    fun updateFavorite(helpcard: Helpcard?) {
+        val messageResponse: Message = updateHelpcardFavoriteByHelpcardIdUseCase.execute(helpcard)
+        messageMutable.value = messageResponse
+        messageMutable.value = Message.POOL_EMPTY
     }
 
-    public void updateFavorite(Helpcard helpcard) {
-        Message messageResponse = updateHelpcardFavoriteByHelpcardIdUseCase.execute(helpcard);
-        messageMutable.setValue(messageResponse);
-        messageMutable.setValue(Message.POOL_EMPTY);
+    fun updateLocking(helpcard: Helpcard?) {
+        val messageResponse: Message = updateHelpcardLockingByHelpcardIdUseCase.execute(helpcard)
+        messageMutable.value = messageResponse
+        messageMutable.value = Message.POOL_EMPTY
     }
 
-    public void updateLocking(Helpcard helpcard) {
-        Message messageResponse = updateHelpcardLockingByHelpcardIdUseCase.execute(helpcard);
-        messageMutable.setValue(messageResponse);
-        messageMutable.setValue(Message.POOL_EMPTY);
-    }
-
-    public void delete(Helpcard helpcard) {
-        Message messageResponse = deleteHelpcardUnlockedByHelpcardIdUseCase.execute(helpcard);
-        messageMutable.setValue(messageResponse);
-        messageMutable.setValue(Message.POOL_EMPTY);
+    fun delete(helpcard: Helpcard?) {
+        val messageResponse: Message = deleteHelpcardUnlockedByHelpcardIdUseCase.execute(helpcard)
+        messageMutable.value = messageResponse
+        messageMutable.value = Message.POOL_EMPTY
     }
 
 }

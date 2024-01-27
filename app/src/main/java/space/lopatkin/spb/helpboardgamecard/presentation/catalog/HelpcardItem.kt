@@ -1,76 +1,75 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.catalog;
+package space.lopatkin.spb.helpboardgamecard.presentation.catalog
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewbinding.ViewBinding;
-import org.jetbrains.annotations.NotNull;
-import space.lopatkin.spb.helpboardgamecard.databinding.ItemCardBinding;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import android.view.View
+import android.widget.CompoundButton
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
+import space.lopatkin.spb.helpboardgamecard.databinding.ItemCardBinding
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 
+class HelpcardItem(
+    parent: Fragment,
+    binding: ViewBinding
+) : AbstractRecyclerViewHolder<Helpcard>(binding, parent) {
 
-public class HelpcardItem extends AbstractRecyclerViewHolder<Helpcard> {
+    private val parent: CatalogFragment
+    private val binding: ItemCardBinding
+    private var data: Helpcard? = null
 
-    private CatalogFragment parent;
-    private ItemCardBinding binding;
-    private Helpcard data;
-
-    public HelpcardItem(@NonNull @NotNull Fragment parent, @NonNull @NotNull ViewBinding binding) {
-        super(binding, parent);
-        this.binding = (ItemCardBinding) binding;
-        this.parent = (CatalogFragment) parent;
-
-        onActionItem();
+    init {
+        this.binding = binding as ItemCardBinding
+        this.parent = parent as CatalogFragment
+        onActionItem()
     }
 
-    @Override
-    protected void onActionItem() {
-        itemView.setOnClickListener(view -> {
-            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                parent.notifyToNavigateToHelpcard(data.getId());
+    override fun onActionItem() {
+        itemView.setOnClickListener { view: View? ->
+            if (adapterPosition != RecyclerView.NO_POSITION && data != null) {
+                parent.notifyToNavigateToHelpcard(data!!.id)
             }
-        });
-    }
-
-    @Override
-    protected void setData(Helpcard data) {
-        this.data = data;
-        updateItem();
-    }
-
-    @Override
-    protected void updateItem() {
-        binding.textItemTitle.setText(data.getTitle());
-        if (data.getDescription() != null && !data.getDescription().isEmpty()) {
-            binding.textItemDescription.setText(data.getDescription());
         }
-        binding.textItemPriority.setText(String.valueOf(data.getPriority()));
-
-        binding.actionItemFavorites.setOnCheckedChangeListener(null);
-        binding.actionItemFavorites.setChecked((data.isFavorites()));
-        onActionFavorite();
-
-        binding.actionItemLock.setOnCheckedChangeListener(null);
-        binding.actionItemLock.setChecked((data.isLock()));
-        onActionLock();
     }
 
-    private void onActionFavorite() {
-        binding.actionItemFavorites.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                data.setFavorites(isChecked);
-                parent.notifyToUpdateFavorite(data);
-            }
-        });
+    override fun setData(data: Helpcard) {
+        this.data = data
+        if (this.data != null) {
+            updateItem()
+        }
     }
 
-    private void onActionLock() {
-        binding.actionItemLock.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-                data.setLock(isChecked);
-                parent.notifyToUpdateLocking(data);
+    override fun updateItem() {
+        binding.textItemTitle.text = data!!.title
+        if (data!!.description != null && !data!!.description.isNullOrEmpty()) {
+            binding.textItemDescription.text = data!!.description
+        }
+        binding.textItemPriority.text = data!!.priority.toString()
+
+        binding.actionItemFavorites.setOnCheckedChangeListener(null)
+        binding.actionItemFavorites.isChecked = data!!.isFavorites
+        onActionFavorite()
+
+        binding.actionItemLock.setOnCheckedChangeListener(null)
+        binding.actionItemLock.isChecked = data!!.isLock
+        onActionLock()
+    }
+
+    private fun onActionFavorite() {
+        binding.actionItemFavorites.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                data!!.isFavorites = isChecked
+                parent.notifyToUpdateFavorite(data)
             }
-        });
+        }
+    }
+
+    private fun onActionLock() {
+        binding.actionItemLock.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                data!!.isLock = isChecked
+                parent.notifyToUpdateLocking(data)
+            }
+        }
     }
 
 }
