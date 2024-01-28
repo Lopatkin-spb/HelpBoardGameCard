@@ -1,84 +1,75 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.cardedit;
+package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.cardedit
 
-import android.content.Context;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
-import android.util.AttributeSet;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatEditText;
-import org.jetbrains.annotations.NotNull;
-import space.lopatkin.spb.keyboard.SymbolIcon;
-import space.lopatkin.spb.keyboard.KeyboardView;
+import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ImageSpan
+import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatEditText
+import space.lopatkin.spb.keyboard.KeyboardView
+import space.lopatkin.spb.keyboard.SymbolIcon
+import java.util.stream.IntStream
 
-import java.util.stream.IntStream;
+class IconEditView : AppCompatEditText {
 
-public class IconEditView extends AppCompatEditText {
+    private val SEPARATOR: Char = SymbolIcon.SEPARATOR[0]
+    private var context: Context
 
-    private static final char SEPARATOR = SymbolIcon.SEPARATOR.charAt(0);
-    private Context context;
-
-    public IconEditView(@NonNull @NotNull Context context) {
-        super(context);
-        this.context = context;
+    constructor(context: Context) : super(context) {
+        this.context = context
     }
 
-    public IconEditView(@NonNull @NotNull Context context, @Nullable @org.jetbrains.annotations.Nullable AttributeSet attrs) {
-        super(context, attrs);
-        this.context = context;
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        this.context = context
     }
 
-    public IconEditView(@NonNull @NotNull Context context, @Nullable @org.jetbrains.annotations.Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        this.context = context;
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        this.context = context
     }
 
-    @Override
-    public void setText(CharSequence charSequence, BufferType type) {
-        String text = String.valueOf(charSequence);
-        Spannable textWithImages = new SpannableString(text);
+    override fun setText(charSequence: CharSequence, type: BufferType) {
+        val text: String = charSequence.toString()
+        val textPainted: Spannable = SpannableString(text)
 
         if (!text.isEmpty() && countImagesIn(text) > 0) {
-            setSpansToText(textWithImages, text);
+            setSpansToText(textPainted, text)
         }
-        super.setText(textWithImages, type);
+
+        super.setText(textPainted, type)
     }
 
-    private void setSpansToText(Spannable textWithImages, String text) {
-        for (int numberImage = 0; numberImage < countImagesIn(text); numberImage++) {
-            int firstCharIndex = getIndexSeparator(text, numberImage);
-            int lastCharIndex = firstCharIndex + SymbolIcon.CODENAME_LENGTH;
-
-            setImageToWord(textWithImages, text, firstCharIndex, lastCharIndex);
+    private fun setSpansToText(textPainted: Spannable, text: String) {
+        for (indexImage in 0 until countImagesIn(text)) {
+            val firstCharIndex: Int = getIndexSeparator(text, indexImage.toInt())
+            val lastCharIndex: Int = firstCharIndex + SymbolIcon.CODENAME_LENGTH
+            setImageToWord(textPainted, text, firstCharIndex, lastCharIndex)
         }
     }
 
-    private void setImageToWord(Spannable textWithImages, String text, int firstCharIndex, int lastCharIndex) {
-        String codename = text.substring(firstCharIndex, lastCharIndex);
-
-        ImageSpan image = new ImageSpan(context,
-                SymbolIcon.getDrawableResourceFrom(codename),
-                KeyboardView.DYNAMIC_DRAWABLE_SPAN);
-
-        textWithImages.setSpan(image, firstCharIndex, lastCharIndex, KeyboardView.SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE);
+    private fun setImageToWord(textPainted: Spannable, text: String, firstCharIndex: Int, lastCharIndex: Int) {
+        val codename: String = text.substring(firstCharIndex, lastCharIndex)
+        val image: ImageSpan = ImageSpan(
+            context,
+            SymbolIcon.getDrawableResourceFrom(codename),
+            KeyboardView.DYNAMIC_DRAWABLE_SPAN
+        )
+        textPainted.setSpan(image, firstCharIndex, lastCharIndex, KeyboardView.SPANNABLE_SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 
-    private long countImagesIn(String text) {
-        CharSequence charSequence = text;
+    private fun countImagesIn(text: String): Long {
+        val charSequence: CharSequence = text
         return charSequence.chars()
-                .filter(character -> character == SEPARATOR)
-                .count();
+            .filter { character -> character == SEPARATOR.code }
+            .count()
     }
 
-    private int getIndexSeparator(String text, int numberImage) {
-        char[] characters = text.toCharArray();
-
-        int[] indexes = IntStream.range(0, characters.length)
-                .filter(index -> characters[index] == SEPARATOR)
-                .toArray();
-
-        return indexes[numberImage];
+    private fun getIndexSeparator(text: String, numberImage: Int): Int {
+        val characters: Array<Char> = text.toCharArray().toTypedArray()
+        val indexes: Array<Int> = IntStream.range(0, characters.size)
+            .filter { index -> characters[index] == SEPARATOR }
+            .toArray()
+            .toTypedArray()
+        return indexes[numberImage]
     }
 
 }

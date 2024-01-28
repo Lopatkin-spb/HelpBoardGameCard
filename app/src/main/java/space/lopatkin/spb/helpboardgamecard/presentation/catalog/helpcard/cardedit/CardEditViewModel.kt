@@ -1,49 +1,44 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.cardedit;
+package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.cardedit
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
-import androidx.lifecycle.ViewModel;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByHelpcardIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByHelpcardIdUseCase;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByHelpcardIdUseCase
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateHelpcardByHelpcardIdUseCase
 
-public class CardEditViewModel extends ViewModel {
+class CardEditViewModel(
+    private val getHelpcardByHelpcardIdUseCase: GetHelpcardByHelpcardIdUseCase,
+    private val updateHelpcardByHelpcardIdUseCase: UpdateHelpcardByHelpcardIdUseCase,
+    private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
+) : ViewModel() {
 
-    private GetHelpcardByHelpcardIdUseCase getHelpcardByHelpcardIdUseCase;
-    private UpdateHelpcardByHelpcardIdUseCase updateHelpcardByHelpcardIdUseCase;
-    private GetKeyboardTypeUseCase getKeyboardTypeUseCase;
-    private MutableLiveData<Integer> helpcardIdMutable = new MutableLiveData<>();
-    private MutableLiveData<KeyboardType> keyboardTypeMutable = new MutableLiveData<>();
-    private MutableLiveData<Message> messageMutable = new MutableLiveData<>();
-    LiveData<Helpcard> helpcard;
-    LiveData<KeyboardType> keyboardType = keyboardTypeMutable;
-    LiveData<Message> message = messageMutable;
+    private val helpcardIdMutable = MutableLiveData<Int>()
+    private val keyboardTypeMutable = MutableLiveData<KeyboardType>()
+    private val messageMutable = MutableLiveData<Message>()
+    var helpcard: LiveData<Helpcard>? = null
+    val keyboardType: LiveData<KeyboardType> = keyboardTypeMutable
+    val message: LiveData<Message> = messageMutable
 
-    public CardEditViewModel(GetHelpcardByHelpcardIdUseCase getHelpcardByHelpcardIdUseCase,
-                             UpdateHelpcardByHelpcardIdUseCase updateHelpcardByHelpcardIdUseCase,
-                             GetKeyboardTypeUseCase getKeyboardTypeUseCase) {
-        this.getHelpcardByHelpcardIdUseCase = getHelpcardByHelpcardIdUseCase;
-        this.updateHelpcardByHelpcardIdUseCase = updateHelpcardByHelpcardIdUseCase;
-        this.getKeyboardTypeUseCase = getKeyboardTypeUseCase;
+    fun loadKeyboardType() {
+        keyboardTypeMutable.value = getKeyboardTypeUseCase.execute()
     }
 
-    public void loadKeyboardType() {
-        keyboardTypeMutable.setValue(getKeyboardTypeUseCase.execute());
+    fun loadHelpcard(helpcardId: Int) {
+        helpcardIdMutable.value = helpcardId
+        helpcard = Transformations.switchMap(helpcardIdMutable) { thisId ->
+            getHelpcardByHelpcardIdUseCase.execute(thisId!!)
+        }
     }
 
-    public void loadHelpcard(int helpcardId) {
-        helpcardIdMutable.setValue(helpcardId);
-        helpcard = Transformations.switchMap(helpcardIdMutable, (thisId) -> getHelpcardByHelpcardIdUseCase.execute(thisId));
-    }
-
-    public void update(Helpcard helpcard) {
-        Message messageResponse = updateHelpcardByHelpcardIdUseCase.execute(helpcard);
-        messageMutable.setValue(messageResponse);
-        messageMutable.setValue(Message.POOL_EMPTY);
+    fun update(helpcard: Helpcard?) {
+        val messageResponse: Message = updateHelpcardByHelpcardIdUseCase.execute(helpcard)
+        messageMutable.value = messageResponse
+        messageMutable.value = Message.POOL_EMPTY
     }
 
 }
