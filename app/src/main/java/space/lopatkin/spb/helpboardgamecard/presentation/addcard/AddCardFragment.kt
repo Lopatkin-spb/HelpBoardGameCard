@@ -33,7 +33,7 @@ class AddCardFragment : AbstractFragment() {
     private var binding: FragmentAddcardBinding? = null
     private var inputConnection: InputConnection? = null
     private val viewModel: AddCardViewModel by lazy {
-        ViewModelProvider(requireActivity(), viewModelFactory!!).get(AddCardViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory!!).get(AddCardViewModel::class.java)
     }
     private val navController: NavController by lazy { Navigation.findNavController(requireView()) }
 

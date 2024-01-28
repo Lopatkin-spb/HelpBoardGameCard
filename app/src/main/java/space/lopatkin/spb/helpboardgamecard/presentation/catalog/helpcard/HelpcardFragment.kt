@@ -24,7 +24,7 @@ class HelpcardFragment : AbstractFragment() {
     @Inject
     var viewModelFactory: ViewModelFactory? = null
     private val viewModel: HelpcardViewModel by lazy {
-        ViewModelProvider(requireActivity(), viewModelFactory!!).get(HelpcardViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory!!).get(HelpcardViewModel::class.java)
     }
     private var binding: FragmentHelpcardBinding? = null
     private val navController: NavController by lazy {

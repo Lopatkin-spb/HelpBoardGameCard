@@ -24,7 +24,7 @@ class CatalogFragment : AbstractFragment() {
     @Inject
     var viewModelFactory: ViewModelFactory? = null
     private val viewModel: CatalogViewModel by lazy {
-        ViewModelProvider(requireActivity(), viewModelFactory!!).get(CatalogViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory!!).get(CatalogViewModel::class.java)
     }
     private var binding: FragmentCatalogBinding? = null
     private val adapter: HelpcardAdapter by lazy { HelpcardAdapter(this) }

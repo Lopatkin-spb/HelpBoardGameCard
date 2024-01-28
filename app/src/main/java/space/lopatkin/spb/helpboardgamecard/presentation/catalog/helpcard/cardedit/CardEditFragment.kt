@@ -33,7 +33,7 @@ class CardEditFragment : AbstractFragment() {
     @Inject
     var viewModelFactory: ViewModelFactory? = null
     private val viewModel: CardEditViewModel by lazy {
-        ViewModelProvider(requireActivity(), viewModelFactory!!).get(CardEditViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory!!).get(CardEditViewModel::class.java)
     }
     private var binding: FragmentCardEditBinding? = null
     private val navController: NavController by lazy { Navigation.findNavController(requireView()) }

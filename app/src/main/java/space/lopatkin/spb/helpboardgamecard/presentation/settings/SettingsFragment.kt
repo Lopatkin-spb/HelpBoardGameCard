@@ -22,7 +22,7 @@ class SettingsFragment : AbstractFragment() {
     @Inject
     var viewModelFactory: ViewModelFactory? = null
     private val viewModel: SettingsViewModel by lazy {
-        ViewModelProvider(requireActivity(), viewModelFactory!!).get(SettingsViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory!!).get(SettingsViewModel::class.java)
     }
     private var binding: FragmentSettingsBinding? = null
 
