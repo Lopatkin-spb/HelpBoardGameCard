@@ -1,20 +1,17 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.share;
+package space.lopatkin.spb.helpboardgamecard.presentation.share
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-public class ShareViewModel extends ViewModel {
+class ShareViewModel : ViewModel() {
+    private val mText: MutableLiveData<String>
 
-    private MutableLiveData<String> mText;
-
-    public ShareViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is share fragment. пока свободный фрагмент");
+    init {
+        mText = MutableLiveData()
+        mText.value = "This is share fragment. пока свободный фрагмент"
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
-
+    val text: LiveData<String>
+        get() = mText
 }

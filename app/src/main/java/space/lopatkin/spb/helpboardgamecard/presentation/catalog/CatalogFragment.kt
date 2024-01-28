@@ -78,10 +78,6 @@ class CatalogFragment : AbstractFragment() {
         binding = null
     }
 
-    override fun showMessage(parentView: View, message: Int) {
-        super.showMessage(parentView, message)
-    }
-
     private fun loadHelpcardsList() {
         viewModel.loadHelpcardsList()
         viewModel.listHelpcards!!.observe(viewLifecycleOwner) { helpcards -> adapter.setList(helpcards) }

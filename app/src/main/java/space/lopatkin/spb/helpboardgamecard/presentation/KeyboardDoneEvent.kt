@@ -1,4 +1,3 @@
-package space.lopatkin.spb.helpboardgamecard.presentation;
+package space.lopatkin.spb.helpboardgamecard.presentation
 
-public class KeyboardDoneEvent {
-}
+class KeyboardDoneEvent

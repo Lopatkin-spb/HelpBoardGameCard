@@ -1,102 +1,97 @@
-package space.lopatkin.spb.helpboardgamecard.presentation;
+package space.lopatkin.spb.helpboardgamecard.presentation
 
+import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout.SimpleDrawerListener
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import org.greenrobot.eventbus.EventBus
+import space.lopatkin.spb.helpboardgamecard.BuildConfig
+import space.lopatkin.spb.helpboardgamecard.R
+import space.lopatkin.spb.helpboardgamecard.databinding.DrawerActivityMainBinding
+import space.lopatkin.spb.helpboardgamecard.databinding.DrawerNavHeaderMainBinding
 
-import android.content.Context;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import org.greenrobot.eventbus.EventBus;
-import space.lopatkin.spb.helpboardgamecard.BuildConfig;
-import space.lopatkin.spb.helpboardgamecard.R;
-import space.lopatkin.spb.helpboardgamecard.databinding.DrawerActivityMainBinding;
-import space.lopatkin.spb.helpboardgamecard.databinding.DrawerNavHeaderMainBinding;
+class MainActivity : AppCompatActivity() {
 
-public class MainActivity extends AppCompatActivity {
+    private var binding: DrawerActivityMainBinding? = null
+    private var bindingHeader: DrawerNavHeaderMainBinding? = null
+    private var mAppBarConfiguration: AppBarConfiguration? = null
 
-    private DrawerActivityMainBinding binding;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    private DrawerNavHeaderMainBinding bindingHeader;
+        binding = DrawerActivityMainBinding.inflate(layoutInflater)
+        val view: View = binding!!.root
+        setContentView(view)
 
-    private AppBarConfiguration mAppBarConfiguration;
-
-    @Override
-    protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DrawerActivityMainBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
-
-        setToolbar();
-        setNavigation();
-        setApplicationVersion();
-        onActionOpenDrawer();
+        setToolbar()
+        setNavigation()
+        setApplicationVersion()
+        onActionOpenDrawer()
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    override fun onSupportNavigateUp(): Boolean {
+        val navController: NavController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        return (NavigationUI.navigateUp(navController, mAppBarConfiguration!!)
+                || super.onSupportNavigateUp())
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        hideCustomKeyboard(); //Maybe move code to keyboard util
-        hideDeviceKeyboard(binding.drawerLayout); //Maybe move code to keyboard util
-        return super.onOptionsItemSelected(item);
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        hideCustomKeyboard() //Maybe move code to keyboard util
+        hideDeviceKeyboard(binding!!.drawerLayout) //Maybe move code to keyboard util
+        return super.onOptionsItemSelected(item)
     }
 
-    @Override
-    public void onBackPressed() {
-        hideCustomKeyboard(); //Maybe move code to keyboard util
-        super.onBackPressed();
+    override fun onBackPressed() {
+        hideCustomKeyboard() //Maybe move code to keyboard util
+        super.onBackPressed()
     }
 
-    private void onActionOpenDrawer() {
-        binding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
-                hideCustomKeyboard(); //Maybe move code to keyboard util
-                hideDeviceKeyboard(drawerView); //Maybe move code to keyboard util
-            }
-        });
-    }
-
-    private void setToolbar() {
-//        тулбар должен быть инициализирован, чтоб на фрагментах можно было их установить
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-    }
-
-    private void hideDeviceKeyboard(View view) {
-        if (view != null && view.getWindowToken() != null) {
-            InputMethodManager inputManager =
-                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private fun onActionOpenDrawer() {
+        if (binding != null) {
+            binding!!.drawerLayout.addDrawerListener(object : SimpleDrawerListener() {
+                override fun onDrawerOpened(drawerView: View) {
+                    hideCustomKeyboard() //Maybe move code to keyboard util
+                    hideDeviceKeyboard(drawerView) //Maybe move code to keyboard util
+                }
+            })
         }
     }
 
-    private void hideCustomKeyboard() {
-        EventBus.getDefault().post(new KeyboardDoneEvent());
+    private fun setToolbar() {
+//        тулбар должен быть инициализирован, чтоб на фрагментах можно было их установить
+        if (binding != null) {
+            setSupportActionBar(binding!!.includeDrawerAppBarMain.toolbar)
+        }
     }
 
-    private void setApplicationVersion() {
-        bindingHeader = DrawerNavHeaderMainBinding.bind(binding.navView.getHeaderView(0));
-        String appVersion = getString(R.string.text_app_version, BuildConfig.VERSION_NAME);
-        bindingHeader.textAppVersion.setText(appVersion);
+    private fun hideDeviceKeyboard(view: View?) {
+        if (view != null && view.windowToken != null) {
+            val inputManager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
-    private void setFloatingActionButton() {
+    private fun hideCustomKeyboard() {
+        EventBus.getDefault().post(KeyboardDoneEvent())
+    }
+
+    private fun setApplicationVersion() {
+        if (binding != null) {
+            bindingHeader = DrawerNavHeaderMainBinding.bind(binding!!.navView.getHeaderView(0))
+            val appVersion: String = getString(R.string.text_app_version, BuildConfig.VERSION_NAME)
+            if (bindingHeader != null) {
+                bindingHeader!!.textAppVersion.text = appVersion
+            }
+        }
+    }
+
+    private fun setFloatingActionButton() {
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -111,20 +106,21 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
-    private void setNavigation() {
+    private fun setNavigation() {
         //навигейшин архитекчер компонент
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_catalog,
-                R.id.nav_addcard,
-                R.id.nav_share,
-                R.id.nav_settings)
-                .setDrawerLayout(binding.drawerLayout)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        mAppBarConfiguration = AppBarConfiguration.Builder(
+            R.id.nav_catalog,
+            R.id.nav_addcard,
+            R.id.nav_share,
+            R.id.nav_settings
+        )
+            .setDrawerLayout(binding!!.drawerLayout)
+            .build()
+        val navController: NavController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration!!)
+        NavigationUI.setupWithNavController(binding!!.navView, navController)
     }
 
 }

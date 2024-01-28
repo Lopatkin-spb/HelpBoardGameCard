@@ -102,10 +102,6 @@ class CardEditFragment : AbstractFragment() {
         binding = null
     }
 
-    override fun showMessage(parentView: View, message: Int) {
-        super.showMessage(parentView, message)
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onKeyboardDoneEvent(event: KeyboardDoneEvent) {
         if (binding != null) {

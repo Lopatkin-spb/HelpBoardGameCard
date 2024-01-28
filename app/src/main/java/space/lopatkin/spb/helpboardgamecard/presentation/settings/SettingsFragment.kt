@@ -56,10 +56,6 @@ class SettingsFragment : AbstractFragment() {
         binding = null
     }
 
-    override fun showMessage(parentView: View, message: Int) {
-        super.showMessage(parentView, message)
-    }
-
     private fun setupSpinner() {
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),

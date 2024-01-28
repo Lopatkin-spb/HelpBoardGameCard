@@ -1,36 +1,25 @@
-package space.lopatkin.spb.helpboardgamecard.presentation.share;
+package space.lopatkin.spb.helpboardgamecard.presentation.share
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.annotation.Nullable;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import space.lopatkin.spb.helpboardgamecard.R;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import space.lopatkin.spb.helpboardgamecard.R
 
-public class ShareFragment extends Fragment {
+class ShareFragment : Fragment() {
 
-
-    //проверено
-
-    private ShareViewModel shareViewModel;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        shareViewModel =
-                ViewModelProviders.of(this).get(ShareViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_share, container, false);
-        final TextView textView = root.findViewById(R.id.text_share);
-        shareViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+    private var shareViewModel: ShareViewModel? = null
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        shareViewModel = ViewModelProviders.of(this).get(ShareViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_share, container, false)
+        val textView = root.findViewById<TextView>(R.id.text_share)
+        shareViewModel!!.text.observe(viewLifecycleOwner) { s -> textView.text = s }
+        return root
     }
 }
