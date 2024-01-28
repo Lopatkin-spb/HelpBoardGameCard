@@ -114,5 +114,8 @@ dependencies {
      * For work synchronously on background threads
      */
     implementation 'androidx.work:work-runtime:2.8.1'
+    //kotlin + coroutines
+    implementation 'androidx.work:work-runtime-ktx:2.8.1'
+
 
 }
