@@ -1,17 +1,11 @@
-package space.lopatkin.spb.helpboardgamecard.domain.usecase;
+package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 
-public class DeleteHelpcardsByUnlockStateUseCase {
+class DeleteHelpcardsByUnlockStateUseCase(private val repository: AppRepository) {
 
-    private AppRepository repository;
-
-    public DeleteHelpcardsByUnlockStateUseCase(AppRepository repository) {
-        this.repository = repository;
-    }
-
-    public void execute() {
-        repository.deleteAllUnlockHelpcards();
+    fun execute() {
+        repository.deleteAllUnlockHelpcards()
     }
 
 }

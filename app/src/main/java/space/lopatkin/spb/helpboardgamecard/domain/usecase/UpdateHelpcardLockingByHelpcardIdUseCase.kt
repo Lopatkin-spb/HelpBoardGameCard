@@ -1,24 +1,18 @@
-package space.lopatkin.spb.helpboardgamecard.domain.usecase;
+package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 
-public class UpdateHelpcardLockingByHelpcardIdUseCase {
+class UpdateHelpcardLockingByHelpcardIdUseCase(private val repository: AppRepository) {
 
-    private AppRepository repository;
-
-    public UpdateHelpcardLockingByHelpcardIdUseCase(AppRepository repository) {
-        this.repository = repository;
-    }
-
-    public Message execute(Helpcard helpcard) {
+    fun execute(helpcard: Helpcard?): Message {
         if (helpcard == null) {
-            return Message.ACTION_ENDED_ERROR;
+            return Message.ACTION_ENDED_ERROR
         }
 
-        repository.update(helpcard);
-        return Message.LOCKING_ITEM_ACTION_ENDED_SUCCESS;
+        repository.update(helpcard)
+        return Message.LOCKING_ITEM_ACTION_ENDED_SUCCESS
     }
 
 }

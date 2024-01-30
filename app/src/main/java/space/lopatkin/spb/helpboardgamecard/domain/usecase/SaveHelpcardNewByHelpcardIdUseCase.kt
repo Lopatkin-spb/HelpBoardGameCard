@@ -1,29 +1,22 @@
-package space.lopatkin.spb.helpboardgamecard.domain.usecase;
+package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 
-public class SaveHelpcardNewByHelpcardIdUseCase {
+class SaveHelpcardNewByHelpcardIdUseCase(private val repository: AppRepository) {
 
-    private AppRepository repository;
-
-    public SaveHelpcardNewByHelpcardIdUseCase(AppRepository repository) {
-        this.repository = repository;
-    }
-
-    public Message execute(Helpcard helpcard) {
+    fun execute(helpcard: Helpcard?): Message {
         if (helpcard == null) {
-            return Message.ACTION_ENDED_ERROR;
+            return Message.ACTION_ENDED_ERROR
         }
-
-        if (helpcard.getTitle().isEmpty()) {
-            return Message.ACTION_STOPPED;
-        } else if (!helpcard.getTitle().isEmpty()) {
-            repository.saveNewHelpcard(helpcard);
-            return Message.ACTION_ENDED_SUCCESS;
+        if (helpcard.title.isEmpty()) {
+            return Message.ACTION_STOPPED
+        } else if (!helpcard.title.isEmpty()) {
+            repository.saveNewHelpcard(helpcard)
+            return Message.ACTION_ENDED_SUCCESS
         }
-        return Message.ACTION_ENDED_ERROR;
+        return Message.ACTION_ENDED_ERROR
     }
 
 }

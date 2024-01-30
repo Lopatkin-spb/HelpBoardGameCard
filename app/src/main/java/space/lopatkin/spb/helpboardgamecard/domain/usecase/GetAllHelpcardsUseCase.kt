@@ -1,21 +1,13 @@
-package space.lopatkin.spb.helpboardgamecard.domain.usecase;
+package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import androidx.lifecycle.LiveData;
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import androidx.lifecycle.LiveData
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 
-import java.util.List;
+class GetAllHelpcardsUseCase(private val repository: AppRepository) {
 
-public class GetAllHelpcardsUseCase {
-
-    private AppRepository repository;
-
-    public GetAllHelpcardsUseCase(AppRepository repository) {
-        this.repository = repository;
-    }
-
-    public LiveData<List<Helpcard>> execute() {
-        return repository.getAllHelpcards();
+    fun execute(): LiveData<List<Helpcard>> {
+        return repository.getAllHelpcards()
     }
 
 }

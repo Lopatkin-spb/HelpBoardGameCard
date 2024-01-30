@@ -1,24 +1,18 @@
-package space.lopatkin.spb.helpboardgamecard.domain.usecase;
+package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message;
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
-import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 
-public class SaveKeyboardTypeByUserChoiceUseCase {
+class SaveKeyboardTypeByUserChoiceUseCase(private val repository: AppRepository) {
 
-    private AppRepository repository;
-
-    public SaveKeyboardTypeByUserChoiceUseCase(AppRepository repository) {
-        this.repository = repository;
-    }
-
-    public Message execute(Object userChoice) {
+    fun execute(userChoice: Any?): Message {
         if (userChoice != null) {
-            KeyboardType type = KeyboardType.getOrdinalFrom(userChoice.toString());
-            repository.saveKeyboardType(type.ordinal());
-            return Message.ACTION_ENDED_SUCCESS;
+            val type: KeyboardType = KeyboardType.getOrdinalFrom(userChoice.toString())
+            repository.saveKeyboardType(type.ordinal)
+            return Message.ACTION_ENDED_SUCCESS
         }
-        return Message.ACTION_ENDED_ERROR;
+        return Message.ACTION_ENDED_ERROR
     }
 
 }

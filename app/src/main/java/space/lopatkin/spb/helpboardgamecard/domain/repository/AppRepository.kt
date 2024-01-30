@@ -1,57 +1,55 @@
-package space.lopatkin.spb.helpboardgamecard.domain.repository;
+package space.lopatkin.spb.helpboardgamecard.domain.repository
 
 import androidx.lifecycle.LiveData;
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
 
-import java.util.List;
-
-public interface AppRepository {
+interface AppRepository {
 
     /**
      * Получить карточку памяти по идентификатору настольной игры.
      */
-    LiveData<Helpcard> getHelpcard(int boardGameId);
+    fun getHelpcard(boardGameId: Int): LiveData<Helpcard>
 
     /**
      * Получить все карточки памяти.
      */
-    LiveData<List<Helpcard>> getAllHelpcards();
+    fun getAllHelpcards(): LiveData<List<Helpcard>>
 
     /**
      * Удалить карточку памяти.
      */
-    void delete(Helpcard helpcard);
+    fun delete(helpcard: Helpcard)
 
     /**
      * Удалить карточку памяти.
      */
-    void delete(int id);
+    fun delete(id: Int)
 
     /**
      * Обновить карточку памяти.
      */
-    void update(Helpcard helpcard);
+    fun update(helpcard: Helpcard)
 
     /**
      * Удалить все незаблокированные карточки памяти.
      */
-    void deleteAllUnlockHelpcards();
+    fun deleteAllUnlockHelpcards()
 
     /**
      * Сохранить новую карточку памяти.
      */
-    void saveNewHelpcard(Helpcard helpcard);
+    fun saveNewHelpcard(helpcard: Helpcard)
 
     /**
      * Сохранить тип включенной клавиатуры в настройках: кастомная или дефолтная.
      *
      * @param type выбранный пользователем тип.
      */
-    void saveKeyboardType(int type);
+    fun saveKeyboardType(type: Int)
 
     /**
      * Получить тип включенной клавиатуры в настройках: кастомная или дефолтная.
      */
-    int getKeyboardType();
+    fun getKeyboardType(): Int
 
 }

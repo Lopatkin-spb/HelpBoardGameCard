@@ -1,18 +1,12 @@
-package space.lopatkin.spb.helpboardgamecard.domain.usecase;
+package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
-import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType;
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 
-public class GetKeyboardTypeUseCase {
+class GetKeyboardTypeUseCase(private val repository: AppRepository) {
 
-    private AppRepository repository;
-
-    public GetKeyboardTypeUseCase(AppRepository repository) {
-        this.repository = repository;
-    }
-
-    public KeyboardType execute() {
-        return KeyboardType.getOrdinalFrom(repository.getKeyboardType());
+    fun execute(): KeyboardType {
+        return KeyboardType.getOrdinalFrom(repository.getKeyboardType())
     }
 
 }
