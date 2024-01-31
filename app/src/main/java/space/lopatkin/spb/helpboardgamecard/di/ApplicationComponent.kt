@@ -9,7 +9,12 @@ import space.lopatkin.spb.helpboardgamecard.presentation.settings.SettingsFragme
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApplicationModule::class, DomainModule::class, DataModule::class])
+@Component(
+    modules = [
+        ApplicationModule::class,
+        DomainModule::class,
+        DataModule::class]
+)
 interface ApplicationComponent {
     fun inject(fragment: CatalogFragment)
     fun inject(fragment: AddCardFragment)

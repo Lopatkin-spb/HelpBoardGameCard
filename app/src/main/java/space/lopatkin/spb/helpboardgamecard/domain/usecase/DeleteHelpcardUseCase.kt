@@ -6,7 +6,7 @@ import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 class DeleteHelpcardUseCase(private val repository: AppRepository) {
 
     fun execute(helpcard: Helpcard?) {
-        repository.delete(helpcard!!)
+        repository.delete(helpcard = helpcard!!)
     }
 
 }

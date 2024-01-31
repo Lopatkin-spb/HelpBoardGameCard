@@ -32,17 +32,17 @@ class ApplicationModule(private val applicationContext: Application) {
         getKeyboardTypeUseCase: GetKeyboardTypeUseCase
     ): ViewModelFactory {
         return ViewModelFactory(
-            getHelpcardByHelpcardIdUseCase,
-            getAllHelpcardsUseCase,
-            deleteHelpcardUseCase,
-            deleteHelpcardUnlockedByHelpcardIdUseCase,
-            updateHelpcardByHelpcardIdUseCase,
-            updateHelpcardFavoriteByHelpcardIdUseCase,
-            updateHelpcardLockingByHelpcardIdUseCase,
-            deleteHelpcardsByUnlockStateUseCase,
-            saveHelpcardNewByHelpcardIdUseCase,
-            saveKeyboardTypeByUserChoiceUseCase,
-            getKeyboardTypeUseCase
+            getHelpcardByHelpcardIdUseCase = getHelpcardByHelpcardIdUseCase,
+            getAllHelpcardsUseCase = getAllHelpcardsUseCase,
+            deleteHelpcardUseCase = deleteHelpcardUseCase,
+            deleteHelpcardUnlockedByHelpcardIdUseCase = deleteHelpcardUnlockedByHelpcardIdUseCase,
+            updateHelpcardByHelpcardIdUseCase = updateHelpcardByHelpcardIdUseCase,
+            updateHelpcardFavoriteByHelpcardIdUseCase = updateHelpcardFavoriteByHelpcardIdUseCase,
+            updateHelpcardLockingByHelpcardIdUseCase = updateHelpcardLockingByHelpcardIdUseCase,
+            deleteHelpcardsByUnlockStateUseCase = deleteHelpcardsByUnlockStateUseCase,
+            saveHelpcardNewByHelpcardIdUseCase = saveHelpcardNewByHelpcardIdUseCase,
+            saveKeyboardTypeByUserChoiceUseCase = saveKeyboardTypeByUserChoiceUseCase,
+            getKeyboardTypeUseCase = getKeyboardTypeUseCase
         )
     }
 

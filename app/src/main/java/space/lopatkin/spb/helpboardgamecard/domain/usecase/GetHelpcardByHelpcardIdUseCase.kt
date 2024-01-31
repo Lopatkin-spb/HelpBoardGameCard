@@ -7,7 +7,7 @@ import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 class GetHelpcardByHelpcardIdUseCase(private val repository: AppRepository) {
 
     fun execute(boardGameId: Int): LiveData<Helpcard> {
-        return repository.getHelpcard(boardGameId)
+        return repository.getHelpcard(boardGameId = boardGameId)
     }
 
 }

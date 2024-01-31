@@ -8,12 +8,13 @@ enum class KeyboardType {
 
         fun getOrdinalFrom(name: String): KeyboardType {
             for (type in values()) {
-                if (type.name.equals(name, ignoreCase = true)) {
+                if (type.name.equals(other = name, ignoreCase = true)) {
                     return type
                 }
             }
             return CUSTOM
         }
+
         fun getOrdinalFrom(value: Int): KeyboardType {
             for (type in values()) {
                 if (type.ordinal == value) {

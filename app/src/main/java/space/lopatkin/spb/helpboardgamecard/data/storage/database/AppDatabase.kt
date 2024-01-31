@@ -30,7 +30,7 @@ abstract class AppDatabase : RoomDatabase() {
                     .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            PopulateDbAsyncTask(instance!!).execute()
+                            PopulateDbAsyncTask(db = instance!!).execute()
                         }
                     })
                     .build()

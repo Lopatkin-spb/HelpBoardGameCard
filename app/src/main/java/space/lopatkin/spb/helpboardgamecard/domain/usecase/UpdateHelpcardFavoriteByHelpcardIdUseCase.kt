@@ -11,7 +11,7 @@ class UpdateHelpcardFavoriteByHelpcardIdUseCase(private val repository: AppRepos
             return Message.ACTION_ENDED_ERROR
         }
 
-        repository.update(helpcard)
+        repository.update(helpcard = helpcard)
         return Message.FAVORITE_ITEM_ACTION_ENDED_SUCCESS
     }
 

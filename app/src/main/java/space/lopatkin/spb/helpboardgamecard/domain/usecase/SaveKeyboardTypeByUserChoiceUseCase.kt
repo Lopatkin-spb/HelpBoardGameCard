@@ -8,8 +8,8 @@ class SaveKeyboardTypeByUserChoiceUseCase(private val repository: AppRepository)
 
     fun execute(userChoice: Any?): Message {
         if (userChoice != null) {
-            val type: KeyboardType = KeyboardType.getOrdinalFrom(userChoice.toString())
-            repository.saveKeyboardType(type.ordinal)
+            val type: KeyboardType = KeyboardType.getOrdinalFrom(name = userChoice.toString())
+            repository.saveKeyboardType(type = type.ordinal)
             return Message.ACTION_ENDED_SUCCESS
         }
         return Message.ACTION_ENDED_ERROR

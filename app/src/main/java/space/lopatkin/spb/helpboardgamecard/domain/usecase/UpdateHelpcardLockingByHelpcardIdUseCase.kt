@@ -11,7 +11,7 @@ class UpdateHelpcardLockingByHelpcardIdUseCase(private val repository: AppReposi
             return Message.ACTION_ENDED_ERROR
         }
 
-        repository.update(helpcard)
+        repository.update(helpcard = helpcard)
         return Message.LOCKING_ITEM_ACTION_ENDED_SUCCESS
     }
 

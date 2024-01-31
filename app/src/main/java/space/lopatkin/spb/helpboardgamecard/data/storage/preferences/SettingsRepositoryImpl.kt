@@ -8,7 +8,7 @@ import space.lopatkin.spb.helpboardgamecard.data.repository.SettingsRepository
 private const val APPLICATION_PREFERENCES = "APPLICATION_PREFERENCES"
 private const val KEYBOARD_TYPE = "KEYBOARD_TYPE"
 
-class SettingsRepositoryImpl(application: Application) : SettingsRepository {
+class SettingsRepositoryImpl(private val application: Application) : SettingsRepository {
 
     private val context: Context
     private val preferences: SharedPreferences

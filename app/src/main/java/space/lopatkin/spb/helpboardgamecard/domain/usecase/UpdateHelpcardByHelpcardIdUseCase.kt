@@ -10,7 +10,7 @@ class UpdateHelpcardByHelpcardIdUseCase(private val repository: AppRepository) {
         if (helpcard != null && helpcard.title!!.isEmpty()) {
             return Message.ACTION_STOPPED
         } else if (helpcard != null && !helpcard.title!!.isEmpty()) {
-            repository.update(helpcard)
+            repository.update(helpcard = helpcard)
             return Message.ACTION_ENDED_SUCCESS
         }
         return Message.ACTION_ENDED_ERROR

@@ -10,8 +10,9 @@ class AppRepositoryImpl(
     private val databaseRepository: DatabaseRepository,
     private val settingsRepository: SettingsRepository
 ) : AppRepository {
+
     override fun getHelpcard(boardGameId: Int): LiveData<Helpcard> {
-        return databaseRepository.getHelpcard(boardGameId)
+        return databaseRepository.getHelpcard(boardGameId = boardGameId)
     }
 
     override fun getAllHelpcards(): LiveData<List<Helpcard>> {
@@ -19,15 +20,15 @@ class AppRepositoryImpl(
     }
 
     override fun delete(helpcard: Helpcard) {
-        databaseRepository.delete(helpcard)
+        databaseRepository.delete(helpcard = helpcard)
     }
 
     override fun delete(id: Int) {
-        databaseRepository.delete(id)
+        databaseRepository.delete(id = id)
     }
 
     override fun update(helpcard: Helpcard) {
-        databaseRepository.update(helpcard)
+        databaseRepository.update(helpcard = helpcard)
     }
 
     override fun deleteAllUnlockHelpcards() {
@@ -35,11 +36,11 @@ class AppRepositoryImpl(
     }
 
     override fun saveNewHelpcard(helpcard: Helpcard) {
-        databaseRepository.saveNewHelpcard(helpcard)
+        databaseRepository.saveNewHelpcard(helpcard = helpcard)
     }
 
     override fun saveKeyboardType(type: Int) {
-        settingsRepository.saveKeyboardType(type)
+        settingsRepository.saveKeyboardType(type = type)
     }
 
     override fun getKeyboardType(): Int {

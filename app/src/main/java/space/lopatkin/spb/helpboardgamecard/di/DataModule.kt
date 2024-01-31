@@ -20,19 +20,22 @@ class DataModule {
         databaseRepository: DatabaseRepository,
         settingsRepository: SettingsRepository
     ): AppRepository {
-        return AppRepositoryImpl(databaseRepository, settingsRepository)
+        return AppRepositoryImpl(
+            databaseRepository = databaseRepository,
+            settingsRepository = settingsRepository
+        )
     }
 
     @Singleton
     @Provides
     fun provideDatabaseRepository(application: Application): DatabaseRepository {
-        return DatabaseRepositoryImpl(application)
+        return DatabaseRepositoryImpl(application = application)
     }
 
     @Singleton
     @Provides
     fun provideSettingsRepository(application: Application): SettingsRepository {
-        return SettingsRepositoryImpl(application)
+        return SettingsRepositoryImpl(application = application)
     }
 
 }

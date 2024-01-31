@@ -13,7 +13,7 @@ class SaveHelpcardNewByHelpcardIdUseCase(private val repository: AppRepository) 
         if (helpcard.title!!.isEmpty()) {
             return Message.ACTION_STOPPED
         } else if (!helpcard.title!!.isEmpty()) {
-            repository.saveNewHelpcard(helpcard)
+            repository.saveNewHelpcard(helpcard = helpcard)
             return Message.ACTION_ENDED_SUCCESS
         }
         return Message.ACTION_ENDED_ERROR

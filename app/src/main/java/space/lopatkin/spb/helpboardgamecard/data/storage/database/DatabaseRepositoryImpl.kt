@@ -7,20 +7,20 @@ import space.lopatkin.spb.helpboardgamecard.data.repository.DatabaseRepository
 import space.lopatkin.spb.helpboardgamecard.data.storage.database.AppDatabase.Companion.getInstance
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 
-class DatabaseRepositoryImpl(val application: Application) : DatabaseRepository {
+class DatabaseRepositoryImpl(private val application: Application) : DatabaseRepository {
     private val helpcardDao: HelpcardDao
     private val allHelpcards: LiveData<List<Helpcard>>
     private val allFavoritesHelpcards: LiveData<List<Helpcard>>
 
     init {
-        val database: AppDatabase = getInstance(application)
+        val database: AppDatabase = getInstance(context = application)
         helpcardDao = database.helpcardDao()
         allHelpcards = helpcardDao.getAllHelpcards()
         allFavoritesHelpcards = helpcardDao.getAllFavoritesHelpcards()
     }
 
     override fun getHelpcard(boardGameId: Int): LiveData<Helpcard> {
-        return helpcardDao.getHelpcard(boardGameId)
+        return helpcardDao.getHelpcard(boardGameId = boardGameId)
     }
 
     override fun getAllHelpcards(): LiveData<List<Helpcard>> {
@@ -28,28 +28,28 @@ class DatabaseRepositoryImpl(val application: Application) : DatabaseRepository 
     }
 
     override fun delete(helpcard: Helpcard) {
-        DeleteHelpcardAsyncTask(helpcardDao).execute(helpcard)
+        DeleteHelpcardAsyncTask(helpcardDao = helpcardDao).execute(helpcard)
     }
 
     override fun delete(id: Int) {
-        DeleteHelpcardByIdAsyncTask(helpcardDao).execute(id)
+        DeleteHelpcardByIdAsyncTask(helpcardDao = helpcardDao).execute(id)
     }
 
     override fun update(helpcard: Helpcard) {
-        UpdateHelpcardAsyncTask(helpcardDao).execute(helpcard)
+        UpdateHelpcardAsyncTask(helpcardDao = helpcardDao).execute(helpcard)
     }
 
     override fun deleteAllUnlockHelpcards() {
-        DeleteAllUnlockHelpcardsAsyncTask(helpcardDao).execute()
+        DeleteAllUnlockHelpcardsAsyncTask(helpcardDao = helpcardDao).execute()
     }
 
     override fun saveNewHelpcard(helpcard: Helpcard) {
-        InsertHelpcardAsyncTask(helpcardDao).execute(helpcard)
+        InsertHelpcardAsyncTask(helpcardDao = helpcardDao).execute(helpcard)
     }
 
     //todo: do work -------
     fun deleteAllHelpcards() {
-        DeleteAllHelpcardsAsyncTask(helpcardDao).execute()
+        DeleteAllHelpcardsAsyncTask(helpcardDao = helpcardDao).execute()
     }
 
     fun getAllFavoritesHelpcards(): LiveData<List<Helpcard>> {
