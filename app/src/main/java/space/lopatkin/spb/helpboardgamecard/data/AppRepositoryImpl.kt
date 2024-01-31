@@ -1,61 +1,49 @@
-package space.lopatkin.spb.helpboardgamecard.data;
+package space.lopatkin.spb.helpboardgamecard.data
 
+import androidx.lifecycle.LiveData
+import space.lopatkin.spb.helpboardgamecard.data.repository.DatabaseRepository
+import space.lopatkin.spb.helpboardgamecard.data.repository.SettingsRepository
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 
-import androidx.lifecycle.LiveData;
-import space.lopatkin.spb.helpboardgamecard.data.repository.DatabaseRepository;
-import space.lopatkin.spb.helpboardgamecard.data.repository.SettingsRepository;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository;
-
-import java.util.List;
-
-
-public class AppRepositoryImpl implements AppRepository {
-
-    private DatabaseRepository databaseRepository;
-    private SettingsRepository settingsRepository;
-
-
-    public AppRepositoryImpl(DatabaseRepository databaseRepository, SettingsRepository settingsRepository) {
-        this.databaseRepository = databaseRepository;
-        this.settingsRepository = settingsRepository;
+class AppRepositoryImpl(
+    private val databaseRepository: DatabaseRepository,
+    private val settingsRepository: SettingsRepository
+) : AppRepository {
+    override fun getHelpcard(boardGameId: Int): LiveData<Helpcard> {
+        return databaseRepository.getHelpcard(boardGameId)
     }
 
-    @Override
-    public LiveData<Helpcard> getHelpcard(int boardGameId) {
-        return databaseRepository.getHelpcard(boardGameId);
+    override fun getAllHelpcards(): LiveData<List<Helpcard>> {
+        return databaseRepository.getAllHelpcards()
     }
-    @Override
-    public LiveData<List<Helpcard>> getAllHelpcards() {
-        return databaseRepository.getAllHelpcards();
+
+    override fun delete(helpcard: Helpcard) {
+        databaseRepository.delete(helpcard)
     }
-    @Override
-    public void delete(Helpcard helpcard) {
-        databaseRepository.delete(helpcard);
+
+    override fun delete(id: Int) {
+        databaseRepository.delete(id)
     }
-    @Override
-    public void delete(int id) {
-        databaseRepository.delete(id);
+
+    override fun update(helpcard: Helpcard) {
+        databaseRepository.update(helpcard)
     }
-    @Override
-    public void update(Helpcard helpcard) {
-        databaseRepository.update(helpcard);
+
+    override fun deleteAllUnlockHelpcards() {
+        databaseRepository.deleteAllUnlockHelpcards()
     }
-    @Override
-    public void deleteAllUnlockHelpcards() {
-        databaseRepository.deleteAllUnlockHelpcards();
+
+    override fun saveNewHelpcard(helpcard: Helpcard) {
+        databaseRepository.saveNewHelpcard(helpcard)
     }
-    @Override
-    public void saveNewHelpcard(Helpcard helpcard) {
-        databaseRepository.saveNewHelpcard(helpcard);
+
+    override fun saveKeyboardType(type: Int) {
+        settingsRepository.saveKeyboardType(type)
     }
-    @Override
-    public void saveKeyboardType(int type) {
-        settingsRepository.saveKeyboardType(type);
-    }
-    @Override
-    public int getKeyboardType() {
-        return settingsRepository.getKeyboardType();
+
+    override fun getKeyboardType(): Int {
+        return settingsRepository.getKeyboardType()
     }
 
 }

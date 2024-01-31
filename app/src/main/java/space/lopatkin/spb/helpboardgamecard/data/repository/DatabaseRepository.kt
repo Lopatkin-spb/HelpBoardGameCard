@@ -1,46 +1,42 @@
-package space.lopatkin.spb.helpboardgamecard.data.repository;
+package space.lopatkin.spb.helpboardgamecard.data.repository
 
-import androidx.lifecycle.LiveData;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import androidx.lifecycle.LiveData
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 
-import java.util.List;
-
-public interface DatabaseRepository {
-
-
+interface DatabaseRepository {
     /**
      * Получить карточку памяти по идентификатору настольной игры.
      */
-    LiveData<Helpcard> getHelpcard(int boardGameId);
+    fun getHelpcard(boardGameId: Int): LiveData<Helpcard>
 
     /**
      * Получить все карточки памяти.
      */
-    LiveData<List<Helpcard>> getAllHelpcards();
+    fun getAllHelpcards(): LiveData<List<Helpcard>>
 
     /**
      * Удалить карточку памяти.
      */
-    void delete(Helpcard helpcard);
+    fun delete(helpcard: Helpcard)
 
     /**
      * Удалить карточку памяти.
      */
-    void delete(int id);
+    fun delete(id: Int)
 
     /**
      * Обновить карточку памяти.
      */
-    void update(Helpcard helpcard);
+    fun update(helpcard: Helpcard)
 
     /**
      * Удалить все незаблокированные карточки памяти.
      */
-    void deleteAllUnlockHelpcards();
+    fun deleteAllUnlockHelpcards()
 
     /**
      * Сохранить новую карточку памяти.
      */
-    void saveNewHelpcard(Helpcard helpcard);
+    fun saveNewHelpcard(helpcard: Helpcard)
 
 }
