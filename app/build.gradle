@@ -50,24 +50,19 @@ dependencies {
     /*
      * Android Jetpack: Appcompat (+ material design)
      */
-    //kotlin
-    def appcompat_version = "1.6.1"
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.appcompat:appcompat:1.6.1"
 
     /*
      * Android Jetpack: ViewModel & Lifecycle
      */
     def lifecycle_version = "2.2.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    //kotlin
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     /*
      * Xml
      */
-    //kotlin
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.6.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -76,9 +71,6 @@ dependencies {
      * Android Jetpack: Navigation
      */
     def navigation_version = "2.3.0"
-    implementation "androidx.navigation:navigation-fragment:$navigation_version"
-    implementation "androidx.navigation:navigation-ui:$navigation_version"
-//kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
@@ -87,24 +79,24 @@ dependencies {
      */
     def room_version = "2.5.2"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version" //delete after migration
     implementation "androidx.room:room-rxjava2:$room_version"
-
-    // + for kotlin
     kapt "androidx.room:room-compiler:$room_version"
 
     /*
      * Dagger 2
      */
-    implementation "com.google.dagger:dagger:2.40.1"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.40.1" //delete after migration
+    def dagger_version = "2.40.1"
+    implementation "com.google.dagger:dagger:$dagger_version"
     implementation "javax.inject:javax.inject:1"
-
-    //kot
-    kapt "com.google.dagger:dagger-compiler:2.40.1"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     /*
-     * For inner events
+     * For work synchronously on background threads (kotlin + coroutines)
+     */
+    implementation 'androidx.work:work-runtime-ktx:2.8.1'
+
+    /*
+     * For inner events (not for kotlin)
      */
     implementation "org.greenrobot:eventbus:3.3.1"
 
@@ -115,14 +107,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-
-    /*
-     * For work synchronously on background threads
-     */
-    implementation 'androidx.work:work-runtime:2.8.1'
-    //kotlin + coroutines
-    implementation 'androidx.work:work-runtime-ktx:2.8.1'
-
 
 }
