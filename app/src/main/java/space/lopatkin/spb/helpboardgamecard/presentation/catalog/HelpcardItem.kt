@@ -46,11 +46,11 @@ class HelpcardItem(
         binding.textItemPriority.text = data!!.priority.toString()
 
         binding.actionItemFavorites.setOnCheckedChangeListener(null)
-        binding.actionItemFavorites.isChecked = data!!.isFavorites
+        binding.actionItemFavorites.isChecked = data!!.isFavorites!!
         onActionFavorite()
 
         binding.actionItemLock.setOnCheckedChangeListener(null)
-        binding.actionItemLock.isChecked = data!!.isLock
+        binding.actionItemLock.isChecked = data!!.isLock!!
         onActionLock()
     }
 

@@ -185,27 +185,27 @@ class CardEditFragment : AbstractFragment() {
                 binding!!.editPreparation.setText(helpcard.preparation)
                 binding!!.editPlayerTurn.setText(helpcard.playerTurn)
                 idCard = helpcard.id
-                effects = helpcard.effects
-                favorites = helpcard.isFavorites
-                lock = helpcard.isLock
-                priority = helpcard.priority
+                effects = helpcard.effects!!
+                favorites = helpcard.isFavorites!!
+                lock = helpcard.isLock!!
+                priority = helpcard.priority!!
             }
         }
     }
 
     private fun getEditedData(): Helpcard {
         return Helpcard(
-            idCard,
-            binding!!.editTitle.text.toString(),
-            binding!!.editVictoryCondition.text.toString(),
-            binding!!.editEndGame.text.toString(),
-            binding!!.editPreparation.text.toString(),
-            binding!!.editDescription.text.toString(),
-            binding!!.editPlayerTurn.text.toString(),
-            effects,
-            favorites,
-            lock,
-            priority
+            id = idCard,
+            title = binding!!.editTitle.text.toString(),
+            victoryCondition = binding!!.editVictoryCondition.text.toString(),
+            endGame = binding!!.editEndGame.text.toString(),
+            preparation = binding!!.editPreparation.text.toString(),
+            description = binding!!.editDescription.text.toString(),
+            playerTurn = binding!!.editPlayerTurn.text.toString(),
+            effects = effects,
+            isFavorites = favorites,
+            isLock = lock,
+            priority = priority
         )
     }
 

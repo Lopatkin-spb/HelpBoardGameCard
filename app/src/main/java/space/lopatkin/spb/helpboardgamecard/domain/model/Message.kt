@@ -1,6 +1,7 @@
-package space.lopatkin.spb.helpboardgamecard.domain.model;
+package space.lopatkin.spb.helpboardgamecard.domain.model
 
-public enum Message {
+enum class Message {
+
     POOL_EMPTY, ACTION_ENDED_ERROR, ACTION_ENDED_SUCCESS, ACTION_STOPPED,
 
     DELETE_ITEM_ACTION_ENDED_ERROR, DELETE_ITEM_ACTION_ENDED_SUCCESS, DELETE_ITEM_ACTION_STOPPED,

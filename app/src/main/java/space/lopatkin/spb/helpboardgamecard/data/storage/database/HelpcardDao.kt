@@ -1,5 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.data.storage.database;
-
+package space.lopatkin.spb.helpboardgamecard.data.storage.database
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -9,58 +8,56 @@ import androidx.room.Query;
 import androidx.room.Update;
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
 
-import java.util.List;
-
 @Dao
-public interface HelpcardDao {
+interface HelpcardDao {
 
     /**
      * Получить карточку памяти по идентификатору настольной игры.
      */
     @Query("SELECT * FROM helpcard_table WHERE id=:boardGameId")
-    LiveData<Helpcard> getHelpcard(int boardGameId);
+    fun getHelpcard(boardGameId: Int): LiveData<Helpcard>
 
     /**
      * Получить все карточки памяти и применить фильтр по убыванию.
      */
     @Query("SELECT * FROM helpcard_table ORDER BY priority DESC")
-    LiveData<List<Helpcard>> getAllHelpcards();
+    fun getAllHelpcards(): LiveData<List<Helpcard>>
 
     /**
      * Удалить карточку памяти.
      */
     @Delete
-    void delete(Helpcard helpcard);
+    fun delete(helpcard: Helpcard)
 
     /**
      * Удалить карточку памяти по идентификационному номеру.
      */
     @Query("DELETE FROM helpcard_table WHERE id=:boardGameId")
-    void delete(int boardGameId);
+    fun delete(boardGameId: Int)
 
     /**
      * Обновить карточку памяти.
      */
     @Update
-    void update(Helpcard helpcard);
+    fun update(helpcard: Helpcard)
 
     /**
      * Добавить новую карточку памяти.
      */
     @Insert
-    void insert(Helpcard helpcard);
+    fun insert(helpcard: Helpcard)
 
     /**
      * Удалить все незаблокированные карточки памяти.
      */
     @Query("DELETE FROM helpcard_table WHERE lock = 0")
-    void deleteAllUnlockHelpcards();
+    fun deleteAllUnlockHelpcards()
 
     //todo: do work -------
     @Query("SELECT * FROM helpcard_table WHERE favorites = 1 ORDER BY priority DESC")
-    LiveData<List<Helpcard>> getAllFavoritesHelpcards();
+    fun getAllFavoritesHelpcards(): LiveData<List<Helpcard>>
 
     @Query("DELETE FROM helpcard_table")
-    void deleteAllHelpcards();
+    fun deleteAllHelpcards()
 
 }

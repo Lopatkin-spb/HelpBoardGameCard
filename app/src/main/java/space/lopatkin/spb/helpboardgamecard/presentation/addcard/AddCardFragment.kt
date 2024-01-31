@@ -169,16 +169,17 @@ class AddCardFragment : AbstractFragment() {
 
     private fun getData(): Helpcard {
         return Helpcard(
-            binding!!.editTextTitle.text.toString(),
-            binding!!.editTextVictoryCondition.text.toString(),
-            binding!!.editTextEndGame.text.toString(),
-            binding!!.editTextPreparation.text.toString(),
-            binding!!.editTextDescription.text.toString(),
-            binding!!.editTextPlayerTurn.text.toString(),
-            binding!!.editTextEffects.text.toString(),
-            false,
-            false,
-            binding!!.numberPickerPriority.value
+            id = 0,
+            title = binding!!.editTextTitle.text.toString(),
+            victoryCondition = binding!!.editTextVictoryCondition.text.toString(),
+            endGame = binding!!.editTextEndGame.text.toString(),
+            preparation = binding!!.editTextPreparation.text.toString(),
+            description = binding!!.editTextDescription.text.toString(),
+            playerTurn = binding!!.editTextPlayerTurn.text.toString(),
+            effects = binding!!.editTextEffects.text.toString(),
+            isFavorites = false,
+            isLock = false,
+            priority = binding!!.numberPickerPriority.value
         )
     }
 

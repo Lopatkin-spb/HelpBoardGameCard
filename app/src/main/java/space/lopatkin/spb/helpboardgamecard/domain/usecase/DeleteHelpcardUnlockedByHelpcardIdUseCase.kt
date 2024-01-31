@@ -10,10 +10,10 @@ class DeleteHelpcardUnlockedByHelpcardIdUseCase(private val repository: AppRepos
         if (helpcard == null) {
             return Message.ACTION_ENDED_ERROR
         }
-        if (!helpcard.isLock) {
+        if (!helpcard.isLock!!) {
             repository.delete(helpcard.id)
             return Message.DELETE_ITEM_ACTION_ENDED_SUCCESS
-        } else if (helpcard.isLock) {
+        } else if (helpcard.isLock!!) {
             return Message.DELETE_ITEM_ACTION_STOPPED
         }
         return Message.ACTION_ENDED_ERROR

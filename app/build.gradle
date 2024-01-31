@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs' //add '.kotlin' after full migration
+    id 'kotlin-kapt'
 }
 
 android {
@@ -86,15 +87,21 @@ dependencies {
      */
     def room_version = "2.5.2"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version" //delete after migration
     implementation "androidx.room:room-rxjava2:$room_version"
+
+    // + for kotlin
+    kapt "androidx.room:room-compiler:$room_version"
 
     /*
      * Dagger 2
      */
     implementation "com.google.dagger:dagger:2.40.1"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.40.1"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.40.1" //delete after migration
     implementation "javax.inject:javax.inject:1"
+
+    //kot
+    kapt "com.google.dagger:dagger-compiler:2.40.1"
 
     /*
      * For inner events
