@@ -2,8 +2,10 @@
 
 --- GLOBAL TASKS: KOTLIN!!!
 
-- рефакторинг
-- котлин
+- рефакторинг (убрать слой ДИ - контексты, создать презентер модуль, переместить аппРепо и другие репо глубже,
+префс коррект дефолты и наллаблы, correct onAttach, rename snackbar to strRes, rename mutable to _,
+set breack to LPV)
+
 - coroutines
 
 

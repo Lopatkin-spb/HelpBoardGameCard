@@ -1,6 +1,9 @@
-apply plugin: 'com.android.application'
-apply plugin: "androidx.navigation.safeargs"
-
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs' //add '.kotlin' after full migration
+    id 'kotlin-kapt'
+}
 
 android {
     compileSdk 33
@@ -12,12 +15,8 @@ android {
         targetSdk 33
         versionCode 1
         versionName "0.2.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -27,8 +26,13 @@ android {
         }
     }
 
-    viewBinding {
-        enabled true
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
 }
@@ -40,19 +44,21 @@ dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //kotlin
+    implementation 'androidx.core:core-ktx:1.7.0'
+
     /*
      * Android Jetpack: Appcompat (+ material design)
      */
-    def appcompat_version = "1.6.1"
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.appcompat:appcompat:1.6.1"
 
     /*
-     * Android Jetpack: Lifecycle
+     * Android Jetpack: ViewModel & Lifecycle
      */
     def lifecycle_version = "2.2.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    // Noinspection LifecycleAnnotationProcessorWithJava8
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     /*
      * Xml
@@ -65,26 +71,32 @@ dependencies {
      * Android Jetpack: Navigation
      */
     def navigation_version = "2.3.0"
-    implementation "androidx.navigation:navigation-fragment:$navigation_version"
-    implementation "androidx.navigation:navigation-ui:$navigation_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     /*
      * Android Jetpack: Room
      */
     def room_version = "2.5.2"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     /*
      * Dagger 2
      */
-    implementation "com.google.dagger:dagger:2.40.1"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.40.1"
+    def dagger_version = "2.40.1"
+    implementation "com.google.dagger:dagger:$dagger_version"
     implementation "javax.inject:javax.inject:1"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     /*
-     * For inner events
+     * For work synchronously on background threads (kotlin + coroutines)
+     */
+    implementation 'androidx.work:work-runtime-ktx:2.8.1'
+
+    /*
+     * For inner events (not for kotlin)
      */
     implementation "org.greenrobot:eventbus:3.3.1"
 
@@ -95,11 +107,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-
-    /*
-     * For work synchronously on background threads
-     */
-    implementation 'androidx.work:work-runtime:2.8.1'
 
 }
