@@ -1,19 +1,19 @@
 package space.lopatkin.spb.helpboardgamecard.data.storage.database
 
-import android.app.Application
+import android.content.Context
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
-import space.lopatkin.spb.helpboardgamecard.data.repository.DatabaseRepository
+import space.lopatkin.spb.helpboardgamecard.data.storage.repository.DatabaseRepository
 import space.lopatkin.spb.helpboardgamecard.data.storage.database.AppDatabase.Companion.getInstance
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 
-class DatabaseRepositoryImpl(private val application: Application) : DatabaseRepository {
+class DatabaseRepositoryImpl(private val context: Context) : DatabaseRepository {
     private val helpcardDao: HelpcardDao
     private val allHelpcards: LiveData<List<Helpcard>>
     private val allFavoritesHelpcards: LiveData<List<Helpcard>>
 
     init {
-        val database: AppDatabase = getInstance(context = application)
+        val database: AppDatabase = getInstance(context = context)
         helpcardDao = database.helpcardDao()
         allHelpcards = helpcardDao.getAllHelpcards()
         allFavoritesHelpcards = helpcardDao.getAllFavoritesHelpcards()

@@ -43,8 +43,8 @@ class CardEditFragment : AbstractFragment() {
     private var priority: Int = 0
 
     override fun onAttach(context: Context) {
-        (context.applicationContext as HelpBoardGameCardApplication).applicationComponent.inject(this)
         super.onAttach(context)
+        (requireActivity().applicationContext as HelpBoardGameCardApplication).applicationComponent.inject(this)
     }
 
     override fun onCreateView(

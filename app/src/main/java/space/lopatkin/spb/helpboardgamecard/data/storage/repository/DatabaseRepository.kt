@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.data.repository
+package space.lopatkin.spb.helpboardgamecard.data.storage.repository
 
 import androidx.lifecycle.LiveData
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard

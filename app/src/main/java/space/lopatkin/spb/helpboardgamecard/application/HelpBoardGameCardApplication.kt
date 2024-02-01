@@ -16,7 +16,7 @@ class HelpBoardGameCardApplication : Application() {
 
     private fun initDagger() {
         applicationComponent = DaggerApplicationComponent.builder()
-            .applicationModule(ApplicationModule(applicationContext = this))
+            .applicationModule(ApplicationModule(context = this))
             .build()
     }
 

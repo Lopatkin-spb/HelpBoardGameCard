@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI
 import org.greenrobot.eventbus.EventBus
 import space.lopatkin.spb.helpboardgamecard.BuildConfig
 import space.lopatkin.spb.helpboardgamecard.R
+import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication
 import space.lopatkin.spb.helpboardgamecard.databinding.DrawerActivityMainBinding
 import space.lopatkin.spb.helpboardgamecard.databinding.DrawerNavHeaderMainBinding
 
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private var mAppBarConfiguration: AppBarConfiguration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        (applicationContext as HelpBoardGameCardApplication).applicationComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         binding = DrawerActivityMainBinding.inflate(layoutInflater)

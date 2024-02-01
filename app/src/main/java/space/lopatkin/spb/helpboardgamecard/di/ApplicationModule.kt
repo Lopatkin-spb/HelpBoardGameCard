@@ -1,6 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.di
 
-import android.app.Application
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.*
@@ -8,12 +8,12 @@ import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val applicationContext: Application) {
+class ApplicationModule(private val context: Context) {
 
     @Singleton
     @Provides
-    fun provideApplication(): Application {
-        return applicationContext
+    fun provideContext(): Context {
+        return context
     }
 
     @Singleton

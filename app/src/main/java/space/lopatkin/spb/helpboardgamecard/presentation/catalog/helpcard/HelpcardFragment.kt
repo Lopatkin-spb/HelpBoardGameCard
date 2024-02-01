@@ -30,8 +30,8 @@ class HelpcardFragment : AbstractFragment() {
     private val args: HelpcardFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
-        (context.applicationContext as HelpBoardGameCardApplication).applicationComponent.inject(this)
         super.onAttach(context)
+        (requireActivity().applicationContext as HelpBoardGameCardApplication).applicationComponent.inject(this)
     }
 
     override fun onCreateView(

@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.data.repository
+package space.lopatkin.spb.helpboardgamecard.data.storage.repository
 
 interface SettingsRepository {
     /**

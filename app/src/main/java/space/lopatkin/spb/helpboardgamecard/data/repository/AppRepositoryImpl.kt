@@ -1,8 +1,8 @@
-package space.lopatkin.spb.helpboardgamecard.data
+package space.lopatkin.spb.helpboardgamecard.data.repository
 
 import androidx.lifecycle.LiveData
-import space.lopatkin.spb.helpboardgamecard.data.repository.DatabaseRepository
-import space.lopatkin.spb.helpboardgamecard.data.repository.SettingsRepository
+import space.lopatkin.spb.helpboardgamecard.data.storage.repository.DatabaseRepository
+import space.lopatkin.spb.helpboardgamecard.data.storage.repository.SettingsRepository
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 

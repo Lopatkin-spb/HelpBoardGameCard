@@ -35,8 +35,8 @@ class AddCardFragment : AbstractFragment() {
     private val navController: NavController by lazy { Navigation.findNavController(requireView()) }
 
     override fun onAttach(context: Context) {
-        (context.applicationContext as HelpBoardGameCardApplication).applicationComponent.inject(this)
         super.onAttach(context)
+        (requireActivity().applicationContext as HelpBoardGameCardApplication).applicationComponent.inject(this)
     }
 
     override fun onCreateView(
