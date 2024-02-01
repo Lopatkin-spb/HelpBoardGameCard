@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
 abstract class AbstractRecyclerViewHolder<E>(
-    binding: ViewBinding, parent: Fragment?
+    binding: ViewBinding,
+    parent: Fragment
 ) : RecyclerView.ViewHolder(binding.root) {
 
     protected abstract fun onActionItem()

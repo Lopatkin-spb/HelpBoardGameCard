@@ -29,12 +29,9 @@ import javax.inject.Inject
 
 class CardEditFragment : AbstractFragment() {
 
-    @JvmField
     @Inject
-    var viewModelFactory: ViewModelFactory? = null
-    private val viewModel: CardEditViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory!!).get(CardEditViewModel::class.java)
-    }
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: CardEditViewModel
     private var binding: FragmentCardEditBinding? = null
     private val navController: NavController by lazy { Navigation.findNavController(requireView()) }
     private val args: CardEditFragmentArgs by navArgs()
@@ -57,6 +54,7 @@ class CardEditFragment : AbstractFragment() {
     ): View? {
         binding = FragmentCardEditBinding.inflate(inflater, container, false)
 
+        viewModel = ViewModelProvider(this, viewModelFactory!!).get(CardEditViewModel::class.java)
         val helpcardId = args.id
         if (helpcardId > 0) {
             loadHelpcard(helpcardId)
@@ -303,7 +301,7 @@ class CardEditFragment : AbstractFragment() {
     }
 
     private fun setAnimationSizeForExpandableViews() {
-        val layoutTransition = LayoutTransition()
+        val layoutTransition: LayoutTransition = LayoutTransition()
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding!!.layoutExpandableCardedit.layoutTransition = layoutTransition
     }

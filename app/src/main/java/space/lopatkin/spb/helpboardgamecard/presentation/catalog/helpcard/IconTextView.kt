@@ -12,7 +12,7 @@ import java.util.stream.IntStream
 
 class IconTextView : AppCompatTextView {
 
-    private val separator: Char = SymbolIcon.SEPARATOR[0]
+    private val SEPARATOR: Char = SymbolIcon.SEPARATOR[0]
     private var context: Context
 
     constructor(context: Context) : super(context) {
@@ -40,15 +40,15 @@ class IconTextView : AppCompatTextView {
 
     private fun setSpansToText(textPainted: Spannable, text: String) {
         for (indexImage in 0 until countImagesIn(text)) {
-            val firstCharIndex = getIndexSeparator(text, indexImage.toInt())
-            val lastCharIndex = firstCharIndex + SymbolIcon.CODENAME_LENGTH
+            val firstCharIndex: Int = getIndexSeparator(text, indexImage.toInt())
+            val lastCharIndex: Int = firstCharIndex + SymbolIcon.CODENAME_LENGTH
             setImageToWord(textPainted, text, firstCharIndex, lastCharIndex)
         }
     }
 
     private fun setImageToWord(textPainted: Spannable, text: String, firstCharIndex: Int, lastCharIndex: Int) {
-        val codename = text.substring(firstCharIndex, lastCharIndex)
-        val image = ImageSpan(
+        val codename: String = text.substring(firstCharIndex, lastCharIndex)
+        val image: ImageSpan = ImageSpan(
             context,
             SymbolIcon.getDrawableResourceFrom(codename),
             KeyboardView.DYNAMIC_DRAWABLE_SPAN
@@ -59,15 +59,16 @@ class IconTextView : AppCompatTextView {
     private fun countImagesIn(text: String): Long {
         val charSequence: CharSequence = text
         return charSequence.chars()
-            .filter { character: Int -> character == separator.code }
+            .filter { character: Int -> character == SEPARATOR.code }
             .count()
     }
 
     private fun getIndexSeparator(text: String, numberImage: Int): Int {
-        val characters = text.toCharArray()
-        val indexes = IntStream.range(0, characters.size)
-            .filter { index: Int -> characters[index] == separator }
+        val characters: Array<Char> = text.toCharArray().toTypedArray()
+        val indexes: Array<Int> = IntStream.range(0, characters.size)
+            .filter { index: Int -> characters[index] == SEPARATOR }
             .toArray()
+            .toTypedArray()
         return indexes[numberImage]
     }
 

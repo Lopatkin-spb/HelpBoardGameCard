@@ -27,14 +27,11 @@ import javax.inject.Inject
 
 class AddCardFragment : AbstractFragment() {
 
-    @JvmField
     @Inject
-    var viewModelFactory: ViewModelFactory? = null
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: AddCardViewModel
     private var binding: FragmentAddcardBinding? = null
     private var inputConnection: InputConnection? = null
-    private val viewModel: AddCardViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory!!).get(AddCardViewModel::class.java)
-    }
     private val navController: NavController by lazy { Navigation.findNavController(requireView()) }
 
     override fun onAttach(context: Context) {
@@ -48,7 +45,10 @@ class AddCardFragment : AbstractFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddcardBinding.inflate(inflater, container, false)
+
+        viewModel = ViewModelProvider(this, viewModelFactory!!).get(AddCardViewModel::class.java)
         loadKeyboardType()
+
         return binding!!.root
     }
 

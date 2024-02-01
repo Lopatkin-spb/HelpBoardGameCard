@@ -3,6 +3,7 @@ package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
+import android.content.res.TypedArray
 import android.text.TextPaint
 import android.view.MotionEvent
 import android.view.View
@@ -35,7 +36,6 @@ class LabelPopupView(
     private val DEFAULT_VALUE: Int = 0
     private val SYMBOL_WIDTH: Int = 38 // ~ 30 - 50
     private val ICON_WIDTH: Int = 88 // ~ 80 - 100
-
 
     private var layoutHeight: Int = 0
     private var layoutPadding: Int = 0
@@ -266,12 +266,12 @@ class LabelPopupView(
 
     @SuppressLint("ResourceType")
     private fun obtainStyledAttributes() {
-        val arrayLayouts = intArrayOf(android.R.attr.layout_width, android.R.attr.layout_height)
-        val arrayPaddings = intArrayOf(android.R.attr.padding)
-        val arrayTexts = intArrayOf(android.R.attr.textSize)
-        val attributesLayouts = context.obtainStyledAttributes(R.style.TextLabelPopup, arrayLayouts)
-        val attributesPaddings = context.obtainStyledAttributes(R.style.TextLabelPopup, arrayPaddings)
-        val attributesTexts = context.obtainStyledAttributes(R.style.TextLabelPopup, arrayTexts)
+        val arrayLayouts: IntArray = intArrayOf(android.R.attr.layout_width, android.R.attr.layout_height)
+        val arrayPaddings: IntArray = intArrayOf(android.R.attr.padding)
+        val arrayTexts: IntArray = intArrayOf(android.R.attr.textSize)
+        val attributesLayouts: TypedArray = context.obtainStyledAttributes(R.style.TextLabelPopup, arrayLayouts)
+        val attributesPaddings: TypedArray = context.obtainStyledAttributes(R.style.TextLabelPopup, arrayPaddings)
+        val attributesTexts: TypedArray = context.obtainStyledAttributes(R.style.TextLabelPopup, arrayTexts)
         try {
             layoutHeight = attributesLayouts.getDimensionPixelSize(1, DEFAULT_VALUE)
             layoutPadding = attributesPaddings.getDimensionPixelOffset(0, DEFAULT_VALUE)

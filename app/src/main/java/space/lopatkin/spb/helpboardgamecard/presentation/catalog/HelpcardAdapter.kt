@@ -11,13 +11,14 @@ class HelpcardAdapter(
 ) : RecyclerView.Adapter<HelpcardItem>() {
 
     private var list: List<Helpcard> = ArrayList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HelpcardItem {
-        val binding = ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemCardBinding = ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HelpcardItem(this.parent, binding)
     }
 
     override fun onBindViewHolder(holder: HelpcardItem, position: Int) {
-        val item = list[position]
+        val item: Helpcard = list[position]
         holder.setData(item)
     }
 

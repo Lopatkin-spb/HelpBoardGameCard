@@ -12,8 +12,8 @@ abstract class AbstractFragment : Fragment() {
         super.onAttach(context)
     }
 
-    protected fun showMessage(parentView: View?, message: Int) {
-        Snackbar.make(parentView!!, message, Snackbar.LENGTH_SHORT).show()
+    protected fun showMessage(parentView: View, message: Int) {
+        Snackbar.make(parentView, message, Snackbar.LENGTH_SHORT).show()
     }
 
 }

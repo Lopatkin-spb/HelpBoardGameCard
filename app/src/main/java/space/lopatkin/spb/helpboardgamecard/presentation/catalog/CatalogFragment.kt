@@ -20,12 +20,9 @@ import javax.inject.Inject
 
 class CatalogFragment : AbstractFragment() {
 
-    @JvmField
     @Inject
-    var viewModelFactory: ViewModelFactory? = null
-    private val viewModel: CatalogViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory!!).get(CatalogViewModel::class.java)
-    }
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: CatalogViewModel
     private var binding: FragmentCatalogBinding? = null
     private val adapter: HelpcardAdapter by lazy { HelpcardAdapter(this) }
     private val navController: NavController by lazy {
@@ -44,6 +41,8 @@ class CatalogFragment : AbstractFragment() {
     ): View? {
         binding = FragmentCatalogBinding.inflate(inflater, container, false)
         val view: View = binding!!.root
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CatalogViewModel::class.java)
         setupList()
         loadHelpcardsList()
         return view
@@ -109,7 +108,7 @@ class CatalogFragment : AbstractFragment() {
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val helpcard = adapter.getHelpcardAt(viewHolder.adapterPosition)
+                    val helpcard: Helpcard = adapter.getHelpcardAt(viewHolder.adapterPosition)
                     viewModel.delete(helpcard)
                 }
             }).attachToRecyclerView(binding!!.recyclerView)

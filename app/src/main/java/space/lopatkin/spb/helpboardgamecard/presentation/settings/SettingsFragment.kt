@@ -18,12 +18,9 @@ import javax.inject.Inject
 
 class SettingsFragment : AbstractFragment() {
 
-    @JvmField
     @Inject
-    var viewModelFactory: ViewModelFactory? = null
-    private val viewModel: SettingsViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory!!).get(SettingsViewModel::class.java)
-    }
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: SettingsViewModel
     private var binding: FragmentSettingsBinding? = null
 
     override fun onAttach(context: Context) {
@@ -38,6 +35,8 @@ class SettingsFragment : AbstractFragment() {
     ): View? {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val view: View = binding!!.root
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SettingsViewModel::class.java)
 
         setupSpinner()
         loadKeyboardType()
@@ -57,7 +56,7 @@ class SettingsFragment : AbstractFragment() {
     }
 
     private fun setupSpinner() {
-        val adapter = ArrayAdapter.createFromResource(
+        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.action_spinner_keyboards,
             android.R.layout.simple_spinner_item
@@ -78,7 +77,7 @@ class SettingsFragment : AbstractFragment() {
     }
 
     private fun onActionSpinner() {
-        val spinnerListener = SpinnerInteractionListener()
+        val spinnerListener: SpinnerInteractionListener = SpinnerInteractionListener()
 
         if (binding != null) {
             binding!!.actionSpinnerKeyboards.setOnTouchListener(spinnerListener)

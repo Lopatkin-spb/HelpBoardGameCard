@@ -20,12 +20,9 @@ import javax.inject.Inject
 
 class HelpcardFragment : AbstractFragment() {
 
-    @JvmField
     @Inject
-    var viewModelFactory: ViewModelFactory? = null
-    private val viewModel: HelpcardViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory!!).get(HelpcardViewModel::class.java)
-    }
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: HelpcardViewModel
     private var binding: FragmentHelpcardBinding? = null
     private val navController: NavController by lazy {
         Navigation.findNavController(requireView())
@@ -45,6 +42,7 @@ class HelpcardFragment : AbstractFragment() {
         binding = FragmentHelpcardBinding.inflate(inflater, container, false)
         val view: View = binding!!.root
 
+        viewModel = ViewModelProvider(this, viewModelFactory).get(HelpcardViewModel::class.java)
         val helpcardId: Int = args.id
         if (helpcardId > 0) {
             loadHelpcard(helpcardId)
@@ -145,7 +143,7 @@ class HelpcardFragment : AbstractFragment() {
     private fun showLabel(view: View, motionEvent: MotionEvent, textView: TextView): Boolean {
         if (motionEvent.action == MotionEvent.ACTION_UP) {
             // Binding create this. If binding create inside LabelPopupView then bug in draw background.
-            val bindingLabel = ViewLabelPopupBinding.inflate(LayoutInflater.from(context))
+            val bindingLabel: ViewLabelPopupBinding = ViewLabelPopupBinding.inflate(LayoutInflater.from(context))
             val label: LabelPopupView = LabelPopupView(requireContext(), bindingLabel, viewLifecycleOwner)
             label.show(view, motionEvent, textView)
         }
@@ -153,7 +151,7 @@ class HelpcardFragment : AbstractFragment() {
     }
 
     private fun setAnimationSizeForExpandableViews() {
-        val layoutTransition = LayoutTransition()
+        val layoutTransition: LayoutTransition = LayoutTransition()
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding!!.layoutExpandableHelpcard.layoutTransition = layoutTransition
     }
