@@ -10,15 +10,15 @@ import space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.carded
 import space.lopatkin.spb.helpboardgamecard.presentation.settings.SettingsViewModel
 
 class ViewModelFactory(
-    private val getHelpcardByHelpcardIdUseCase: GetHelpcardByHelpcardIdUseCase,
-    private val getAllHelpcardsUseCase: GetAllHelpcardsUseCase,
-    private val deleteHelpcardUseCase: DeleteHelpcardUseCase,
-    private val deleteHelpcardUnlockedByHelpcardIdUseCase: DeleteHelpcardUnlockedByHelpcardIdUseCase,
-    private val updateHelpcardByHelpcardIdUseCase: UpdateHelpcardByHelpcardIdUseCase,
-    private val updateHelpcardFavoriteByHelpcardIdUseCase: UpdateHelpcardFavoriteByHelpcardIdUseCase,
-    private val updateHelpcardLockingByHelpcardIdUseCase: UpdateHelpcardLockingByHelpcardIdUseCase,
-    private val deleteHelpcardsByUnlockStateUseCase: DeleteHelpcardsByUnlockStateUseCase,
-    private val saveHelpcardNewByHelpcardIdUseCase: SaveHelpcardNewByHelpcardIdUseCase,
+    private val getHelpcardByBoardgameIdUseCase: GetHelpcardByBoardgameIdUseCase,
+    private val getAllBoardgamesInfoUseCase: GetAllBoardgamesInfoUseCase,
+    private val getBoardgameRawByBoardgameIdUseCase: GetBoardgameRawByBoardgameIdUseCase,
+    private val deleteBoardgameUnlockedByBoardgameIdUseCase: DeleteBoardgameUnlockedByBoardgameIdUseCase,
+    private val updateBoardgameByBoardgameIdUseCase: UpdateBoardgameByBoardgameIdUseCase,
+    private val updateBoardgameFavoriteByBoardgameIdUseCase: UpdateBoardgameFavoriteByBoardgameIdUseCase,
+    private val updateBoardgameLockingByBoardgameIdUseCase: UpdateBoardgameLockingByBoardgameIdUseCase,
+    private val deleteBoardgamesByUnlockStateUseCase: DeleteBoardgamesByUnlockStateUseCase,
+    private val saveBoardgameNewByBoardgameIdUseCase: SaveBoardgameNewByBoardgameIdUseCase,
     private val saveKeyboardTypeByUserChoiceUseCase: SaveKeyboardTypeByUserChoiceUseCase,
     private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
 ) : ViewModelProvider.Factory {
@@ -26,25 +26,25 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HelpcardViewModel::class.java)) {
             return HelpcardViewModel(
-                getHelpcardByHelpcardIdUseCase = getHelpcardByHelpcardIdUseCase
+                getHelpcardByBoardgameIdUseCase = getHelpcardByBoardgameIdUseCase
             ) as T
         } else if (modelClass.isAssignableFrom(CatalogViewModel::class.java)) {
             return CatalogViewModel(
-                getAllHelpcardsUseCase = getAllHelpcardsUseCase,
-                deleteHelpcardUnlockedByHelpcardIdUseCase = deleteHelpcardUnlockedByHelpcardIdUseCase,
-                updateHelpcardFavoriteByHelpcardIdUseCase = updateHelpcardFavoriteByHelpcardIdUseCase,
-                updateHelpcardLockingByHelpcardIdUseCase = updateHelpcardLockingByHelpcardIdUseCase,
-                deleteHelpcardsByUnlockStateUseCase = deleteHelpcardsByUnlockStateUseCase
+                getAllBoardgamesInfoUseCase = getAllBoardgamesInfoUseCase,
+                deleteBoardgameUnlockedByBoardgameIdUseCase = deleteBoardgameUnlockedByBoardgameIdUseCase,
+                updateBoardgameFavoriteByBoardgameIdUseCase = updateBoardgameFavoriteByBoardgameIdUseCase,
+                updateBoardgameLockingByBoardgameIdUseCase = updateBoardgameLockingByBoardgameIdUseCase,
+                deleteBoardgamesByUnlockStateUseCase = deleteBoardgamesByUnlockStateUseCase
             ) as T
         } else if (modelClass.isAssignableFrom(AddCardViewModel::class.java)) {
             return AddCardViewModel(
-                saveHelpcardNewByHelpcardIdUseCase = saveHelpcardNewByHelpcardIdUseCase,
+                saveBoardgameNewByBoardgameIdUseCase = saveBoardgameNewByBoardgameIdUseCase,
                 getKeyboardTypeUseCase = getKeyboardTypeUseCase
             ) as T
         } else if (modelClass.isAssignableFrom(CardEditViewModel::class.java)) {
             return CardEditViewModel(
-                getHelpcardByHelpcardIdUseCase = getHelpcardByHelpcardIdUseCase,
-                updateHelpcardByHelpcardIdUseCase = updateHelpcardByHelpcardIdUseCase,
+                getBoardgameRawByBoardgameIdUseCase = getBoardgameRawByBoardgameIdUseCase,
+                updateBoardgameByBoardgameIdUseCase = updateBoardgameByBoardgameIdUseCase,
                 getKeyboardTypeUseCase = getKeyboardTypeUseCase
             ) as T
         } else if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {

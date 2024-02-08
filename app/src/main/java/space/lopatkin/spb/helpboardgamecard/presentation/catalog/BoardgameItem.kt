@@ -6,16 +6,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import space.lopatkin.spb.helpboardgamecard.databinding.ItemCardBinding
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 
-class HelpcardItem(
+class BoardgameItem(
     parent: Fragment,
     binding: ViewBinding
-) : AbstractRecyclerViewHolder<Helpcard>(binding, parent) {
+) : AbstractRecyclerViewHolder<BoardgameInfo>(binding, parent) {
 
     private val parent: CatalogFragment
     private val binding: ItemCardBinding
-    private var data: Helpcard? = null
+    private var data: BoardgameInfo? = null
 
     init {
         this.binding = binding as ItemCardBinding
@@ -25,13 +25,13 @@ class HelpcardItem(
 
     override fun onActionItem() {
         itemView.setOnClickListener { view: View? ->
-            if (adapterPosition != RecyclerView.NO_POSITION && data != null) {
-                parent.notifyToNavigateToHelpcard(data!!.id)
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                parent.notifyToNavigateToHelpcard(this.data?.boardgameId)
             }
         }
     }
 
-    override fun setData(data: Helpcard) {
+    override fun setData(data: BoardgameInfo) {
         this.data = data
         if (this.data != null) {
             updateItem()
@@ -39,26 +39,25 @@ class HelpcardItem(
     }
 
     override fun updateItem() {
-        binding.textItemTitle.text = data!!.title
-        if (data!!.description != null && !data!!.description.isNullOrEmpty()) {
-            binding.textItemDescription.text = data!!.description
-        }
-        binding.textItemPriority.text = data!!.priority.toString()
+        binding.textItemTitle.text = this.data?.boardgameName
+        binding.textItemDescription.text = this.data?.boardgameDescription
+
+        binding.textItemPriority.text = this.data?.boardgamePriority.toString()
 
         binding.actionItemFavorites.setOnCheckedChangeListener(null)
-        binding.actionItemFavorites.isChecked = data!!.isFavorites!!
+        binding.actionItemFavorites.isChecked = this.data!!.boardgameFavorite
         onActionFavorite()
 
         binding.actionItemLock.setOnCheckedChangeListener(null)
-        binding.actionItemLock.isChecked = data!!.isLock!!
+        binding.actionItemLock.isChecked = this.data!!.boardgameLock
         onActionLock()
     }
 
     private fun onActionFavorite() {
         binding.actionItemFavorites.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
             if (adapterPosition != RecyclerView.NO_POSITION) {
-                data!!.isFavorites = isChecked
-                parent.notifyToUpdateFavorite(data)
+                this.data?.boardgameFavorite = isChecked
+                parent.notifyToUpdateFavorite(this.data)
             }
         }
     }
@@ -66,8 +65,8 @@ class HelpcardItem(
     private fun onActionLock() {
         binding.actionItemLock.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
             if (adapterPosition != RecyclerView.NO_POSITION) {
-                data!!.isLock = isChecked
-                parent.notifyToUpdateLocking(data)
+                this.data?.boardgameLock = isChecked
+                parent.notifyToUpdateLocking(this.data)
             }
         }
     }

@@ -4,21 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import space.lopatkin.spb.helpboardgamecard.databinding.ItemCardBinding
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 
-class HelpcardAdapter(
+class BoardgameAdapter(
     private val parent: CatalogFragment
-) : RecyclerView.Adapter<HelpcardItem>() {
+) : RecyclerView.Adapter<BoardgameItem>() {
 
-    private var list: List<Helpcard> = ArrayList()
+    private var list: List<BoardgameInfo> = ArrayList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HelpcardItem {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoardgameItem {
         val binding: ItemCardBinding = ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HelpcardItem(this.parent, binding)
+        return BoardgameItem(this.parent, binding)
     }
 
-    override fun onBindViewHolder(holder: HelpcardItem, position: Int) {
-        val item: Helpcard = list[position]
+    override fun onBindViewHolder(holder: BoardgameItem, position: Int) {
+        val item: BoardgameInfo = list[position]
         holder.setData(item)
     }
 
@@ -26,13 +26,13 @@ class HelpcardAdapter(
         return list.size
     }
 
-    fun setList(list: List<Helpcard>) {
+    fun setList(list: List<BoardgameInfo>) {
         this.list = list
         updateList()
     }
 
     //uznaet poziciu dlia svaipa stirania
-    fun getHelpcardAt(position: Int): Helpcard {
+    fun getBoardgameInfoAt(position: Int): BoardgameInfo {
         return list[position]
     }
 

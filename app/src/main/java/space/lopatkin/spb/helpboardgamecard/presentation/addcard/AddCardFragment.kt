@@ -16,7 +16,7 @@ import org.greenrobot.eventbus.ThreadMode
 import space.lopatkin.spb.helpboardgamecard.R
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentAddcardBinding
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.presentation.AbstractFragment
@@ -63,7 +63,7 @@ class AddCardFragment : AbstractFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_save -> {
-                viewModel.saveNewHelpcard(getData())
+                viewModel.saveNewBoardgame(getInstance())
                 true
             }
 
@@ -167,18 +167,15 @@ class AddCardFragment : AbstractFragment() {
         }
     }
 
-    private fun getData(): Helpcard {
-        return Helpcard(
-            id = 0,
-            title = binding!!.editTextTitle.text.toString(),
-            victoryCondition = binding!!.editTextVictoryCondition.text.toString(),
-            endGame = binding!!.editTextEndGame.text.toString(),
-            preparation = binding!!.editTextPreparation.text.toString(),
-            description = binding!!.editTextDescription.text.toString(),
-            playerTurn = binding!!.editTextPlayerTurn.text.toString(),
-            effects = binding!!.editTextEffects.text.toString(),
-            isFavorites = false,
-            isLock = false,
+    private fun getInstance(): BoardgameRaw {
+        return BoardgameRaw(
+            name = binding!!.editTextTitle.text?.toString(),
+            description = binding!!.editTextDescription.text?.toString(),
+            victoryCondition = binding!!.editTextVictoryCondition.text?.toString(),
+            playerTurn = binding!!.editTextPlayerTurn.text?.toString(),
+            endGame = binding!!.editTextEndGame.text?.toString(),
+            effects = binding!!.editTextEffects.text?.toString(),
+            preparation = binding!!.editTextPreparation.text?.toString(),
             priority = binding!!.numberPickerPriority.value
         )
     }

@@ -19,28 +19,28 @@ class ApplicationModule(private val context: Context) {
     @Singleton
     @Provides
     fun provideViewModelFactory(
-        getHelpcardByHelpcardIdUseCase: GetHelpcardByHelpcardIdUseCase,
-        getAllHelpcardsUseCase: GetAllHelpcardsUseCase,
-        deleteHelpcardUseCase: DeleteHelpcardUseCase,
-        deleteHelpcardUnlockedByHelpcardIdUseCase: DeleteHelpcardUnlockedByHelpcardIdUseCase,
-        updateHelpcardByHelpcardIdUseCase: UpdateHelpcardByHelpcardIdUseCase,
-        updateHelpcardFavoriteByHelpcardIdUseCase: UpdateHelpcardFavoriteByHelpcardIdUseCase,
-        updateHelpcardLockingByHelpcardIdUseCase: UpdateHelpcardLockingByHelpcardIdUseCase,
-        deleteHelpcardsByUnlockStateUseCase: DeleteHelpcardsByUnlockStateUseCase,
-        saveHelpcardNewByHelpcardIdUseCase: SaveHelpcardNewByHelpcardIdUseCase,
+        getHelpcardByBoardgameIdUseCase: GetHelpcardByBoardgameIdUseCase,
+        getAllBoardgamesInfoUseCase: GetAllBoardgamesInfoUseCase,
+        getBoardgameRawByBoardgameIdUseCase: GetBoardgameRawByBoardgameIdUseCase,
+        deleteBoardgameUnlockedByBoardgameIdUseCase: DeleteBoardgameUnlockedByBoardgameIdUseCase,
+        updateBoardgameByBoardgameIdUseCase: UpdateBoardgameByBoardgameIdUseCase,
+        updateBoardgameFavoriteByBoardgameIdUseCase: UpdateBoardgameFavoriteByBoardgameIdUseCase,
+        updateBoardgameLockingByBoardgameIdUseCase: UpdateBoardgameLockingByBoardgameIdUseCase,
+        deleteBoardgamesByUnlockStateUseCase: DeleteBoardgamesByUnlockStateUseCase,
+        saveBoardgameNewByBoardgameIdUseCase: SaveBoardgameNewByBoardgameIdUseCase,
         saveKeyboardTypeByUserChoiceUseCase: SaveKeyboardTypeByUserChoiceUseCase,
         getKeyboardTypeUseCase: GetKeyboardTypeUseCase
     ): ViewModelFactory {
         return ViewModelFactory(
-            getHelpcardByHelpcardIdUseCase = getHelpcardByHelpcardIdUseCase,
-            getAllHelpcardsUseCase = getAllHelpcardsUseCase,
-            deleteHelpcardUseCase = deleteHelpcardUseCase,
-            deleteHelpcardUnlockedByHelpcardIdUseCase = deleteHelpcardUnlockedByHelpcardIdUseCase,
-            updateHelpcardByHelpcardIdUseCase = updateHelpcardByHelpcardIdUseCase,
-            updateHelpcardFavoriteByHelpcardIdUseCase = updateHelpcardFavoriteByHelpcardIdUseCase,
-            updateHelpcardLockingByHelpcardIdUseCase = updateHelpcardLockingByHelpcardIdUseCase,
-            deleteHelpcardsByUnlockStateUseCase = deleteHelpcardsByUnlockStateUseCase,
-            saveHelpcardNewByHelpcardIdUseCase = saveHelpcardNewByHelpcardIdUseCase,
+            getHelpcardByBoardgameIdUseCase = getHelpcardByBoardgameIdUseCase,
+            getAllBoardgamesInfoUseCase = getAllBoardgamesInfoUseCase,
+            getBoardgameRawByBoardgameIdUseCase = getBoardgameRawByBoardgameIdUseCase,
+            deleteBoardgameUnlockedByBoardgameIdUseCase = deleteBoardgameUnlockedByBoardgameIdUseCase,
+            updateBoardgameByBoardgameIdUseCase = updateBoardgameByBoardgameIdUseCase,
+            updateBoardgameFavoriteByBoardgameIdUseCase = updateBoardgameFavoriteByBoardgameIdUseCase,
+            updateBoardgameLockingByBoardgameIdUseCase = updateBoardgameLockingByBoardgameIdUseCase,
+            deleteBoardgamesByUnlockStateUseCase = deleteBoardgamesByUnlockStateUseCase,
+            saveBoardgameNewByBoardgameIdUseCase = saveBoardgameNewByBoardgameIdUseCase,
             saveKeyboardTypeByUserChoiceUseCase = saveKeyboardTypeByUserChoiceUseCase,
             getKeyboardTypeUseCase = getKeyboardTypeUseCase
         )

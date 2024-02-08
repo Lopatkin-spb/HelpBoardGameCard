@@ -18,10 +18,10 @@
                 android:id="@+id/action_nav_catalog_to_nav_helpcard"
                 app:destination="@+id/nav_helpcard"/>
         <argument
-                android:name="helpcard"
-                app:argType="space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard"
-                app:nullable="true"
-                android:defaultValue="@null"/>
+                android:name="boardgameId"
+                app:argType="long"
+                app:nullable="false"
+                android:defaultValue="0L"/>
     </fragment>
 
     <fragment
@@ -44,10 +44,10 @@
                 android:id="@+id/action_nav_helpcard_to_nav_card_edit"
                 app:destination="@id/nav_card_edit"/>
         <argument
-                android:name="id"
-                app:argType="integer"
+                android:name="boardgameId"
+                app:argType="long"
                 app:nullable="false"
-                android:defaultValue="-1"/>
+                android:defaultValue="0L"/>
     </fragment>
 
 
@@ -57,10 +57,10 @@
             android:label="@string/title_card_edit"
             tools:layout="@layout/fragment_card_edit">
         <argument
-                android:name="id"
-                app:argType="integer"
+                android:name="boardgameId"
+                app:argType="long"
                 app:nullable="false"
-                android:defaultValue="-1"/>
+                android:defaultValue="0L"/>
         <action
                 android:id="@+id/action_nav_card_edit_to_nav_catalog"
                 app:destination="@id/nav_catalog"/>

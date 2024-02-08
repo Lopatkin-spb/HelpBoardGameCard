@@ -43,10 +43,8 @@ class HelpcardFragment : AbstractFragment() {
         val view: View = binding!!.root
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(HelpcardViewModel::class.java)
-        val helpcardId: Int = args.id
-        if (helpcardId > 0) {
-            loadHelpcard(helpcardId)
-        }
+
+        loadHelpcard(args.boardgameId)
 
         onVictoryCondition()
         onEndGame()
@@ -81,25 +79,24 @@ class HelpcardFragment : AbstractFragment() {
         binding = null
     }
 
-    private fun loadHelpcard(helpcardId: Int) {
-        viewModel.loadHelpcard(helpcardId)
+    private fun loadHelpcard(boardgameId: Long?) {
+        viewModel.loadHelpcard(boardgameId)
         viewModel.helpcard?.observe(viewLifecycleOwner) { helpcard ->
             if (helpcard != null && binding != null) {
-                binding!!.textViewTitle.text = helpcard.title
-                binding!!.textViewDescription.text = helpcard.description
-                binding!!.textVictoryCondition.text = helpcard.victoryCondition
-                binding!!.textEndGame.text = helpcard.endGame
-                binding!!.textPreparation.text = helpcard.preparation
-                binding!!.textPlayerTurn.text = helpcard.playerTurn
-                binding!!.textEffects.text = helpcard.effects
+                binding!!.textViewTitle.text = helpcard.boardgameName
+                binding!!.textVictoryCondition.text = helpcard.helpcardVictoryCondition
+                binding!!.textEndGame.text = helpcard.helpcardEndGame
+                binding!!.textPreparation.text = helpcard.helpcardPreparation
+                binding!!.textPlayerTurn.text = helpcard.helpcardPlayerTurn
+                binding!!.textEffects.text = helpcard.helpcardEffects
             }
         }
     }
 
     private fun navigateToCardEdit() {
-        viewModel.helpcardId.observe(viewLifecycleOwner) { helpcardId ->
-            if (helpcardId != null) {
-                val action = HelpcardFragmentDirections.actionNavHelpcardToNavCardEdit().setId(helpcardId)
+        viewModel.boardgameId.observe(viewLifecycleOwner) { boardgameId ->
+            if (boardgameId != null) {
+                val action = HelpcardFragmentDirections.actionNavHelpcardToNavCardEdit().setBoardgameId(boardgameId)
                 navController.navigate(action)
             }
         }

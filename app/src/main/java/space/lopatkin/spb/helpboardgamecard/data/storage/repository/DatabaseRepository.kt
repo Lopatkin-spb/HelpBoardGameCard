@@ -1,42 +1,48 @@
 package space.lopatkin.spb.helpboardgamecard.data.storage.repository
 
 import androidx.lifecycle.LiveData
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
 interface DatabaseRepository {
-    /**
-     * Получить карточку памяти по идентификатору настольной игры.
-     */
-    fun getHelpcard(boardGameId: Int): LiveData<Helpcard>
 
     /**
-     * Получить все карточки памяти.
+     * Получить все настолки с мин данными с фильтром по убыванию приоритета.
      */
-    fun getAllHelpcards(): LiveData<List<Helpcard>>
+    fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>>
 
     /**
-     * Удалить карточку памяти.
+     * Получить карточку памяти по идентификатору настолки.
      */
-    fun delete(helpcard: Helpcard)
+    fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard>
 
     /**
-     * Удалить карточку памяти.
+     * Получить полные сырые данные настолки по идентификатору настолки.
      */
-    fun delete(id: Int)
+    fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw>
 
     /**
-     * Обновить карточку памяти.
+     * Сохранить новую настолку.
      */
-    fun update(helpcard: Helpcard)
+    fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw)
 
     /**
-     * Удалить все незаблокированные карточки памяти.
+     * Обновить настолку.
      */
-    fun deleteAllUnlockHelpcards()
+    fun updateBoardgameBy(boardgameRaw: BoardgameRaw)
 
     /**
-     * Сохранить новую карточку памяти.
+     * Обновить мин данные настолки.
      */
-    fun saveNewHelpcard(helpcard: Helpcard)
+    fun update(boardgameInfo: BoardgameInfo)
+
+    /**
+     * Удалить настолку.
+     */
+    fun deleteBoardgameBy(boardgameId: Long)
+
+    /**
+     * Удалить все незаблокированные настолки.
+     */
+    fun deleteUnlockBoardgames()
 
 }

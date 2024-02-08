@@ -1,80 +1,44 @@
 package space.lopatkin.spb.helpboardgamecard.domain.model
 
-import android.os.Parcel
-import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard.Companion.TABLE_NAME
 
-@Entity(tableName = "helpcard_table")
+@Entity(tableName = TABLE_NAME)
 data class Helpcard(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
-    @ColumnInfo(name = "title")
-    var title: String?,
-    @ColumnInfo(name = "description")
-    var description: String?,
-    @ColumnInfo(name = "victory_condition")
-    var victoryCondition: String?,
-    @ColumnInfo(name = "end_game")
-    var endGame: String?,
-    @ColumnInfo(name = "preparation")
-    var preparation: String?,
-    @ColumnInfo(name = "player_turn")
-    var playerTurn: String?,
-    @ColumnInfo(name = "effects")
-    var effects: String?,
-    @ColumnInfo(name = "favorites")
-    var isFavorites: Boolean?,
-    @ColumnInfo(name = "lock")
-    var isLock: Boolean?,
-    @ColumnInfo(name = "priority")
-    var priority: Int?
-) : Parcelable {
+    @PrimaryKey
+    @ColumnInfo(name = COLUMN_ID)
+    val helpcardId: Long?,
+    @ColumnInfo(name = COLUMN_BOARDGAME_ID)
+    val boardgameId: Long,
+    @ColumnInfo(name = "boardgame_name")
+    val boardgameName: String,
+    @ColumnInfo(name = COLUMN_AUTHOR)
+    val helpcardAuthor: String,
+    @ColumnInfo(name = COLUMN_VICTORY_COND)
+    val helpcardVictoryCondition: String,
+    @ColumnInfo(name = COLUMN_PLAYER_TURN)
+    val helpcardPlayerTurn: String,
+    @ColumnInfo(name = COLUMN_END_GAME)
+    val helpcardEndGame: String,
+    @ColumnInfo(name = COLUMN_EFFECTS)
+    val helpcardEffects: String,
+    @ColumnInfo(name = COLUMN_PREPARATION)
+    val helpcardPreparation: String,
+    @ColumnInfo(name = "boardgame_priority")
+    val boardgamePriority: Int
+) {
 
-    @Ignore
-    constructor(parcel: Parcel) : this(
-        parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        parcel.readValue(Int::class.java.classLoader) as? Int
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
-        parcel.writeString(title)
-        parcel.writeString(description)
-        parcel.writeString(victoryCondition)
-        parcel.writeString(endGame)
-        parcel.writeString(preparation)
-        parcel.writeString(playerTurn)
-        parcel.writeString(effects)
-        parcel.writeValue(isFavorites)
-        parcel.writeValue(isLock)
-        parcel.writeValue(priority)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Helpcard> {
-        override fun createFromParcel(parcel: Parcel): Helpcard {
-            return Helpcard(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Helpcard?> {
-            return arrayOfNulls(size)
-        }
+    companion object {
+        const val TABLE_NAME = "helpcard_table"
+        const val COLUMN_ID = "helpcard_id"
+        const val COLUMN_BOARDGAME_ID = "boardgame_id"
+        const val COLUMN_AUTHOR = "helpcard_author"
+        const val COLUMN_VICTORY_COND = "helpcard_victory_condition"
+        const val COLUMN_PLAYER_TURN = "helpcard_player_turn"
+        const val COLUMN_END_GAME = "helpcard_end_game"
+        const val COLUMN_EFFECTS = "helpcard_effects"
+        const val COLUMN_PREPARATION = "helpcard_preparation"
     }
 
 }
+

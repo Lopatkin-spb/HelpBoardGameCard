@@ -3,7 +3,7 @@ package space.lopatkin.spb.helpboardgamecard.data.repository
 import androidx.lifecycle.LiveData
 import space.lopatkin.spb.helpboardgamecard.data.storage.repository.DatabaseRepository
 import space.lopatkin.spb.helpboardgamecard.data.storage.repository.SettingsRepository
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.*
 import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 
 class AppRepositoryImpl(
@@ -11,32 +11,36 @@ class AppRepositoryImpl(
     private val settingsRepository: SettingsRepository
 ) : AppRepository {
 
-    override fun getHelpcard(boardGameId: Int): LiveData<Helpcard> {
-        return databaseRepository.getHelpcard(boardGameId = boardGameId)
+    override fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>> {
+        return databaseRepository.getAllBoardgamesInfo()
     }
 
-    override fun getAllHelpcards(): LiveData<List<Helpcard>> {
-        return databaseRepository.getAllHelpcards()
+    override fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard> {
+        return databaseRepository.getHelpcardBy(boardgameId)
     }
 
-    override fun delete(helpcard: Helpcard) {
-        databaseRepository.delete(helpcard = helpcard)
+    override fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw> {
+        return databaseRepository.getBoardgameRawBy(boardgameId)
     }
 
-    override fun delete(id: Int) {
-        databaseRepository.delete(id = id)
+    override fun deleteBoardgameBy(boardgameId: Long) {
+        databaseRepository.deleteBoardgameBy(boardgameId)
     }
 
-    override fun update(helpcard: Helpcard) {
-        databaseRepository.update(helpcard = helpcard)
+    override fun update(boardgameInfo: BoardgameInfo) {
+        databaseRepository.update(boardgameInfo)
     }
 
-    override fun deleteAllUnlockHelpcards() {
-        databaseRepository.deleteAllUnlockHelpcards()
+    override fun deleteUnlockBoardgames() {
+        databaseRepository.deleteUnlockBoardgames()
     }
 
-    override fun saveNewHelpcard(helpcard: Helpcard) {
-        databaseRepository.saveNewHelpcard(helpcard = helpcard)
+    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw) {
+        databaseRepository.saveNewBoardgameBy(boardgameRaw)
+    }
+
+    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw) {
+        databaseRepository.updateBoardgameBy(boardgameRaw)
     }
 
     override fun saveKeyboardType(type: Int) {

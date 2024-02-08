@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import space.lopatkin.spb.helpboardgamecard.R
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentCatalogBinding
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.presentation.AbstractFragment
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory
@@ -24,7 +24,7 @@ class CatalogFragment : AbstractFragment() {
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: CatalogViewModel
     private var binding: FragmentCatalogBinding? = null
-    private val adapter: HelpcardAdapter by lazy { HelpcardAdapter(this) }
+    private val adapter: BoardgameAdapter by lazy { BoardgameAdapter(this) }
     private val navController: NavController by lazy {
         Navigation.findNavController(requireView())
     }
@@ -44,7 +44,7 @@ class CatalogFragment : AbstractFragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(CatalogViewModel::class.java)
         setupList()
-        loadHelpcardsList()
+        loadListBoardgamesInfo()
         return view
     }
 
@@ -59,7 +59,7 @@ class CatalogFragment : AbstractFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_delete_all_unlock_helpcards -> {
-                viewModel.deleteAllUnlockHelpcards()
+                viewModel.deleteAllUnlockBoardgames()
                 true
             }
 
@@ -77,9 +77,9 @@ class CatalogFragment : AbstractFragment() {
         binding = null
     }
 
-    private fun loadHelpcardsList() {
-        viewModel.loadHelpcardsList()
-        viewModel.listHelpcards!!.observe(viewLifecycleOwner) { helpcards -> adapter.setList(helpcards) }
+    private fun loadListBoardgamesInfo() {
+        viewModel.loadListBoardgamesInfo()
+        viewModel.listBoardgamesInfo!!.observe(viewLifecycleOwner) { boardgamesInfo -> adapter.setList(boardgamesInfo) }
     }
 
     private fun setupList() {
@@ -108,24 +108,26 @@ class CatalogFragment : AbstractFragment() {
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val helpcard: Helpcard = adapter.getHelpcardAt(viewHolder.adapterPosition)
-                    viewModel.delete(helpcard)
+                    val boardgameInfo: BoardgameInfo = adapter.getBoardgameInfoAt(viewHolder.adapterPosition)
+                    viewModel.delete(boardgameInfo)
                 }
             }).attachToRecyclerView(binding!!.recyclerView)
         }
     }
 
-    fun notifyToUpdateFavorite(helpcard: Helpcard?) {
-        viewModel.updateFavorite(helpcard)
+    fun notifyToUpdateFavorite(boardgameInfo: BoardgameInfo?) {
+        viewModel.updateFavorite(boardgameInfo)
     }
 
-    fun notifyToUpdateLocking(helpcard: Helpcard?) {
-        viewModel.updateLocking(helpcard)
+    fun notifyToUpdateLocking(boardgameInfo: BoardgameInfo?) {
+        viewModel.updateLocking(boardgameInfo)
     }
 
-    fun notifyToNavigateToHelpcard(helpcardId: Int) {
-        val action = CatalogFragmentDirections.actionNavCatalogToNavHelpcard().setId(helpcardId)
-        navController.navigate(action)
+    fun notifyToNavigateToHelpcard(boardgameId: Long?) {
+        if (boardgameId != null) {
+            val action = CatalogFragmentDirections.actionNavCatalogToNavHelpcard().setBoardgameId(boardgameId)
+            navController.navigate(action)
+        }
     }
 
     private fun resultListener() {

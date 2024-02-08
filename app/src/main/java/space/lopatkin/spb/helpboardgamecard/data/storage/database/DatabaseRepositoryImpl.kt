@@ -5,104 +5,108 @@ import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import space.lopatkin.spb.helpboardgamecard.data.storage.repository.DatabaseRepository
 import space.lopatkin.spb.helpboardgamecard.data.storage.database.AppDatabase.Companion.getInstance
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
 class DatabaseRepositoryImpl(private val context: Context) : DatabaseRepository {
     private val helpcardDao: HelpcardDao
-    private val allHelpcards: LiveData<List<Helpcard>>
-    private val allFavoritesHelpcards: LiveData<List<Helpcard>>
+    private val allBoardgamesInfo: LiveData<List<BoardgameInfo>>
 
     init {
         val database: AppDatabase = getInstance(context = context)
         helpcardDao = database.helpcardDao()
-        allHelpcards = helpcardDao.getAllHelpcards()
-        allFavoritesHelpcards = helpcardDao.getAllFavoritesHelpcards()
+        allBoardgamesInfo = helpcardDao.getAllBoardgamesInfo()
     }
 
-    override fun getHelpcard(boardGameId: Int): LiveData<Helpcard> {
-        return helpcardDao.getHelpcard(boardGameId = boardGameId)
+    override fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>> {
+        return allBoardgamesInfo
     }
 
-    override fun getAllHelpcards(): LiveData<List<Helpcard>> {
-        return allHelpcards
+    override fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard> {
+        return helpcardDao.getHelpcardBy(boardgameId)
     }
 
-    override fun delete(helpcard: Helpcard) {
-        DeleteHelpcardAsyncTask(helpcardDao = helpcardDao).execute(helpcard)
+    override fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw> {
+        return helpcardDao.getBoardgameRawBy(boardgameId)
     }
 
-    override fun delete(id: Int) {
-        DeleteHelpcardByIdAsyncTask(helpcardDao = helpcardDao).execute(id)
+    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw) {
+        AddBoardgameInfoAndHelpcardAsyncTask(helpcardDao = helpcardDao).execute(boardgameRaw)
     }
 
-    override fun update(helpcard: Helpcard) {
-        UpdateHelpcardAsyncTask(helpcardDao = helpcardDao).execute(helpcard)
+    override fun deleteBoardgameBy(boardgameId: Long) {
+        DeleteBoardgameInfoAndHelpcardByIdAsyncTask(helpcardDao = helpcardDao).execute(boardgameId)
     }
 
-    override fun deleteAllUnlockHelpcards() {
-        DeleteAllUnlockHelpcardsAsyncTask(helpcardDao = helpcardDao).execute()
+    override fun update(boardgameInfo: BoardgameInfo) {
+        UpdateBoardgameInfoAsyncTask(helpcardDao = helpcardDao).execute(boardgameInfo)
     }
 
-    override fun saveNewHelpcard(helpcard: Helpcard) {
-        InsertHelpcardAsyncTask(helpcardDao = helpcardDao).execute(helpcard)
+    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw) {
+        UpdateBoardgameInfoAndHelpcardByIdAsyncTask(helpcardDao = helpcardDao).execute(boardgameRaw)
     }
 
-    //todo: do work -------
-    fun deleteAllHelpcards() {
-        DeleteAllHelpcardsAsyncTask(helpcardDao = helpcardDao).execute()
+    override fun deleteUnlockBoardgames() {
+        DeleteUnlockBoardgamesAsyncTask(helpcardDao = helpcardDao).execute()
     }
-
-    fun getAllFavoritesHelpcards(): LiveData<List<Helpcard>> {
-        return allFavoritesHelpcards
-    }
-
 
     companion object {
 
-        private class InsertHelpcardAsyncTask(private val helpcardDao: HelpcardDao) :
-            AsyncTask<Helpcard, Void, Void>() {
-            override fun doInBackground(vararg helpcards: Helpcard): Void? {
-                helpcardDao.insert(helpcards[0])
+        private class AddBoardgameInfoAndHelpcardAsyncTask(private val helpcardDao: HelpcardDao) :
+            AsyncTask<BoardgameRaw, Void, Void>() {
+            override fun doInBackground(vararg data: BoardgameRaw): Void? {
+                val boardgameRaw: BoardgameRaw = data[0]
+                val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
+                val boardgameId: Long = helpcardDao.add(boardgameInfo)
+                val helpcard: Helpcard = boardgameRaw.toHelpcard(boardgameId)
+                helpcardDao.add(helpcard)
                 return null
             }
         }
 
-        private class UpdateHelpcardAsyncTask(private val helpcardDao: HelpcardDao) :
-            AsyncTask<Helpcard, Void, Void>() {
-            override fun doInBackground(vararg helpcards: Helpcard): Void? {
-                helpcardDao.update(helpcards[0])
+        private class UpdateBoardgameInfoAndHelpcardByIdAsyncTask(private val helpcardDao: HelpcardDao) :
+            AsyncTask<BoardgameRaw, Void, Void>() {
+            override fun doInBackground(vararg data: BoardgameRaw): Void? {
+                val boardgameRaw: BoardgameRaw = data[0]
+                if (boardgameRaw.id != null) {
+                    val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
+                    helpcardDao.update(boardgameInfo)
+                    val helpcardDbId: Long = helpcardDao.getHelpcardIdBy(boardgameRaw.id!!)
+                    val helpcard: Helpcard = boardgameRaw.toHelpcard(helpcardDbId, boardgameRaw.id!!)
+                    helpcardDao.update(helpcard)
+                }
                 return null
             }
         }
 
-        private class DeleteHelpcardAsyncTask(private val helpcardDao: HelpcardDao) :
-            AsyncTask<Helpcard, Void, Void>() {
-            override fun doInBackground(vararg helpcards: Helpcard): Void? {
-                helpcardDao.delete(helpcards[0])
+        private class UpdateBoardgameInfoAsyncTask(private val helpcardDao: HelpcardDao) :
+            AsyncTask<BoardgameInfo, Void, Void>() {
+            override fun doInBackground(vararg boardgameInfos: BoardgameInfo): Void? {
+                helpcardDao.update(boardgameInfos[0])
                 return null
             }
         }
 
-        private class DeleteHelpcardByIdAsyncTask(private val helpcardDao: HelpcardDao) :
-            AsyncTask<Int, Void, Void>() {
-            override fun doInBackground(vararg integers: Int?): Void? {
-                helpcardDao.delete(integers[0]!!)
+        private class DeleteBoardgameInfoAndHelpcardByIdAsyncTask(private val helpcardDao: HelpcardDao) :
+            AsyncTask<Long, Void, Void>() {
+            override fun doInBackground(vararg params: Long?): Void? {
+                val boardgameId: Long? = params[0]
+                if (boardgameId != null) {
+                    helpcardDao.deleteBoardgameInfoBy(boardgameId)
+                    helpcardDao.deleteHelpcardBy(boardgameId)
+                }
                 return null
             }
         }
 
-        private class DeleteAllHelpcardsAsyncTask(private val helpcardDao: HelpcardDao) :
+        private class DeleteUnlockBoardgamesAsyncTask(private val helpcardDao: HelpcardDao) :
             AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg voids: Void): Void? {
-                helpcardDao.deleteAllHelpcards()
-                return null
-            }
-        }
+                val listIdUnlock: Array<Long> = helpcardDao.getBoardgameIdsByUnlock()
 
-        private class DeleteAllUnlockHelpcardsAsyncTask(private val helpcardDao: HelpcardDao) :
-            AsyncTask<Void, Void, Void>() {
-            override fun doInBackground(vararg voids: Void): Void? {
-                helpcardDao.deleteAllUnlockHelpcards()
+                for (index in 0 until listIdUnlock.size) {
+                    helpcardDao.deleteBoardgameInfoBy(listIdUnlock.get(index))
+                    helpcardDao.deleteHelpcardBy(listIdUnlock.get(index))
+                }
                 return null
             }
         }

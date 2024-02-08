@@ -3,14 +3,14 @@ package space.lopatkin.spb.helpboardgamecard.presentation.addcard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase
-import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveHelpcardNewByHelpcardIdUseCase
+import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveBoardgameNewByBoardgameIdUseCase
 
 class AddCardViewModel(
-    private val saveHelpcardNewByHelpcardIdUseCase: SaveHelpcardNewByHelpcardIdUseCase,
+    private val saveBoardgameNewByBoardgameIdUseCase: SaveBoardgameNewByBoardgameIdUseCase,
     private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
 ) : ViewModel() {
 
@@ -23,8 +23,8 @@ class AddCardViewModel(
         keyboardTypeMutable.value = getKeyboardTypeUseCase.execute()
     }
 
-    fun saveNewHelpcard(helpcard: Helpcard?) {
-        val messageResponse: Message = saveHelpcardNewByHelpcardIdUseCase.execute(helpcard)
+    fun saveNewBoardgame(boardgameRaw: BoardgameRaw?) {
+        val messageResponse: Message = saveBoardgameNewByBoardgameIdUseCase.execute(boardgameRaw)
         messageMutable.value = messageResponse
         messageMutable.value = Message.POOL_EMPTY
     }

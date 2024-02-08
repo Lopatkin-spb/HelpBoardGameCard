@@ -18,7 +18,7 @@ import org.greenrobot.eventbus.ThreadMode
 import space.lopatkin.spb.helpboardgamecard.R
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentCardEditBinding
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.presentation.AbstractFragment
@@ -36,11 +36,6 @@ class CardEditFragment : AbstractFragment() {
     private val navController: NavController by lazy { Navigation.findNavController(requireView()) }
     private val args: CardEditFragmentArgs by navArgs()
     private var inputConnection: InputConnection? = null
-    private var idCard: Int = 0
-    private var effects: String = ""
-    private var favorites: Boolean = false
-    private var lock: Boolean = false
-    private var priority: Int = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,10 +50,8 @@ class CardEditFragment : AbstractFragment() {
         binding = FragmentCardEditBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(this, viewModelFactory!!).get(CardEditViewModel::class.java)
-        val helpcardId = args.id
-        if (helpcardId > 0) {
-            loadHelpcard(helpcardId)
-        }
+
+        loadBoardgameFromDb(args.boardgameId)
 
         loadKeyboardType()
         setAnimationSizeForExpandableViews()
@@ -76,7 +69,7 @@ class CardEditFragment : AbstractFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_card_save -> {
-                viewModel.update(getEditedData())
+                updateData()
                 true
             }
 
@@ -172,38 +165,44 @@ class CardEditFragment : AbstractFragment() {
         }
     }
 
-    private fun loadHelpcard(helpcardId: Int) {
-        viewModel.loadHelpcard(helpcardId)
-        viewModel.helpcard?.observe(viewLifecycleOwner) { helpcard ->
-            if (binding != null && helpcard != null) {
-                binding!!.editTitle.setText(helpcard.title)
-                binding!!.editDescription.setText(helpcard.description)
-                binding!!.editVictoryCondition.setText(helpcard.victoryCondition)
-                binding!!.editEndGame.setText(helpcard.endGame)
-                binding!!.editPreparation.setText(helpcard.preparation)
-                binding!!.editPlayerTurn.setText(helpcard.playerTurn)
-                idCard = helpcard.id
-                effects = helpcard.effects!!
-                favorites = helpcard.isFavorites!!
-                lock = helpcard.isLock!!
-                priority = helpcard.priority!!
+    private fun loadBoardgameFromDb(boardgameId: Long?) {
+        viewModel.loadBoardgameRaw(boardgameId)
+        viewModel.boardgameRaw?.observe(viewLifecycleOwner) { boardgameRaw ->
+
+            if (binding != null && boardgameRaw != null) {
+                binding!!.editTitle.setText(boardgameRaw.name)
+                binding!!.editDescription.setText(boardgameRaw.description)
+                binding!!.editVictoryCondition.setText(boardgameRaw.victoryCondition)
+                binding!!.editEndGame.setText(boardgameRaw.endGame)
+                binding!!.editPreparation.setText(boardgameRaw.preparation)
+                binding!!.editPlayerTurn.setText(boardgameRaw.playerTurn)
             }
         }
     }
 
-    private fun getEditedData(): Helpcard {
-        return Helpcard(
-            id = idCard,
-            title = binding!!.editTitle.text.toString(),
-            victoryCondition = binding!!.editVictoryCondition.text.toString(),
-            endGame = binding!!.editEndGame.text.toString(),
-            preparation = binding!!.editPreparation.text.toString(),
+    private fun updateData() {
+        viewModel.boardgameRaw?.observe(viewLifecycleOwner) { boardgameRawDb ->
+            if (binding != null && boardgameRawDb != null) {
+                viewModel.update(getEditedInstance(boardgameRawDb))
+            }
+        }
+
+    }
+
+    private fun getEditedInstance(boardgameRawDb: BoardgameRaw): BoardgameRaw {
+        return BoardgameRaw(
+            id = boardgameRawDb.id,
+            name = binding!!.editTitle.text.toString(),
             description = binding!!.editDescription.text.toString(),
+            victoryCondition = binding!!.editVictoryCondition.text.toString(),
             playerTurn = binding!!.editPlayerTurn.text.toString(),
-            effects = effects,
-            isFavorites = favorites,
-            isLock = lock,
-            priority = priority
+            endGame = binding!!.editEndGame.text.toString(),
+            effects = boardgameRawDb.effects,
+            preparation = binding!!.editPreparation.text.toString(),
+            priority = boardgameRawDb.priority,
+            favorite = boardgameRawDb.favorite,
+            lock = boardgameRawDb.lock,
+            author = boardgameRawDb.author,
         )
     }
 

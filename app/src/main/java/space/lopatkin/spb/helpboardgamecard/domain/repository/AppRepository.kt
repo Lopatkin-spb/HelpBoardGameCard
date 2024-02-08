@@ -1,44 +1,49 @@
 package space.lopatkin.spb.helpboardgamecard.domain.repository
 
 import androidx.lifecycle.LiveData;
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard;
+import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
 interface AppRepository {
 
     /**
-     * Получить карточку памяти по идентификатору настольной игры.
+     * Получить карточку памяти по идентификатору настолки.
      */
-    fun getHelpcard(boardGameId: Int): LiveData<Helpcard>
+    fun getHelpcardBy(boardGameId: Long): LiveData<Helpcard>
 
     /**
-     * Получить все карточки памяти.
+     * Получить полные сырые данные настолки по идентификатору настолки.
      */
-    fun getAllHelpcards(): LiveData<List<Helpcard>>
+    fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw>
 
     /**
-     * Удалить карточку памяти.
+     * Получить все настолки с мин данными с фильтром по убыванию приоритета.
      */
-    fun delete(helpcard: Helpcard)
+    fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>>
 
     /**
-     * Удалить карточку памяти.
+     * Удалить настолку.
      */
-    fun delete(id: Int)
+    fun deleteBoardgameBy(boardgameId: Long)
 
     /**
-     * Обновить карточку памяти.
+     * Обновить мин данные настолки.
      */
-    fun update(helpcard: Helpcard)
+    fun update(boardgameInfo: BoardgameInfo)
 
     /**
-     * Удалить все незаблокированные карточки памяти.
+     * Удалить незаблокированные настолки.
      */
-    fun deleteAllUnlockHelpcards()
+    fun deleteUnlockBoardgames()
 
     /**
-     * Сохранить новую карточку памяти.
+     * Сохранить новую настолку.
      */
-    fun saveNewHelpcard(helpcard: Helpcard)
+    fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw)
+
+    /**
+     * Обновить настолку.
+     */
+    fun updateBoardgameBy(boardgameRaw: BoardgameRaw)
 
     /**
      * Сохранить тип включенной клавиатуры в настройках: кастомная или дефолтная.

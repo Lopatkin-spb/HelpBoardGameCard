@@ -1,17 +1,17 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
 
-class UpdateHelpcardFavoriteByHelpcardIdUseCase(private val repository: AppRepository) {
+class UpdateBoardgameFavoriteByBoardgameIdUseCase(private val repository: AppRepository) {
 
-    fun execute(helpcard: Helpcard?): Message {
-        if (helpcard == null) {
+    fun execute(boardgameInfo: BoardgameInfo?): Message {
+        if (boardgameInfo == null) {
             return Message.ACTION_ENDED_ERROR
         }
 
-        repository.update(helpcard = helpcard)
+        repository.update(boardgameInfo = boardgameInfo)
         return Message.FAVORITE_ITEM_ACTION_ENDED_SUCCESS
     }
 

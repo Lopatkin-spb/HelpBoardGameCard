@@ -11,56 +11,50 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun provideGetHelpcardByHelpcardIdUseCase(repository: AppRepository): GetHelpcardByHelpcardIdUseCase {
-        return GetHelpcardByHelpcardIdUseCase(repository = repository)
+    fun provideGetHelpcardByBoardgameIdUseCase(repository: AppRepository): GetHelpcardByBoardgameIdUseCase {
+        return GetHelpcardByBoardgameIdUseCase(repository = repository)
     }
 
     @Singleton
     @Provides
-    fun provideDeleteHelpcardUseCase(repository: AppRepository): DeleteHelpcardUseCase {
-        return DeleteHelpcardUseCase(repository = repository)
+    fun provideDeleteBoardgameUnlockedByBoardgameIdUseCase(repository: AppRepository): DeleteBoardgameUnlockedByBoardgameIdUseCase {
+        return DeleteBoardgameUnlockedByBoardgameIdUseCase(repository = repository)
     }
 
     @Singleton
     @Provides
-    fun provideDeleteHelpcardUnlockedByHelpcardIdUseCase(repository: AppRepository): DeleteHelpcardUnlockedByHelpcardIdUseCase {
-        return DeleteHelpcardUnlockedByHelpcardIdUseCase(repository = repository)
+    fun provideGetAllBoardgamesInfoUseCase(repository: AppRepository): GetAllBoardgamesInfoUseCase {
+        return GetAllBoardgamesInfoUseCase(repository = repository)
     }
 
     @Singleton
     @Provides
-    fun provideGetAllHelpcardsUseCase(repository: AppRepository): GetAllHelpcardsUseCase {
-        return GetAllHelpcardsUseCase(repository = repository)
+    fun provideUpdateBoardgameByBoardgameIdUseCase(repository: AppRepository): UpdateBoardgameByBoardgameIdUseCase {
+        return UpdateBoardgameByBoardgameIdUseCase(repository = repository)
     }
 
     @Singleton
     @Provides
-    fun provideUpdateHelpcardByHelpcardIdUseCase(repository: AppRepository): UpdateHelpcardByHelpcardIdUseCase {
-        return UpdateHelpcardByHelpcardIdUseCase(repository = repository)
+    fun provideUpdateBoardgameFavoriteByBoardgameIdUseCase(repository: AppRepository): UpdateBoardgameFavoriteByBoardgameIdUseCase {
+        return UpdateBoardgameFavoriteByBoardgameIdUseCase(repository = repository)
     }
 
     @Singleton
     @Provides
-    fun provideUpdateHelpcardFavoriteByHelpcardIdUseCase(repository: AppRepository): UpdateHelpcardFavoriteByHelpcardIdUseCase {
-        return UpdateHelpcardFavoriteByHelpcardIdUseCase(repository = repository)
+    fun provideUpdateBoardgameLockingByBoardgameIdUseCase(repository: AppRepository): UpdateBoardgameLockingByBoardgameIdUseCase {
+        return UpdateBoardgameLockingByBoardgameIdUseCase(repository = repository)
     }
 
     @Singleton
     @Provides
-    fun provideUpdateHelpcardLockingByHelpcardIdUseCase(repository: AppRepository): UpdateHelpcardLockingByHelpcardIdUseCase {
-        return UpdateHelpcardLockingByHelpcardIdUseCase(repository = repository)
+    fun provideDeleteBoardgamesByUnlockStateUseCase(repository: AppRepository): DeleteBoardgamesByUnlockStateUseCase {
+        return DeleteBoardgamesByUnlockStateUseCase(repository = repository)
     }
 
     @Singleton
     @Provides
-    fun provideDeleteHelpcardsByUnlockStateUseCase(repository: AppRepository): DeleteHelpcardsByUnlockStateUseCase {
-        return DeleteHelpcardsByUnlockStateUseCase(repository = repository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideSaveHelpcardNewByHelpcardIdUseCase(repository: AppRepository): SaveHelpcardNewByHelpcardIdUseCase {
-        return SaveHelpcardNewByHelpcardIdUseCase(repository = repository)
+    fun provideSaveBoardgameNewByBoardgameIdUseCase(repository: AppRepository): SaveBoardgameNewByBoardgameIdUseCase {
+        return SaveBoardgameNewByBoardgameIdUseCase(repository = repository)
     }
 
     @Singleton
@@ -73,6 +67,12 @@ class DomainModule {
     @Provides
     fun provideGetKeyboardTypeUseCase(repository: AppRepository): GetKeyboardTypeUseCase {
         return GetKeyboardTypeUseCase(repository = repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetBoardgameRawByBoardgameIdUseCase(repository: AppRepository): GetBoardgameRawByBoardgameIdUseCase {
+        return GetBoardgameRawByBoardgameIdUseCase(repository = repository)
     }
 
 }
