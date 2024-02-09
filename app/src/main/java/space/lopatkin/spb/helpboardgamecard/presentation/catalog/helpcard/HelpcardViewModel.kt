@@ -11,14 +11,14 @@ class HelpcardViewModel(
     private val getHelpcardByBoardgameIdUseCase: GetHelpcardByBoardgameIdUseCase
 ) : ViewModel() {
 
-    private val boardgameIdMutable = MutableLiveData<Long>()
+    private val _boardgameId = MutableLiveData<Long>()
     var helpcard: LiveData<Helpcard>? = null
-    val boardgameId: LiveData<Long> = boardgameIdMutable
+    val boardgameId: LiveData<Long> = _boardgameId
 
     fun loadHelpcard(boardgameId: Long?) {
         if (boardgameId != null && boardgameId > 0) {
-            boardgameIdMutable.value = boardgameId
-            helpcard = Transformations.switchMap(boardgameIdMutable) { thisId ->
+            _boardgameId.value = boardgameId
+            helpcard = Transformations.switchMap(_boardgameId) { thisId ->
                 getHelpcardByBoardgameIdUseCase.execute(thisId)
             }
         }

@@ -14,19 +14,19 @@ class AddCardViewModel(
     private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
 ) : ViewModel() {
 
-    private val keyboardTypeMutable = MutableLiveData<KeyboardType>()
-    private val messageMutable = MutableLiveData<Message>()
-    val keyboardType: LiveData<KeyboardType> = keyboardTypeMutable
-    val message: LiveData<Message> = messageMutable
+    private val _keyboardType = MutableLiveData<KeyboardType>()
+    private val _message = MutableLiveData<Message>()
+    val keyboardType: LiveData<KeyboardType> = _keyboardType
+    val message: LiveData<Message> = _message
 
     fun loadKeyboardType() {
-        keyboardTypeMutable.value = getKeyboardTypeUseCase.execute()
+        _keyboardType.value = getKeyboardTypeUseCase.execute()
     }
 
     fun saveNewBoardgame(boardgameRaw: BoardgameRaw?) {
         val messageResponse: Message = saveBoardgameNewByBoardgameIdUseCase.execute(boardgameRaw)
-        messageMutable.value = messageResponse
-        messageMutable.value = Message.POOL_EMPTY
+        _message.value = messageResponse
+        _message.value = Message.POOL_EMPTY
     }
 
 }

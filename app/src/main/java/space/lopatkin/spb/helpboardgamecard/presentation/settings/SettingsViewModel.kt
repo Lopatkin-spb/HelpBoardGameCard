@@ -13,19 +13,19 @@ class SettingsViewModel(
     private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
 ) : ViewModel() {
 
-    private val keyboardTypeMutable = MutableLiveData<KeyboardType>()
-    private val messageMutable = MutableLiveData<Message>()
-    val message: LiveData<Message> = messageMutable
-    val keyboardType: LiveData<KeyboardType> = keyboardTypeMutable
+    private val _keyboardType = MutableLiveData<KeyboardType>()
+    private val _message = MutableLiveData<Message>()
+    val message: LiveData<Message> = _message
+    val keyboardType: LiveData<KeyboardType> = _keyboardType
 
     fun loadKeyboardType() {
-        keyboardTypeMutable.value = getKeyboardTypeUseCase.execute()
+        _keyboardType.value = getKeyboardTypeUseCase.execute()
     }
 
     fun saveKeyboardType(type: Any?) {
         val messageResponse: Message = saveKeyboardTypeByUserChoiceUseCase.execute(type)
-        messageMutable.value = messageResponse
-        messageMutable.value = Message.POOL_EMPTY
+        _message.value = messageResponse
+        _message.value = Message.POOL_EMPTY
     }
 
 }

@@ -15,21 +15,21 @@ class CardEditViewModel(
     private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
 ) : ViewModel() {
 
-    private val boardgameIdMutable = MutableLiveData<Long>()
-    private val keyboardTypeMutable = MutableLiveData<KeyboardType>()
-    private val messageMutable = MutableLiveData<Message>()
+    private val _boardgameId = MutableLiveData<Long>()
+    private val _keyboardType = MutableLiveData<KeyboardType>()
+    private val _message = MutableLiveData<Message>()
     var boardgameRaw: LiveData<BoardgameRaw>? = null
-    val keyboardType: LiveData<KeyboardType> = keyboardTypeMutable
-    val message: LiveData<Message> = messageMutable
+    val keyboardType: LiveData<KeyboardType> = _keyboardType
+    val message: LiveData<Message> = _message
 
     fun loadKeyboardType() {
-        keyboardTypeMutable.value = getKeyboardTypeUseCase.execute()
+        _keyboardType.value = getKeyboardTypeUseCase.execute()
     }
 
     fun loadBoardgameRaw(boardgameId: Long?) {
         if (boardgameId != null && boardgameId > 0) {
-            boardgameIdMutable.value = boardgameId
-            boardgameRaw = Transformations.switchMap(boardgameIdMutable) { thisId ->
+            _boardgameId.value = boardgameId
+            boardgameRaw = Transformations.switchMap(_boardgameId) { thisId ->
                 getBoardgameRawByBoardgameIdUseCase.execute(thisId)
             }
         }
@@ -37,8 +37,8 @@ class CardEditViewModel(
 
     fun update(boardgameRaw: BoardgameRaw?) {
         val messageResponse: Message = updateBoardgameByBoardgameIdUseCase.execute(boardgameRaw)
-        messageMutable.value = messageResponse
-        messageMutable.value = Message.POOL_EMPTY
+        _message.value = messageResponse
+        _message.value = Message.POOL_EMPTY
     }
 
 }

@@ -15,8 +15,8 @@ class CatalogViewModel(
     private val deleteBoardgamesByUnlockStateUseCase: DeleteBoardgamesByUnlockStateUseCase
 ) : ViewModel() {
 
-    private val messageMutable = MutableLiveData<Message>()
-    val message: LiveData<Message> = messageMutable
+    private val _message = MutableLiveData<Message>()
+    val message: LiveData<Message> = _message
     var listBoardgamesInfo: LiveData<List<BoardgameInfo>>? = null
 
     fun loadListBoardgamesInfo() {
@@ -29,20 +29,20 @@ class CatalogViewModel(
 
     fun updateFavorite(boardgameInfo: BoardgameInfo?) {
         val messageResponse: Message = updateBoardgameFavoriteByBoardgameIdUseCase.execute(boardgameInfo)
-        messageMutable.value = messageResponse
-        messageMutable.value = Message.POOL_EMPTY
+        _message.value = messageResponse
+        _message.value = Message.POOL_EMPTY
     }
 
     fun updateLocking(boardgameInfo: BoardgameInfo?) {
         val messageResponse: Message = updateBoardgameLockingByBoardgameIdUseCase.execute(boardgameInfo)
-        messageMutable.value = messageResponse
-        messageMutable.value = Message.POOL_EMPTY
+        _message.value = messageResponse
+        _message.value = Message.POOL_EMPTY
     }
 
     fun delete(boardgameInfo: BoardgameInfo?) {
         val messageResponse: Message = deleteBoardgameUnlockedByBoardgameIdUseCase.execute(boardgameInfo)
-        messageMutable.value = messageResponse
-        messageMutable.value = Message.POOL_EMPTY
+        _message.value = messageResponse
+        _message.value = Message.POOL_EMPTY
     }
 
 }
