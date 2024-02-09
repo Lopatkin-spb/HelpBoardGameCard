@@ -3,7 +3,7 @@ package space.lopatkin.spb.helpboardgamecard.domain.repository
 import androidx.lifecycle.LiveData;
 import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
-interface AppRepository {
+interface BoardgameRepository {
 
     /**
      * Получить карточку памяти по идентификатору настолки.
@@ -44,17 +44,5 @@ interface AppRepository {
      * Обновить настолку.
      */
     fun updateBoardgameBy(boardgameRaw: BoardgameRaw)
-
-    /**
-     * Сохранить тип включенной клавиатуры в настройках: кастомная или дефолтная.
-     *
-     * @param type выбранный пользователем тип.
-     */
-    fun saveKeyboardType(type: Int)
-
-    /**
-     * Получить тип включенной клавиатуры в настройках: кастомная или дефолтная.
-     */
-    fun getKeyboardType(): Int
 
 }

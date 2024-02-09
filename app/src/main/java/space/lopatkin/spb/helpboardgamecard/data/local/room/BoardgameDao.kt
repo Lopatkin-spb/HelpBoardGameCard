@@ -1,11 +1,11 @@
-package space.lopatkin.spb.helpboardgamecard.data.storage.database
+package space.lopatkin.spb.helpboardgamecard.data.local.room
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*
 import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
 @Dao
-interface HelpcardDao {
+interface BoardgameDao {
 
     /**
      * Получить карточку памяти по идентификатору настолки.

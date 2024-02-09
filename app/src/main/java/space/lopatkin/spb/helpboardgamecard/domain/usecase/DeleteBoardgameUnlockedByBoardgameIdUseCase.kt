@@ -2,9 +2,9 @@ package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
+import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
-class DeleteBoardgameUnlockedByBoardgameIdUseCase(private val repository: AppRepository) {
+class DeleteBoardgameUnlockedByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
     fun execute(boardgameInfo: BoardgameInfo?): Message {
         if (boardgameInfo == null) {

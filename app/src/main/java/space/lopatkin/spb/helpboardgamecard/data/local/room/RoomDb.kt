@@ -1,4 +1,4 @@
-package space.lopatkin.spb.helpboardgamecard.data.storage.database
+package space.lopatkin.spb.helpboardgamecard.data.local.room
 
 import android.content.Context
 import android.os.AsyncTask
@@ -12,14 +12,14 @@ import space.lopatkin.spb.helpboardgamecard.domain.model.*
     entities = [
         BoardgameInfo::class,
         Helpcard::class
-    ], version = 35
+    ], version = 36
 )
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun helpcardDao(): HelpcardDao
+abstract class RoomDb : RoomDatabase() {
+    abstract fun boardgameDao(): BoardgameDao
 
-    private class PopulateDbAsyncTask(private val db: AppDatabase) : AsyncTask<Void, Void, Void>() {
+    private class PopulateDbAsyncTask(private val db: RoomDb) : AsyncTask<Void, Void, Void>() {
         override fun doInBackground(vararg params: Void): Void? {
-            val helpcardDao: HelpcardDao = db.helpcardDao()
+            val boardgameDao: BoardgameDao = db.boardgameDao()
 
             val example1: BoardgameRaw = BoardgameRaw(
                 name = "Title 1",
@@ -35,9 +35,9 @@ abstract class AppDatabase : RoomDatabase() {
                 priority = 1
             )
             val boardgameInfo1: BoardgameInfo = example1.toBoardgameInfo()
-            val boardgameId1: Long = helpcardDao.add(boardgameInfo1)
+            val boardgameId1: Long = boardgameDao.add(boardgameInfo1)
             val helpcard1: Helpcard = example1.toHelpcard(boardgameId1)
-            helpcardDao.add(helpcard1)
+            boardgameDao.add(helpcard1)
 
             val example2: BoardgameRaw = BoardgameRaw(
                 name = "Илос 3варик",
@@ -53,9 +53,9 @@ abstract class AppDatabase : RoomDatabase() {
                 priority = 2
             )
             val boardgameInfo2: BoardgameInfo = example2.toBoardgameInfo()
-            val boardgameId2: Long = helpcardDao.add(boardgameInfo2)
+            val boardgameId2: Long = boardgameDao.add(boardgameInfo2)
             val helpcard2: Helpcard = example2.toHelpcard(boardgameId2)
-            helpcardDao.add(helpcard2)
+            boardgameDao.add(helpcard2)
 
             val example3: BoardgameRaw = BoardgameRaw(
                 name = "Илос 1вар",
@@ -71,9 +71,9 @@ abstract class AppDatabase : RoomDatabase() {
                 priority = 3
             )
             val boardgameInfo3: BoardgameInfo = example3.toBoardgameInfo()
-            val boardgameId3: Long = helpcardDao.add(boardgameInfo3)
+            val boardgameId3: Long = boardgameDao.add(boardgameInfo3)
             val helpcard3: Helpcard = example3.toHelpcard(boardgameId3)
-            helpcardDao.add(helpcard3)
+            boardgameDao.add(helpcard3)
 
             val example4: BoardgameRaw = BoardgameRaw(
                 name = "Илос 2вар",
@@ -89,32 +89,32 @@ abstract class AppDatabase : RoomDatabase() {
                 priority = 4
             )
             val boardgameInfo4: BoardgameInfo = example4.toBoardgameInfo()
-            val boardgameId4: Long = helpcardDao.add(boardgameInfo4)
+            val boardgameId4: Long = boardgameDao.add(boardgameInfo4)
             val helpcard4: Helpcard = example4.toHelpcard(boardgameId4)
-            helpcardDao.add(helpcard4)
+            boardgameDao.add(helpcard4)
 
             return null
         }
     }
 
     companion object {
-        private const val NAME_DATABASE = "helpcard_database"
+        private const val NAME_DATABASE = "room_boardgame_database"
 
         @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private var INSTANCE: RoomDb? = null
 
-        fun getInstance(context: Context): AppDatabase {
+        fun getInstance(context: Context): RoomDb {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java,
+                    RoomDb::class.java,
                     NAME_DATABASE
                 )
                     .fallbackToDestructiveMigration()
                     .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            INSTANCE?.let { databa ->
+                            INSTANCE?.let { roomDb ->
                                 PopulateDbAsyncTask(db = INSTANCE!!).execute()
                             }
                         }

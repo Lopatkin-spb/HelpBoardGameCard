@@ -1,9 +1,9 @@
-package space.lopatkin.spb.helpboardgamecard.data.storage.repository
+package space.lopatkin.spb.helpboardgamecard.data.local.data.source
 
 import androidx.lifecycle.LiveData
 import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
-interface DatabaseRepository {
+interface BoardgameLocalDataSource {
 
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.

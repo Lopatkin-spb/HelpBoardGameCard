@@ -1,13 +1,13 @@
-package space.lopatkin.spb.helpboardgamecard.data.storage.preferences
+package space.lopatkin.spb.helpboardgamecard.data.local.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import space.lopatkin.spb.helpboardgamecard.data.storage.repository.SettingsRepository
+import space.lopatkin.spb.helpboardgamecard.data.local.data.source.SettingsLocalDataSource
 
 private const val APPLICATION_PREFERENCES = "APPLICATION_PREFERENCES"
 private const val KEYBOARD_TYPE = "KEYBOARD_TYPE"
 
-class SettingsRepositoryImpl(private val context: Context) : SettingsRepository {
+class PreferencesSettingsLocalDataSource(private val context: Context) : SettingsLocalDataSource {
 
     private val preferences: SharedPreferences = context.getSharedPreferences(APPLICATION_PREFERENCES, Context.MODE_PRIVATE)
 

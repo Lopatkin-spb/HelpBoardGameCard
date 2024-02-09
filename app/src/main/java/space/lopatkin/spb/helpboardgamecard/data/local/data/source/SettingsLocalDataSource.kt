@@ -1,6 +1,6 @@
-package space.lopatkin.spb.helpboardgamecard.data.storage.repository
+package space.lopatkin.spb.helpboardgamecard.data.local.data.source
 
-interface SettingsRepository {
+interface SettingsLocalDataSource {
     /**
      * Сохранить тип включенной клавиатуры в настройках: кастомная или дефолтная.
      *

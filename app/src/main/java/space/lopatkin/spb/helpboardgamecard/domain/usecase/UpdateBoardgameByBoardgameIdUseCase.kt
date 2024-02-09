@@ -1,11 +1,10 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import android.util.Log
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
-import space.lopatkin.spb.helpboardgamecard.domain.repository.AppRepository
+import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
-class UpdateBoardgameByBoardgameIdUseCase(private val repository: AppRepository) {
+class UpdateBoardgameByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
     fun execute(boardgameRaw: BoardgameRaw?): Message {
         if (boardgameRaw != null && boardgameRaw.name?.isEmpty() == true) {
