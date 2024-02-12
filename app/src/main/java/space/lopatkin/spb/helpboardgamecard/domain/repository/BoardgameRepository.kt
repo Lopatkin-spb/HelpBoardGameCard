@@ -8,12 +8,12 @@ interface BoardgameRepository {
     /**
      * Получить карточку памяти по идентификатору настолки.
      */
-    fun getHelpcardBy(boardGameId: Long): LiveData<Helpcard>
+    suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard>
 
     /**
      * Получить полные сырые данные настолки по идентификатору настолки.
      */
-    fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw>
+    suspend fun getBoardgameRawBy(boardgameId: Long): Result<BoardgameRaw>
 
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.

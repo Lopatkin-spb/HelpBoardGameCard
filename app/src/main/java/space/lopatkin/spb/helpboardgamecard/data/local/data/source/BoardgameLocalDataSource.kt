@@ -13,12 +13,12 @@ interface BoardgameLocalDataSource {
     /**
      * Получить карточку памяти по идентификатору настолки.
      */
-    fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard>
+    suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard>
 
     /**
      * Получить полные сырые данные настолки по идентификатору настолки.
      */
-    fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw>
+    suspend fun getBoardgameRawBy(boardgameId: Long): Result<BoardgameRaw>
 
     /**
      * Сохранить новую настолку.

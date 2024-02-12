@@ -9,6 +9,7 @@ import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import kotlin.Result
 
 class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLocalDataSource {
     private val boardgameDao: BoardgameDao
@@ -24,12 +25,22 @@ class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLoca
         return allBoardgamesInfo
     }
 
-    override fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard> {
-        return boardgameDao.getHelpcardBy(boardgameId)
+    override suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard> {
+        return try {
+            val data: Helpcard = boardgameDao.getHelpcardBy(boardgameId)
+            Result.success(data)
+        } catch (cause: Throwable) {
+            Result.failure(cause)
+        }
     }
 
-    override fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw> {
-        return boardgameDao.getBoardgameRawBy(boardgameId)
+    override suspend fun getBoardgameRawBy(boardgameId: Long): Result<BoardgameRaw> {
+        return try {
+            val data: BoardgameRaw = boardgameDao.getBoardgameRawBy(boardgameId)
+            Result.success(data)
+        } catch (cause: Throwable) {
+            Result.failure(cause)
+        }
     }
 
     override suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Message {

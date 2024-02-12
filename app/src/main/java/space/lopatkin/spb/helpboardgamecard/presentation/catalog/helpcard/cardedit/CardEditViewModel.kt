@@ -1,8 +1,13 @@
 package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.cardedit
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import space.lopatkin.spb.helpboardgamecard.domain.model.*
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetBoardgameRawByBoardgameIdUseCase
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateBoardgameByBoardgameIdUseCase
@@ -16,7 +21,8 @@ class CardEditViewModel(
     private val _boardgameId = MutableLiveData<Long>()
     private val _keyboardType = MutableLiveData<KeyboardType>()
     private val _message = MutableLiveData<Message>()
-    var boardgameRaw: LiveData<BoardgameRaw>? = null
+    private val _boardgameRaw = MutableLiveData<BoardgameRaw>()
+    val boardgameRaw: LiveData<BoardgameRaw> = _boardgameRaw
     val keyboardType: LiveData<KeyboardType> = _keyboardType
     val message: LiveData<Message> = _message
 
@@ -32,10 +38,21 @@ class CardEditViewModel(
     }
 
     fun loadBoardgameRaw(boardgameId: Long?) {
-        if (boardgameId != null && boardgameId > 0) {
-            _boardgameId.value = boardgameId
-            boardgameRaw = Transformations.switchMap(_boardgameId) { thisId ->
-                getBoardgameRawByBoardgameIdUseCase.execute(thisId)
+        _boardgameId.value = boardgameId
+        viewModelScope.launch {
+            val result = try {
+                getBoardgameRawByBoardgameIdUseCase.execute(boardgameId)
+            } catch (cause: Throwable) {
+                Result.failure(cause)
+            }
+            when (result.isSuccess) {
+                true -> {
+                    _boardgameRaw.value = result.getOrNull()
+                }
+
+                else -> {
+                    _message.value = Message.ACTION_ENDED_ERROR
+                }
             }
         }
     }

@@ -13,11 +13,11 @@ class BoardgameRepositoryImpl(
         return boardgameLocalDataSource.getAllBoardgamesInfo()
     }
 
-    override fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard> {
+    override suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard> {
         return boardgameLocalDataSource.getHelpcardBy(boardgameId)
     }
 
-    override fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw> {
+    override suspend fun getBoardgameRawBy(boardgameId: Long): Result<BoardgameRaw> {
         return boardgameLocalDataSource.getBoardgameRawBy(boardgameId)
     }
 

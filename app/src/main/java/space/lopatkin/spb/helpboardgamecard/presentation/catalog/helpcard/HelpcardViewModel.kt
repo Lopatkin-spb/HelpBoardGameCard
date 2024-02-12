@@ -2,8 +2,9 @@ package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByBoardgameIdUseCase
 
@@ -12,14 +13,26 @@ class HelpcardViewModel(
 ) : ViewModel() {
 
     private val _boardgameId = MutableLiveData<Long>()
-    var helpcard: LiveData<Helpcard>? = null
+    private val _helpcard = MutableLiveData<Helpcard>()
+    val helpcard: LiveData<Helpcard> = _helpcard
     val boardgameId: LiveData<Long> = _boardgameId
 
     fun loadHelpcard(boardgameId: Long?) {
-        if (boardgameId != null && boardgameId > 0) {
-            _boardgameId.value = boardgameId
-            helpcard = Transformations.switchMap(_boardgameId) { thisId ->
-                getHelpcardByBoardgameIdUseCase.execute(thisId)
+        _boardgameId.value = boardgameId
+        viewModelScope.launch {
+            val result = try {
+                getHelpcardByBoardgameIdUseCase.execute(boardgameId)
+            } catch (cause: Throwable) {
+                Result.failure(cause)
+            }
+            when (result.isSuccess) {
+                true -> {
+                    _helpcard.value = result.getOrNull()
+                }
+
+                else -> {
+                    _helpcard.value = result.getOrNull()
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ interface BoardgameDao {
      * Получить карточку памяти по идентификатору настолки.
      */
     @Query("SELECT * FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId")
-    fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard>
+    suspend fun getHelpcardBy(boardgameId: Long): Helpcard
 
     /**
      * Получить идентификатор карточки памяти по идентификатору настолки.
@@ -42,7 +42,7 @@ interface BoardgameDao {
                 "WHERE ${BoardgameInfo.TABLE_NAME}.${BoardgameInfo.COLUMN_ID} = :boardgameId " +
                 "AND ${Helpcard.TABLE_NAME}.${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId"
     )
-    fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw>
+    suspend fun getBoardgameRawBy(boardgameId: Long): BoardgameRaw
 
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.

@@ -1,13 +1,16 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import androidx.lifecycle.LiveData
+import space.lopatkin.spb.helpboardgamecard.domain.model.DataPassError
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
 class GetHelpcardByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
-    fun execute(boardGameId: Long): LiveData<Helpcard> {
-        return repository.getHelpcardBy(boardGameId = boardGameId)
+    suspend fun execute(boardgameId: Long?): Result<Helpcard> {
+        if (boardgameId != null && boardgameId > 0) {
+            return repository.getHelpcardBy(boardgameId)
+        }
+        return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
     }
 
 }
