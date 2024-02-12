@@ -1,16 +1,18 @@
 package space.lopatkin.spb.helpboardgamecard.data.local.data.source
 
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+
 interface SettingsLocalDataSource {
     /**
      * Сохранить тип включенной клавиатуры в настройках: кастомная или дефолтная.
      *
      * @param type выбранный пользователем тип.
      */
-    fun saveKeyboardType(type: Int)
+    suspend fun saveKeyboardType(type: Int): Message
 
     /**
      * Получить тип включенной клавиатуры в настройках: кастомная или дефолтная.
      */
-    fun getKeyboardType(): Int
+    suspend fun getKeyboardType(): Int
 
 }

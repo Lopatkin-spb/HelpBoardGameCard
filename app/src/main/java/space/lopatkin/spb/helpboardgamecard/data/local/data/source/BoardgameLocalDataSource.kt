@@ -23,12 +23,12 @@ interface BoardgameLocalDataSource {
     /**
      * Сохранить новую настолку.
      */
-    fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw)
+    suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Message
 
     /**
      * Обновить настолку.
      */
-    fun updateBoardgameBy(boardgameRaw: BoardgameRaw)
+    suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Message
 
     /**
      * Обновить мин данные настолки.

@@ -3,6 +3,8 @@ package space.lopatkin.spb.helpboardgamecard.presentation.addcard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
@@ -20,13 +22,27 @@ class AddCardViewModel(
     val message: LiveData<Message> = _message
 
     fun loadKeyboardType() {
-        _keyboardType.value = getKeyboardTypeUseCase.execute()
+        viewModelScope.launch {
+            try {
+                val type: KeyboardType = getKeyboardTypeUseCase.execute()
+                _keyboardType.value = type
+            } catch (error: Throwable) {
+                _keyboardType.value = KeyboardType.CUSTOM
+            }
+        }
     }
 
     fun saveNewBoardgame(boardgameRaw: BoardgameRaw?) {
-        val messageResponse: Message = saveBoardgameNewByBoardgameIdUseCase.execute(boardgameRaw)
-        _message.value = messageResponse
-        _message.value = Message.POOL_EMPTY
+        viewModelScope.launch {
+            try {
+                val messageResponse: Message = saveBoardgameNewByBoardgameIdUseCase.execute(boardgameRaw!!)
+                _message.value = messageResponse
+            } catch (error: Throwable) {
+                _message.value = Message.ACTION_ENDED_ERROR
+            } finally {
+                _message.value = Message.POOL_EMPTY
+            }
+        }
     }
 
 }

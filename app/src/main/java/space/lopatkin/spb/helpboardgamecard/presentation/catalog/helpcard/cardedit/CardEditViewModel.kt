@@ -1,9 +1,7 @@
 package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard.cardedit
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.domain.model.*
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetBoardgameRawByBoardgameIdUseCase
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase
@@ -23,7 +21,14 @@ class CardEditViewModel(
     val message: LiveData<Message> = _message
 
     fun loadKeyboardType() {
-        _keyboardType.value = getKeyboardTypeUseCase.execute()
+        viewModelScope.launch {
+            try {
+                val type: KeyboardType = getKeyboardTypeUseCase.execute()
+                _keyboardType.value = type
+            } catch (error: Throwable) {
+                _keyboardType.value = KeyboardType.CUSTOM
+            }
+        }
     }
 
     fun loadBoardgameRaw(boardgameId: Long?) {
@@ -36,9 +41,16 @@ class CardEditViewModel(
     }
 
     fun update(boardgameRaw: BoardgameRaw?) {
-        val messageResponse: Message = updateBoardgameByBoardgameIdUseCase.execute(boardgameRaw)
-        _message.value = messageResponse
-        _message.value = Message.POOL_EMPTY
+        viewModelScope.launch {
+            try {
+                val messageResponse: Message = updateBoardgameByBoardgameIdUseCase.execute(boardgameRaw)
+                _message.value = messageResponse
+            } catch (error: Throwable) {
+                _message.value = Message.ACTION_ENDED_ERROR
+            } finally {
+                _message.value = Message.POOL_EMPTY
+            }
+        }
     }
 
 }

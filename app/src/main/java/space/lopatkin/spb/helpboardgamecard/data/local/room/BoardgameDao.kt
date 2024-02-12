@@ -17,7 +17,7 @@ interface BoardgameDao {
      * Получить идентификатор карточки памяти по идентификатору настолки.
      */
     @Query("SELECT ${Helpcard.TABLE_NAME}.${Helpcard.COLUMN_ID} FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId")
-    fun getHelpcardIdBy(boardgameId: Long): Long
+    suspend fun getHelpcardIdBy(boardgameId: Long): Long
 
     /**
      * Получить полные сырые данные настолки по идентификатору настолки.
@@ -66,26 +66,26 @@ interface BoardgameDao {
      * Обновить мин данные настолки по идентификатору настолки.
      */
     @Update(entity = BoardgameInfo::class)
-    fun update(boardgameInfo: BoardgameInfo)
+    suspend fun update(boardgameInfo: BoardgameInfo)
 
     /**
      * Обновить карточку памяти по идентификатору карточки памяти.
      */
     @Update(entity = Helpcard::class)
-    fun update(helpcard: Helpcard)
+    suspend fun update(helpcard: Helpcard)
 
     /**
      * Добавить мин данные о настолке.
      * @return идентификатор добавленной настолки.
      */
     @Insert(entity = BoardgameInfo::class)
-    fun add(boardgameInfo: BoardgameInfo): Long
+    suspend fun add(boardgameInfo: BoardgameInfo): Long
 
     /**
      * Добавить карточку памяти.
      */
     @Insert(entity = Helpcard::class)
-    fun add(helpcard: Helpcard)
+    suspend fun add(helpcard: Helpcard)
 
     /**
      * Удалить все незаблокированные настолки с мин данными.

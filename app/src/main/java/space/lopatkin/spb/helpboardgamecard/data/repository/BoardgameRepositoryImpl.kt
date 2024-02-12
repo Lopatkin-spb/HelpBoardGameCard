@@ -33,12 +33,12 @@ class BoardgameRepositoryImpl(
         boardgameLocalDataSource.deleteUnlockBoardgames()
     }
 
-    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw) {
-        boardgameLocalDataSource.saveNewBoardgameBy(boardgameRaw)
+    override suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Message {
+        return boardgameLocalDataSource.saveNewBoardgameBy(boardgameRaw)
     }
 
-    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw) {
-        boardgameLocalDataSource.updateBoardgameBy(boardgameRaw)
+    override suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Message {
+        return boardgameLocalDataSource.updateBoardgameBy(boardgameRaw)
     }
 
 }

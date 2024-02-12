@@ -5,7 +5,7 @@ import space.lopatkin.spb.helpboardgamecard.domain.repository.SettingsRepository
 
 class GetKeyboardTypeUseCase(private val repository: SettingsRepository) {
 
-    fun execute(): KeyboardType {
+    suspend fun execute(): KeyboardType {
         return KeyboardType.getOrdinalFrom(value = repository.getKeyboardType())
     }
 

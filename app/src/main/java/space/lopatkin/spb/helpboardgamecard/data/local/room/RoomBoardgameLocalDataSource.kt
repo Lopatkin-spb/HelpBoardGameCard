@@ -5,7 +5,10 @@ import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
 import space.lopatkin.spb.helpboardgamecard.data.local.room.RoomDb.Companion.getInstance
-import space.lopatkin.spb.helpboardgamecard.domain.model.*
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 
 class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLocalDataSource {
     private val boardgameDao: BoardgameDao
@@ -29,8 +32,16 @@ class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLoca
         return boardgameDao.getBoardgameRawBy(boardgameId)
     }
 
-    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw) {
-        AddBoardgameInfoAndHelpcardAsyncTask(boardgameDao = boardgameDao).execute(boardgameRaw)
+    override suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Message {
+        return try {
+            val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
+            val boardgameId: Long = boardgameDao.add(boardgameInfo)
+            val helpcard: Helpcard = boardgameRaw.toHelpcard(boardgameId)
+            boardgameDao.add(helpcard)
+            Message.ACTION_ENDED_SUCCESS
+        } catch (error: Throwable) {
+            Message.ACTION_ENDED_ERROR
+        }
     }
 
     override fun deleteBoardgameBy(boardgameId: Long) {
@@ -41,8 +52,20 @@ class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLoca
         UpdateBoardgameInfoAsyncTask(boardgameDao = boardgameDao).execute(boardgameInfo)
     }
 
-    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw) {
-        UpdateBoardgameInfoAndHelpcardByIdAsyncTask(boardgameDao = boardgameDao).execute(boardgameRaw)
+    override suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Message {
+        return try {
+            val data: BoardgameRaw = boardgameRaw
+            if (data.id != null) {
+                val boardgameInfo: BoardgameInfo = data.toBoardgameInfo()
+                boardgameDao.update(boardgameInfo)
+                val helpcardDbId: Long = boardgameDao.getHelpcardIdBy(data.id!!)
+                val helpcard: Helpcard = data.toHelpcard(helpcardDbId, data.id!!)
+                boardgameDao.update(helpcard)
+            }
+            Message.ACTION_ENDED_SUCCESS
+        } catch (error: Throwable) {
+            Message.ACTION_ENDED_ERROR
+        }
     }
 
     override fun deleteUnlockBoardgames() {
@@ -51,37 +74,10 @@ class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLoca
 
     companion object {
 
-        private class AddBoardgameInfoAndHelpcardAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<BoardgameRaw, Void, Void>() {
-            override fun doInBackground(vararg data: BoardgameRaw): Void? {
-                val boardgameRaw: BoardgameRaw = data[0]
-                val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
-                val boardgameId: Long = boardgameDao.add(boardgameInfo)
-                val helpcard: Helpcard = boardgameRaw.toHelpcard(boardgameId)
-                boardgameDao.add(helpcard)
-                return null
-            }
-        }
-
-        private class UpdateBoardgameInfoAndHelpcardByIdAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<BoardgameRaw, Void, Void>() {
-            override fun doInBackground(vararg data: BoardgameRaw): Void? {
-                val boardgameRaw: BoardgameRaw = data[0]
-                if (boardgameRaw.id != null) {
-                    val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
-                    boardgameDao.update(boardgameInfo)
-                    val helpcardDbId: Long = boardgameDao.getHelpcardIdBy(boardgameRaw.id!!)
-                    val helpcard: Helpcard = boardgameRaw.toHelpcard(helpcardDbId, boardgameRaw.id!!)
-                    boardgameDao.update(helpcard)
-                }
-                return null
-            }
-        }
-
         private class UpdateBoardgameInfoAsyncTask(private val boardgameDao: BoardgameDao) :
             AsyncTask<BoardgameInfo, Void, Void>() {
             override fun doInBackground(vararg boardgameInfos: BoardgameInfo): Void? {
-                boardgameDao.update(boardgameInfos[0])
+//                boardgameDao.update(boardgameInfos[0])
                 return null
             }
         }

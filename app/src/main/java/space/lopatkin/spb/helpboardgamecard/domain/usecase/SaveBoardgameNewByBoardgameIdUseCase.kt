@@ -6,15 +6,14 @@ import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepositor
 
 class SaveBoardgameNewByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
-    fun execute(boardgameRaw: BoardgameRaw?): Message {
+    suspend fun execute(boardgameRaw: BoardgameRaw?): Message {
         if (boardgameRaw == null) {
             return Message.ACTION_ENDED_ERROR
         }
         if (boardgameRaw.name != null && boardgameRaw.name.isEmpty()) {
             return Message.ACTION_STOPPED
         } else if (!boardgameRaw.name.isNullOrEmpty()) {
-            repository.saveNewBoardgameBy(boardgameRaw = boardgameRaw)
-            return Message.ACTION_ENDED_SUCCESS
+            return repository.saveNewBoardgameBy(boardgameRaw = boardgameRaw)
         }
         return Message.ACTION_ENDED_ERROR
     }
