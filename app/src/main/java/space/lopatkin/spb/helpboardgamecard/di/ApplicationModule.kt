@@ -3,17 +3,27 @@ package space.lopatkin.spb.helpboardgamecard.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineScope
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.*
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val context: Context) {
+class ApplicationModule(
+    private val context: Context,
+    private val scope: CoroutineScope
+) {
 
     @Singleton
     @Provides
     fun provideContext(): Context {
         return context
+    }
+
+    @Singleton
+    @Provides
+    fun provideScope(): CoroutineScope {
+        return scope
     }
 
     @Singleton

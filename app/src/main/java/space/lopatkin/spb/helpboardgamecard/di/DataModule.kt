@@ -3,6 +3,7 @@ package space.lopatkin.spb.helpboardgamecard.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineScope
 import space.lopatkin.spb.helpboardgamecard.data.repository.BoardgameRepositoryImpl
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.SettingsLocalDataSource
@@ -38,8 +39,8 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideBoardgameLocalDataSource(context: Context): BoardgameLocalDataSource {
-        return RoomBoardgameLocalDataSource(context = context)
+    fun provideBoardgameLocalDataSource(context: Context, scope: CoroutineScope): BoardgameLocalDataSource {
+        return RoomBoardgameLocalDataSource(context = context, scope = scope)
     }
 
     @Singleton

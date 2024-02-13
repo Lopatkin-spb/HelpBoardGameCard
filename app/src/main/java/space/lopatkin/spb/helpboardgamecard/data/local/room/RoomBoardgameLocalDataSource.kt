@@ -1,15 +1,19 @@
 package space.lopatkin.spb.helpboardgamecard.data.local.room
 
 import android.content.Context
+import kotlinx.coroutines.CoroutineScope
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
 import space.lopatkin.spb.helpboardgamecard.data.local.room.RoomDb.Companion.getInstance
 import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
-class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLocalDataSource {
+class RoomBoardgameLocalDataSource(
+    private val context: Context,
+    private val scope: CoroutineScope
+) : BoardgameLocalDataSource {
     private val boardgameDao: BoardgameDao
 
     init {
-        val database: RoomDb = getInstance(context = context)
+        val database: RoomDb = getInstance(context = context, scope = scope)
         boardgameDao = database.boardgameDao()
     }
 
