@@ -48,25 +48,31 @@ interface BoardgameDao {
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
      */
     @Query("SELECT * FROM ${BoardgameInfo.TABLE_NAME} ORDER BY ${BoardgameInfo.COLUMN_PRIORITY} DESC")
-    fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>>
+    suspend fun getAllBoardgamesInfo(): List<BoardgameInfo>
 
     /**
      * Удалить настолку с мин данными по идентификатору настолки.
+     *
+     * @return количество удаленных объектов.
      */
     @Query("DELETE FROM ${BoardgameInfo.TABLE_NAME} WHERE ${BoardgameInfo.COLUMN_ID} = :boardgameId")
-    fun deleteBoardgameInfoBy(boardgameId: Long)
+    suspend fun deleteBoardgameInfoBy(boardgameId: Long): Int
 
     /**
      * Удалить карточку памяти по идентификатору настолки.
+     *
+     * @return количество удаленных объектов.
      */
     @Query("DELETE FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId")
-    fun deleteHelpcardBy(boardgameId: Long)
+    suspend fun deleteHelpcardBy(boardgameId: Long): Int
 
     /**
      * Обновить мин данные настолки по идентификатору настолки.
+     *
+     * @return количество обновленных объектов.
      */
     @Update(entity = BoardgameInfo::class)
-    suspend fun update(boardgameInfo: BoardgameInfo)
+    suspend fun update(boardgameInfo: BoardgameInfo): Int
 
     /**
      * Обновить карточку памяти по идентификатору карточки памяти.
@@ -76,6 +82,7 @@ interface BoardgameDao {
 
     /**
      * Добавить мин данные о настолке.
+     *
      * @return идентификатор добавленной настолки.
      */
     @Insert(entity = BoardgameInfo::class)
@@ -97,7 +104,7 @@ interface BoardgameDao {
      * Получить идентификаторы всех незаблокированных настолок.
      */
     @Query("SELECT ${BoardgameInfo.COLUMN_ID} FROM ${BoardgameInfo.TABLE_NAME} WHERE ${BoardgameInfo.COLUMN_LOCK} = 0")
-    fun getBoardgameIdsByUnlock(): Array<Long>
+    suspend fun getBoardgameIdsByUnlock(): Array<Long>
 
     /**
      * Получить любимые настолки с мин данными.

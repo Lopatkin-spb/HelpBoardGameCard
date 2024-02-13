@@ -1,18 +1,23 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
+import space.lopatkin.spb.helpboardgamecard.domain.model.DataPassError
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
 class UpdateBoardgameFavoriteByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
-    fun execute(boardgameInfo: BoardgameInfo?): Message {
+    suspend fun execute(boardgameInfo: BoardgameInfo?): Result<Message> {
         if (boardgameInfo == null) {
-            return Message.ACTION_ENDED_ERROR
+            return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
         }
 
-        repository.update(boardgameInfo = boardgameInfo)
-        return Message.FAVORITE_ITEM_ACTION_ENDED_SUCCESS
+        val result = repository.update(boardgameInfo)
+        if (result.getOrNull() == Message.ACTION_ENDED_SUCCESS) {
+            return Result.success(Message.FAVORITE_ITEM_ACTION_ENDED_SUCCESS)
+        }
+
+        return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
     }
 
 }

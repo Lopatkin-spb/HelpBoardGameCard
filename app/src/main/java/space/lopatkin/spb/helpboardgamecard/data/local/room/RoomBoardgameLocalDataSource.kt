@@ -1,28 +1,24 @@
 package space.lopatkin.spb.helpboardgamecard.data.local.room
 
 import android.content.Context
-import android.os.AsyncTask
-import androidx.lifecycle.LiveData
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
 import space.lopatkin.spb.helpboardgamecard.data.local.room.RoomDb.Companion.getInstance
-import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
-import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message
-import kotlin.Result
+import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
 class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLocalDataSource {
     private val boardgameDao: BoardgameDao
-    private val allBoardgamesInfo: LiveData<List<BoardgameInfo>>
 
     init {
         val database: RoomDb = getInstance(context = context)
         boardgameDao = database.boardgameDao()
-        allBoardgamesInfo = boardgameDao.getAllBoardgamesInfo()
     }
 
-    override fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>> {
-        return allBoardgamesInfo
+    override suspend fun getAllBoardgamesInfo(): Result<List<BoardgameInfo>> {
+        return try {
+            Result.success(boardgameDao.getAllBoardgamesInfo())
+        } catch (cause: Throwable) {
+            Result.failure(cause)
+        }
     }
 
     override suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard> {
@@ -55,12 +51,31 @@ class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLoca
         }
     }
 
-    override fun deleteBoardgameBy(boardgameId: Long) {
-        DeleteBoardgameInfoAndHelpcardByIdAsyncTask(boardgameDao = boardgameDao).execute(boardgameId)
+    override suspend fun deleteBoardgameBy(boardgameId: Long): Result<Message> {
+        return try {
+            val deletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(boardgameId)
+            val deletedHelpcard: Int = boardgameDao.deleteHelpcardBy(boardgameId)
+            if (deletedInfo > 0 && deletedHelpcard > 0) {
+                return Result.success(Message.DELETE_ITEM_ACTION_ENDED_SUCCESS)
+            } else {
+                return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
+            }
+        } catch (cause: Throwable) {
+            Result.failure(cause)
+        }
     }
 
-    override fun update(boardgameInfo: BoardgameInfo) {
-        UpdateBoardgameInfoAsyncTask(boardgameDao = boardgameDao).execute(boardgameInfo)
+    override suspend fun update(boardgameInfo: BoardgameInfo): Result<Message> {
+        return try {
+            val updated: Int = boardgameDao.update(boardgameInfo)
+            if (updated > 0) {
+                return Result.success(Message.ACTION_ENDED_SUCCESS)
+            } else {
+                return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
+            }
+        } catch (cause: Throwable) {
+            Result.failure(cause)
+        }
     }
 
     override suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Message {
@@ -79,45 +94,32 @@ class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLoca
         }
     }
 
-    override fun deleteUnlockBoardgames() {
-        DeleteUnlockBoardgamesAsyncTask(boardgameDao = boardgameDao).execute()
+    override suspend fun deleteUnlockBoardgames(): Result<Message> {
+        return try {
+            val listIdUnlock: Array<Long> = boardgameDao.getBoardgameIdsByUnlock()
+
+            for (index in 0 until listIdUnlock.size) {
+                val deletedStatusInfo: Int = boardgameDao.deleteBoardgameInfoBy(listIdUnlock.get(index))
+                val deletedStatusHelpcard: Int = boardgameDao.deleteHelpcardBy(listIdUnlock.get(index))
+
+                if (deletedStatusInfo == 0 && deletedStatusHelpcard == 0) {
+                    return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
+                }
+            }
+            Result.success(Message.DELETE_ALL_ACTION_ENDED_SUCCESS)
+        } catch (cause: Throwable) {
+            Result.failure(cause)
+        }
     }
 
-    companion object {
+    override suspend fun getBoardgamesIdByUnlock(): Result<Array<Long>> {
+        return try {
+            val listIdUnlock: Array<Long> = boardgameDao.getBoardgameIdsByUnlock()
 
-        private class UpdateBoardgameInfoAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<BoardgameInfo, Void, Void>() {
-            override fun doInBackground(vararg boardgameInfos: BoardgameInfo): Void? {
-//                boardgameDao.update(boardgameInfos[0])
-                return null
-            }
+            Result.success(listIdUnlock)
+        } catch (cause: Throwable) {
+            Result.failure(cause)
         }
-
-        private class DeleteBoardgameInfoAndHelpcardByIdAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<Long, Void, Void>() {
-            override fun doInBackground(vararg params: Long?): Void? {
-                val boardgameId: Long? = params[0]
-                if (boardgameId != null) {
-                    boardgameDao.deleteBoardgameInfoBy(boardgameId)
-                    boardgameDao.deleteHelpcardBy(boardgameId)
-                }
-                return null
-            }
-        }
-
-        private class DeleteUnlockBoardgamesAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<Void, Void, Void>() {
-            override fun doInBackground(vararg voids: Void): Void? {
-                val listIdUnlock: Array<Long> = boardgameDao.getBoardgameIdsByUnlock()
-
-                for (index in 0 until listIdUnlock.size) {
-                    boardgameDao.deleteBoardgameInfoBy(listIdUnlock.get(index))
-                    boardgameDao.deleteHelpcardBy(listIdUnlock.get(index))
-                }
-                return null
-            }
-        }
-
     }
 
 }

@@ -1,15 +1,17 @@
 package space.lopatkin.spb.helpboardgamecard.data.repository
 
-import androidx.lifecycle.LiveData
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
-import space.lopatkin.spb.helpboardgamecard.domain.model.*
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
 class BoardgameRepositoryImpl(
     private val boardgameLocalDataSource: BoardgameLocalDataSource
 ) : BoardgameRepository {
 
-    override fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>> {
+    override suspend fun getAllBoardgamesInfo(): Result<List<BoardgameInfo>> {
         return boardgameLocalDataSource.getAllBoardgamesInfo()
     }
 
@@ -21,16 +23,20 @@ class BoardgameRepositoryImpl(
         return boardgameLocalDataSource.getBoardgameRawBy(boardgameId)
     }
 
-    override fun deleteBoardgameBy(boardgameId: Long) {
-        boardgameLocalDataSource.deleteBoardgameBy(boardgameId)
+    override suspend fun deleteBoardgameBy(boardgameId: Long): Result<Message> {
+        return boardgameLocalDataSource.deleteBoardgameBy(boardgameId)
     }
 
-    override fun update(boardgameInfo: BoardgameInfo) {
-        boardgameLocalDataSource.update(boardgameInfo)
+    override suspend fun update(boardgameInfo: BoardgameInfo): Result<Message> {
+        return boardgameLocalDataSource.update(boardgameInfo)
     }
 
-    override fun deleteUnlockBoardgames() {
-        boardgameLocalDataSource.deleteUnlockBoardgames()
+    override suspend fun deleteUnlockBoardgames(): Result<Message> {
+        return boardgameLocalDataSource.deleteUnlockBoardgames()
+    }
+
+    override suspend fun getBoardgamesIdByUnlock(): Result<Array<Long>> {
+        return boardgameLocalDataSource.getBoardgamesIdByUnlock()
     }
 
     override suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Message {

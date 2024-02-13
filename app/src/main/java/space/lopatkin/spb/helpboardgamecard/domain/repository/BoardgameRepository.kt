@@ -1,7 +1,9 @@
 package space.lopatkin.spb.helpboardgamecard.domain.repository
 
-import androidx.lifecycle.LiveData;
-import space.lopatkin.spb.helpboardgamecard.domain.model.*
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 
 interface BoardgameRepository {
 
@@ -18,22 +20,27 @@ interface BoardgameRepository {
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
      */
-    fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>>
+    suspend fun getAllBoardgamesInfo(): Result<List<BoardgameInfo>>
 
     /**
      * Удалить настолку.
      */
-    fun deleteBoardgameBy(boardgameId: Long)
+    suspend fun deleteBoardgameBy(boardgameId: Long): Result<Message>
 
     /**
      * Обновить мин данные настолки.
      */
-    fun update(boardgameInfo: BoardgameInfo)
+    suspend fun update(boardgameInfo: BoardgameInfo): Result<Message>
 
     /**
      * Удалить незаблокированные настолки.
      */
-    fun deleteUnlockBoardgames()
+    suspend fun deleteUnlockBoardgames(): Result<Message>
+
+    /**
+     * Получить идентификаторы всех незаблокированных настолок.
+     */
+    suspend fun getBoardgamesIdByUnlock(): Result<Array<Long>>
 
     /**
      * Сохранить новую настолку.

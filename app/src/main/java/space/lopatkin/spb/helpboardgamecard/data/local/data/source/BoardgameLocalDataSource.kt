@@ -1,14 +1,16 @@
 package space.lopatkin.spb.helpboardgamecard.data.local.data.source
 
-import androidx.lifecycle.LiveData
-import space.lopatkin.spb.helpboardgamecard.domain.model.*
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
+import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
+import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 
 interface BoardgameLocalDataSource {
 
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
      */
-    fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>>
+    suspend fun getAllBoardgamesInfo(): Result<List<BoardgameInfo>>
 
     /**
      * Получить карточку памяти по идентификатору настолки.
@@ -33,16 +35,21 @@ interface BoardgameLocalDataSource {
     /**
      * Обновить мин данные настолки.
      */
-    fun update(boardgameInfo: BoardgameInfo)
+    suspend fun update(boardgameInfo: BoardgameInfo): Result<Message>
 
     /**
      * Удалить настолку.
      */
-    fun deleteBoardgameBy(boardgameId: Long)
+    suspend fun deleteBoardgameBy(boardgameId: Long): Result<Message>
 
     /**
      * Удалить все незаблокированные настолки.
      */
-    fun deleteUnlockBoardgames()
+    suspend fun deleteUnlockBoardgames(): Result<Message>
+
+    /**
+     * Получить идентификаторы всех незаблокированных настолок.
+     */
+    suspend fun getBoardgamesIdByUnlock(): Result<Array<Long>>
 
 }

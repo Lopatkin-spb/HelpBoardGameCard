@@ -169,6 +169,20 @@ class CatalogFragment : AbstractFragment() {
                     binding!!.recyclerView, R.string.message_helpcard_locking_updated
                 )
 
+                Message.DELETE_ALL_ACTION_ENDED_SUCCESS -> {
+                    showMessage(
+                        binding!!.recyclerView,
+                        R.string.message_action_ended_success
+                    )
+                    viewModel.loadListBoardgamesInfo()
+                }
+
+                Message.DELETE_ALL_ACTION_STOPPED -> showMessage(
+                    binding!!.recyclerView, R.string.message_delete_all_stopped
+                )
+
+                Message.DELETE_ALL_ACTION_ENDED_ERROR -> showMessage(binding!!.recyclerView, R.string.error_action_ended)
+
                 else -> {}
             }
         }

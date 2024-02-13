@@ -1,22 +1,22 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
+import space.lopatkin.spb.helpboardgamecard.domain.model.DataPassError
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
 class DeleteBoardgameUnlockedByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
-    fun execute(boardgameInfo: BoardgameInfo?): Message {
+    suspend fun execute(boardgameInfo: BoardgameInfo?): Result<Message> {
         if (boardgameInfo == null) {
-            return Message.ACTION_ENDED_ERROR
+            return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
         }
         if (!boardgameInfo.boardgameLock && boardgameInfo.boardgameId != null) {
-            repository.deleteBoardgameBy(boardgameId = boardgameInfo.boardgameId)
-            return Message.DELETE_ITEM_ACTION_ENDED_SUCCESS
+            return repository.deleteBoardgameBy(boardgameInfo.boardgameId)
         } else if (boardgameInfo.boardgameLock) {
-            return Message.DELETE_ITEM_ACTION_STOPPED
+            return Result.success(Message.DELETE_ITEM_ACTION_STOPPED)
         }
-        return Message.ACTION_ENDED_ERROR
+        return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
     }
 
 }
