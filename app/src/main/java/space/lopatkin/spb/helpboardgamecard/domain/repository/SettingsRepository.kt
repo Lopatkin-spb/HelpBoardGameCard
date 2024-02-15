@@ -1,5 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.domain.repository
 
+import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 
 interface SettingsRepository {
@@ -9,11 +10,11 @@ interface SettingsRepository {
      *
      * @param type выбранный пользователем тип.
      */
-    suspend fun saveKeyboardType(type: Int): Message
+    suspend fun saveKeyboardType(type: KeyboardType): Result<Message>
 
     /**
      * Получить тип включенной клавиатуры в настройках: кастомная или дефолтная.
      */
-    suspend fun getKeyboardType(): Int
+    suspend fun getKeyboardType(): Result<KeyboardType>
 
 }

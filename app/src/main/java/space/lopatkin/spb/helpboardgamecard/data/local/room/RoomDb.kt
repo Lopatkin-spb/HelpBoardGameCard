@@ -48,7 +48,7 @@ abstract class RoomDb : RoomDatabase() {
                     val boardgameInfo1: BoardgameInfo = example1.toBoardgameInfo()
                     val boardgameId1: Long = boardgameDao.add(boardgameInfo1)
                     val helpcard1: Helpcard = example1.toHelpcard(boardgameId1)
-                    boardgameDao.add(helpcard1)
+                    val helpcardId1: Long = boardgameDao.add(helpcard1)
 
                     val example2: BoardgameRaw = BoardgameRaw(
                         name = "Илос 3варик",
@@ -66,7 +66,7 @@ abstract class RoomDb : RoomDatabase() {
                     val boardgameInfo2: BoardgameInfo = example2.toBoardgameInfo()
                     val boardgameId2: Long = boardgameDao.add(boardgameInfo2)
                     val helpcard2: Helpcard = example2.toHelpcard(boardgameId2)
-                    boardgameDao.add(helpcard2)
+                    val helpcardId2: Long = boardgameDao.add(helpcard2)
 
                     val example3: BoardgameRaw = BoardgameRaw(
                         name = "Илос 1вар",
@@ -84,7 +84,7 @@ abstract class RoomDb : RoomDatabase() {
                     val boardgameInfo3: BoardgameInfo = example3.toBoardgameInfo()
                     val boardgameId3: Long = boardgameDao.add(boardgameInfo3)
                     val helpcard3: Helpcard = example3.toHelpcard(boardgameId3)
-                    boardgameDao.add(helpcard3)
+                    val helpcardId3: Long = boardgameDao.add(helpcard3)
 
                     val example4: BoardgameRaw = BoardgameRaw(
                         name = "Илос 2вар",
@@ -102,7 +102,7 @@ abstract class RoomDb : RoomDatabase() {
                     val boardgameInfo4: BoardgameInfo = example4.toBoardgameInfo()
                     val boardgameId4: Long = boardgameDao.add(boardgameInfo4)
                     val helpcard4: Helpcard = example4.toHelpcard(boardgameId4)
-                    boardgameDao.add(helpcard4)
+                    val helpcardId4: Long = boardgameDao.add(helpcard4)
                 }
             }
         }

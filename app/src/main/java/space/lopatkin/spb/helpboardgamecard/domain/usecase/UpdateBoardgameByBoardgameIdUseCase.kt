@@ -6,13 +6,13 @@ import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepositor
 
 class UpdateBoardgameByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
-    suspend fun execute(boardgameRaw: BoardgameRaw?): Message {
+    suspend fun execute(boardgameRaw: BoardgameRaw?): Result<Message> {
         if (boardgameRaw != null && boardgameRaw.name?.isEmpty() == true) {
-            return Message.ACTION_STOPPED
+            return Result.success(Message.ACTION_STOPPED) // Rework to error maybe
         } else if (boardgameRaw != null && boardgameRaw.name?.isNotEmpty() == true) {
-            return repository.updateBoardgameBy(boardgameRaw = boardgameRaw)
+            return repository.updateBoardgameBy(boardgameRaw)
         }
-        return Message.ACTION_ENDED_ERROR
+        return Result.failure(Exception("NotFoundException (usecase): data (BoardgameRaw) is null"))
     }
 
 }

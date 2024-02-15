@@ -6,12 +6,12 @@ import space.lopatkin.spb.helpboardgamecard.domain.repository.SettingsRepository
 
 class SaveKeyboardTypeByUserChoiceUseCase(private val repository: SettingsRepository) {
 
-    suspend fun execute(userChoice: Any?): Message {
+    suspend fun execute(userChoice: Any?): Result<Message> {
         if (userChoice != null) {
-            val type: KeyboardType = KeyboardType.getOrdinalFrom(name = userChoice.toString())
-            return repository.saveKeyboardType(type = type.ordinal)
+            val type: KeyboardType = KeyboardType.getOrdinalFrom(userChoice.toString())
+            return repository.saveKeyboardType(type)
         }
-        return Message.ACTION_ENDED_ERROR
+        return Result.failure(Exception("NotFoundException (usecase): data (userChoiceKeyboardType) is null"))
     }
 
 }

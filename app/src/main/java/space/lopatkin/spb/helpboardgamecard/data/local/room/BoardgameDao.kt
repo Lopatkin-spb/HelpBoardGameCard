@@ -21,6 +21,8 @@ interface BoardgameDao {
 
     /**
      * Получить полные сырые данные настолки по идентификатору настолки.
+     *
+     * @return BoardgameRaw - если есть данные, Null - если данных нет.
      */
     @Query(
         "SELECT " +
@@ -42,7 +44,7 @@ interface BoardgameDao {
                 "WHERE ${BoardgameInfo.TABLE_NAME}.${BoardgameInfo.COLUMN_ID} = :boardgameId " +
                 "AND ${Helpcard.TABLE_NAME}.${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId"
     )
-    suspend fun getBoardgameRawBy(boardgameId: Long): BoardgameRaw
+    suspend fun getBoardgameRawBy(boardgameId: Long): BoardgameRaw?
 
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
@@ -67,6 +69,14 @@ interface BoardgameDao {
     suspend fun deleteHelpcardBy(boardgameId: Long): Int
 
     /**
+     * Удалить карточку памяти по идентификатору карточки памяти.
+     *
+     * @return количество удаленных объектов.
+     */
+    @Query("DELETE FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_ID} = :helpcardId")
+    suspend fun deleteHelpcardByOwn(helpcardId: Long): Int
+
+    /**
      * Обновить мин данные настолки по идентификатору настолки.
      *
      * @return количество обновленных объектов.
@@ -76,23 +86,27 @@ interface BoardgameDao {
 
     /**
      * Обновить карточку памяти по идентификатору карточки памяти.
+     *
+     * @return количество обновленных объектов.
      */
     @Update(entity = Helpcard::class)
-    suspend fun update(helpcard: Helpcard)
+    suspend fun update(helpcard: Helpcard): Int
 
     /**
      * Добавить мин данные о настолке.
      *
-     * @return идентификатор добавленной настолки.
+     * @return идентификатор добавленного объекта.
      */
     @Insert(entity = BoardgameInfo::class)
     suspend fun add(boardgameInfo: BoardgameInfo): Long
 
     /**
      * Добавить карточку памяти.
+     *
+     * @return идентификатор добавленного объекта.
      */
     @Insert(entity = Helpcard::class)
-    suspend fun add(helpcard: Helpcard)
+    suspend fun add(helpcard: Helpcard): Long
 
     /**
      * Удалить все незаблокированные настолки с мин данными.

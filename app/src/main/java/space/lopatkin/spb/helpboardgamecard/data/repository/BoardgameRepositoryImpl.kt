@@ -39,11 +39,11 @@ class BoardgameRepositoryImpl(
         return boardgameLocalDataSource.getBoardgamesIdByUnlock()
     }
 
-    override suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Message {
+    override suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message> {
         return boardgameLocalDataSource.saveNewBoardgameBy(boardgameRaw)
     }
 
-    override suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Message {
+    override suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message> {
         return boardgameLocalDataSource.updateBoardgameBy(boardgameRaw)
     }
 

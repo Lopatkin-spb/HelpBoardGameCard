@@ -14,24 +14,24 @@ class PreferencesSettingsLocalDataSource(private val context: Context) : Setting
     private val preferences: SharedPreferences =
         context.getSharedPreferences(APPLICATION_PREFERENCES, Context.MODE_PRIVATE)
 
-    override suspend fun saveKeyboardType(type: Int): Message {
+    override suspend fun saveKeyboardType(type: KeyboardType): Result<Message> {
         return try {
             preferences
                 .edit()
-                .putInt(KEYBOARD_TYPE, type)
+                .putInt(KEYBOARD_TYPE, type.ordinal)
                 .apply()
-            Message.ACTION_ENDED_SUCCESS
-        } catch (error: Throwable) {
-            Message.ACTION_ENDED_ERROR
+            Result.success(Message.ACTION_ENDED_SUCCESS)
+        } catch (cause: Throwable) {
+            Result.failure(cause)
         }
     }
 
-    override suspend fun getKeyboardType(): Int {
+    override suspend fun getKeyboardType(): Result<KeyboardType> {
         return try {
-            preferences
-                .getInt(KEYBOARD_TYPE, -1)
-        } catch (error: Throwable) {
-            KeyboardType.CUSTOM.ordinal
+            val data: Int = preferences.getInt(KEYBOARD_TYPE, -1)
+            Result.success(KeyboardType.getOrdinalFrom(data))
+        } catch (cause: Throwable) {
+            Result.failure(cause)
         }
     }
 
