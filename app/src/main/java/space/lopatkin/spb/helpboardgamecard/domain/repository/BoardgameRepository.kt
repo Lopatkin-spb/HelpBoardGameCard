@@ -38,11 +38,6 @@ interface BoardgameRepository {
     suspend fun deleteUnlockBoardgames(): Result<Message>
 
     /**
-     * Получить идентификаторы всех незаблокированных настолок.
-     */
-    suspend fun getBoardgamesIdByUnlock(): Result<Array<Long>>
-
-    /**
      * Сохранить новую настолку.
      */
     suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message>

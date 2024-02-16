@@ -9,9 +9,11 @@ interface BoardgameDao {
 
     /**
      * Получить карточку памяти по идентификатору настолки.
+     *
+     * @return Helpcard - если есть данные, Null - если данных нет.
      */
     @Query("SELECT * FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId")
-    suspend fun getHelpcardBy(boardgameId: Long): Helpcard
+    suspend fun getHelpcardBy(boardgameId: Long): Helpcard?
 
     /**
      * Получить идентификатор карточки памяти по идентификатору настолки.
@@ -48,6 +50,8 @@ interface BoardgameDao {
 
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
+     *
+     * @return List - если есть данные, ListEmpty - если данных нет.
      */
     @Query("SELECT * FROM ${BoardgameInfo.TABLE_NAME} ORDER BY ${BoardgameInfo.COLUMN_PRIORITY} DESC")
     suspend fun getAllBoardgamesInfo(): List<BoardgameInfo>
@@ -109,13 +113,9 @@ interface BoardgameDao {
     suspend fun add(helpcard: Helpcard): Long
 
     /**
-     * Удалить все незаблокированные настолки с мин данными.
-     */
-    @Query("DELETE FROM ${BoardgameInfo.TABLE_NAME} WHERE ${BoardgameInfo.COLUMN_LOCK} = 0")
-    fun deleteBoardgamesInfoByUnlock()
-
-    /**
      * Получить идентификаторы всех незаблокированных настолок.
+     *
+     * @return List - если есть данные, ListEmpty - если данных нет.
      */
     @Query("SELECT ${BoardgameInfo.COLUMN_ID} FROM ${BoardgameInfo.TABLE_NAME} WHERE ${BoardgameInfo.COLUMN_LOCK} = 0")
     suspend fun getBoardgameIdsByUnlock(): Array<Long>

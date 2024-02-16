@@ -35,10 +35,6 @@ class BoardgameRepositoryImpl(
         return boardgameLocalDataSource.deleteUnlockBoardgames()
     }
 
-    override suspend fun getBoardgamesIdByUnlock(): Result<Array<Long>> {
-        return boardgameLocalDataSource.getBoardgamesIdByUnlock()
-    }
-
     override suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message> {
         return boardgameLocalDataSource.saveNewBoardgameBy(boardgameRaw)
     }

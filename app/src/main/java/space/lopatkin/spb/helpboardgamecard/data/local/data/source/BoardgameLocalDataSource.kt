@@ -47,9 +47,4 @@ interface BoardgameLocalDataSource {
      */
     suspend fun deleteUnlockBoardgames(): Result<Message>
 
-    /**
-     * Получить идентификаторы всех незаблокированных настолок.
-     */
-    suspend fun getBoardgamesIdByUnlock(): Result<Array<Long>>
-
 }

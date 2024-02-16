@@ -1,7 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
-import space.lopatkin.spb.helpboardgamecard.domain.model.DataPassError
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
@@ -9,14 +8,14 @@ class DeleteBoardgameUnlockedByBoardgameIdUseCase(private val repository: Boardg
 
     suspend fun execute(boardgameInfo: BoardgameInfo?): Result<Message> {
         if (boardgameInfo == null) {
-            return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
-        }
-        if (!boardgameInfo.boardgameLock && boardgameInfo.boardgameId != null) {
+            return Result.failure(Exception("NotFoundException (usecase): data (BoardgameInfo) is null"))
+        } else if (!boardgameInfo.boardgameLock && boardgameInfo.boardgameId != null) {
             return repository.deleteBoardgameBy(boardgameInfo.boardgameId)
         } else if (boardgameInfo.boardgameLock) {
             return Result.success(Message.DELETE_ITEM_ACTION_STOPPED)
+        } else {
+            return Result.failure(Exception("NotFoundException (usecase): missing target arguments in (BoardgameInfo)"))
         }
-        return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
     }
 
 }

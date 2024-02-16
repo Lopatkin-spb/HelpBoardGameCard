@@ -1,6 +1,5 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
-import space.lopatkin.spb.helpboardgamecard.domain.model.DataPassError
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
@@ -10,7 +9,7 @@ class GetHelpcardByBoardgameIdUseCase(private val repository: BoardgameRepositor
         if (boardgameId != null && boardgameId > 0) {
             return repository.getHelpcardBy(boardgameId)
         }
-        return Result.failure(DataPassError("Data pass is null", IllegalStateException()))
+        return Result.failure(Exception("NotFoundException (usecase): data (boardgameId) is null"))
     }
 
 }

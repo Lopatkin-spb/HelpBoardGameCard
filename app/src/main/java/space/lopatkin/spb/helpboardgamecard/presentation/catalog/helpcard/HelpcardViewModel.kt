@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByBoardgameIdUseCase
@@ -19,19 +20,20 @@ class HelpcardViewModel(
 
     fun loadHelpcard(boardgameId: Long?) {
         _boardgameId.value = boardgameId
-        viewModelScope.launch {
-            val result = try {
-                getHelpcardByBoardgameIdUseCase.execute(boardgameId)
-            } catch (cause: Throwable) {
-                Result.failure(cause)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            val result: Result<Helpcard> =
+                try {
+                    getHelpcardByBoardgameIdUseCase.execute(boardgameId)
+                } catch (cause: Throwable) {
+                    Result.failure(cause)
+                }
             when (result.isSuccess) {
                 true -> {
-                    _helpcard.value = result.getOrNull()
+                    _helpcard.postValue(result.getOrNull())
                 }
 
                 else -> {
-                    _helpcard.value = result.getOrNull()
+                    //TODO: logging error
                 }
             }
         }
