@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.launch
+import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
@@ -16,7 +17,8 @@ import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateBoardgameByBoar
 class CardEditViewModel(
     private val getBoardgameRawByBoardgameIdUseCase: GetBoardgameRawByBoardgameIdUseCase,
     private val updateBoardgameByBoardgameIdUseCase: UpdateBoardgameByBoardgameIdUseCase,
-    private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
+    private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase,
+    private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
     private val _boardgameId = MutableLiveData<Long>()
@@ -28,7 +30,7 @@ class CardEditViewModel(
     val message: LiveData<Message> = _message
 
     fun loadKeyboardType() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io + CoroutineName(LOAD_KEYBOARD_TYPE)) {
             val result: Result<KeyboardType> =
                 try {
                     getKeyboardTypeUseCase.execute()
@@ -50,7 +52,7 @@ class CardEditViewModel(
 
     fun loadBoardgameRaw(boardgameId: Long?) {
         _boardgameId.value = boardgameId
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io + CoroutineName(LOAD_BOARDGAME_RAW)) {
             val result: Result<BoardgameRaw> =
                 try {
                     getBoardgameRawByBoardgameIdUseCase.execute(boardgameId)
@@ -71,7 +73,7 @@ class CardEditViewModel(
     }
 
     fun update(boardgameRaw: BoardgameRaw?) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io + CoroutineName(UPDATE_BOARDGAME_RAW)) {
             val result: Result<Message> =
                 try {
                     updateBoardgameByBoardgameIdUseCase.execute(boardgameRaw)
@@ -97,6 +99,9 @@ class CardEditViewModel(
 
     companion object {
         private val DEFAULT_TYPE: KeyboardType = KeyboardType.CUSTOM
+        private const val UPDATE_BOARDGAME_RAW: String = "coroutine_update_boardgame_raw"
+        private const val LOAD_BOARDGAME_RAW: String = "coroutine_load_boardgame_raw"
+        private const val LOAD_KEYBOARD_TYPE: String = "coroutine_load_keyboard_type"
     }
 
 }

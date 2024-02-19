@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.launch
+import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
@@ -14,7 +15,8 @@ import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveBoardgameNewByBoa
 
 class AddCardViewModel(
     private val saveBoardgameNewByBoardgameIdUseCase: SaveBoardgameNewByBoardgameIdUseCase,
-    private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
+    private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase,
+    private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
     private val _keyboardType = MutableLiveData<KeyboardType>()
@@ -23,7 +25,7 @@ class AddCardViewModel(
     val message: LiveData<Message> = _message
 
     fun loadKeyboardType() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io + CoroutineName(LOAD_KEYBOARD_TYPE)) {
             val result: Result<KeyboardType> =
                 try {
                     getKeyboardTypeUseCase.execute()
@@ -44,7 +46,7 @@ class AddCardViewModel(
     }
 
     fun saveNewBoardgame(boardgameRaw: BoardgameRaw?) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io + CoroutineName(SAVE_NEW_BOARDGAME)) {
             val result: Result<Message> =
                 try {
                     saveBoardgameNewByBoardgameIdUseCase.execute(boardgameRaw)
@@ -70,6 +72,8 @@ class AddCardViewModel(
 
     companion object {
         private val DEFAULT_TYPE: KeyboardType = KeyboardType.CUSTOM
+        private const val SAVE_NEW_BOARDGAME: String = "coroutine_save_new_boardgame"
+        private const val LOAD_KEYBOARD_TYPE: String = "coroutine_load_keyboard_type"
     }
 
 }

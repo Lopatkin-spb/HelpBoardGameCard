@@ -4,13 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.launch
+import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByBoardgameIdUseCase
 
 class HelpcardViewModel(
-    private val getHelpcardByBoardgameIdUseCase: GetHelpcardByBoardgameIdUseCase
+    private val getHelpcardByBoardgameIdUseCase: GetHelpcardByBoardgameIdUseCase,
+    private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
     private val _boardgameId = MutableLiveData<Long>()
@@ -20,7 +22,7 @@ class HelpcardViewModel(
 
     fun loadHelpcard(boardgameId: Long?) {
         _boardgameId.value = boardgameId
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io + CoroutineName(LOAD_HELPCARD)) {
             val result: Result<Helpcard> =
                 try {
                     getHelpcardByBoardgameIdUseCase.execute(boardgameId)
@@ -37,6 +39,10 @@ class HelpcardViewModel(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val LOAD_HELPCARD: String = "coroutine_load_helpcard"
     }
 
 }

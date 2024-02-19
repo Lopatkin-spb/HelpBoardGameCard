@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.launch
+import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase
@@ -13,7 +14,8 @@ import space.lopatkin.spb.helpboardgamecard.domain.usecase.SaveKeyboardTypeByUse
 
 class SettingsViewModel(
     private val saveKeyboardTypeByUserChoiceUseCase: SaveKeyboardTypeByUserChoiceUseCase,
-    private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase
+    private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase,
+    private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
     private val _keyboardType = MutableLiveData<KeyboardType>()
@@ -22,7 +24,7 @@ class SettingsViewModel(
     val keyboardType: LiveData<KeyboardType> = _keyboardType
 
     fun loadKeyboardType() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io + CoroutineName(LOAD_KEYBOARD_TYPE)) {
             val result: Result<KeyboardType> =
                 try {
                     getKeyboardTypeUseCase.execute()
@@ -43,7 +45,7 @@ class SettingsViewModel(
     }
 
     fun saveKeyboardType(type: Any?) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io + CoroutineName(SAVE_KEYBOARD_TYPE)) {
             val result: Result<Message> =
                 try {
                     saveKeyboardTypeByUserChoiceUseCase.execute(type)
@@ -65,6 +67,8 @@ class SettingsViewModel(
 
     companion object {
         private val DEFAULT_TYPE: KeyboardType = KeyboardType.CUSTOM
+        private const val SAVE_KEYBOARD_TYPE: String = "coroutine_save_keyboard_type"
+        private const val LOAD_KEYBOARD_TYPE: String = "coroutine_load_keyboard_type"
     }
 
 }
