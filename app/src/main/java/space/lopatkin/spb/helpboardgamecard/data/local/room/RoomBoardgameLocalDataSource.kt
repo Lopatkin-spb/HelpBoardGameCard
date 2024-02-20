@@ -29,6 +29,19 @@ class RoomBoardgameLocalDataSource(
         }
     }
 
+//    override fun getAllBoardgamesInfo(): Flow<List<BoardgameInfo>> {
+//        return flow {
+//            kotlinx.coroutines.delay(9000)
+//            try {
+//                emit(boardgameDao.getAllBoardgamesInfo())
+//
+//            } catch (cause: Throwable) {
+//                throw cause
+//            }
+//        }
+//            .flowOn(Dispatchers.IO)
+//    }
+
     override suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard> {
         return try {
             val dataFromDb: Helpcard? = boardgameDao.getHelpcardBy(boardgameId)

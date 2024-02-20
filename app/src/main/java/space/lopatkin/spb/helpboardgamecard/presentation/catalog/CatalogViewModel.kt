@@ -1,10 +1,9 @@
 package space.lopatkin.spb.helpboardgamecard.presentation.catalog
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
@@ -18,6 +17,10 @@ class CatalogViewModel(
     private val deleteBoardgamesByUnlockStateUseCase: DeleteBoardgamesByUnlockStateUseCase,
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
+
+    init {
+        loadListBoardgamesInfo()
+    }
 
     private var jobLoadAllBoardgamesInfo: Job? = null
     private var jobDeleteItem: Job? = null
@@ -43,6 +46,28 @@ class CatalogViewModel(
             }
         }
     }
+
+
+//    fun loadListBoardgamesInfo() {
+//        jobLoadAllBoardgamesInfo = viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_BOARDGAMES_INFO)) {
+//            Log.d("myLogs", "vm loadListBoardgamesInfo start")
+//
+//            getAllBoardgamesInfoUseCase.execute()
+//                .cancellable()
+//
+//                .catch { exception ->
+//                    Log.e("myLogs", "$exception")
+//
+//                    Log.d("myLogs", "vm loadListBoardgamesInfo catch error = $exception")
+//                    //TODO: logging error
+//                }
+//                .collect { list ->
+//                    Log.d("myLogs", "vm loadListBoardgamesInfo collect list = $list")
+//
+//                    _listBoardgamesInfo.value = list
+//                }
+//        }
+//    }
 
     fun deleteAllUnlockBoardgames() {
         viewModelScope.launch(dispatchers.io + CoroutineName(DELETE_ALL_UNLOCKS)) {
