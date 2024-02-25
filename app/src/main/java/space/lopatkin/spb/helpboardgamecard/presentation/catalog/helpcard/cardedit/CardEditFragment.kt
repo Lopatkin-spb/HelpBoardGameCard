@@ -207,7 +207,7 @@ class CardEditFragment : AbstractFragment() {
     }
 
     private fun navigateToCatalog() {
-        navController.navigate(CardEditFragmentDirections.actionNavCardEditToNavCatalog())
+        navController.navigate(R.id.nav_catalog)
     }
 
     private fun onActionTitle() {

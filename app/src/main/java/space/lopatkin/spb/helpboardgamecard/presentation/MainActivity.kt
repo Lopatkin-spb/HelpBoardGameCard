@@ -1,13 +1,13 @@
 package space.lopatkin.spb.helpboardgamecard.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout.SimpleDrawerListener
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.*
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import org.greenrobot.eventbus.EventBus
@@ -124,6 +124,49 @@ class MainActivity : AppCompatActivity() {
         val navController: NavController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration!!)
         NavigationUI.setupWithNavController(binding!!.navView, navController)
+
+        fixBackstackTempState()
+    }
+
+    private fun fixBackstackTempState() {
+        val navController = findNavController(R.id.nav_host_fragment)
+
+        navController.addOnDestinationChangedListener { _, destination, args ->
+//            Log.d("myLogs", "Activity navControllerListener start")
+
+            val previousBackStackEntry: NavBackStackEntry? = navController.previousBackStackEntry
+//            Log.d(
+//                "myLogs",
+//                "Activity navControllerListener previousBackStackEntry = ${previousBackStackEntry?.destination?.label}"
+//            )
+//
+            val currentBackStackEntry: NavBackStackEntry? = navController.currentBackStackEntry
+//            Log.d("myLogs",
+//                "Activity navControllerListener currentBackStackEntry = ${currentBackStackEntry?.destination?.label}")
+
+            if (previousBackStackEntry != null) {
+
+                if (currentBackStackEntry?.destination?.id != R.id.nav_helpcard
+                    && currentBackStackEntry?.destination?.id != R.id.nav_card_edit
+                ) {
+                    navController.navigate(
+                        resId = destination.id,
+                        args = null,
+                        navOptions = navOptions {
+                            launchSingleTop = true
+                            popUpTo(previousBackStackEntry.destination.id) {
+                                this.inclusive = true
+                            }
+                        })
+
+                    // Reset StartDestination to avoid bug dont listen first press Home
+                    navController.graph.setStartDestination(previousBackStackEntry.destination.id)
+
+//                    Log.d("myLogs", "Activity navControllerListener endFull")
+
+                }
+            }
+        }
     }
 
 }
