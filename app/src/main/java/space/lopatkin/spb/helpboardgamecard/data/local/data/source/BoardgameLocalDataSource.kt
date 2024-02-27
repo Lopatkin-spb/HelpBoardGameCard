@@ -1,5 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.data.local.data.source
 
+import kotlinx.coroutines.flow.Flow
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
@@ -10,7 +11,7 @@ interface BoardgameLocalDataSource {
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
      */
-    suspend fun getAllBoardgamesInfo(): Result<List<BoardgameInfo>>
+    fun getAllBoardgamesInfo(): Flow<List<BoardgameInfo>>
 
     /**
      * Получить карточку памяти по идентификатору настолки.
@@ -35,16 +36,16 @@ interface BoardgameLocalDataSource {
     /**
      * Обновить мин данные настолки.
      */
-    suspend fun update(boardgameInfo: BoardgameInfo): Result<Message>
+    fun update(boardgameInfo: BoardgameInfo): Flow<Message>
 
     /**
      * Удалить настолку.
      */
-    suspend fun deleteBoardgameBy(boardgameId: Long): Result<Message>
+    fun deleteBoardgameBy(boardgameId: Long): Flow<Message>
 
     /**
      * Удалить все незаблокированные настолки.
      */
-    suspend fun deleteUnlockBoardgames(): Result<Message>
+    fun deleteUnlockBoardgames(): Flow<Message>
 
 }

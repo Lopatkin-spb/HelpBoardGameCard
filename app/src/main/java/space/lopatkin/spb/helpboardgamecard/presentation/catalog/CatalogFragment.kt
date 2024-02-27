@@ -78,7 +78,6 @@ class CatalogFragment : AbstractFragment() {
     }
 
     private fun loadListBoardgamesInfo() {
-        viewModel.loadListBoardgamesInfo()
         viewModel.listBoardgamesInfo!!.observe(viewLifecycleOwner) { boardgamesInfo -> adapter.setList(boardgamesInfo) }
     }
 
@@ -148,40 +147,6 @@ class CatalogFragment : AbstractFragment() {
                 )
 
                 Message.ACTION_ENDED_ERROR -> showMessage(binding!!.recyclerView, R.string.error_action_ended)
-                Message.DELETE_ITEM_ACTION_ENDED_SUCCESS -> showMessage(
-                    binding!!.recyclerView, R.string.message_helpcard_deleted
-                )
-
-                Message.DELETE_ITEM_ACTION_STOPPED -> showMessage(
-                    binding!!.recyclerView,
-                    R.string.message_helpcard_not_deleted
-                )
-
-                Message.FAVORITE_ITEM_ACTION_ENDED_SUCCESS -> showMessage(
-                    binding!!.recyclerView, R.string.message_helpcard_favorite_updated
-                )
-
-                Message.FAVORITE_ITEM_ACTION_STOPPED -> showMessage(
-                    binding!!.recyclerView, R.string.message_helpcard_favorite_not_updated
-                )
-
-                Message.LOCKING_ITEM_ACTION_ENDED_SUCCESS -> showMessage(
-                    binding!!.recyclerView, R.string.message_helpcard_locking_updated
-                )
-
-                Message.DELETE_ALL_ACTION_ENDED_SUCCESS -> {
-                    showMessage(
-                        binding!!.recyclerView,
-                        R.string.message_action_ended_success
-                    )
-                    viewModel.loadListBoardgamesInfo()
-                }
-
-                Message.DELETE_ALL_ACTION_STOPPED -> showMessage(
-                    binding!!.recyclerView, R.string.message_delete_all_stopped
-                )
-
-                Message.DELETE_ALL_ACTION_ENDED_ERROR -> showMessage(binding!!.recyclerView, R.string.error_action_ended)
 
                 else -> {}
             }

@@ -2,6 +2,10 @@ package space.lopatkin.spb.helpboardgamecard.data.local.room
 
 import android.content.Context
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
 import space.lopatkin.spb.helpboardgamecard.data.local.room.RoomDb.Companion.getInstance
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
@@ -16,31 +20,19 @@ class RoomBoardgameLocalDataSource(
     private val boardgameDao: BoardgameDao
 
     init {
-        val database: RoomDb = getInstance(context = context, scope = scope)
+        val database: RoomDb = getInstance(context, scope)
         boardgameDao = database.boardgameDao()
     }
 
-    override suspend fun getAllBoardgamesInfo(): Result<List<BoardgameInfo>> {
-        return try {
-            val list: List<BoardgameInfo> = boardgameDao.getAllBoardgamesInfo()
-            Result.success(list)
-        } catch (cause: Throwable) {
-            Result.failure(cause)
-        }
+    override fun getAllBoardgamesInfo(): Flow<List<BoardgameInfo>> {
+        return flow {
+            try {
+                emit(boardgameDao.getAllBoardgamesInfo())
+            } catch (cause: Throwable) {
+                throw cause
+            }
+        }.flowOn(Dispatchers.IO)
     }
-
-//    override fun getAllBoardgamesInfo(): Flow<List<BoardgameInfo>> {
-//        return flow {
-//            kotlinx.coroutines.delay(9000)
-//            try {
-//                emit(boardgameDao.getAllBoardgamesInfo())
-//
-//            } catch (cause: Throwable) {
-//                throw cause
-//            }
-//        }
-//            .flowOn(Dispatchers.IO)
-//    }
 
     override suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard> {
         return try {
@@ -86,31 +78,35 @@ class RoomBoardgameLocalDataSource(
         }
     }
 
-    override suspend fun deleteBoardgameBy(boardgameId: Long): Result<Message> {
-        return try {
-            val deletedHelpcard: Int = boardgameDao.deleteHelpcardBy(boardgameId)
-            val deletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(boardgameId)
-            if (deletedInfo > 0 && deletedHelpcard > 0) {
-                return Result.success(Message.DELETE_ITEM_ACTION_ENDED_SUCCESS)
-            } else {
-                Result.failure(Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo) not deleted full"))
+    override fun deleteBoardgameBy(boardgameId: Long): Flow<Message> {
+        return flow {
+            try {
+                val deletedHelpcard: Int = boardgameDao.deleteHelpcardBy(boardgameId)
+                val deletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(boardgameId)
+                if (deletedInfo > 0 && deletedHelpcard > 0) {
+                    emit(Message.ACTION_ENDED_SUCCESS)
+                } else {
+                    throw Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo) not deleted full")
+                }
+            } catch (cause: Throwable) {
+                throw cause
             }
-        } catch (cause: Throwable) {
-            Result.failure(cause)
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun update(boardgameInfo: BoardgameInfo): Result<Message> {
-        return try {
-            val updated: Int = boardgameDao.update(boardgameInfo)
-            if (updated > 0) {
-                Result.success(Message.ACTION_ENDED_SUCCESS)
-            } else {
-                Result.failure(Exception("NotFoundException (room): model (BoardgameInfo) not updated because (BoardgameId) not found in db table"))
+    override fun update(boardgameInfo: BoardgameInfo): Flow<Message> {
+        return flow {
+            try {
+                val updated: Int = boardgameDao.update(boardgameInfo)
+                if (updated > 0) {
+                    emit(Message.ACTION_ENDED_SUCCESS)
+                } else {
+                    throw Exception("NotFoundException (room): model (BoardgameInfo) not updated because (BoardgameId) not found in db table")
+                }
+            } catch (cause: Throwable) {
+                throw cause
             }
-        } catch (cause: Throwable) {
-            Result.failure(cause)
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message> {
@@ -139,21 +135,23 @@ class RoomBoardgameLocalDataSource(
         }
     }
 
-    override suspend fun deleteUnlockBoardgames(): Result<Message> {
-        return try {
-            val listIdUnlock: Array<Long> = boardgameDao.getBoardgameIdsByUnlock()
-            if (listIdUnlock.size > 0) {
-                for (index in 0 until listIdUnlock.size) {
-                    val deletedStatusInfo: Int = boardgameDao.deleteBoardgameInfoBy(listIdUnlock.get(index))
-                    val deletedStatusHelpcard: Int = boardgameDao.deleteHelpcardBy(listIdUnlock.get(index))
+    override fun deleteUnlockBoardgames(): Flow<Message> {
+        return flow {
+            try {
+                val listIdUnlock: Array<Long> = boardgameDao.getBoardgameIdsByUnlock()
+                if (listIdUnlock.size > 0) {
+                    for (index in 0 until listIdUnlock.size) {
+                        val deletedStatusInfo: Int = boardgameDao.deleteBoardgameInfoBy(listIdUnlock.get(index))
+                        val deletedStatusHelpcard: Int = boardgameDao.deleteHelpcardBy(listIdUnlock.get(index))
+                    }
+                    emit(Message.ACTION_ENDED_SUCCESS)
+                } else {
+                    throw Exception("NotFoundException (room): (Boardgame)s not deleted because not files for deleting")
                 }
-                Result.success(Message.DELETE_ALL_ACTION_ENDED_SUCCESS)
-            } else {
-                Result.success(Message.DELETE_ALL_ACTION_STOPPED)
+            } catch (cause: Throwable) {
+                throw cause
             }
-        } catch (cause: Throwable) {
-            Result.failure(cause)
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
 }

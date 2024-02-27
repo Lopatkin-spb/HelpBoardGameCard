@@ -54,7 +54,7 @@ interface BoardgameDao {
      * @return List - если есть данные, ListEmpty - если данных нет.
      */
     @Query("SELECT * FROM ${BoardgameInfo.TABLE_NAME} ORDER BY ${BoardgameInfo.COLUMN_PRIORITY} DESC")
-    suspend fun getAllBoardgamesInfo(): List<BoardgameInfo>
+    fun getAllBoardgamesInfo(): List<BoardgameInfo>
 
     /**
      * Удалить настолку с мин данными по идентификатору настолки.
@@ -62,7 +62,7 @@ interface BoardgameDao {
      * @return количество удаленных объектов.
      */
     @Query("DELETE FROM ${BoardgameInfo.TABLE_NAME} WHERE ${BoardgameInfo.COLUMN_ID} = :boardgameId")
-    suspend fun deleteBoardgameInfoBy(boardgameId: Long): Int
+    fun deleteBoardgameInfoBy(boardgameId: Long): Int
 
     /**
      * Удалить карточку памяти по идентификатору настолки.
@@ -70,7 +70,7 @@ interface BoardgameDao {
      * @return количество удаленных объектов.
      */
     @Query("DELETE FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId")
-    suspend fun deleteHelpcardBy(boardgameId: Long): Int
+    fun deleteHelpcardBy(boardgameId: Long): Int
 
     /**
      * Удалить карточку памяти по идентификатору карточки памяти.
@@ -86,7 +86,7 @@ interface BoardgameDao {
      * @return количество обновленных объектов.
      */
     @Update(entity = BoardgameInfo::class)
-    suspend fun update(boardgameInfo: BoardgameInfo): Int
+    fun update(boardgameInfo: BoardgameInfo): Int
 
     /**
      * Обновить карточку памяти по идентификатору карточки памяти.
@@ -118,7 +118,7 @@ interface BoardgameDao {
      * @return List - если есть данные, ListEmpty - если данных нет.
      */
     @Query("SELECT ${BoardgameInfo.COLUMN_ID} FROM ${BoardgameInfo.TABLE_NAME} WHERE ${BoardgameInfo.COLUMN_LOCK} = 0")
-    suspend fun getBoardgameIdsByUnlock(): Array<Long>
+    fun getBoardgameIdsByUnlock(): Array<Long>
 
     /**
      * Получить любимые настолки с мин данными.

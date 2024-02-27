@@ -1,9 +1,16 @@
 package space.lopatkin.spb.helpboardgamecard.presentation.catalog
 
-import android.util.Log
-import androidx.lifecycle.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
@@ -23,101 +30,86 @@ class CatalogViewModel(
     }
 
     private var jobLoadAllBoardgamesInfo: Job? = null
-    private var jobDeleteItem: Job? = null
     private val _message = MutableLiveData<Message>()
     private val _listBoardgamesInfo = MutableLiveData<List<BoardgameInfo>>()
+
     val message: LiveData<Message> = _message
     val listBoardgamesInfo: LiveData<List<BoardgameInfo>> = _listBoardgamesInfo
 
+    // Longtime job must be cancelling (auto cancelling in vm.onCleared) and log it
     fun loadListBoardgamesInfo() {
-        jobLoadAllBoardgamesInfo = viewModelScope.launch(dispatchers.io + CoroutineName(LOAD_BOARDGAMES_INFO)) {
+        jobLoadAllBoardgamesInfo = viewModelScope.launch(
+            dispatchers.main + CoroutineName(LOAD_BOARDGAMES_INFO)
+        ) {
             getAllBoardgamesInfoUseCase.execute()
-                .onSuccess { listBoardgamesInfo ->
-                    _listBoardgamesInfo.postValue(listBoardgamesInfo)
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    _message.value = Message.ACTION_ENDED_ERROR
                 }
-                .onFailure { cause ->
-                    //TODO: logging error
+                .collect { list ->
+                    _listBoardgamesInfo.value = list
                 }
         }.also { thisJob ->
             thisJob.invokeOnCompletion { error ->
                 if (error != null && error is CancellationException) {
                     // Clear resources
+                    //TODO: logging only exception but not error
                 }
             }
         }
     }
 
-
-//    fun loadListBoardgamesInfo() {
-//        jobLoadAllBoardgamesInfo = viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_BOARDGAMES_INFO)) {
-//            Log.d("myLogs", "vm loadListBoardgamesInfo start")
-//
-//            getAllBoardgamesInfoUseCase.execute()
-//                .cancellable()
-//
-//                .catch { exception ->
-//                    Log.e("myLogs", "$exception")
-//
-//                    Log.d("myLogs", "vm loadListBoardgamesInfo catch error = $exception")
-//                    //TODO: logging error
-//                }
-//                .collect { list ->
-//                    Log.d("myLogs", "vm loadListBoardgamesInfo collect list = $list")
-//
-//                    _listBoardgamesInfo.value = list
-//                }
-//        }
-//    }
-
     fun deleteAllUnlockBoardgames() {
-        viewModelScope.launch(dispatchers.io + CoroutineName(DELETE_ALL_UNLOCKS)) {
+        viewModelScope.launch(dispatchers.main + CoroutineName(DELETE_ALL_UNLOCKS)) {
             deleteBoardgamesByUnlockStateUseCase.execute()
-                .onSuccess { result ->
-                    loadListBoardgamesInfo() // RefreshList Временный костыль - переделать в будущем
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    _message.value = Message.ACTION_ENDED_ERROR
                 }
-                .onFailure { cause ->
-                    //TODO: logging error
+                .collect { success ->
+                    loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
                 }
         }
     }
 
     fun updateFavorite(boardgameInfo: BoardgameInfo?) {
-        viewModelScope.launch(dispatchers.io + CoroutineName(UPDATE_FAVORITE)) {
+        viewModelScope.launch(dispatchers.main + CoroutineName(UPDATE_FAVORITE)) {
             updateBoardgameFavoriteByBoardgameIdUseCase.execute(boardgameInfo)
-                .onFailure { cause ->
-                    //TODO: logging error
-                    loadListBoardgamesInfo() // RefreshList Временный костыль - переделать в будущем
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
+                    _message.value = Message.ACTION_ENDED_ERROR
                 }
+                .collect()
         }
     }
 
     fun updateLocking(boardgameInfo: BoardgameInfo?) {
-        viewModelScope.launch(dispatchers.io + CoroutineName(UPDATE_LOCKING)) {
+        viewModelScope.launch(dispatchers.main + CoroutineName(UPDATE_LOCKING)) {
             updateBoardgameLockingByBoardgameIdUseCase.execute(boardgameInfo)
-                .onFailure { cause ->
-                    //TODO: logging error
-                    loadListBoardgamesInfo() // RefreshList Временный костыль - переделать в будущем
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
+                    _message.value = Message.ACTION_ENDED_ERROR
                 }
+                .collect()
         }
     }
 
-    // For example: job cancel (auto cancelling in vm.onCleared)
     fun delete(boardgameInfo: BoardgameInfo?) {
-        jobDeleteItem = viewModelScope.launch(dispatchers.io + CoroutineName(DELETE_ITEM)) {
+        viewModelScope.launch(dispatchers.main + CoroutineName(DELETE_ITEM)) {
             deleteBoardgameUnlockedByBoardgameIdUseCase.execute(boardgameInfo)
-                .onSuccess { result ->
-                    loadListBoardgamesInfo() // RefreshList Временный костыль - переделать в будущем
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
+                    _message.value = Message.ACTION_ENDED_ERROR
                 }
-                .onFailure { cause ->
-                    //TODO: logging error
-                    loadListBoardgamesInfo() // RefreshList Временный костыль - переделать в будущем
-                }
-        }.also { thisJob ->
-            thisJob.invokeOnCompletion { error ->
-                if (error != null && error is CancellationException) {
-                    // Clear resources
-                }
-            }
+                .collect()
         }
     }
 

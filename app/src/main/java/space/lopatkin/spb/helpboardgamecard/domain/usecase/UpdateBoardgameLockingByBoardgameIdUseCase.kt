@@ -1,18 +1,22 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
 class UpdateBoardgameLockingByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
-    suspend fun execute(boardgameInfo: BoardgameInfo?): Result<Message> {
-        if (boardgameInfo == null) {
-            return Result.failure(Exception("NotFoundException (usecase): data (BoardgameInfo) is null"))
-        }
-
-        return repository.update(boardgameInfo)
-            .map { resultSuccessTo -> Message.LOCKING_ITEM_ACTION_ENDED_SUCCESS }
+    fun execute(boardgameInfo: BoardgameInfo?): Flow<Message> {
+        return flow {
+            if (boardgameInfo == null) {
+                throw Exception("NotFoundException (usecase): data (BoardgameInfo) is null")
+            } else {
+                emit(boardgameInfo)
+            }
+        }.flatMapMerge { data -> repository.update(data) }
     }
 
 }
