@@ -2,18 +2,21 @@ package space.lopatkin.spb.helpboardgamecard.data.local.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.SettingsLocalDataSource
+import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 
 private const val APPLICATION_PREFERENCES = "APPLICATION_PREFERENCES"
 private const val KEYBOARD_TYPE = "KEYBOARD_TYPE"
 
-class PreferencesSettingsLocalDataSource(private val context: Context) : SettingsLocalDataSource {
+class PreferencesSettingsLocalDataSource(
+    private val context: Context,
+    private val dispatchers: ApplicationModule.CoroutineDispatchers
+) : SettingsLocalDataSource {
 
     private val preferences: SharedPreferences =
         context.getSharedPreferences(APPLICATION_PREFERENCES, Context.MODE_PRIVATE)
@@ -29,7 +32,7 @@ class PreferencesSettingsLocalDataSource(private val context: Context) : Setting
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
     override fun getKeyboardType(): Flow<KeyboardType> {
@@ -40,7 +43,7 @@ class PreferencesSettingsLocalDataSource(private val context: Context) : Setting
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
 }

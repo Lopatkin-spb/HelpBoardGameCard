@@ -52,7 +52,7 @@ class CardEditViewModel(
     }
 
     fun loadBoardgameRaw(boardgameId: Long?) {
-        _boardgameId.value = boardgameId
+        _boardgameId.value = boardgameId //TODO: setter split
         viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_BOARDGAME_RAW)) {
             getBoardgameRawByBoardgameIdUseCase.execute(boardgameId)
                 .cancellable()

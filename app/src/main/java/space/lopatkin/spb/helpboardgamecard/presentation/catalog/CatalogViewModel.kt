@@ -37,7 +37,7 @@ class CatalogViewModel(
     val listBoardgamesInfo: LiveData<List<BoardgameInfo>> = _listBoardgamesInfo
 
     // Longtime job must be cancelling (auto cancelling in vm.onCleared) and log it
-    fun loadListBoardgamesInfo() {
+    private fun loadListBoardgamesInfo() {
         jobLoadAllBoardgamesInfo = viewModelScope.launch(
             dispatchers.main + CoroutineName(LOAD_BOARDGAMES_INFO)
         ) {

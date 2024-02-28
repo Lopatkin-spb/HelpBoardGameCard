@@ -2,12 +2,12 @@ package space.lopatkin.spb.helpboardgamecard.data.local.room
 
 import android.content.Context
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
 import space.lopatkin.spb.helpboardgamecard.data.local.room.RoomDb.Companion.getInstance
+import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
@@ -15,7 +15,9 @@ import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 
 class RoomBoardgameLocalDataSource(
     private val context: Context,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
+    private val dispatchers: ApplicationModule.CoroutineDispatchers
+
 ) : BoardgameLocalDataSource {
     private val boardgameDao: BoardgameDao
 
@@ -31,7 +33,7 @@ class RoomBoardgameLocalDataSource(
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
     override fun getHelpcardBy(boardgameId: Long): Flow<Helpcard> {
@@ -46,7 +48,7 @@ class RoomBoardgameLocalDataSource(
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
     override fun getBoardgameRawBy(boardgameId: Long): Flow<BoardgameRaw> {
@@ -61,7 +63,7 @@ class RoomBoardgameLocalDataSource(
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
     override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
@@ -81,7 +83,7 @@ class RoomBoardgameLocalDataSource(
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
     override fun deleteBoardgameBy(boardgameId: Long): Flow<Message> {
@@ -97,7 +99,7 @@ class RoomBoardgameLocalDataSource(
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
     override fun update(boardgameInfo: BoardgameInfo): Flow<Message> {
@@ -112,7 +114,7 @@ class RoomBoardgameLocalDataSource(
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
     override fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
@@ -140,7 +142,7 @@ class RoomBoardgameLocalDataSource(
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
     override fun deleteUnlockBoardgames(): Flow<Message> {
@@ -159,7 +161,7 @@ class RoomBoardgameLocalDataSource(
             } catch (cause: Throwable) {
                 throw cause
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(dispatchers.io)
     }
 
 }

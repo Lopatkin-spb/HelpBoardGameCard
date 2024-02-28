@@ -139,7 +139,6 @@ class CatalogFragment : AbstractFragment() {
 
     private fun selectingTextFrom(result: Message) {
         if (binding != null) {
-
             when (result) {
                 Message.ACTION_ENDED_SUCCESS -> showMessage(
                     binding!!.recyclerView,

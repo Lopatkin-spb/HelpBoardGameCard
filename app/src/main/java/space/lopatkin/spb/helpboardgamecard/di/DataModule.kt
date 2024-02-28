@@ -39,14 +39,21 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideBoardgameLocalDataSource(context: Context, scope: CoroutineScope): BoardgameLocalDataSource {
-        return RoomBoardgameLocalDataSource(context = context, scope = scope)
+    fun provideBoardgameLocalDataSource(
+        context: Context,
+        scope: CoroutineScope,
+        dispatchers: ApplicationModule.CoroutineDispatchers
+    ): BoardgameLocalDataSource {
+        return RoomBoardgameLocalDataSource(context, scope, dispatchers)
     }
 
     @Singleton
     @Provides
-    fun provideSettingsLocalDataSource(context: Context): SettingsLocalDataSource {
-        return PreferencesSettingsLocalDataSource(context = context)
+    fun provideSettingsLocalDataSource(
+        context: Context,
+        dispatchers: ApplicationModule.CoroutineDispatchers
+    ): SettingsLocalDataSource {
+        return PreferencesSettingsLocalDataSource(context, dispatchers)
     }
 
 }
