@@ -16,11 +16,11 @@ class BoardgameRepositoryImpl(
         return boardgameLocalDataSource.getAllBoardgamesInfo()
     }
 
-    override suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard> {
+    override fun getHelpcardBy(boardgameId: Long): Flow<Helpcard> {
         return boardgameLocalDataSource.getHelpcardBy(boardgameId)
     }
 
-    override suspend fun getBoardgameRawBy(boardgameId: Long): Result<BoardgameRaw> {
+    override fun getBoardgameRawBy(boardgameId: Long): Flow<BoardgameRaw> {
         return boardgameLocalDataSource.getBoardgameRawBy(boardgameId)
     }
 
@@ -36,11 +36,11 @@ class BoardgameRepositoryImpl(
         return boardgameLocalDataSource.deleteUnlockBoardgames()
     }
 
-    override suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message> {
+    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
         return boardgameLocalDataSource.saveNewBoardgameBy(boardgameRaw)
     }
 
-    override suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message> {
+    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
         return boardgameLocalDataSource.updateBoardgameBy(boardgameRaw)
     }
 

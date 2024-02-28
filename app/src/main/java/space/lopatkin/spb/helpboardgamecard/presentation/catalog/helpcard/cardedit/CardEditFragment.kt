@@ -123,7 +123,6 @@ class CardEditFragment : AbstractFragment() {
     }
 
     private fun loadKeyboardType() {
-        viewModel.loadKeyboardType()
         viewModel.keyboardType.observe(viewLifecycleOwner) { keyboardType ->
             if (keyboardType == KeyboardType.CUSTOM) {
                 setupViewsForCustomKeyboard()

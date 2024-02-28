@@ -34,48 +34,54 @@ class RoomBoardgameLocalDataSource(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard> {
-        return try {
-            val dataFromDb: Helpcard? = boardgameDao.getHelpcardBy(boardgameId)
-            if (dataFromDb != null) {
-                Result.success(dataFromDb)
-            } else {
-                Result.failure(Exception("NotFoundException (room): query (getHelpcardByBoardgameId) not finished because Helpcard not found in db table"))
+    override fun getHelpcardBy(boardgameId: Long): Flow<Helpcard> {
+        return flow {
+            try {
+                val dataFromDb: Helpcard? = boardgameDao.getHelpcardBy(boardgameId)
+                if (dataFromDb != null) {
+                    emit(dataFromDb)
+                } else {
+                    throw Exception("NotFoundException (room): query (getHelpcardByBoardgameId) not finished because Helpcard not found in db table")
+                }
+            } catch (cause: Throwable) {
+                throw cause
             }
-        } catch (cause: Throwable) {
-            Result.failure(cause)
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getBoardgameRawBy(boardgameId: Long): Result<BoardgameRaw> {
-        return try {
-            val dataFromDb: BoardgameRaw? = boardgameDao.getBoardgameRawBy(boardgameId)
-            if (dataFromDb != null) {
-                Result.success(dataFromDb)
-            } else {
-                Result.failure(Exception("NotFoundException (room): query (getBoardgameRawByBoardgameId) not finished because Boardgame & Helpcard not found in db tables"))
+    override fun getBoardgameRawBy(boardgameId: Long): Flow<BoardgameRaw> {
+        return flow {
+            try {
+                val dataFromDb: BoardgameRaw? = boardgameDao.getBoardgameRawBy(boardgameId)
+                if (dataFromDb != null) {
+                    emit(dataFromDb)
+                } else {
+                    throw Exception("NotFoundException (room): query (getBoardgameRawByBoardgameId) not finished because Boardgame & Helpcard not found in db tables")
+                }
+            } catch (cause: Throwable) {
+                throw cause
             }
-        } catch (cause: Throwable) {
-            Result.failure(cause)
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message> {
-        return try {
-            val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
-            val addedInfoId: Long = boardgameDao.add(boardgameInfo)
-            val helpcard: Helpcard = boardgameRaw.toHelpcard(addedInfoId)
-            val addedHelpcardId: Long = boardgameDao.add(helpcard)
-            if (addedInfoId > 0 && addedHelpcardId > 0) {
-                Result.success(Message.ACTION_ENDED_SUCCESS)
-            } else {
-                val statusDeletedHelpcard: Int = boardgameDao.deleteHelpcardByOwn(addedHelpcardId)
-                val statusDeletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(addedInfoId)
-                Result.failure(Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo from BoardgameRaw) not added to db"))
+    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
+        return flow {
+            try {
+                val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
+                val addedInfoId: Long = boardgameDao.add(boardgameInfo)
+                val helpcard: Helpcard = boardgameRaw.toHelpcard(addedInfoId)
+                val addedHelpcardId: Long = boardgameDao.add(helpcard)
+                if (addedInfoId > 0 && addedHelpcardId > 0) {
+                    emit(Message.ACTION_ENDED_SUCCESS)
+                } else {
+                    val statusDeletedHelpcard: Int = boardgameDao.deleteHelpcardByOwn(addedHelpcardId)
+                    val statusDeletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(addedInfoId)
+                    throw Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo from BoardgameRaw) not added to db")
+                }
+            } catch (cause: Throwable) {
+                throw cause
             }
-        } catch (cause: Throwable) {
-            Result.failure(cause)
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override fun deleteBoardgameBy(boardgameId: Long): Flow<Message> {
@@ -109,30 +115,32 @@ class RoomBoardgameLocalDataSource(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message> {
-        return try {
-            if (boardgameRaw.id != null) {
-                val helpcardDbId: Long = boardgameDao.getHelpcardIdBy(boardgameRaw.id!!)
+    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
+        return flow {
+            try {
+                if (boardgameRaw.id != null) {
+                    val helpcardDbId: Long = boardgameDao.getHelpcardIdBy(boardgameRaw.id!!)
 
-                val helpcard: Helpcard = boardgameRaw.toHelpcard(helpcardDbId, boardgameRaw.id!!)
-                val statusUpdatedHelpcard: Int = boardgameDao.update(helpcard)
+                    val helpcard: Helpcard = boardgameRaw.toHelpcard(helpcardDbId, boardgameRaw.id!!)
+                    val statusUpdatedHelpcard: Int = boardgameDao.update(helpcard)
 
-                val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
-                val statusUpdatedInfo: Int = boardgameDao.update(boardgameInfo)
+                    val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
+                    val statusUpdatedInfo: Int = boardgameDao.update(boardgameInfo)
 
-                if (statusUpdatedInfo > 0 && statusUpdatedHelpcard > 0) {
-                    Result.success(Message.ACTION_ENDED_SUCCESS)
+                    if (statusUpdatedInfo > 0 && statusUpdatedHelpcard > 0) {
+                        emit(Message.ACTION_ENDED_SUCCESS)
+                    } else {
+                        val statusDeletedHelpcard: Int = boardgameDao.deleteHelpcardBy(helpcard.boardgameId)
+                        val statusDeletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(boardgameRaw.id!!)
+                        throw Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo) not updated")
+                    }
                 } else {
-                    val statusDeletedHelpcard: Int = boardgameDao.deleteHelpcardBy(helpcard.boardgameId)
-                    val statusDeletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(boardgameRaw.id!!)
-                    Result.failure(Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo) not updated"))
+                    throw Exception("NotFoundException (room): Id from BoardgameRaw for update models not found")
                 }
-            } else {
-                Result.failure(Exception("NotFoundException (room): Id from BoardgameRaw for update models not found"))
+            } catch (cause: Throwable) {
+                throw cause
             }
-        } catch (cause: Throwable) {
-            Result.failure(cause)
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override fun deleteUnlockBoardgames(): Flow<Message> {

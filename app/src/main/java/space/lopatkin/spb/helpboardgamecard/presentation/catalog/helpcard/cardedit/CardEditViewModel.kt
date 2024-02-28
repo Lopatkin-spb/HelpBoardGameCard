@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
@@ -13,6 +16,7 @@ import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetBoardgameRawByBoardgameIdUseCase
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateBoardgameByBoardgameIdUseCase
+import space.lopatkin.spb.helpboardgamecard.presentation.ValidationException
 
 class CardEditViewModel(
     private val getBoardgameRawByBoardgameIdUseCase: GetBoardgameRawByBoardgameIdUseCase,
@@ -20,6 +24,10 @@ class CardEditViewModel(
     private val getKeyboardTypeUseCase: GetKeyboardTypeUseCase,
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
+
+    init {
+        loadKeyboardType()
+    }
 
     private val _boardgameId = MutableLiveData<Long>()
     private val _keyboardType = MutableLiveData<KeyboardType>()
@@ -29,71 +37,53 @@ class CardEditViewModel(
     val keyboardType: LiveData<KeyboardType> = _keyboardType
     val message: LiveData<Message> = _message
 
-    fun loadKeyboardType() {
-        viewModelScope.launch(dispatchers.io + CoroutineName(LOAD_KEYBOARD_TYPE)) {
-            val result: Result<KeyboardType> =
-                try {
-                    getKeyboardTypeUseCase.execute()
-                } catch (cause: Throwable) {
-                    Result.failure(cause)
+    private fun loadKeyboardType() {
+        viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_KEYBOARD_TYPE)) {
+            getKeyboardTypeUseCase.execute()
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    _keyboardType.value = DEFAULT_TYPE
                 }
-            when (result.isSuccess) {
-                true -> {
-                    _keyboardType.postValue(result.getOrDefault(DEFAULT_TYPE))
+                .collect { result ->
+                    _keyboardType.value = result
                 }
-
-                else -> {
-                    //TODO: logging error
-                    _keyboardType.postValue(DEFAULT_TYPE)
-                }
-            }
         }
     }
 
     fun loadBoardgameRaw(boardgameId: Long?) {
         _boardgameId.value = boardgameId
-        viewModelScope.launch(dispatchers.io + CoroutineName(LOAD_BOARDGAME_RAW)) {
-            val result: Result<BoardgameRaw> =
-                try {
-                    getBoardgameRawByBoardgameIdUseCase.execute(boardgameId)
-                } catch (cause: Throwable) {
-                    Result.failure(cause)
+        viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_BOARDGAME_RAW)) {
+            getBoardgameRawByBoardgameIdUseCase.execute(boardgameId)
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    _message.value = Message.ACTION_ENDED_ERROR
                 }
-            when (result.isSuccess) {
-                true -> {
-                    _boardgameRaw.postValue(result.getOrNull())
+                .onCompletion {
+                    //TODO: stop loading
                 }
-
-                else -> {
-                    //TODO: logging error
-                    _message.postValue(Message.ACTION_ENDED_ERROR)
+                .collect { result ->
+                    _boardgameRaw.value = result
                 }
-            }
         }
     }
 
     fun update(boardgameRaw: BoardgameRaw?) {
-        viewModelScope.launch(dispatchers.io + CoroutineName(UPDATE_BOARDGAME_RAW)) {
-            val result: Result<Message> =
-                try {
-                    updateBoardgameByBoardgameIdUseCase.execute(boardgameRaw)
-                } catch (cause: Throwable) {
-                    Result.failure(cause)
+        viewModelScope.launch(dispatchers.main + CoroutineName(UPDATE_BOARDGAME_RAW)) {
+            updateBoardgameByBoardgameIdUseCase.execute(boardgameRaw)
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    if (exception is ValidationException) {
+                        _message.value = Message.ACTION_STOPPED
+                    } else {
+                        _message.value = Message.ACTION_ENDED_ERROR
+                    }
                 }
-            when (result.getOrNull()) {
-                Message.ACTION_ENDED_SUCCESS -> {
-                    _message.postValue(result.getOrNull())
+                .collect { action ->
+                    _message.value = Message.ACTION_ENDED_SUCCESS
                 }
-
-                Message.ACTION_STOPPED -> {
-                    _message.postValue(result.getOrNull())
-                }
-
-                else -> {
-                    //TODO: logging error
-                    _message.postValue(Message.ACTION_ENDED_ERROR)
-                }
-            }
         }
     }
 

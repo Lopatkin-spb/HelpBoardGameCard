@@ -11,12 +11,12 @@ interface BoardgameRepository {
     /**
      * Получить карточку памяти по идентификатору настолки.
      */
-    suspend fun getHelpcardBy(boardgameId: Long): Result<Helpcard>
+    fun getHelpcardBy(boardgameId: Long): Flow<Helpcard>
 
     /**
      * Получить полные сырые данные настолки по идентификатору настолки.
      */
-    suspend fun getBoardgameRawBy(boardgameId: Long): Result<BoardgameRaw>
+    fun getBoardgameRawBy(boardgameId: Long): Flow<BoardgameRaw>
 
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
@@ -41,11 +41,11 @@ interface BoardgameRepository {
     /**
      * Сохранить новую настолку.
      */
-    suspend fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message>
+    fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message>
 
     /**
      * Обновить настолку.
      */
-    suspend fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Result<Message>
+    fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message>
 
 }

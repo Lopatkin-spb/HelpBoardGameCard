@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
@@ -18,50 +20,39 @@ class SettingsViewModel(
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
+    init {
+        loadKeyboardType()
+    }
+
     private val _keyboardType = MutableLiveData<KeyboardType>()
     private val _message = MutableLiveData<Message>()
     val message: LiveData<Message> = _message
     val keyboardType: LiveData<KeyboardType> = _keyboardType
 
-    fun loadKeyboardType() {
-        viewModelScope.launch(dispatchers.io + CoroutineName(LOAD_KEYBOARD_TYPE)) {
-            val result: Result<KeyboardType> =
-                try {
-                    getKeyboardTypeUseCase.execute()
-                } catch (cause: Throwable) {
-                    Result.failure(cause)
+    private fun loadKeyboardType() {
+        viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_KEYBOARD_TYPE)) {
+            getKeyboardTypeUseCase.execute()
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    _keyboardType.value = DEFAULT_TYPE
                 }
-            when (result.isSuccess) {
-                true -> {
-                    _keyboardType.postValue(result.getOrDefault(DEFAULT_TYPE))
+                .collect { result ->
+                    _keyboardType.value = result
                 }
-
-                else -> {
-                    //TODO: logging error
-                    _keyboardType.postValue(DEFAULT_TYPE)
-                }
-            }
         }
     }
 
     fun saveKeyboardType(type: Any?) {
-        viewModelScope.launch(dispatchers.io + CoroutineName(SAVE_KEYBOARD_TYPE)) {
-            val result: Result<Message> =
-                try {
-                    saveKeyboardTypeByUserChoiceUseCase.execute(type)
-                } catch (cause: Throwable) {
-                    Result.failure(cause)
+        viewModelScope.launch(dispatchers.main + CoroutineName(SAVE_KEYBOARD_TYPE)) {
+            saveKeyboardTypeByUserChoiceUseCase.execute(type)
+                .cancellable()
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    _message.value = Message.ACTION_ENDED_ERROR
+                    loadKeyboardType()
                 }
-            when (result.isSuccess) {
-                true -> {
-                    _message.postValue(result.getOrNull())
-                }
-
-                else -> {
-                    //TODO: logging error
-                    _message.postValue(Message.ACTION_ENDED_ERROR)
-                }
-            }
+                .collect {}
         }
     }
 

@@ -13,13 +13,13 @@ interface BoardgameDao {
      * @return Helpcard - если есть данные, Null - если данных нет.
      */
     @Query("SELECT * FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId")
-    suspend fun getHelpcardBy(boardgameId: Long): Helpcard?
+    fun getHelpcardBy(boardgameId: Long): Helpcard?
 
     /**
      * Получить идентификатор карточки памяти по идентификатору настолки.
      */
     @Query("SELECT ${Helpcard.TABLE_NAME}.${Helpcard.COLUMN_ID} FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId")
-    suspend fun getHelpcardIdBy(boardgameId: Long): Long
+    fun getHelpcardIdBy(boardgameId: Long): Long
 
     /**
      * Получить полные сырые данные настолки по идентификатору настолки.
@@ -46,7 +46,7 @@ interface BoardgameDao {
                 "WHERE ${BoardgameInfo.TABLE_NAME}.${BoardgameInfo.COLUMN_ID} = :boardgameId " +
                 "AND ${Helpcard.TABLE_NAME}.${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId"
     )
-    suspend fun getBoardgameRawBy(boardgameId: Long): BoardgameRaw?
+    fun getBoardgameRawBy(boardgameId: Long): BoardgameRaw?
 
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
@@ -78,7 +78,7 @@ interface BoardgameDao {
      * @return количество удаленных объектов.
      */
     @Query("DELETE FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_ID} = :helpcardId")
-    suspend fun deleteHelpcardByOwn(helpcardId: Long): Int
+    fun deleteHelpcardByOwn(helpcardId: Long): Int
 
     /**
      * Обновить мин данные настолки по идентификатору настолки.
@@ -94,7 +94,7 @@ interface BoardgameDao {
      * @return количество обновленных объектов.
      */
     @Update(entity = Helpcard::class)
-    suspend fun update(helpcard: Helpcard): Int
+    fun update(helpcard: Helpcard): Int
 
     /**
      * Добавить мин данные о настолке.
@@ -102,7 +102,7 @@ interface BoardgameDao {
      * @return идентификатор добавленного объекта.
      */
     @Insert(entity = BoardgameInfo::class)
-    suspend fun add(boardgameInfo: BoardgameInfo): Long
+    fun add(boardgameInfo: BoardgameInfo): Long
 
     /**
      * Добавить карточку памяти.
@@ -110,7 +110,7 @@ interface BoardgameDao {
      * @return идентификатор добавленного объекта.
      */
     @Insert(entity = Helpcard::class)
-    suspend fun add(helpcard: Helpcard): Long
+    fun add(helpcard: Helpcard): Long
 
     /**
      * Получить идентификаторы всех незаблокированных настолок.

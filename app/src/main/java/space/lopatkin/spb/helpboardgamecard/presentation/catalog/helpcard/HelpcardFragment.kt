@@ -14,6 +14,7 @@ import space.lopatkin.spb.helpboardgamecard.R
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentHelpcardBinding
 import space.lopatkin.spb.helpboardgamecard.databinding.ViewLabelPopupBinding
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.presentation.AbstractFragment
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory
 import javax.inject.Inject
@@ -72,6 +73,11 @@ class HelpcardFragment : AbstractFragment() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        resultListener()
     }
 
     override fun onDestroyView() {
@@ -151,6 +157,21 @@ class HelpcardFragment : AbstractFragment() {
         val layoutTransition: LayoutTransition = LayoutTransition()
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding!!.layoutExpandableHelpcard.layoutTransition = layoutTransition
+    }
+
+    private fun resultListener() {
+        viewModel.message.observe(this) { result ->
+            if (result != Message.POOL_EMPTY && binding != null) {
+                selectingTextFrom(result)
+            }
+        }
+    }
+
+    private fun selectingTextFrom(result: Message) {
+        when (result) {
+            Message.ACTION_ENDED_ERROR -> showMessage(binding!!.scrollHelpcard, R.string.error_action_ended)
+            else -> {}
+        }
     }
 
 }
