@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
@@ -33,13 +35,14 @@ class SettingsViewModel(
         viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_KEYBOARD_TYPE)) {
             getKeyboardTypeUseCase.execute()
                 .cancellable()
+                .onEach { result ->
+                    _keyboardType.value = result
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
                     _keyboardType.value = DEFAULT_TYPE
                 }
-                .collect { result ->
-                    _keyboardType.value = result
-                }
+                .collect()
         }
     }
 
@@ -52,7 +55,7 @@ class SettingsViewModel(
                     _message.value = Message.ACTION_ENDED_ERROR
                     loadKeyboardType()
                 }
-                .collect {}
+                .collect()
         }
     }
 

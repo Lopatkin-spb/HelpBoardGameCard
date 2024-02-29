@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
@@ -41,13 +39,14 @@ class CardEditViewModel(
         viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_KEYBOARD_TYPE)) {
             getKeyboardTypeUseCase.execute()
                 .cancellable()
+                .onEach { result ->
+                    _keyboardType.value = result
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
                     _keyboardType.value = DEFAULT_TYPE
                 }
-                .collect { result ->
-                    _keyboardType.value = result
-                }
+                .collect()
         }
     }
 
@@ -56,16 +55,17 @@ class CardEditViewModel(
         viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_BOARDGAME_RAW)) {
             getBoardgameRawByBoardgameIdUseCase.execute(boardgameId)
                 .cancellable()
-                .catch { exception ->
-                    //TODO: logging only exception but not error
-                    _message.value = Message.ACTION_ENDED_ERROR
+                .onEach { result ->
+                    _boardgameRaw.value = result
                 }
                 .onCompletion {
                     //TODO: stop loading
                 }
-                .collect { result ->
-                    _boardgameRaw.value = result
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    _message.value = Message.ACTION_ENDED_ERROR
                 }
+                .collect()
         }
     }
 
@@ -73,6 +73,9 @@ class CardEditViewModel(
         viewModelScope.launch(dispatchers.main + CoroutineName(UPDATE_BOARDGAME_RAW)) {
             updateBoardgameByBoardgameIdUseCase.execute(boardgameRaw)
                 .cancellable()
+                .onEach { action ->
+                    _message.value = Message.ACTION_ENDED_SUCCESS
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
                     if (exception is ValidationException) {
@@ -81,9 +84,7 @@ class CardEditViewModel(
                         _message.value = Message.ACTION_ENDED_ERROR
                     }
                 }
-                .collect { action ->
-                    _message.value = Message.ACTION_ENDED_SUCCESS
-                }
+                .collect()
         }
     }
 

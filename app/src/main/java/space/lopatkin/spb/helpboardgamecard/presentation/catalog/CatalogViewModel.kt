@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
@@ -32,7 +30,6 @@ class CatalogViewModel(
     private var jobLoadAllBoardgamesInfo: Job? = null
     private val _message = MutableLiveData<Message>()
     private val _listBoardgamesInfo = MutableLiveData<List<BoardgameInfo>>()
-
     val message: LiveData<Message> = _message
     val listBoardgamesInfo: LiveData<List<BoardgameInfo>> = _listBoardgamesInfo
 
@@ -43,13 +40,17 @@ class CatalogViewModel(
         ) {
             getAllBoardgamesInfoUseCase.execute()
                 .cancellable()
+                .onEach { list ->
+                    _listBoardgamesInfo.value = list
+                }
+                .onCompletion {
+                    //TODO: finally block (example - stop loading)
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
                     _message.value = Message.ACTION_ENDED_ERROR
                 }
-                .collect { list ->
-                    _listBoardgamesInfo.value = list
-                }
+                .collect()
         }.also { thisJob ->
             thisJob.invokeOnCompletion { error ->
                 if (error != null && error is CancellationException) {
@@ -64,13 +65,14 @@ class CatalogViewModel(
         viewModelScope.launch(dispatchers.main + CoroutineName(DELETE_ALL_UNLOCKS)) {
             deleteBoardgamesByUnlockStateUseCase.execute()
                 .cancellable()
+                .onEach { success ->
+                    loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
                     _message.value = Message.ACTION_ENDED_ERROR
                 }
-                .collect { success ->
-                    loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
-                }
+                .collect()
         }
     }
 

@@ -23,26 +23,18 @@ class PreferencesSettingsLocalDataSource(
 
     override fun saveKeyboardType(type: KeyboardType): Flow<Message> {
         return flow {
-            try {
-                preferences
-                    .edit()
-                    .putInt(KEYBOARD_TYPE, type.ordinal)
-                    .apply()
-                emit(Message.ACTION_ENDED_SUCCESS)
-            } catch (cause: Throwable) {
-                throw cause
-            }
+            preferences
+                .edit()
+                .putInt(KEYBOARD_TYPE, type.ordinal)
+                .apply()
+            emit(Message.ACTION_ENDED_SUCCESS)
         }.flowOn(dispatchers.io)
     }
 
     override fun getKeyboardType(): Flow<KeyboardType> {
         return flow {
-            try {
-                val data: Int = preferences.getInt(KEYBOARD_TYPE, -1)
-                emit(KeyboardType.getOrdinalFrom(data))
-            } catch (cause: Throwable) {
-                throw cause
-            }
+            val data: Int = preferences.getInt(KEYBOARD_TYPE, -1)
+            emit(KeyboardType.getOrdinalFrom(data))
         }.flowOn(dispatchers.io)
     }
 

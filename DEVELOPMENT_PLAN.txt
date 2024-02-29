@@ -2,6 +2,7 @@
 
 --- GLOBAL TASKS: coroutines!!!
 
+- add tests
 - bug coroutine: refreshed list catalog not auto
 - bug coroutine: not refreshed list catalog to populate from first open app
 - bug coroutine: db created not need class
@@ -17,6 +18,10 @@ next: error handling (catch app errors & skip device errors, create app error cl
 
 
 --- TODAY TASKS:
+
+- loadings + list animation (short)
+- error handling (mid)
+- rework (edit, update, fix) navigations + change fragment animations + setters (big)
 
 - cleaning code keyboard - по минимому привести в порядок код и перейти на релиз
 - запушить проект и обновить резюме

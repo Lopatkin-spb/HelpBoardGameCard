@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
@@ -31,6 +29,9 @@ class HelpcardViewModel(
         viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_HELPCARD)) {
             getHelpcardByBoardgameIdUseCase.execute(boardgameId)
                 .cancellable()
+                .onEach { result ->
+                    _helpcard.value = result
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
                     _message.value = Message.ACTION_ENDED_ERROR
@@ -38,9 +39,7 @@ class HelpcardViewModel(
                 .onCompletion {
                     //TODO: stop loading
                 }
-                .collect { result ->
-                    _helpcard.value = result
-                }
+                .collect()
         }
     }
 
