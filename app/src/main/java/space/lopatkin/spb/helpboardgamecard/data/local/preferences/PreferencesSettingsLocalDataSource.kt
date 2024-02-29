@@ -9,6 +9,7 @@ import space.lopatkin.spb.helpboardgamecard.data.local.data.source.SettingsLocal
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.model.Completable
 
 private const val APPLICATION_PREFERENCES = "APPLICATION_PREFERENCES"
 private const val KEYBOARD_TYPE = "KEYBOARD_TYPE"
@@ -21,13 +22,13 @@ class PreferencesSettingsLocalDataSource(
     private val preferences: SharedPreferences =
         context.getSharedPreferences(APPLICATION_PREFERENCES, Context.MODE_PRIVATE)
 
-    override fun saveKeyboardType(type: KeyboardType): Flow<Message> {
+    override fun saveKeyboardType(type: KeyboardType): Flow<Completable> {
         return flow {
             preferences
                 .edit()
                 .putInt(KEYBOARD_TYPE, type.ordinal)
                 .apply()
-            emit(Message.ACTION_ENDED_SUCCESS)
+            emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
         }.flowOn(dispatchers.io)
     }
 

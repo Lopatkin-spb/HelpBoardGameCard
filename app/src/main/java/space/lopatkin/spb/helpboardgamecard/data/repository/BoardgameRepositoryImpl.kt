@@ -2,10 +2,7 @@ package space.lopatkin.spb.helpboardgamecard.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
-import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
-import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.model.*
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 
 class BoardgameRepositoryImpl(
@@ -24,23 +21,23 @@ class BoardgameRepositoryImpl(
         return boardgameLocalDataSource.getBoardgameRawBy(boardgameId)
     }
 
-    override fun deleteBoardgameBy(boardgameId: Long): Flow<Message> {
+    override fun deleteBoardgameBy(boardgameId: Long): Flow<Completable> {
         return boardgameLocalDataSource.deleteBoardgameBy(boardgameId)
     }
 
-    override fun update(boardgameInfo: BoardgameInfo): Flow<Message> {
+    override fun update(boardgameInfo: BoardgameInfo): Flow<Completable> {
         return boardgameLocalDataSource.update(boardgameInfo)
     }
 
-    override fun deleteUnlockBoardgames(): Flow<Message> {
+    override fun deleteUnlockBoardgames(): Flow<Completable> {
         return boardgameLocalDataSource.deleteUnlockBoardgames()
     }
 
-    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
+    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable> {
         return boardgameLocalDataSource.saveNewBoardgameBy(boardgameRaw)
     }
 
-    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
+    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable> {
         return boardgameLocalDataSource.updateBoardgameBy(boardgameRaw)
     }
 

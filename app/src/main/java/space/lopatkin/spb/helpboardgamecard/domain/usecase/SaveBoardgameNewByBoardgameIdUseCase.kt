@@ -4,13 +4,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.model.Completable
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
 import space.lopatkin.spb.helpboardgamecard.presentation.ValidationException
 
 class SaveBoardgameNewByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
-    fun execute(boardgameRaw: BoardgameRaw?): Flow<Message> {
+    fun execute(boardgameRaw: BoardgameRaw?): Flow<Completable> {
         return flow {
             if (boardgameRaw == null) {
                 throw Exception("NotFoundException (usecase): data (BoardgameRaw) is null")

@@ -8,10 +8,7 @@ import kotlinx.coroutines.flow.flowOn
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
 import space.lopatkin.spb.helpboardgamecard.data.local.room.RoomDb.Companion.getInstance
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
-import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
-import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
 class RoomBoardgameLocalDataSource(
     private val context: Context,
@@ -54,14 +51,14 @@ class RoomBoardgameLocalDataSource(
         }.flowOn(dispatchers.io)
     }
 
-    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
+    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable> {
         return flow {
             val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
             val addedInfoId: Long = boardgameDao.add(boardgameInfo)
             val helpcard: Helpcard = boardgameRaw.toHelpcard(addedInfoId)
             val addedHelpcardId: Long = boardgameDao.add(helpcard)
             if (addedInfoId > 0 && addedHelpcardId > 0) {
-                emit(Message.ACTION_ENDED_SUCCESS)
+                emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
             } else {
                 val statusDeletedHelpcard: Int = boardgameDao.deleteHelpcardByOwn(addedHelpcardId)
                 val statusDeletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(addedInfoId)
@@ -70,30 +67,30 @@ class RoomBoardgameLocalDataSource(
         }.flowOn(dispatchers.io)
     }
 
-    override fun deleteBoardgameBy(boardgameId: Long): Flow<Message> {
+    override fun deleteBoardgameBy(boardgameId: Long): Flow<Completable> {
         return flow {
             val deletedHelpcard: Int = boardgameDao.deleteHelpcardBy(boardgameId)
             val deletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(boardgameId)
             if (deletedInfo > 0 && deletedHelpcard > 0) {
-                emit(Message.ACTION_ENDED_SUCCESS)
+                emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
             } else {
                 throw Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo) not deleted full")
             }
         }.flowOn(dispatchers.io)
     }
 
-    override fun update(boardgameInfo: BoardgameInfo): Flow<Message> {
+    override fun update(boardgameInfo: BoardgameInfo): Flow<Completable> {
         return flow {
             val updated: Int = boardgameDao.update(boardgameInfo)
             if (updated > 0) {
-                emit(Message.ACTION_ENDED_SUCCESS)
+                emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
             } else {
                 throw Exception("NotFoundException (room): model (BoardgameInfo) not updated because (BoardgameId) not found in db table")
             }
         }.flowOn(dispatchers.io)
     }
 
-    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message> {
+    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable> {
         return flow {
             if (boardgameRaw.id != null) {
                 val helpcardDbId: Long = boardgameDao.getHelpcardIdBy(boardgameRaw.id!!)
@@ -105,7 +102,7 @@ class RoomBoardgameLocalDataSource(
                 val statusUpdatedInfo: Int = boardgameDao.update(boardgameInfo)
 
                 if (statusUpdatedInfo > 0 && statusUpdatedHelpcard > 0) {
-                    emit(Message.ACTION_ENDED_SUCCESS)
+                    emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
                 } else {
                     val statusDeletedHelpcard: Int = boardgameDao.deleteHelpcardBy(helpcard.boardgameId)
                     val statusDeletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(boardgameRaw.id!!)
@@ -117,7 +114,7 @@ class RoomBoardgameLocalDataSource(
         }.flowOn(dispatchers.io)
     }
 
-    override fun deleteUnlockBoardgames(): Flow<Message> {
+    override fun deleteUnlockBoardgames(): Flow<Completable> {
         return flow {
             val listIdUnlock: Array<Long> = boardgameDao.getBoardgameIdsByUnlock()
             if (listIdUnlock.size > 0) {
@@ -125,7 +122,7 @@ class RoomBoardgameLocalDataSource(
                     val deletedStatusInfo: Int = boardgameDao.deleteBoardgameInfoBy(listIdUnlock.get(index))
                     val deletedStatusHelpcard: Int = boardgameDao.deleteHelpcardBy(listIdUnlock.get(index))
                 }
-                emit(Message.ACTION_ENDED_SUCCESS)
+                emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
             } else {
                 throw Exception("NotFoundException (room): (Boardgame)s not deleted because not files for deleting")
             }

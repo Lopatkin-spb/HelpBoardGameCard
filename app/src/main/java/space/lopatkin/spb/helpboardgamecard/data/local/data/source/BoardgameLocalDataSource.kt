@@ -1,10 +1,7 @@
 package space.lopatkin.spb.helpboardgamecard.data.local.data.source
 
 import kotlinx.coroutines.flow.Flow
-import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
-import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
 interface BoardgameLocalDataSource {
 
@@ -26,26 +23,26 @@ interface BoardgameLocalDataSource {
     /**
      * Сохранить новую настолку.
      */
-    fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message>
+    fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable>
 
     /**
      * Обновить настолку.
      */
-    fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Message>
+    fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable>
 
     /**
      * Обновить мин данные настолки.
      */
-    fun update(boardgameInfo: BoardgameInfo): Flow<Message>
+    fun update(boardgameInfo: BoardgameInfo): Flow<Completable>
 
     /**
      * Удалить настолку.
      */
-    fun deleteBoardgameBy(boardgameId: Long): Flow<Message>
+    fun deleteBoardgameBy(boardgameId: Long): Flow<Completable>
 
     /**
      * Удалить все незаблокированные настолки.
      */
-    fun deleteUnlockBoardgames(): Flow<Message>
+    fun deleteUnlockBoardgames(): Flow<Completable>
 
 }
