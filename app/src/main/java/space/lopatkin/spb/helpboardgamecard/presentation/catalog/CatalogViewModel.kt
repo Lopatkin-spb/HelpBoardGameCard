@@ -23,10 +23,6 @@ class CatalogViewModel(
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
-    init {
-        loadListBoardgamesInfo()
-    }
-
     private var jobLoadAllBoardgamesInfo: Job? = null
     private val _message = MutableLiveData<Message>()
     private val _listBoardgamesInfo = MutableLiveData<List<BoardgameInfo>>()
@@ -34,9 +30,9 @@ class CatalogViewModel(
     val listBoardgamesInfo: LiveData<List<BoardgameInfo>> = _listBoardgamesInfo
 
     // Longtime job must be cancelling (auto cancelling in vm.onCleared) and log it
-    private fun loadListBoardgamesInfo() {
+    fun loadListBoardgamesInfo() {
         jobLoadAllBoardgamesInfo = viewModelScope.launch(
-            dispatchers.main + CoroutineName(LOAD_BOARDGAMES_INFO)
+            dispatchers.main() + CoroutineName(LOAD_BOARDGAMES_INFO)
         ) {
             getAllBoardgamesInfoUseCase.execute()
                 .cancellable()
@@ -62,7 +58,7 @@ class CatalogViewModel(
     }
 
     fun deleteAllUnlockBoardgames() {
-        viewModelScope.launch(dispatchers.main + CoroutineName(DELETE_ALL_UNLOCKS)) {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(DELETE_ALL_UNLOCKS)) {
             deleteBoardgamesByUnlockStateUseCase.execute()
                 .cancellable()
                 .onEach { success ->
@@ -77,7 +73,7 @@ class CatalogViewModel(
     }
 
     fun updateFavorite(boardgameInfo: BoardgameInfo?) {
-        viewModelScope.launch(dispatchers.main + CoroutineName(UPDATE_FAVORITE)) {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(UPDATE_FAVORITE)) {
             updateBoardgameFavoriteByBoardgameIdUseCase.execute(boardgameInfo)
                 .cancellable()
                 .catch { exception ->
@@ -90,7 +86,7 @@ class CatalogViewModel(
     }
 
     fun updateLocking(boardgameInfo: BoardgameInfo?) {
-        viewModelScope.launch(dispatchers.main + CoroutineName(UPDATE_LOCKING)) {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(UPDATE_LOCKING)) {
             updateBoardgameLockingByBoardgameIdUseCase.execute(boardgameInfo)
                 .cancellable()
                 .catch { exception ->
@@ -103,7 +99,7 @@ class CatalogViewModel(
     }
 
     fun delete(boardgameInfo: BoardgameInfo?) {
-        viewModelScope.launch(dispatchers.main + CoroutineName(DELETE_ITEM)) {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(DELETE_ITEM)) {
             deleteBoardgameUnlockedByBoardgameIdUseCase.execute(boardgameInfo)
                 .cancellable()
                 .catch { exception ->

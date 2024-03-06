@@ -23,10 +23,6 @@ class CardEditViewModel(
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
-    init {
-        loadKeyboardType()
-    }
-
     private val _boardgameId = MutableLiveData<Long>()
     private val _keyboardType = MutableLiveData<KeyboardType>()
     private val _message = MutableLiveData<Message>()
@@ -35,8 +31,8 @@ class CardEditViewModel(
     val keyboardType: LiveData<KeyboardType> = _keyboardType
     val message: LiveData<Message> = _message
 
-    private fun loadKeyboardType() {
-        viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_KEYBOARD_TYPE)) {
+    fun loadKeyboardType() {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_KEYBOARD_TYPE)) {
             getKeyboardTypeUseCase.execute()
                 .cancellable()
                 .onEach { result ->
@@ -52,7 +48,7 @@ class CardEditViewModel(
 
     fun loadBoardgameRaw(boardgameId: Long?) {
         _boardgameId.value = boardgameId //TODO: setter split
-        viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_BOARDGAME_RAW)) {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_BOARDGAME_RAW)) {
             getBoardgameRawByBoardgameIdUseCase.execute(boardgameId)
                 .cancellable()
                 .onEach { result ->
@@ -70,7 +66,7 @@ class CardEditViewModel(
     }
 
     fun update(boardgameRaw: BoardgameRaw?) {
-        viewModelScope.launch(dispatchers.main + CoroutineName(UPDATE_BOARDGAME_RAW)) {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(UPDATE_BOARDGAME_RAW)) {
             updateBoardgameByBoardgameIdUseCase.execute(boardgameRaw)
                 .cancellable()
                 .onEach { action ->

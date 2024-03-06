@@ -26,7 +26,7 @@ class HelpcardViewModel(
 
     fun loadHelpcard(boardgameId: Long?) {
         _boardgameId.value = boardgameId
-        viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_HELPCARD)) {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_HELPCARD)) {
             getHelpcardByBoardgameIdUseCase.execute(boardgameId)
                 .cancellable()
                 .onEach { result ->

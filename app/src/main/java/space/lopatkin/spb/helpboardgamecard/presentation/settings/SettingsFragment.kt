@@ -68,6 +68,7 @@ class SettingsFragment : AbstractFragment() {
     }
 
     private fun loadKeyboardType() {
+        viewModel.loadKeyboardType()
         viewModel.keyboardType.observe(viewLifecycleOwner) { type: KeyboardType ->
             if (binding != null) {
                 binding!!.actionSpinnerKeyboards.setSelection(type.ordinal)

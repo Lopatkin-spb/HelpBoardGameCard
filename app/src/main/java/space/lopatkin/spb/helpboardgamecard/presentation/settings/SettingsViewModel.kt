@@ -22,17 +22,13 @@ class SettingsViewModel(
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
-    init {
-        loadKeyboardType()
-    }
-
     private val _keyboardType = MutableLiveData<KeyboardType>()
     private val _message = MutableLiveData<Message>()
     val message: LiveData<Message> = _message
     val keyboardType: LiveData<KeyboardType> = _keyboardType
 
-    private fun loadKeyboardType() {
-        viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_KEYBOARD_TYPE)) {
+    fun loadKeyboardType() {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_KEYBOARD_TYPE)) {
             getKeyboardTypeUseCase.execute()
                 .cancellable()
                 .onEach { result ->
@@ -47,7 +43,7 @@ class SettingsViewModel(
     }
 
     fun saveKeyboardType(type: Any?) {
-        viewModelScope.launch(dispatchers.main + CoroutineName(SAVE_KEYBOARD_TYPE)) {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(SAVE_KEYBOARD_TYPE)) {
             saveKeyboardTypeByUserChoiceUseCase.execute(type)
                 .cancellable()
                 .catch { exception ->

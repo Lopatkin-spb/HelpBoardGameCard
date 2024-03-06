@@ -6,7 +6,6 @@ import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainCoroutineDispatcher
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.*
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory
 import javax.inject.Singleton
@@ -68,10 +67,26 @@ class ApplicationModule(
     }
 
     class CoroutineDispatchers(
-        val main: MainCoroutineDispatcher = Dispatchers.Main,
+        val main: CoroutineDispatcher = Dispatchers.Main,
         val default: CoroutineDispatcher = Dispatchers.Default,
         val io: CoroutineDispatcher = Dispatchers.IO,
         val unconfined: CoroutineDispatcher = Dispatchers.Unconfined,
-    )
+    ) {
+         fun main(): CoroutineDispatcher {
+            return main
+        }
+
+         fun default(): CoroutineDispatcher {
+            return default
+        }
+
+         fun io(): CoroutineDispatcher {
+            return io
+        }
+
+         fun unconfined(): CoroutineDispatcher {
+            return unconfined
+        }
+    }
 
 }

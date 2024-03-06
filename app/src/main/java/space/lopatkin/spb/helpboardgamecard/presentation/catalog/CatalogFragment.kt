@@ -78,6 +78,7 @@ class CatalogFragment : AbstractFragment() {
     }
 
     private fun loadListBoardgamesInfo() {
+        viewModel.loadListBoardgamesInfo()
         viewModel.listBoardgamesInfo!!.observe(viewLifecycleOwner) { boardgamesInfo -> adapter.setList(boardgamesInfo) }
     }
 

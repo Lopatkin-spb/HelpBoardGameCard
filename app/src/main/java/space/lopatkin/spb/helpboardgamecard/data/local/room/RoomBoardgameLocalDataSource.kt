@@ -26,7 +26,7 @@ class RoomBoardgameLocalDataSource(
     override fun getAllBoardgamesInfo(): Flow<List<BoardgameInfo>> {
         return flow {
             emit(boardgameDao.getAllBoardgamesInfo())
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
     override fun getHelpcardBy(boardgameId: Long): Flow<Helpcard> {
@@ -37,7 +37,7 @@ class RoomBoardgameLocalDataSource(
             } else {
                 throw Exception("NotFoundException (room): query (getHelpcardByBoardgameId) not finished because Helpcard not found in db table")
             }
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
     override fun getBoardgameRawBy(boardgameId: Long): Flow<BoardgameRaw> {
@@ -48,7 +48,7 @@ class RoomBoardgameLocalDataSource(
             } else {
                 throw Exception("NotFoundException (room): query (getBoardgameRawByBoardgameId) not finished because Boardgame & Helpcard not found in db tables")
             }
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
     override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable> {
@@ -64,7 +64,7 @@ class RoomBoardgameLocalDataSource(
                 val statusDeletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(addedInfoId)
                 throw Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo from BoardgameRaw) not added to db")
             }
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
     override fun deleteBoardgameBy(boardgameId: Long): Flow<Completable> {
@@ -76,7 +76,7 @@ class RoomBoardgameLocalDataSource(
             } else {
                 throw Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo) not deleted full")
             }
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
     override fun update(boardgameInfo: BoardgameInfo): Flow<Completable> {
@@ -87,7 +87,7 @@ class RoomBoardgameLocalDataSource(
             } else {
                 throw Exception("NotFoundException (room): model (BoardgameInfo) not updated because (BoardgameId) not found in db table")
             }
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
     override fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable> {
@@ -111,7 +111,7 @@ class RoomBoardgameLocalDataSource(
             } else {
                 throw Exception("NotFoundException (room): Id from BoardgameRaw for update models not found")
             }
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
     override fun deleteUnlockBoardgames(): Flow<Completable> {
@@ -126,7 +126,7 @@ class RoomBoardgameLocalDataSource(
             } else {
                 throw Exception("NotFoundException (room): (Boardgame)s not deleted because not files for deleting")
             }
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
 }

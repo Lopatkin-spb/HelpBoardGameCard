@@ -29,14 +29,14 @@ class PreferencesSettingsLocalDataSource(
                 .putInt(KEYBOARD_TYPE, type.ordinal)
                 .apply()
             emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
     override fun getKeyboardType(): Flow<KeyboardType> {
         return flow {
             val data: Int = preferences.getInt(KEYBOARD_TYPE, -1)
             emit(KeyboardType.getOrdinalFrom(data))
-        }.flowOn(dispatchers.io)
+        }.flowOn(dispatchers.io())
     }
 
 }

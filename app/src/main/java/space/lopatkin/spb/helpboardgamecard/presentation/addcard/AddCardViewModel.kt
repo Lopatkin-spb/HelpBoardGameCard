@@ -24,17 +24,13 @@ class AddCardViewModel(
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
-    init {
-        loadKeyboardType()
-    }
-
     private val _keyboardType = MutableLiveData<KeyboardType>()
     private val _message = MutableLiveData<Message>()
     val keyboardType: LiveData<KeyboardType> = _keyboardType
     val message: LiveData<Message> = _message
 
-    private fun loadKeyboardType() {
-        viewModelScope.launch(dispatchers.main + CoroutineName(LOAD_KEYBOARD_TYPE)) {
+    fun loadKeyboardType() {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_KEYBOARD_TYPE)) {
             getKeyboardTypeUseCase.execute()
                 .cancellable()
                 .onEach { result ->
@@ -49,7 +45,7 @@ class AddCardViewModel(
     }
 
     fun saveNewBoardgame(boardgameRaw: BoardgameRaw?) {
-        viewModelScope.launch(dispatchers.main + CoroutineName(SAVE_NEW_BOARDGAME)) {
+        viewModelScope.launch(dispatchers.main() + CoroutineName(SAVE_NEW_BOARDGAME)) {
             saveBoardgameNewByBoardgameIdUseCase.execute(boardgameRaw)
                 .cancellable()
                 .onEach { action ->
