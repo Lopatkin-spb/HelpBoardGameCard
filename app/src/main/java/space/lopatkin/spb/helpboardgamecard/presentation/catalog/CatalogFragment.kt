@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.greenrobot.eventbus.EventBus
 import space.lopatkin.spb.helpboardgamecard.R
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentCatalogBinding
@@ -69,7 +70,13 @@ class CatalogFragment : AbstractFragment() {
 
     override fun onResume() {
         super.onResume()
+        EventBus.getDefault().register(viewModel)
         resultListener()
+    }
+
+    override fun onPause() {
+        EventBus.getDefault().unregister(viewModel)
+        super.onPause()
     }
 
     override fun onDestroyView() {
@@ -140,7 +147,6 @@ class CatalogFragment : AbstractFragment() {
 
     private fun selectingTextFrom(result: Message) {
         if (binding != null) {
-
             when (result) {
                 Message.ACTION_ENDED_SUCCESS -> showMessage(
                     binding!!.recyclerView,
@@ -148,26 +154,6 @@ class CatalogFragment : AbstractFragment() {
                 )
 
                 Message.ACTION_ENDED_ERROR -> showMessage(binding!!.recyclerView, R.string.error_action_ended)
-                Message.DELETE_ITEM_ACTION_ENDED_SUCCESS -> showMessage(
-                    binding!!.recyclerView, R.string.message_helpcard_deleted
-                )
-
-                Message.DELETE_ITEM_ACTION_STOPPED -> showMessage(
-                    binding!!.recyclerView,
-                    R.string.message_helpcard_not_deleted
-                )
-
-                Message.FAVORITE_ITEM_ACTION_ENDED_SUCCESS -> showMessage(
-                    binding!!.recyclerView, R.string.message_helpcard_favorite_updated
-                )
-
-                Message.FAVORITE_ITEM_ACTION_STOPPED -> showMessage(
-                    binding!!.recyclerView, R.string.message_helpcard_favorite_not_updated
-                )
-
-                Message.LOCKING_ITEM_ACTION_ENDED_SUCCESS -> showMessage(
-                    binding!!.recyclerView, R.string.message_helpcard_locking_updated
-                )
 
                 else -> {}
             }

@@ -3,17 +3,35 @@ package space.lopatkin.spb.helpboardgamecard.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.*
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val context: Context) {
+class ApplicationModule(
+    private val context: Context,
+    private val scope: CoroutineScope
+) {
 
     @Singleton
     @Provides
     fun provideContext(): Context {
         return context
+    }
+
+    @Singleton
+    @Provides
+    fun provideScope(): CoroutineScope {
+        return scope
+    }
+
+    @Singleton
+    @Provides
+    fun provideDispatchers(): CoroutineDispatchers {
+        return CoroutineDispatchers()
     }
 
     @Singleton
@@ -29,7 +47,8 @@ class ApplicationModule(private val context: Context) {
         deleteBoardgamesByUnlockStateUseCase: DeleteBoardgamesByUnlockStateUseCase,
         saveBoardgameNewByBoardgameIdUseCase: SaveBoardgameNewByBoardgameIdUseCase,
         saveKeyboardTypeByUserChoiceUseCase: SaveKeyboardTypeByUserChoiceUseCase,
-        getKeyboardTypeUseCase: GetKeyboardTypeUseCase
+        getKeyboardTypeUseCase: GetKeyboardTypeUseCase,
+        dispatchers: CoroutineDispatchers
     ): ViewModelFactory {
         return ViewModelFactory(
             getHelpcardByBoardgameIdUseCase = getHelpcardByBoardgameIdUseCase,
@@ -42,8 +61,32 @@ class ApplicationModule(private val context: Context) {
             deleteBoardgamesByUnlockStateUseCase = deleteBoardgamesByUnlockStateUseCase,
             saveBoardgameNewByBoardgameIdUseCase = saveBoardgameNewByBoardgameIdUseCase,
             saveKeyboardTypeByUserChoiceUseCase = saveKeyboardTypeByUserChoiceUseCase,
-            getKeyboardTypeUseCase = getKeyboardTypeUseCase
+            getKeyboardTypeUseCase = getKeyboardTypeUseCase,
+            dispatchers = dispatchers
         )
+    }
+
+    class CoroutineDispatchers(
+        val main: CoroutineDispatcher = Dispatchers.Main,
+        val default: CoroutineDispatcher = Dispatchers.Default,
+        val io: CoroutineDispatcher = Dispatchers.IO,
+        val unconfined: CoroutineDispatcher = Dispatchers.Unconfined,
+    ) {
+         fun main(): CoroutineDispatcher {
+            return main
+        }
+
+         fun default(): CoroutineDispatcher {
+            return default
+        }
+
+         fun io(): CoroutineDispatcher {
+            return io
+        }
+
+         fun unconfined(): CoroutineDispatcher {
+            return unconfined
+        }
     }
 
 }

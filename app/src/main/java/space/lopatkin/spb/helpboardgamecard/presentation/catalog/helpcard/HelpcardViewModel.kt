@@ -2,26 +2,49 @@ package space.lopatkin.spb.helpboardgamecard.presentation.catalog.helpcard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByBoardgameIdUseCase
 
 class HelpcardViewModel(
-    private val getHelpcardByBoardgameIdUseCase: GetHelpcardByBoardgameIdUseCase
+    private val getHelpcardByBoardgameIdUseCase: GetHelpcardByBoardgameIdUseCase,
+    private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
     private val _boardgameId = MutableLiveData<Long>()
-    var helpcard: LiveData<Helpcard>? = null
+    private val _helpcard = MutableLiveData<Helpcard>()
+    private val _message = MutableLiveData<Message>()
+    val helpcard: LiveData<Helpcard> = _helpcard
     val boardgameId: LiveData<Long> = _boardgameId
+    val message: LiveData<Message> = _message
 
     fun loadHelpcard(boardgameId: Long?) {
-        if (boardgameId != null && boardgameId > 0) {
-            _boardgameId.value = boardgameId
-            helpcard = Transformations.switchMap(_boardgameId) { thisId ->
-                getHelpcardByBoardgameIdUseCase.execute(thisId)
-            }
+        _boardgameId.value = boardgameId
+        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_HELPCARD)) {
+            getHelpcardByBoardgameIdUseCase.execute(boardgameId)
+                .cancellable()
+                .onEach { result ->
+                    _helpcard.value = result
+                }
+                .catch { exception ->
+                    //TODO: logging only exception but not error
+                    _message.value = Message.ACTION_ENDED_ERROR
+                }
+                .onCompletion {
+                    //TODO: stop loading
+                }
+                .collect()
         }
+    }
+
+    companion object {
+        private const val LOAD_HELPCARD: String = "coroutine_load_helpcard"
     }
 
 }

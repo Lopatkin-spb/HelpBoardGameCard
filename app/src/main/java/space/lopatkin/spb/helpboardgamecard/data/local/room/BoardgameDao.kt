@@ -9,9 +9,11 @@ interface BoardgameDao {
 
     /**
      * Получить карточку памяти по идентификатору настолки.
+     *
+     * @return Helpcard - если есть данные, Null - если данных нет.
      */
     @Query("SELECT * FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId")
-    fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard>
+    fun getHelpcardBy(boardgameId: Long): Helpcard?
 
     /**
      * Получить идентификатор карточки памяти по идентификатору настолки.
@@ -21,6 +23,8 @@ interface BoardgameDao {
 
     /**
      * Получить полные сырые данные настолки по идентификатору настолки.
+     *
+     * @return BoardgameRaw - если есть данные, Null - если данных нет.
      */
     @Query(
         "SELECT " +
@@ -42,59 +46,76 @@ interface BoardgameDao {
                 "WHERE ${BoardgameInfo.TABLE_NAME}.${BoardgameInfo.COLUMN_ID} = :boardgameId " +
                 "AND ${Helpcard.TABLE_NAME}.${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId"
     )
-    fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw>
+    fun getBoardgameRawBy(boardgameId: Long): BoardgameRaw?
 
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
+     *
+     * @return List - если есть данные, ListEmpty - если данных нет.
      */
     @Query("SELECT * FROM ${BoardgameInfo.TABLE_NAME} ORDER BY ${BoardgameInfo.COLUMN_PRIORITY} DESC")
-    fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>>
+    fun getAllBoardgamesInfo(): List<BoardgameInfo>
 
     /**
      * Удалить настолку с мин данными по идентификатору настолки.
+     *
+     * @return количество удаленных объектов.
      */
     @Query("DELETE FROM ${BoardgameInfo.TABLE_NAME} WHERE ${BoardgameInfo.COLUMN_ID} = :boardgameId")
-    fun deleteBoardgameInfoBy(boardgameId: Long)
+    fun deleteBoardgameInfoBy(boardgameId: Long): Int
 
     /**
      * Удалить карточку памяти по идентификатору настолки.
+     *
+     * @return количество удаленных объектов.
      */
     @Query("DELETE FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_BOARDGAME_ID} = :boardgameId")
-    fun deleteHelpcardBy(boardgameId: Long)
+    fun deleteHelpcardBy(boardgameId: Long): Int
+
+    /**
+     * Удалить карточку памяти по идентификатору карточки памяти.
+     *
+     * @return количество удаленных объектов.
+     */
+    @Query("DELETE FROM ${Helpcard.TABLE_NAME} WHERE ${Helpcard.COLUMN_ID} = :helpcardId")
+    fun deleteHelpcardByOwn(helpcardId: Long): Int
 
     /**
      * Обновить мин данные настолки по идентификатору настолки.
+     *
+     * @return количество обновленных объектов.
      */
     @Update(entity = BoardgameInfo::class)
-    fun update(boardgameInfo: BoardgameInfo)
+    fun update(boardgameInfo: BoardgameInfo): Int
 
     /**
      * Обновить карточку памяти по идентификатору карточки памяти.
+     *
+     * @return количество обновленных объектов.
      */
     @Update(entity = Helpcard::class)
-    fun update(helpcard: Helpcard)
+    fun update(helpcard: Helpcard): Int
 
     /**
      * Добавить мин данные о настолке.
-     * @return идентификатор добавленной настолки.
+     *
+     * @return идентификатор добавленного объекта.
      */
     @Insert(entity = BoardgameInfo::class)
     fun add(boardgameInfo: BoardgameInfo): Long
 
     /**
      * Добавить карточку памяти.
+     *
+     * @return идентификатор добавленного объекта.
      */
     @Insert(entity = Helpcard::class)
-    fun add(helpcard: Helpcard)
-
-    /**
-     * Удалить все незаблокированные настолки с мин данными.
-     */
-    @Query("DELETE FROM ${BoardgameInfo.TABLE_NAME} WHERE ${BoardgameInfo.COLUMN_LOCK} = 0")
-    fun deleteBoardgamesInfoByUnlock()
+    fun add(helpcard: Helpcard): Long
 
     /**
      * Получить идентификаторы всех незаблокированных настолок.
+     *
+     * @return List - если есть данные, ListEmpty - если данных нет.
      */
     @Query("SELECT ${BoardgameInfo.COLUMN_ID} FROM ${BoardgameInfo.TABLE_NAME} WHERE ${BoardgameInfo.COLUMN_LOCK} = 0")
     fun getBoardgameIdsByUnlock(): Array<Long>

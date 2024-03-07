@@ -1,22 +1,25 @@
 package space.lopatkin.spb.helpboardgamecard.domain.usecase
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
-import space.lopatkin.spb.helpboardgamecard.domain.model.Message
+import space.lopatkin.spb.helpboardgamecard.domain.model.Completable
 import space.lopatkin.spb.helpboardgamecard.domain.repository.BoardgameRepository
+import space.lopatkin.spb.helpboardgamecard.presentation.ValidationException
 
 class SaveBoardgameNewByBoardgameIdUseCase(private val repository: BoardgameRepository) {
 
-    fun execute(boardgameRaw: BoardgameRaw?): Message {
-        if (boardgameRaw == null) {
-            return Message.ACTION_ENDED_ERROR
-        }
-        if (boardgameRaw.name != null && boardgameRaw.name.isEmpty()) {
-            return Message.ACTION_STOPPED
-        } else if (!boardgameRaw.name.isNullOrEmpty()) {
-            repository.saveNewBoardgameBy(boardgameRaw = boardgameRaw)
-            return Message.ACTION_ENDED_SUCCESS
-        }
-        return Message.ACTION_ENDED_ERROR
+    fun execute(boardgameRaw: BoardgameRaw?): Flow<Completable> {
+        return flow {
+            if (boardgameRaw == null) {
+                throw Exception("NotFoundException (usecase): data (BoardgameRaw) is null")
+            } else if (boardgameRaw.name != null && boardgameRaw.name.isEmpty()) {
+                throw ValidationException("Field Name in ${BoardgameRaw::class.java} is empty")
+            } else {
+                emit(boardgameRaw)
+            }
+        }.flatMapMerge { data -> repository.saveNewBoardgameBy(data) }
     }
 
 }

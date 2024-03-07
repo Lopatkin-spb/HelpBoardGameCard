@@ -1,0 +1,144 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 37,
+    "identityHash": "34bbaba7d3828e57eeff8d775eeb9e25",
+    "entities": [
+      {
+        "tableName": "boardgame_info_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`boardgame_id` INTEGER PRIMARY KEY AUTOINCREMENT, `boardgame_name` TEXT NOT NULL, `boardgame_description` TEXT NOT NULL, `boardgame_favorite` INTEGER NOT NULL, `boardgame_lock` INTEGER NOT NULL, `boardgame_priority` INTEGER NOT NULL, `helpcard_author` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "boardgameId",
+            "columnName": "boardgame_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "boardgameName",
+            "columnName": "boardgame_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "boardgameDescription",
+            "columnName": "boardgame_description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "boardgameFavorite",
+            "columnName": "boardgame_favorite",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "boardgameLock",
+            "columnName": "boardgame_lock",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "boardgamePriority",
+            "columnName": "boardgame_priority",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "helpcardAuthor",
+            "columnName": "helpcard_author",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "boardgame_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "helpcard_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`helpcard_id` INTEGER, `boardgame_id` INTEGER NOT NULL, `boardgame_name` TEXT NOT NULL, `helpcard_author` TEXT NOT NULL, `helpcard_victory_condition` TEXT NOT NULL, `helpcard_player_turn` TEXT NOT NULL, `helpcard_end_game` TEXT NOT NULL, `helpcard_effects` TEXT NOT NULL, `helpcard_preparation` TEXT NOT NULL, `boardgame_priority` INTEGER NOT NULL, PRIMARY KEY(`helpcard_id`))",
+        "fields": [
+          {
+            "fieldPath": "helpcardId",
+            "columnName": "helpcard_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "boardgameId",
+            "columnName": "boardgame_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "boardgameName",
+            "columnName": "boardgame_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "helpcardAuthor",
+            "columnName": "helpcard_author",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "helpcardVictoryCondition",
+            "columnName": "helpcard_victory_condition",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "helpcardPlayerTurn",
+            "columnName": "helpcard_player_turn",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "helpcardEndGame",
+            "columnName": "helpcard_end_game",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "helpcardEffects",
+            "columnName": "helpcard_effects",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "helpcardPreparation",
+            "columnName": "helpcard_preparation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "boardgamePriority",
+            "columnName": "boardgame_priority",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "helpcard_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '34bbaba7d3828e57eeff8d775eeb9e25')"
+    ]
+  }
+}

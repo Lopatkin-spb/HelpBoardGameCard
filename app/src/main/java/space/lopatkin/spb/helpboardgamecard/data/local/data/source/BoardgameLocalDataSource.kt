@@ -1,6 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.data.local.data.source
 
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.Flow
 import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
 interface BoardgameLocalDataSource {
@@ -8,41 +8,41 @@ interface BoardgameLocalDataSource {
     /**
      * Получить все настолки с мин данными с фильтром по убыванию приоритета.
      */
-    fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>>
+    fun getAllBoardgamesInfo(): Flow<List<BoardgameInfo>>
 
     /**
      * Получить карточку памяти по идентификатору настолки.
      */
-    fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard>
+    fun getHelpcardBy(boardgameId: Long): Flow<Helpcard>
 
     /**
      * Получить полные сырые данные настолки по идентификатору настолки.
      */
-    fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw>
+    fun getBoardgameRawBy(boardgameId: Long): Flow<BoardgameRaw>
 
     /**
      * Сохранить новую настолку.
      */
-    fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw)
+    fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable>
 
     /**
      * Обновить настолку.
      */
-    fun updateBoardgameBy(boardgameRaw: BoardgameRaw)
+    fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable>
 
     /**
      * Обновить мин данные настолки.
      */
-    fun update(boardgameInfo: BoardgameInfo)
+    fun update(boardgameInfo: BoardgameInfo): Flow<Completable>
 
     /**
      * Удалить настолку.
      */
-    fun deleteBoardgameBy(boardgameId: Long)
+    fun deleteBoardgameBy(boardgameId: Long): Flow<Completable>
 
     /**
      * Удалить все незаблокированные настолки.
      */
-    fun deleteUnlockBoardgames()
+    fun deleteUnlockBoardgames(): Flow<Completable>
 
 }

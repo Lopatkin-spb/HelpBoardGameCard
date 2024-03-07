@@ -55,17 +55,6 @@
     <string name="message_card_updated">Card updated</string>
     <string name="message_insert_title">Please insert a title</string>
 
-    <string name="message_all_unlock_helpcards_deleted">All unlock helpcards deleted</string>
-
-    <string name="message_helpcard_deleted">Helpcard deleted</string>
-    <string name="message_helpcard_not_deleted">Helpcard not deleted</string>
-
-    <string name="message_helpcard_favorite_updated">Helpcard favorite updated</string>
-    <string name="message_helpcard_favorite_not_updated">Helpcard favorite not updated</string>
-
-    <string name="message_helpcard_locking_updated">Helpcard locking updated</string>
-
-
     <string name="text_keyboard">Keyboard:</string>
 
     <string-array name="action_spinner_keyboards">

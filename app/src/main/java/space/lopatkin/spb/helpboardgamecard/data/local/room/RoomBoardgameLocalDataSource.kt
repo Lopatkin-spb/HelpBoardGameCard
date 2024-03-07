@@ -1,116 +1,132 @@
 package space.lopatkin.spb.helpboardgamecard.data.local.room
 
 import android.content.Context
-import android.os.AsyncTask
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import space.lopatkin.spb.helpboardgamecard.data.local.data.source.BoardgameLocalDataSource
 import space.lopatkin.spb.helpboardgamecard.data.local.room.RoomDb.Companion.getInstance
+import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.*
 
-class RoomBoardgameLocalDataSource(private val context: Context) : BoardgameLocalDataSource {
+class RoomBoardgameLocalDataSource(
+    private val context: Context,
+    private val scope: CoroutineScope,
+    private val dispatchers: ApplicationModule.CoroutineDispatchers
+
+) : BoardgameLocalDataSource {
     private val boardgameDao: BoardgameDao
-    private val allBoardgamesInfo: LiveData<List<BoardgameInfo>>
 
     init {
-        val database: RoomDb = getInstance(context = context)
+        val database: RoomDb = getInstance(context, scope, dispatchers)
         boardgameDao = database.boardgameDao()
-        allBoardgamesInfo = boardgameDao.getAllBoardgamesInfo()
     }
 
-    override fun getAllBoardgamesInfo(): LiveData<List<BoardgameInfo>> {
-        return allBoardgamesInfo
+    override fun getAllBoardgamesInfo(): Flow<List<BoardgameInfo>> {
+        return flow {
+            emit(boardgameDao.getAllBoardgamesInfo())
+        }.flowOn(dispatchers.io())
     }
 
-    override fun getHelpcardBy(boardgameId: Long): LiveData<Helpcard> {
-        return boardgameDao.getHelpcardBy(boardgameId)
+    override fun getHelpcardBy(boardgameId: Long): Flow<Helpcard> {
+        return flow {
+            val dataFromDb: Helpcard? = boardgameDao.getHelpcardBy(boardgameId)
+            if (dataFromDb != null) {
+                emit(dataFromDb)
+            } else {
+                throw Exception("NotFoundException (room): query (getHelpcardByBoardgameId) not finished because Helpcard not found in db table")
+            }
+        }.flowOn(dispatchers.io())
     }
 
-    override fun getBoardgameRawBy(boardgameId: Long): LiveData<BoardgameRaw> {
-        return boardgameDao.getBoardgameRawBy(boardgameId)
+    override fun getBoardgameRawBy(boardgameId: Long): Flow<BoardgameRaw> {
+        return flow {
+            val dataFromDb: BoardgameRaw? = boardgameDao.getBoardgameRawBy(boardgameId)
+            if (dataFromDb != null) {
+                emit(dataFromDb)
+            } else {
+                throw Exception("NotFoundException (room): query (getBoardgameRawByBoardgameId) not finished because Boardgame & Helpcard not found in db tables")
+            }
+        }.flowOn(dispatchers.io())
     }
 
-    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw) {
-        AddBoardgameInfoAndHelpcardAsyncTask(boardgameDao = boardgameDao).execute(boardgameRaw)
+    override fun saveNewBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable> {
+        return flow {
+            val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
+            val addedInfoId: Long = boardgameDao.add(boardgameInfo)
+            val helpcard: Helpcard = boardgameRaw.toHelpcard(addedInfoId)
+            val addedHelpcardId: Long = boardgameDao.add(helpcard)
+            if (addedInfoId > 0 && addedHelpcardId > 0) {
+                emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
+            } else {
+                val statusDeletedHelpcard: Int = boardgameDao.deleteHelpcardByOwn(addedHelpcardId)
+                val statusDeletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(addedInfoId)
+                throw Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo from BoardgameRaw) not added to db")
+            }
+        }.flowOn(dispatchers.io())
     }
 
-    override fun deleteBoardgameBy(boardgameId: Long) {
-        DeleteBoardgameInfoAndHelpcardByIdAsyncTask(boardgameDao = boardgameDao).execute(boardgameId)
+    override fun deleteBoardgameBy(boardgameId: Long): Flow<Completable> {
+        return flow {
+            val deletedHelpcard: Int = boardgameDao.deleteHelpcardBy(boardgameId)
+            val deletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(boardgameId)
+            if (deletedInfo > 0 && deletedHelpcard > 0) {
+                emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
+            } else {
+                throw Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo) not deleted full")
+            }
+        }.flowOn(dispatchers.io())
     }
 
-    override fun update(boardgameInfo: BoardgameInfo) {
-        UpdateBoardgameInfoAsyncTask(boardgameDao = boardgameDao).execute(boardgameInfo)
+    override fun update(boardgameInfo: BoardgameInfo): Flow<Completable> {
+        return flow {
+            val updated: Int = boardgameDao.update(boardgameInfo)
+            if (updated > 0) {
+                emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
+            } else {
+                throw Exception("NotFoundException (room): model (BoardgameInfo) not updated because (BoardgameId) not found in db table")
+            }
+        }.flowOn(dispatchers.io())
     }
 
-    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw) {
-        UpdateBoardgameInfoAndHelpcardByIdAsyncTask(boardgameDao = boardgameDao).execute(boardgameRaw)
-    }
+    override fun updateBoardgameBy(boardgameRaw: BoardgameRaw): Flow<Completable> {
+        return flow {
+            if (boardgameRaw.id != null) {
+                val helpcardDbId: Long = boardgameDao.getHelpcardIdBy(boardgameRaw.id!!)
 
-    override fun deleteUnlockBoardgames() {
-        DeleteUnlockBoardgamesAsyncTask(boardgameDao = boardgameDao).execute()
-    }
+                val helpcard: Helpcard = boardgameRaw.toHelpcard(helpcardDbId, boardgameRaw.id!!)
+                val statusUpdatedHelpcard: Int = boardgameDao.update(helpcard)
 
-    companion object {
-
-        private class AddBoardgameInfoAndHelpcardAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<BoardgameRaw, Void, Void>() {
-            override fun doInBackground(vararg data: BoardgameRaw): Void? {
-                val boardgameRaw: BoardgameRaw = data[0]
                 val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
-                val boardgameId: Long = boardgameDao.add(boardgameInfo)
-                val helpcard: Helpcard = boardgameRaw.toHelpcard(boardgameId)
-                boardgameDao.add(helpcard)
-                return null
-            }
-        }
+                val statusUpdatedInfo: Int = boardgameDao.update(boardgameInfo)
 
-        private class UpdateBoardgameInfoAndHelpcardByIdAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<BoardgameRaw, Void, Void>() {
-            override fun doInBackground(vararg data: BoardgameRaw): Void? {
-                val boardgameRaw: BoardgameRaw = data[0]
-                if (boardgameRaw.id != null) {
-                    val boardgameInfo: BoardgameInfo = boardgameRaw.toBoardgameInfo()
-                    boardgameDao.update(boardgameInfo)
-                    val helpcardDbId: Long = boardgameDao.getHelpcardIdBy(boardgameRaw.id!!)
-                    val helpcard: Helpcard = boardgameRaw.toHelpcard(helpcardDbId, boardgameRaw.id!!)
-                    boardgameDao.update(helpcard)
+                if (statusUpdatedInfo > 0 && statusUpdatedHelpcard > 0) {
+                    emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
+                } else {
+                    val statusDeletedHelpcard: Int = boardgameDao.deleteHelpcardBy(helpcard.boardgameId)
+                    val statusDeletedInfo: Int = boardgameDao.deleteBoardgameInfoBy(boardgameRaw.id!!)
+                    throw Exception("InvalidOperationException (room): models (Helpcard & BoardgameInfo) not updated")
                 }
-                return null
+            } else {
+                throw Exception("NotFoundException (room): Id from BoardgameRaw for update models not found")
             }
-        }
+        }.flowOn(dispatchers.io())
+    }
 
-        private class UpdateBoardgameInfoAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<BoardgameInfo, Void, Void>() {
-            override fun doInBackground(vararg boardgameInfos: BoardgameInfo): Void? {
-                boardgameDao.update(boardgameInfos[0])
-                return null
-            }
-        }
-
-        private class DeleteBoardgameInfoAndHelpcardByIdAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<Long, Void, Void>() {
-            override fun doInBackground(vararg params: Long?): Void? {
-                val boardgameId: Long? = params[0]
-                if (boardgameId != null) {
-                    boardgameDao.deleteBoardgameInfoBy(boardgameId)
-                    boardgameDao.deleteHelpcardBy(boardgameId)
-                }
-                return null
-            }
-        }
-
-        private class DeleteUnlockBoardgamesAsyncTask(private val boardgameDao: BoardgameDao) :
-            AsyncTask<Void, Void, Void>() {
-            override fun doInBackground(vararg voids: Void): Void? {
-                val listIdUnlock: Array<Long> = boardgameDao.getBoardgameIdsByUnlock()
-
+    override fun deleteUnlockBoardgames(): Flow<Completable> {
+        return flow {
+            val listIdUnlock: Array<Long> = boardgameDao.getBoardgameIdsByUnlock()
+            if (listIdUnlock.size > 0) {
                 for (index in 0 until listIdUnlock.size) {
-                    boardgameDao.deleteBoardgameInfoBy(listIdUnlock.get(index))
-                    boardgameDao.deleteHelpcardBy(listIdUnlock.get(index))
+                    val deletedStatusInfo: Int = boardgameDao.deleteBoardgameInfoBy(listIdUnlock.get(index))
+                    val deletedStatusHelpcard: Int = boardgameDao.deleteHelpcardBy(listIdUnlock.get(index))
                 }
-                return null
+                emit(Completable.onComplete(Message.ACTION_ENDED_SUCCESS))
+            } else {
+                throw Exception("NotFoundException (room): (Boardgame)s not deleted because not files for deleting")
             }
-        }
-
+        }.flowOn(dispatchers.io())
     }
 
 }

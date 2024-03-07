@@ -102,11 +102,6 @@ class SettingsFragment : AbstractFragment() {
     private fun selectingTextFrom(result: Message) {
         if (binding != null) {
             when (result) {
-                Message.ACTION_ENDED_SUCCESS -> showMessage(
-                    binding!!.layoutSettings,
-                    R.string.message_action_ended_success
-                )
-
                 Message.ACTION_ENDED_ERROR -> showMessage(binding!!.layoutSettings, R.string.error_action_ended)
                 else -> {}
             }
