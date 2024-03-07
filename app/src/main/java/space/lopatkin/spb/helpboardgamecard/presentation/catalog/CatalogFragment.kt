@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.greenrobot.eventbus.EventBus
 import space.lopatkin.spb.helpboardgamecard.R
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentCatalogBinding
@@ -69,7 +70,13 @@ class CatalogFragment : AbstractFragment() {
 
     override fun onResume() {
         super.onResume()
+        EventBus.getDefault().register(viewModel)
         resultListener()
+    }
+
+    override fun onPause() {
+        EventBus.getDefault().unregister(viewModel)
+        super.onPause()
     }
 
     override fun onDestroyView() {

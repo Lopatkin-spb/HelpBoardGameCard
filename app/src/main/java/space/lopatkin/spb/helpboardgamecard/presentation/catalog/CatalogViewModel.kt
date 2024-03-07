@@ -9,10 +9,13 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.*
+import space.lopatkin.spb.helpboardgamecard.presentation.ForceRefreshCatalogListAfterFirstOpenAppEvent
 
 class CatalogViewModel(
     private val getAllBoardgamesInfoUseCase: GetAllBoardgamesInfoUseCase,
@@ -109,6 +112,11 @@ class CatalogViewModel(
                 }
                 .collect()
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onForceRefreshCatalogListAfterFirstOpenAppEvent(event: ForceRefreshCatalogListAfterFirstOpenAppEvent) {
+        loadListBoardgamesInfo()
     }
 
     companion object {

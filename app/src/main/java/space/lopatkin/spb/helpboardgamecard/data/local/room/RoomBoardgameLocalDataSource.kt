@@ -19,7 +19,7 @@ class RoomBoardgameLocalDataSource(
     private val boardgameDao: BoardgameDao
 
     init {
-        val database: RoomDb = getInstance(context, scope)
+        val database: RoomDb = getInstance(context, scope, dispatchers)
         boardgameDao = database.boardgameDao()
     }
 

@@ -7,9 +7,12 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameInfo
 import space.lopatkin.spb.helpboardgamecard.domain.model.BoardgameRaw
 import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
+import space.lopatkin.spb.helpboardgamecard.presentation.ForceRefreshCatalogListAfterFirstOpenAppEvent
 
 @Database(
     entities = [
@@ -21,14 +24,15 @@ abstract class RoomDb : RoomDatabase() {
     abstract fun boardgameDao(): BoardgameDao
 
     private class PopulateDbCallback(
-        private val scope: CoroutineScope
+        private val scope: CoroutineScope,
+        private val dispatchers: ApplicationModule.CoroutineDispatchers
     ) : RoomDatabase.Callback() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
 
             INSTANCE?.let { database ->
-                scope.launch {
+                scope.launch(dispatchers.io()) {
 
                     val boardgameDao: BoardgameDao = database.boardgameDao()
 
@@ -103,6 +107,8 @@ abstract class RoomDb : RoomDatabase() {
                     val boardgameId4: Long = boardgameDao.add(boardgameInfo4)
                     val helpcard4: Helpcard = example4.toHelpcard(boardgameId4)
                     val helpcardId4: Long = boardgameDao.add(helpcard4)
+
+                    EventBus.getDefault().post(ForceRefreshCatalogListAfterFirstOpenAppEvent())
                 }
             }
         }
@@ -116,7 +122,8 @@ abstract class RoomDb : RoomDatabase() {
 
         fun getInstance(
             context: Context,
-            scope: CoroutineScope
+            scope: CoroutineScope,
+            dispatchers: ApplicationModule.CoroutineDispatchers
         ): RoomDb {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -125,7 +132,7 @@ abstract class RoomDb : RoomDatabase() {
                     NAME_DATABASE
                 )
                     .fallbackToDestructiveMigration()
-                    .addCallback(PopulateDbCallback(scope))
+                    .addCallback(PopulateDbCallback(scope, dispatchers))
                     .build()
                 INSTANCE = instance
                 instance // Return
