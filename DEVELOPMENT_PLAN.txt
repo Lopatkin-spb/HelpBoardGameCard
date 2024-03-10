@@ -1,15 +1,14 @@
 
 
---- GLOBAL TASKS: coroutines!!!
-
-- add tests
-- bug coroutine: refreshed list catalog not auto
-- bug coroutine: not refreshed list catalog to populate from first open app
-- bug coroutine: db created not need class
+--- GLOBAL TASKS: rework navigations!!!
 
 - bug!!!! IMPORTANT!!! каталог фрагмент удаляется только после третьего фрагмента или при заходе на него самого -
 ето ненормально и грозит непрвавильной очисткой процессов вьюМодели (при чем фрагменты сеттинги и адд кард работают
 нормально - удаляются после их закрытия и ухода с них и соответственно их модели очищаются вовремя)
+
+
+
+
 
 next: error handling (catch app errors & skip device errors, create app error classifications, logging)
 
@@ -19,7 +18,13 @@ next: error handling (catch app errors & skip device errors, create app error cl
 
 --- TODAY TASKS:
 
-- loadings + list animation (short)
+- loadings + message clearing
+
+
+
+
+
+
 - error handling (mid)
 - rework (edit, update, fix) navigations + change fragment animations + setters (big)
 
@@ -152,7 +157,6 @@ setup
 
 
 
-
-- CardEdit/ Helpcard: add expandable animations for views;
-- CardEdit/ Addcard: add displaying animations for keyboard;
-- Catalog: add click animation to items;
+- Gradle: updated recyclerview to actual;
+- Catalog: added vertical scrollbar, added simple list animations, deleted recyclerview redundant option;
+- Fixed bug: when delete item then list incorrect redraw;

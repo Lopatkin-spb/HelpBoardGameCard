@@ -105,6 +105,9 @@ class CatalogViewModel(
         viewModelScope.launch(dispatchers.main() + CoroutineName(DELETE_ITEM)) {
             deleteBoardgameUnlockedByBoardgameIdUseCase.execute(boardgameInfo)
                 .cancellable()
+                .onEach { success ->
+                    loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
                     loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем

@@ -93,7 +93,6 @@ class CatalogFragment : AbstractFragment() {
         if (binding != null) {
             //инициализация ресайкл вью
             binding!!.recyclerView.layoutManager = LinearLayoutManager(activity)
-            binding!!.recyclerView.setHasFixedSize(true)
             //подключение адаптера к ресайкл вью
             binding!!.recyclerView.adapter = adapter
             onActionSwipe()
@@ -115,8 +114,12 @@ class CatalogFragment : AbstractFragment() {
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val boardgameInfo: BoardgameInfo = adapter.getBoardgameInfoAt(viewHolder.adapterPosition)
-                    viewModel.delete(boardgameInfo)
+                    val position = viewHolder.adapterPosition
+                    val item: BoardgameInfo = adapter.getBoardgameInfoAt(position)
+                    if (item.boardgameLock) { // Stub for correct redraw list if error deleted
+                        adapter.deleteItemAt(position)
+                    }
+                    viewModel.delete(item)
                 }
             }).attachToRecyclerView(binding!!.recyclerView)
         }
