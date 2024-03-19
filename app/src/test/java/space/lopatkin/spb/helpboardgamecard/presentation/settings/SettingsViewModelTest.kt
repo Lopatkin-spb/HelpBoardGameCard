@@ -69,7 +69,7 @@ class SettingsViewModelTest {
 
         viewModel.loadKeyboardType() // Start method with coroutine
         advanceUntilIdle() // Start coroutine
-        val actual = viewModel.keyboardType.value // This must init after started testing method
+        val actual = viewModel.uiState.value?.keyboard // This must init after started testing method
         val expected = KeyboardType.DEFAULT
 
         assertEquals(
@@ -90,7 +90,7 @@ class SettingsViewModelTest {
 
         viewModel.loadKeyboardType() // Start method with coroutine
         advanceUntilIdle() // Start coroutine
-        val actual = viewModel.keyboardType.value // This must init after started testing method
+        val actual = viewModel.uiState.value?.keyboard // This must init after started testing method
         val expected = KeyboardType.CUSTOM
 
         assertEquals(
@@ -109,7 +109,7 @@ class SettingsViewModelTest {
         viewModel.saveKeyboardType(testData)
         advanceUntilIdle()
         val expected = Message.ACTION_ENDED_ERROR
-        val actual = viewModel.message.value // This must init after started testing method
+        val actual = viewModel.uiState.value?.message // This must init after started testing method
 
         assertNotEquals(
             expected,
@@ -131,7 +131,7 @@ class SettingsViewModelTest {
         viewModel.saveKeyboardType(testData)
         advanceUntilIdle()
         val expected = Message.ACTION_ENDED_ERROR
-        val actual = viewModel.message.value // This must init after started testing method
+        val actual = viewModel.uiState.value?.message // This must init after started testing method
 
         Mockito.verify(mockGetKeyboardTypeUseCase, Mockito.times(1)).execute()
         assertEquals(

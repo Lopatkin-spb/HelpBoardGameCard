@@ -18,12 +18,8 @@ next: error handling (catch app errors & skip device errors, create app error cl
 
 --- TODAY TASKS:
 
-- loadings + message clearing
 
 !!! баг Settings: if select then start logic twice
-
-
-
 
 - error handling (mid)
 - rework (edit, update, fix) navigations + change fragment animations + setters (big)
