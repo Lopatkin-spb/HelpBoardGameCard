@@ -45,9 +45,8 @@ class AddCardFragment : AbstractFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddcardBinding.inflate(inflater, container, false)
-
         viewModel = ViewModelProvider(this, viewModelFactory!!).get(AddCardViewModel::class.java)
-        loadKeyboardType()
+        setupUserSettings()
 
         return binding!!.root
     }
@@ -87,6 +86,20 @@ class AddCardFragment : AbstractFragment() {
         binding = null
     }
 
+    private fun setupUserSettings() {
+        viewModel.loadKeyboardType()
+        setupViewsForDeviceKeyboard()
+        viewModel.settings.observe(viewLifecycleOwner) { settings ->
+            settings.keyboard?.let { type ->
+                if (type == KeyboardType.CUSTOM) {
+                    setupViewsForCustomKeyboard()
+                } else {
+                    setupViewsForDeviceKeyboard()
+                }
+            }
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onKeyboardDoneEvent(event: KeyboardDoneEvent) {
         if (binding != null) {
@@ -119,18 +132,25 @@ class AddCardFragment : AbstractFragment() {
         }
     }
 
-    private fun loadKeyboardType() {
-        viewModel.loadKeyboardType()
-        viewModel.keyboardType.observe(viewLifecycleOwner) { keyboardType: KeyboardType ->
-            if (keyboardType == KeyboardType.CUSTOM) {
-                setupViewsForCustomKeyboard()
-            } else {
-                setupViews()
+    private fun resultListener() {
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+
+            binding?.loadingIndicator?.let { loadingIndicator ->
+                if (uiState.isLoading != loadingIndicator.isRefreshing) {
+                    loadingIndicator.isRefreshing = uiState.isLoading
+                }
+            }
+            uiState.message?.let { message ->
+                selectingTextFrom(message)
+                viewModel.messageShownToUser()
+            }
+            if (uiState.isSaveCompleted) {
+                navigateToCatalog()
             }
         }
     }
 
-    private fun setupViews() {
+    private fun setupViewsForDeviceKeyboard() {
         if (binding != null) {
             binding!!.editTextTitle.imeOptions = EditorInfo.IME_ACTION_DONE
             binding!!.editTextDescription.imeOptions = EditorInfo.IME_ACTION_DONE
@@ -261,23 +281,11 @@ class AddCardFragment : AbstractFragment() {
         binding!!.keyboardAddcard.scrollEditTextToKeyboard(view)
     }
 
-    private fun resultListener() {
-        viewModel.message.observe(this) { result ->
-            if (result != Message.POOL_EMPTY) {
-                selectingTextFrom(result)
-            }
-        }
-    }
-
     private fun selectingTextFrom(result: Message) {
         if (binding != null) {
             when (result) {
                 Message.ACTION_STOPPED -> showMessage(binding!!.scrollAddcard, R.string.message_insert_title)
-                Message.ACTION_ENDED_SUCCESS -> {
-                    showMessage(binding!!.scrollAddcard, R.string.message_helpcard_saved)
-                    navigateToCatalog()
-                }
-
+                Message.ACTION_ENDED_SUCCESS -> showMessage(binding!!.scrollAddcard, R.string.message_helpcard_saved)
                 Message.ACTION_ENDED_ERROR -> showMessage(binding!!.scrollAddcard, R.string.error_action_ended)
                 else -> {}
             }

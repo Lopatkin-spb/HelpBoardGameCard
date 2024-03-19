@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import space.lopatkin.spb.helpboardgamecard.R
 import space.lopatkin.spb.helpboardgamecard.application.HelpBoardGameCardApplication
 import space.lopatkin.spb.helpboardgamecard.databinding.FragmentSettingsBinding
-import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.presentation.AbstractFragment
 import space.lopatkin.spb.helpboardgamecard.presentation.ViewModelFactory
@@ -37,9 +36,7 @@ class SettingsFragment : AbstractFragment() {
         val view: View = binding!!.root
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(SettingsViewModel::class.java)
-
         setupSpinner()
-        loadKeyboardType()
         onActionSpinner()
 
         return view
@@ -47,7 +44,8 @@ class SettingsFragment : AbstractFragment() {
 
     override fun onResume() {
         super.onResume()
-        resultListener()
+        viewModel.loadKeyboardType()
+        uiStateListener()
     }
 
     override fun onDestroyView() {
@@ -67,15 +65,6 @@ class SettingsFragment : AbstractFragment() {
         }
     }
 
-    private fun loadKeyboardType() {
-        viewModel.loadKeyboardType()
-        viewModel.keyboardType.observe(viewLifecycleOwner) { type: KeyboardType ->
-            if (binding != null) {
-                binding!!.actionSpinnerKeyboards.setSelection(type.ordinal)
-            }
-        }
-    }
-
     private fun onActionSpinner() {
         val spinnerListener: SpinnerInteractionListener = SpinnerInteractionListener()
 
@@ -90,13 +79,23 @@ class SettingsFragment : AbstractFragment() {
 
     }
 
-    private fun resultListener() {
-        viewModel.message.observe(this) { result: Message ->
-            if (result != Message.POOL_EMPTY) {
-                selectingTextFrom(result)
+    private fun uiStateListener() {
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+
+            binding?.loadingIndicator?.let { loadingIndicator ->
+                if (uiState.isLoading != loadingIndicator.isRefreshing) {
+                    loadingIndicator.isRefreshing = uiState.isLoading
+                }
+            }
+            uiState.keyboard?.let { type ->
+                binding?.actionSpinnerKeyboards?.setSelection(type.ordinal)
+                viewModel.keyboardInstalledToScreen()
+            }
+            uiState.message?.let { message ->
+                selectingTextFrom(message)
+                viewModel.messageShowedToUser()
             }
         }
-
     }
 
     private fun selectingTextFrom(result: Message) {

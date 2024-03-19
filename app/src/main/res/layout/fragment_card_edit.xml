@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<space.lopatkin.spb.helpboardgamecard.presentation.LoadingIndicator
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/loading_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_card_edit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        xmlns:tools="http://schemas.android.com/tools">
+        android:animateLayoutChanges="true">
 
     <ScrollView
             android:id="@+id/scroll_card_edit"
@@ -188,3 +193,5 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</space.lopatkin.spb.helpboardgamecard.presentation.LoadingIndicator>

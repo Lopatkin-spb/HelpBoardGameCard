@@ -26,29 +26,38 @@ class CatalogViewModel(
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
-    private var jobLoadAllBoardgamesInfo: Job? = null
-    private val _message = MutableLiveData<Message>()
-    private val _listBoardgamesInfo = MutableLiveData<List<BoardgameInfo>>()
-    val message: LiveData<Message> = _message
-    val listBoardgamesInfo: LiveData<List<BoardgameInfo>> = _listBoardgamesInfo
+    private var jobLoadList: Job? = null
+    private var jobDeleteAll: Job? = null
+    private var jobUpdateFavorite: Job? = null
+    private var jobUpdateLocking: Job? = null
+    private var jobDeleteBoardgame: Job? = null
+    private val _uiState = MutableLiveData(CatalogUiState())
+    val uiState: LiveData<CatalogUiState> = _uiState
 
     // Longtime job must be cancelling (auto cancelling in vm.onCleared) and log it
     fun loadListBoardgamesInfo() {
-        jobLoadAllBoardgamesInfo = viewModelScope.launch(
-            dispatchers.main() + CoroutineName(LOAD_BOARDGAMES_INFO)
-        ) {
+        // Protect from concurrent callers (if in progress ,dont trigger it again).
+        if (jobLoadList != null) return
+        jobLoadList = viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_BOARDGAMES_INFO)) {
+
             getAllBoardgamesInfoUseCase.execute()
-                .cancellable()
-                .onEach { list ->
-                    _listBoardgamesInfo.value = list
+                .onStart {
+                    val newUiState = _uiState.value?.copy(isLoading = true)
+                    _uiState.value = newUiState
                 }
-                .onCompletion {
-                    //TODO: finally block (example - stop loading)
+                .cancellable()
+                .onEach { newList ->
+                    val newUiState = _uiState.value?.copy(isLoading = false, list = newList)
+                    _uiState.value = newUiState
                 }
                 .catch { exception ->
                     //TODO: logging only exception but not error
-                    _message.value = Message.ACTION_ENDED_ERROR
+                    val newUiState = _uiState.value?.copy(
+                        isLoading = false, message = Message.ACTION_ENDED_ERROR, list = emptyList()
+                    )
+                    _uiState.value = newUiState
                 }
+                .onCompletion { finally -> jobLoadList = null }
                 .collect()
         }.also { thisJob ->
             thisJob.invokeOnCompletion { error ->
@@ -61,60 +70,101 @@ class CatalogViewModel(
     }
 
     fun deleteAllUnlockBoardgames() {
-        viewModelScope.launch(dispatchers.main() + CoroutineName(DELETE_ALL_UNLOCKS)) {
+        if (jobDeleteAll != null) return
+        jobDeleteAll = viewModelScope.launch(dispatchers.main() + CoroutineName(DELETE_ALL_UNLOCKS)) {
+
             deleteBoardgamesByUnlockStateUseCase.execute()
-                .cancellable()
-                .onEach { success ->
-                    loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
+                .onStart {
+                    val newUiState = _uiState.value?.copy(isLoading = true)
+                    _uiState.value = newUiState
                 }
+                .cancellable()
+                .onEach { success -> loadListBoardgamesInfo() }
                 .catch { exception ->
                     //TODO: logging only exception but not error
-                    _message.value = Message.ACTION_ENDED_ERROR
+                    val newUiState = _uiState.value?.copy(isLoading = false, message = Message.ACTION_ENDED_ERROR)
+                    _uiState.value = newUiState
                 }
+                .onCompletion { finally -> jobDeleteAll = null }
                 .collect()
         }
     }
 
     fun updateFavorite(boardgameInfo: BoardgameInfo?) {
-        viewModelScope.launch(dispatchers.main() + CoroutineName(UPDATE_FAVORITE)) {
+        if (jobUpdateFavorite != null) return
+        jobUpdateFavorite = viewModelScope.launch(dispatchers.main() + CoroutineName(UPDATE_FAVORITE)) {
+
             updateBoardgameFavoriteByBoardgameIdUseCase.execute(boardgameInfo)
+                .onStart {
+                    val newUiState = _uiState.value?.copy(isLoading = true)
+                    _uiState.value = newUiState
+                }
                 .cancellable()
+                .onEach { success ->
+                    val newUiState = _uiState.value?.copy(isLoading = false)
+                    _uiState.value = newUiState
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
+                    val newUiState = _uiState.value?.copy(message = Message.ACTION_ENDED_ERROR)
+                    _uiState.value = newUiState
                     loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
-                    _message.value = Message.ACTION_ENDED_ERROR
                 }
+                .onCompletion { finally -> jobUpdateFavorite = null }
                 .collect()
         }
     }
 
     fun updateLocking(boardgameInfo: BoardgameInfo?) {
-        viewModelScope.launch(dispatchers.main() + CoroutineName(UPDATE_LOCKING)) {
+        if (jobUpdateLocking != null) return
+        jobUpdateLocking = viewModelScope.launch(dispatchers.main() + CoroutineName(UPDATE_LOCKING)) {
+
             updateBoardgameLockingByBoardgameIdUseCase.execute(boardgameInfo)
+                .onStart {
+                    val newUiState = _uiState.value?.copy(isLoading = true)
+                    _uiState.value = newUiState
+                }
                 .cancellable()
+                .onEach { success ->
+                    val newUiState = _uiState.value?.copy(isLoading = false)
+                    _uiState.value = newUiState
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
+                    val newUiState = _uiState.value?.copy(message = Message.ACTION_ENDED_ERROR)
+                    _uiState.value = newUiState
                     loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
-                    _message.value = Message.ACTION_ENDED_ERROR
                 }
+                .onCompletion { finally -> jobUpdateLocking = null }
                 .collect()
         }
     }
 
     fun delete(boardgameInfo: BoardgameInfo?) {
-        viewModelScope.launch(dispatchers.main() + CoroutineName(DELETE_ITEM)) {
+        if (jobDeleteBoardgame != null) return
+        jobDeleteBoardgame = viewModelScope.launch(dispatchers.main() + CoroutineName(DELETE_ITEM)) {
+
             deleteBoardgameUnlockedByBoardgameIdUseCase.execute(boardgameInfo)
-                .cancellable()
-                .onEach { success ->
-                    loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
+                .onStart {
+                    val newUiState = _uiState.value?.copy(isLoading = true)
+                    _uiState.value = newUiState
                 }
+                .cancellable()
+                .onEach { success -> loadListBoardgamesInfo() }
                 .catch { exception ->
                     //TODO: logging only exception but not error
+                    val newUiState = _uiState.value?.copy(message = Message.ACTION_ENDED_ERROR)
+                    _uiState.value = newUiState
                     loadListBoardgamesInfo() // RefreshList Временный maybe костыль - переделать в будущем
-                    _message.value = Message.ACTION_ENDED_ERROR
                 }
+                .onCompletion { finally -> jobDeleteBoardgame = null }
                 .collect()
         }
+    }
+
+    fun messageShownToUser() {
+        val newUiState = _uiState.value?.copy(message = null)
+        _uiState.value = newUiState
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

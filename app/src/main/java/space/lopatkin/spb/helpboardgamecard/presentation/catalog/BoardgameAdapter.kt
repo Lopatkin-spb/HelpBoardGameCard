@@ -11,7 +11,7 @@ class BoardgameAdapter(
     private val parent: CatalogFragment
 ) : RecyclerView.Adapter<BoardgameItem>() {
 
-    private var currentList: List<BoardgameInfo> = listOf()
+    private var currentList: List<BoardgameInfo> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoardgameItem {
         val binding: ItemCardBinding = ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -50,6 +50,34 @@ class BoardgameAdapter(
     private fun redrawList(newList: List<BoardgameInfo>) {
         val diffResult = DiffUtil.calculateDiff(BoardgameDiffUtilCallback(currentList, newList))
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun updateItemFavorite(itemData: BoardgameInfo?) {
+        if (itemData != null) {
+            val newList: MutableList<BoardgameInfo> = currentList.toMutableList()
+
+            for (index in newList.indices) {
+                if (newList[index].boardgameId == itemData.boardgameId) {
+                    newList[index].boardgameFavorite = itemData.boardgameFavorite
+                    break
+                }
+            }
+            currentList = newList
+        }
+    }
+
+    fun updateItemLocking(itemData: BoardgameInfo?) {
+        if (itemData != null) {
+            val newList: MutableList<BoardgameInfo> = currentList.toMutableList()
+
+            for (index in newList.indices) {
+                if (newList[index].boardgameId == itemData.boardgameId) {
+                    newList[index].boardgameLock = itemData.boardgameLock
+                    break
+                }
+            }
+            currentList = newList
+        }
     }
 
 }

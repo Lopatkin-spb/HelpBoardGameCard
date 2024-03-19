@@ -45,7 +45,6 @@ class CatalogFragment : AbstractFragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(CatalogViewModel::class.java)
         setupList()
-        loadListBoardgamesInfo()
         return view
     }
 
@@ -71,7 +70,8 @@ class CatalogFragment : AbstractFragment() {
     override fun onResume() {
         super.onResume()
         EventBus.getDefault().register(viewModel)
-        resultListener()
+        viewModel.loadListBoardgamesInfo()
+        uiStateListener()
     }
 
     override fun onPause() {
@@ -84,9 +84,22 @@ class CatalogFragment : AbstractFragment() {
         binding = null
     }
 
-    private fun loadListBoardgamesInfo() {
-        viewModel.loadListBoardgamesInfo()
-        viewModel.listBoardgamesInfo!!.observe(viewLifecycleOwner) { boardgamesInfo -> adapter.setList(boardgamesInfo) }
+    private fun uiStateListener() {
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+
+            binding?.loadingIndicator?.let { loadingIndicator ->
+                if (uiState.isLoading != loadingIndicator.isRefreshing) {
+                    loadingIndicator.isRefreshing = uiState.isLoading
+                }
+            }
+            if (!uiState.isLoading) {
+                adapter.setList(uiState.list)
+            }
+            uiState.message?.let { message ->
+                selectingTextFrom(message)
+                viewModel.messageShownToUser()
+            }
+        }
     }
 
     private fun setupList() {
@@ -116,9 +129,7 @@ class CatalogFragment : AbstractFragment() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val position = viewHolder.adapterPosition
                     val item: BoardgameInfo = adapter.getBoardgameInfoAt(position)
-                    if (item.boardgameLock) { // Stub for correct redraw list if error deleted
-                        adapter.deleteItemAt(position)
-                    }
+                    adapter.deleteItemAt(position)
                     viewModel.delete(item)
                 }
             }).attachToRecyclerView(binding!!.recyclerView)
@@ -126,10 +137,12 @@ class CatalogFragment : AbstractFragment() {
     }
 
     fun notifyToUpdateFavorite(boardgameInfo: BoardgameInfo?) {
+        adapter.updateItemFavorite(boardgameInfo)
         viewModel.updateFavorite(boardgameInfo)
     }
 
     fun notifyToUpdateLocking(boardgameInfo: BoardgameInfo?) {
+        adapter.updateItemLocking(boardgameInfo)
         viewModel.updateLocking(boardgameInfo)
     }
 
@@ -137,14 +150,6 @@ class CatalogFragment : AbstractFragment() {
         if (boardgameId != null) {
             val action = CatalogFragmentDirections.actionNavCatalogToNavHelpcard().setBoardgameId(boardgameId)
             navController.navigate(action)
-        }
-    }
-
-    private fun resultListener() {
-        viewModel.message.observe(this) { result ->
-            if (result != Message.POOL_EMPTY) {
-                selectingTextFrom(result)
-            }
         }
     }
 

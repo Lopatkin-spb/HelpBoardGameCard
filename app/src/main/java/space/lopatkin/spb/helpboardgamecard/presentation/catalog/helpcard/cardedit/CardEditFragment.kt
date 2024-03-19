@@ -50,10 +50,8 @@ class CardEditFragment : AbstractFragment() {
         binding = FragmentCardEditBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(this, viewModelFactory!!).get(CardEditViewModel::class.java)
+        setupUserSettings()
 
-        loadBoardgameFromDb(args.boardgameId)
-
-        loadKeyboardType()
         setAnimationSizeForExpandableViews()
         return binding!!.root
     }
@@ -69,7 +67,7 @@ class CardEditFragment : AbstractFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_card_save -> {
-                updateData()
+                viewModel.getDataDetailsForUpdate()
                 true
             }
 
@@ -80,7 +78,8 @@ class CardEditFragment : AbstractFragment() {
     override fun onResume() {
         super.onResume()
         EventBus.getDefault().register(this)
-        resultListener()
+        viewModel.loadBoardgameRaw(args.boardgameId)
+        uiStateListener()
     }
 
     override fun onPause() {
@@ -91,6 +90,20 @@ class CardEditFragment : AbstractFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    private fun setupUserSettings() {
+        viewModel.loadKeyboardType()
+        setupViewsForDeviceKeyboard()
+        viewModel.settings.observe(viewLifecycleOwner) { settings ->
+            settings.keyboard?.let { type ->
+                if (type == KeyboardType.CUSTOM) {
+                    setupViewsForCustomKeyboard()
+                } else {
+                    setupViewsForDeviceKeyboard()
+                }
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -122,18 +135,7 @@ class CardEditFragment : AbstractFragment() {
         }
     }
 
-    private fun loadKeyboardType() {
-        viewModel.loadKeyboardType()
-        viewModel.keyboardType.observe(viewLifecycleOwner) { keyboardType ->
-            if (keyboardType == KeyboardType.CUSTOM) {
-                setupViewsForCustomKeyboard()
-            } else {
-                setupViews()
-            }
-        }
-    }
-
-    private fun setupViews() {
+    private fun setupViewsForDeviceKeyboard() {
         if (binding != null) {
             binding!!.editTitle.imeOptions = EditorInfo.IME_ACTION_DONE
             binding!!.editDescription.imeOptions = EditorInfo.IME_ACTION_DONE
@@ -163,30 +165,6 @@ class CardEditFragment : AbstractFragment() {
             onActionPreparation()
             onActionPlayerTurn()
         }
-    }
-
-    private fun loadBoardgameFromDb(boardgameId: Long?) {
-        viewModel.loadBoardgameRaw(boardgameId)
-        viewModel.boardgameRaw?.observe(viewLifecycleOwner) { boardgameRaw ->
-
-            if (binding != null && boardgameRaw != null) {
-                binding!!.editTitle.setText(boardgameRaw.name)
-                binding!!.editDescription.setText(boardgameRaw.description)
-                binding!!.editVictoryCondition.setText(boardgameRaw.victoryCondition)
-                binding!!.editEndGame.setText(boardgameRaw.endGame)
-                binding!!.editPreparation.setText(boardgameRaw.preparation)
-                binding!!.editPlayerTurn.setText(boardgameRaw.playerTurn)
-            }
-        }
-    }
-
-    private fun updateData() {
-        viewModel.boardgameRaw?.observe(viewLifecycleOwner) { boardgameRawDb ->
-            if (binding != null && boardgameRawDb != null) {
-                viewModel.update(getEditedInstance(boardgameRawDb))
-            }
-        }
-
     }
 
     private fun getEditedInstance(boardgameRawDb: BoardgameRaw): BoardgameRaw {
@@ -278,10 +256,35 @@ class CardEditFragment : AbstractFragment() {
         binding!!.keyboardCardEdit.scrollEditTextToKeyboard(view)
     }
 
-    private fun resultListener() {
-        viewModel.message.observe(this) { result ->
-            if (result != Message.POOL_EMPTY && binding != null) {
-                selectingTextFrom(result)
+    private fun uiStateListener() {
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+
+            binding?.loadingIndicator?.let { loadingIndicator ->
+                if (uiState.isLoading != loadingIndicator.isRefreshing) {
+                    loadingIndicator.isRefreshing = uiState.isLoading
+                }
+            }
+            if (uiState.isUpdateStart) {
+                uiState.boardgameRaw?.let { dataFromDb ->
+                    viewModel.update(getEditedInstance(dataFromDb))
+                    viewModel.eventPassedToFragment()
+                }
+            } else {
+                uiState.boardgameRaw?.let { boardgameRaw ->
+                    binding?.editTitle?.setText(boardgameRaw.name)
+                    binding?.editDescription?.setText(boardgameRaw.description)
+                    binding?.editVictoryCondition?.setText(boardgameRaw.victoryCondition)
+                    binding?.editEndGame?.setText(boardgameRaw.endGame)
+                    binding?.editPreparation?.setText(boardgameRaw.preparation)
+                    binding?.editPlayerTurn?.setText(boardgameRaw.playerTurn)
+                }
+            }
+            uiState.message?.let { message ->
+                selectingTextFrom(message)
+                viewModel.messageShownToUser()
+            }
+            if (uiState.isUpdateCompleted) {
+                navigateToCatalog()
             }
         }
     }
@@ -289,11 +292,7 @@ class CardEditFragment : AbstractFragment() {
     private fun selectingTextFrom(result: Message) {
         when (result) {
             Message.ACTION_STOPPED -> showMessage(binding!!.scrollCardEdit, R.string.message_insert_title)
-            Message.ACTION_ENDED_SUCCESS -> {
-                showMessage(binding!!.scrollCardEdit, R.string.message_card_updated)
-                navigateToCatalog()
-            }
-
+            Message.ACTION_ENDED_SUCCESS -> showMessage(binding!!.scrollCardEdit, R.string.message_card_updated)
             Message.ACTION_ENDED_ERROR -> showMessage(binding!!.scrollCardEdit, R.string.error_action_ended)
             else -> {}
         }

@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
-import space.lopatkin.spb.helpboardgamecard.domain.model.Helpcard
 import space.lopatkin.spb.helpboardgamecard.domain.model.Message
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetHelpcardByBoardgameIdUseCase
 
@@ -17,30 +17,53 @@ class HelpcardViewModel(
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
-    private val _boardgameId = MutableLiveData<Long>()
-    private val _helpcard = MutableLiveData<Helpcard>()
-    private val _message = MutableLiveData<Message>()
-    val helpcard: LiveData<Helpcard> = _helpcard
-    val boardgameId: LiveData<Long> = _boardgameId
-    val message: LiveData<Message> = _message
+    private var jobLoadHelpcard: Job? = null
+    private val _uiState = MutableLiveData(HelpcardUiState())
+    val uiState: LiveData<HelpcardUiState> = _uiState
 
     fun loadHelpcard(boardgameId: Long?) {
-        _boardgameId.value = boardgameId
-        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_HELPCARD)) {
+        if (jobLoadHelpcard != null) return
+        jobLoadHelpcard = viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_HELPCARD)) {
+
             getHelpcardByBoardgameIdUseCase.execute(boardgameId)
+                .onStart {
+                    val newUiState = _uiState.value?.copy(isLoading = true, boardgameId = boardgameId)
+                    _uiState.value = newUiState
+                }
                 .cancellable()
                 .onEach { result ->
-                    _helpcard.value = result
+                    val newUiState = _uiState.value?.copy(isLoading = false, helpcard = result)
+                    _uiState.value = newUiState
                 }
                 .catch { exception ->
                     //TODO: logging only exception but not error
-                    _message.value = Message.ACTION_ENDED_ERROR
+                    val newUiState = _uiState.value?.copy(isLoading = false, message = Message.ACTION_ENDED_ERROR)
+                    _uiState.value = newUiState
                 }
-                .onCompletion {
-                    //TODO: stop loading
-                }
+                .onCompletion { finally -> jobLoadHelpcard = null }
                 .collect()
         }
+    }
+
+    fun messageShownToUser() {
+        val newUiState = _uiState.value?.copy(message = null)
+        _uiState.value = newUiState
+    }
+
+    fun notifyNavigateToEdit() {
+        val boardgameId = _uiState.value?.boardgameId
+        if (boardgameId != null) {
+            val newUiState = _uiState.value?.copy(isNavigate = true)
+            _uiState.value = newUiState
+        } else {
+            val newUiState = _uiState.value?.copy(message = Message.ACTION_ENDED_ERROR)
+            _uiState.value = newUiState
+        }
+    }
+
+    fun userNavigated() {
+        val newUiState = _uiState.value?.copy(isNavigate = false)
+        _uiState.value = newUiState
     }
 
     companion object {

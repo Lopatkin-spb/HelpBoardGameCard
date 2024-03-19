@@ -20,7 +20,7 @@ next: error handling (catch app errors & skip device errors, create app error cl
 
 - loadings + message clearing
 
-
+!!! баг Settings: if select then start logic twice
 
 
 
@@ -157,6 +157,7 @@ setup
 
 
 
-- Gradle: updated recyclerview to actual;
-- Catalog: added vertical scrollbar, added simple list animations, deleted recyclerview redundant option;
-- Fixed bug: when delete item then list incorrect redraw;
+- Presentation: added loading bar;
+- Refactoring: added uiState to viewModels, added reset single-live event to fragments,
+moved invoke methods after success to uiStateListener, finalize list updating to CatalogFragment,
+little rename some methods;

@@ -5,10 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
 import space.lopatkin.spb.helpboardgamecard.domain.model.KeyboardType
@@ -22,37 +20,68 @@ class SettingsViewModel(
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
-    private val _keyboardType = MutableLiveData<KeyboardType>()
-    private val _message = MutableLiveData<Message>()
-    val message: LiveData<Message> = _message
-    val keyboardType: LiveData<KeyboardType> = _keyboardType
+    private var jobLoadKeyboardType: Job? = null
+    private var jobSaveKeyboardType: Job? = null
+    private val _uiState = MutableLiveData(SettingsUiState())
+    val uiState: LiveData<SettingsUiState> = _uiState
 
     fun loadKeyboardType() {
-        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_KEYBOARD_TYPE)) {
+        if (jobLoadKeyboardType != null) return
+        jobLoadKeyboardType = viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_KEYBOARD_TYPE)) {
+
             getKeyboardTypeUseCase.execute()
+                .onStart {
+                    val newUiState = _uiState.value?.copy(isLoading = true)
+                    _uiState.value = newUiState
+                }
                 .cancellable()
                 .onEach { result ->
-                    _keyboardType.value = result
+                    val newUiState = _uiState.value?.copy(isLoading = false, keyboard = result)
+                    _uiState.value = newUiState
                 }
                 .catch { exception ->
                     //TODO: logging only exception but not error
-                    _keyboardType.value = DEFAULT_TYPE
+                    val newUiState = _uiState.value?.copy(isLoading = false, keyboard = DEFAULT_TYPE)
+                    _uiState.value = newUiState
                 }
+                .onCompletion { finally -> jobLoadKeyboardType = null }
                 .collect()
         }
     }
 
     fun saveKeyboardType(type: Any?) {
-        viewModelScope.launch(dispatchers.main() + CoroutineName(SAVE_KEYBOARD_TYPE)) {
+        if (jobSaveKeyboardType != null) return
+        jobSaveKeyboardType = viewModelScope.launch(dispatchers.main() + CoroutineName(SAVE_KEYBOARD_TYPE)) {
+
             saveKeyboardTypeByUserChoiceUseCase.execute(type)
+                .onStart {
+                    val newUiState = _uiState.value?.copy(isLoading = true)
+                    _uiState.value = newUiState
+                }
                 .cancellable()
+                .onEach { result ->
+                    val newUiState = _uiState.value?.copy(isLoading = false)
+                    _uiState.value = newUiState
+                }
                 .catch { exception ->
                     //TODO: logging only exception but not error
-                    _message.value = Message.ACTION_ENDED_ERROR
+                    val newUiState = _uiState.value?.copy(message = Message.ACTION_ENDED_ERROR)
+                    _uiState.value = newUiState
                     loadKeyboardType()
                 }
+                .onCompletion { finally -> jobSaveKeyboardType = null }
                 .collect()
         }
+    }
+
+    fun messageShowedToUser() {
+        val newUiState = _uiState.value?.copy(message = null)
+        _uiState.value = newUiState
+    }
+
+    fun keyboardInstalledToScreen() {
+        val newUiState = _uiState.value?.copy(keyboard = null)
+        _uiState.value = newUiState
     }
 
     companion object {

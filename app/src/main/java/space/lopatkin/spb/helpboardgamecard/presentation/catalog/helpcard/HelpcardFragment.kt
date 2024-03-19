@@ -45,8 +45,6 @@ class HelpcardFragment : AbstractFragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(HelpcardViewModel::class.java)
 
-        loadHelpcard(args.boardgameId)
-
         onVictoryCondition()
         onEndGame()
         onPreparation()
@@ -67,7 +65,7 @@ class HelpcardFragment : AbstractFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_card_edit -> {
-                navigateToCardEdit()
+                viewModel.notifyNavigateToEdit()
                 true
             }
 
@@ -77,35 +75,13 @@ class HelpcardFragment : AbstractFragment() {
 
     override fun onResume() {
         super.onResume()
-        resultListener()
+        viewModel.loadHelpcard(args.boardgameId)
+        uiStateListener()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    private fun loadHelpcard(boardgameId: Long?) {
-        viewModel.loadHelpcard(boardgameId)
-        viewModel.helpcard?.observe(viewLifecycleOwner) { helpcard ->
-            if (helpcard != null && binding != null) {
-                binding!!.textViewTitle.text = helpcard.boardgameName
-                binding!!.textVictoryCondition.text = helpcard.helpcardVictoryCondition
-                binding!!.textEndGame.text = helpcard.helpcardEndGame
-                binding!!.textPreparation.text = helpcard.helpcardPreparation
-                binding!!.textPlayerTurn.text = helpcard.helpcardPlayerTurn
-                binding!!.textEffects.text = helpcard.helpcardEffects
-            }
-        }
-    }
-
-    private fun navigateToCardEdit() {
-        viewModel.boardgameId.observe(viewLifecycleOwner) { boardgameId ->
-            if (boardgameId != null) {
-                val action = HelpcardFragmentDirections.actionNavHelpcardToNavCardEdit().setBoardgameId(boardgameId)
-                navController.navigate(action)
-            }
-        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -159,10 +135,32 @@ class HelpcardFragment : AbstractFragment() {
         binding!!.layoutExpandableHelpcard.layoutTransition = layoutTransition
     }
 
-    private fun resultListener() {
-        viewModel.message.observe(this) { result ->
-            if (result != Message.POOL_EMPTY && binding != null) {
-                selectingTextFrom(result)
+    private fun uiStateListener() {
+        viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
+
+            binding?.loadingIndicator?.let { loadingIndicator ->
+                if (uiState.isLoading != loadingIndicator.isRefreshing) {
+                    loadingIndicator.isRefreshing = uiState.isLoading
+                }
+            }
+            uiState.helpcard?.let { helpcard ->
+                binding?.textViewTitle?.text = helpcard.boardgameName
+                binding?.textVictoryCondition?.text = helpcard.helpcardVictoryCondition
+                binding?.textEndGame?.text = helpcard.helpcardEndGame
+                binding?.textPreparation?.text = helpcard.helpcardPreparation
+                binding?.textPlayerTurn?.text = helpcard.helpcardPlayerTurn
+                binding?.textEffects?.text = helpcard.helpcardEffects
+            }
+            uiState.message?.let { message ->
+                selectingTextFrom(message)
+                viewModel.messageShownToUser()
+            }
+            if (uiState.isNavigate) {
+                uiState.boardgameId?.let { id ->
+                    val action = HelpcardFragmentDirections.actionNavHelpcardToNavCardEdit().setBoardgameId(id)
+                    navController.navigate(action)
+                    viewModel.userNavigated()
+                }
             }
         }
     }

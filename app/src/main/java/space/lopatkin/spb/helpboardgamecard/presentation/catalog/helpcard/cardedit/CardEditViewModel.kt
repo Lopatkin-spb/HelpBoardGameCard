@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import space.lopatkin.spb.helpboardgamecard.di.ApplicationModule
@@ -15,6 +16,7 @@ import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetBoardgameRawByBoar
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.GetKeyboardTypeUseCase
 import space.lopatkin.spb.helpboardgamecard.domain.usecase.UpdateBoardgameByBoardgameIdUseCase
 import space.lopatkin.spb.helpboardgamecard.presentation.ValidationException
+import space.lopatkin.spb.helpboardgamecard.presentation.UserSettingsUiState
 
 class CardEditViewModel(
     private val getBoardgameRawByBoardgameIdUseCase: GetBoardgameRawByBoardgameIdUseCase,
@@ -23,65 +25,104 @@ class CardEditViewModel(
     private val dispatchers: ApplicationModule.CoroutineDispatchers
 ) : ViewModel() {
 
-    private val _boardgameId = MutableLiveData<Long>()
-    private val _keyboardType = MutableLiveData<KeyboardType>()
-    private val _message = MutableLiveData<Message>()
-    private val _boardgameRaw = MutableLiveData<BoardgameRaw>()
-    val boardgameRaw: LiveData<BoardgameRaw> = _boardgameRaw
-    val keyboardType: LiveData<KeyboardType> = _keyboardType
-    val message: LiveData<Message> = _message
+    private var jobLoadKeyboardType: Job? = null
+    private var jobLoadBoardgameRaw: Job? = null
+    private var jobUpdateBoardgame: Job? = null
+    private val _settings = MutableLiveData(UserSettingsUiState())
+    val settings: LiveData<UserSettingsUiState> = _settings
+    private val _uiState = MutableLiveData(CardEditUiState())
+    val uiState: LiveData<CardEditUiState> = _uiState
 
     fun loadKeyboardType() {
-        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_KEYBOARD_TYPE)) {
+        if (jobLoadKeyboardType != null) return
+        jobLoadKeyboardType = viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_KEYBOARD_TYPE)) {
+
             getKeyboardTypeUseCase.execute()
                 .cancellable()
-                .onEach { result ->
-                    _keyboardType.value = result
-                }
+                .onEach { result -> _settings.value = UserSettingsUiState(keyboard = result) }
                 .catch { exception ->
                     //TODO: logging only exception but not error
-                    _keyboardType.value = DEFAULT_TYPE
+                    _settings.value = UserSettingsUiState(keyboard = DEFAULT_TYPE)
                 }
+                .onCompletion { finally -> jobLoadKeyboardType = null }
                 .collect()
         }
     }
 
     fun loadBoardgameRaw(boardgameId: Long?) {
-        _boardgameId.value = boardgameId //TODO: setter split
-        viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_BOARDGAME_RAW)) {
+        if (jobLoadBoardgameRaw != null) return
+        jobLoadBoardgameRaw = viewModelScope.launch(dispatchers.main() + CoroutineName(LOAD_BOARDGAME_RAW)) {
+
             getBoardgameRawByBoardgameIdUseCase.execute(boardgameId)
+                .onStart {
+                    val newUiState =
+                        _uiState.value?.copy(isLoading = true, boardgameId = boardgameId) //TODO: setter split
+                    _uiState.value = newUiState
+                }
                 .cancellable()
                 .onEach { result ->
-                    _boardgameRaw.value = result
-                }
-                .onCompletion {
-                    //TODO: stop loading
+                    val newUiState = _uiState.value?.copy(isLoading = false, boardgameRaw = result)
+                    _uiState.value = newUiState
                 }
                 .catch { exception ->
                     //TODO: logging only exception but not error
-                    _message.value = Message.ACTION_ENDED_ERROR
+                    val newUiState = _uiState.value?.copy(
+                        isLoading = false, message = Message.ACTION_ENDED_ERROR, boardgameRaw = null
+                    )
+                    _uiState.value = newUiState
                 }
+                .onCompletion { finally -> jobLoadBoardgameRaw = null }
                 .collect()
         }
     }
 
     fun update(boardgameRaw: BoardgameRaw?) {
-        viewModelScope.launch(dispatchers.main() + CoroutineName(UPDATE_BOARDGAME_RAW)) {
+        if (jobUpdateBoardgame != null) return
+        jobUpdateBoardgame = viewModelScope.launch(dispatchers.main() + CoroutineName(UPDATE_BOARDGAME_RAW)) {
+
             updateBoardgameByBoardgameIdUseCase.execute(boardgameRaw)
+                .onStart {
+                    val newUiState = _uiState.value?.copy(isLoading = true, boardgameRaw = boardgameRaw)
+                    _uiState.value = newUiState
+                }
                 .cancellable()
                 .onEach { action ->
-                    _message.value = Message.ACTION_ENDED_SUCCESS
+                    val newUiState = _uiState.value?.copy(
+                        isLoading = false,
+                        isUpdateCompleted = true,
+                        message = Message.ACTION_ENDED_SUCCESS,
+                        boardgameRaw = null
+                    )
+                    _uiState.value = newUiState
                 }
                 .catch { exception ->
                     //TODO: logging only exception but not error
                     if (exception is ValidationException) {
-                        _message.value = Message.ACTION_STOPPED
+                        val newUiState = _uiState.value?.copy(isLoading = false, message = Message.ACTION_STOPPED)
+                        _uiState.value = newUiState
                     } else {
-                        _message.value = Message.ACTION_ENDED_ERROR
+                        val newUiState = _uiState.value?.copy(isLoading = false, message = Message.ACTION_ENDED_ERROR)
+                        _uiState.value = newUiState
                     }
                 }
+                .onCompletion { finally -> jobUpdateBoardgame = null }
                 .collect()
         }
+    }
+
+    fun messageShownToUser() {
+        val newUiState = _uiState.value?.copy(message = null)
+        _uiState.value = newUiState
+    }
+
+    fun getDataDetailsForUpdate() {
+        val newUiState = _uiState.value?.copy(isUpdateStart = true)
+        _uiState.value = newUiState
+    }
+
+    fun eventPassedToFragment() {
+        val newUiState = _uiState.value?.copy(isUpdateStart = false)
+        _uiState.value = newUiState
     }
 
     companion object {
