@@ -1,7 +1,6 @@
 package space.lopatkin.spb.helpboardgamecard.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -19,7 +18,7 @@ import space.lopatkin.spb.helpboardgamecard.databinding.DrawerNavHeaderMainBindi
 
 class MainActivity : AppCompatActivity() {
 
-    private var binding: DrawerActivityMainBinding? = null
+    private lateinit var binding: DrawerActivityMainBinding
     private var bindingHeader: DrawerNavHeaderMainBinding? = null
     private var mAppBarConfiguration: AppBarConfiguration? = null
 
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DrawerActivityMainBinding.inflate(layoutInflater)
-        val view: View = binding!!.root
+        val view: View = binding.root
         setContentView(view)
 
         setToolbar()
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         hideCustomKeyboard() //Maybe move code to keyboard util
-        hideDeviceKeyboard(binding!!.drawerLayout) //Maybe move code to keyboard util
+        hideDeviceKeyboard(binding.drawerLayout) //Maybe move code to keyboard util
         return super.onOptionsItemSelected(item)
     }
 
@@ -56,21 +55,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onActionOpenDrawer() {
-        if (binding != null) {
-            binding!!.drawerLayout.addDrawerListener(object : SimpleDrawerListener() {
-                override fun onDrawerOpened(drawerView: View) {
-                    hideCustomKeyboard() //Maybe move code to keyboard util
-                    hideDeviceKeyboard(drawerView) //Maybe move code to keyboard util
-                }
-            })
-        }
+        binding.drawerLayout.addDrawerListener(object : SimpleDrawerListener() {
+            override fun onDrawerOpened(drawerView: View) {
+                hideCustomKeyboard() //Maybe move code to keyboard util
+                hideDeviceKeyboard(drawerView) //Maybe move code to keyboard util
+            }
+        })
     }
 
     private fun setToolbar() {
 //        тулбар должен быть инициализирован, чтоб на фрагментах можно было их установить
-        if (binding != null) {
-            setSupportActionBar(binding!!.includeDrawerAppBarMain.toolbar)
-        }
+        setSupportActionBar(binding.includeDrawerAppBarMain.toolbar)
     }
 
     private fun hideDeviceKeyboard(view: View?) {
@@ -85,12 +80,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setApplicationVersion() {
-        if (binding != null) {
-            bindingHeader = DrawerNavHeaderMainBinding.bind(binding!!.navView.getHeaderView(0))
-            val appVersion: String = getString(R.string.text_app_version, BuildConfig.VERSION_NAME)
-            if (bindingHeader != null) {
-                bindingHeader!!.textAppVersion.text = appVersion
-            }
+        bindingHeader = DrawerNavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
+        val appVersion: String = getString(R.string.text_app_version, BuildConfig.VERSION_NAME)
+        if (bindingHeader != null) {
+            bindingHeader!!.textAppVersion.text = appVersion
         }
     }
 
@@ -119,11 +112,11 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_share,
             R.id.nav_settings
         )
-            .setDrawerLayout(binding!!.drawerLayout)
+            .setDrawerLayout(binding.drawerLayout)
             .build()
         val navController: NavController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration!!)
-        NavigationUI.setupWithNavController(binding!!.navView, navController)
+        NavigationUI.setupWithNavController(binding.navView, navController)
 
         fixBackstackTempState()
     }

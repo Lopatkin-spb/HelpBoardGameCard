@@ -32,7 +32,8 @@ class CardEditFragment : AbstractFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: CardEditViewModel
-    private var binding: FragmentCardEditBinding? = null
+    private var _binding: FragmentCardEditBinding? = null
+    private val binding get() = _binding!!
     private val navController: NavController by lazy { Navigation.findNavController(requireView()) }
     private val args: CardEditFragmentArgs by navArgs()
     private var inputConnection: InputConnection? = null
@@ -47,13 +48,14 @@ class CardEditFragment : AbstractFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCardEditBinding.inflate(inflater, container, false)
+        _binding = FragmentCardEditBinding.inflate(inflater, container, false)
+        val view: View = binding.root
 
         viewModel = ViewModelProvider(this, viewModelFactory!!).get(CardEditViewModel::class.java)
         setupUserSettings()
 
         setAnimationSizeForExpandableViews()
-        return binding!!.root
+        return view
     }
 
     override fun onCreateOptionsMenu(
@@ -89,7 +91,7 @@ class CardEditFragment : AbstractFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
     private fun setupUserSettings() {
@@ -108,75 +110,69 @@ class CardEditFragment : AbstractFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onKeyboardDoneEvent(event: KeyboardDoneEvent) {
-        if (binding != null) {
-            clearFocus()
-            binding!!.keyboardCardEdit.visibility = View.GONE
-        }
+        clearFocus()
+        binding.keyboardCardEdit.visibility = View.GONE
     }
 
     private fun clearFocus() {
-        if (binding!!.editTitle.isFocused) {
-            binding!!.editTitle.clearFocus()
+        if (binding.editTitle.isFocused) {
+            binding.editTitle.clearFocus()
         }
-        if (binding!!.editDescription.isFocused) {
-            binding!!.editDescription.clearFocus()
+        if (binding.editDescription.isFocused) {
+            binding.editDescription.clearFocus()
         }
-        if (binding!!.editVictoryCondition.isFocused) {
-            binding!!.editVictoryCondition.clearFocus()
+        if (binding.editVictoryCondition.isFocused) {
+            binding.editVictoryCondition.clearFocus()
         }
-        if (binding!!.editEndGame.isFocused) {
-            binding!!.editEndGame.clearFocus()
+        if (binding.editEndGame.isFocused) {
+            binding.editEndGame.clearFocus()
         }
-        if (binding!!.editPreparation.isFocused) {
-            binding!!.editPreparation.clearFocus()
+        if (binding.editPreparation.isFocused) {
+            binding.editPreparation.clearFocus()
         }
-        if (binding!!.editPlayerTurn.isFocused) {
-            binding!!.editPlayerTurn.clearFocus()
+        if (binding.editPlayerTurn.isFocused) {
+            binding.editPlayerTurn.clearFocus()
         }
     }
 
     private fun setupViewsForDeviceKeyboard() {
-        if (binding != null) {
-            binding!!.editTitle.imeOptions = EditorInfo.IME_ACTION_DONE
-            binding!!.editDescription.imeOptions = EditorInfo.IME_ACTION_DONE
-            binding!!.editTitle.setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-            binding!!.editDescription.setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-        }
+        binding.editTitle.imeOptions = EditorInfo.IME_ACTION_DONE
+        binding.editDescription.imeOptions = EditorInfo.IME_ACTION_DONE
+        binding.editTitle.setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+        binding.editDescription.setRawInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS)
     }
 
     private fun setupViewsForCustomKeyboard() {
-        if (binding != null) {
-            binding!!.editTitle.setRawInputType(InputType.TYPE_CLASS_TEXT)
-            binding!!.editDescription.setRawInputType(InputType.TYPE_CLASS_TEXT)
-            binding!!.editVictoryCondition.setRawInputType(InputType.TYPE_CLASS_TEXT)
-            binding!!.editEndGame.setRawInputType(InputType.TYPE_CLASS_TEXT)
-            binding!!.editPreparation.setRawInputType(InputType.TYPE_CLASS_TEXT)
-            binding!!.editPlayerTurn.setRawInputType(InputType.TYPE_CLASS_TEXT)
-            binding!!.editTitle.showSoftInputOnFocus = false
-            binding!!.editDescription.showSoftInputOnFocus = false
-            binding!!.editVictoryCondition.showSoftInputOnFocus = false
-            binding!!.editEndGame.showSoftInputOnFocus = false
-            binding!!.editPreparation.showSoftInputOnFocus = false
-            binding!!.editPlayerTurn.showSoftInputOnFocus = false
-            onActionTitle()
-            onActionDescription()
-            onActionVictoryCondition()
-            onActionEndGame()
-            onActionPreparation()
-            onActionPlayerTurn()
-        }
+        binding.editTitle.setRawInputType(InputType.TYPE_CLASS_TEXT)
+        binding.editDescription.setRawInputType(InputType.TYPE_CLASS_TEXT)
+        binding.editVictoryCondition.setRawInputType(InputType.TYPE_CLASS_TEXT)
+        binding.editEndGame.setRawInputType(InputType.TYPE_CLASS_TEXT)
+        binding.editPreparation.setRawInputType(InputType.TYPE_CLASS_TEXT)
+        binding.editPlayerTurn.setRawInputType(InputType.TYPE_CLASS_TEXT)
+        binding.editTitle.showSoftInputOnFocus = false
+        binding.editDescription.showSoftInputOnFocus = false
+        binding.editVictoryCondition.showSoftInputOnFocus = false
+        binding.editEndGame.showSoftInputOnFocus = false
+        binding.editPreparation.showSoftInputOnFocus = false
+        binding.editPlayerTurn.showSoftInputOnFocus = false
+        onActionTitle()
+        onActionDescription()
+        onActionVictoryCondition()
+        onActionEndGame()
+        onActionPreparation()
+        onActionPlayerTurn()
     }
 
     private fun getEditedInstance(boardgameRawDb: BoardgameRaw): BoardgameRaw {
         return BoardgameRaw(
             id = boardgameRawDb.id,
-            name = binding!!.editTitle.text.toString(),
-            description = binding!!.editDescription.text.toString(),
-            victoryCondition = binding!!.editVictoryCondition.text.toString(),
-            playerTurn = binding!!.editPlayerTurn.text.toString(),
-            endGame = binding!!.editEndGame.text.toString(),
+            name = binding.editTitle.text.toString(),
+            description = binding.editDescription.text.toString(),
+            victoryCondition = binding.editVictoryCondition.text.toString(),
+            playerTurn = binding.editPlayerTurn.text.toString(),
+            endGame = binding.editEndGame.text.toString(),
             effects = boardgameRawDb.effects,
-            preparation = binding!!.editPreparation.text.toString(),
+            preparation = binding.editPreparation.text.toString(),
             priority = boardgameRawDb.priority,
             favorite = boardgameRawDb.favorite,
             lock = boardgameRawDb.lock,
@@ -189,7 +185,7 @@ class CardEditFragment : AbstractFragment() {
     }
 
     private fun onActionTitle() {
-        binding!!.editTitle.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+        binding.editTitle.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS)
             }
@@ -197,7 +193,7 @@ class CardEditFragment : AbstractFragment() {
     }
 
     private fun onActionDescription() {
-        binding!!.editDescription.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+        binding.editDescription.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS)
             }
@@ -205,37 +201,37 @@ class CardEditFragment : AbstractFragment() {
     }
 
     private fun onActionVictoryCondition() {
-        binding!!.editVictoryCondition.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+        binding.editVictoryCondition.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS)
-                scrollTo(binding!!.editVictoryCondition)
+                scrollTo(binding.editVictoryCondition)
             }
         }
     }
 
     private fun onActionEndGame() {
-        binding!!.editEndGame.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+        binding.editEndGame.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS)
-                scrollTo(binding!!.editEndGame)
+                scrollTo(binding.editEndGame)
             }
         }
     }
 
     private fun onActionPreparation() {
-        binding!!.editPreparation.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+        binding.editPreparation.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS)
-                scrollTo(binding!!.editPreparation)
+                scrollTo(binding.editPreparation)
             }
         }
     }
 
     private fun onActionPlayerTurn() {
-        binding!!.editPlayerTurn.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+        binding.editPlayerTurn.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 enableCustomKeyboard(view, KeyboardCapabilities.LETTERS_AND_NUMBERS_AND_ICONS)
-                scrollTo(binding!!.editPlayerTurn)
+                scrollTo(binding.editPlayerTurn)
             }
         }
     }
@@ -245,24 +241,22 @@ class CardEditFragment : AbstractFragment() {
             inputConnection!!.closeConnection()
         }
         inputConnection = view.onCreateInputConnection(EditorInfo())
-        binding!!.keyboardCardEdit.setInputConnection(inputConnection)
-        binding!!.keyboardCardEdit.setCapabilities(capabilities)
-        binding!!.keyboardCardEdit.visibility = View.VISIBLE
+        binding.keyboardCardEdit.setInputConnection(inputConnection)
+        binding.keyboardCardEdit.setCapabilities(capabilities)
+        binding.keyboardCardEdit.visibility = View.VISIBLE
     }
 
     private fun scrollTo(view: EditText) {
-        binding!!.keyboardCardEdit.setHeightFragment(binding!!.layoutCardEdit.height)
-        binding!!.keyboardCardEdit.setScrollView(binding!!.scrollCardEdit)
-        binding!!.keyboardCardEdit.scrollEditTextToKeyboard(view)
+        binding.keyboardCardEdit.setHeightFragment(binding.layoutCardEdit.height)
+        binding.keyboardCardEdit.setScrollView(binding.scrollCardEdit)
+        binding.keyboardCardEdit.scrollEditTextToKeyboard(view)
     }
 
     private fun uiStateListener() {
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
 
-            binding?.loadingIndicator?.let { loadingIndicator ->
-                if (uiState.isLoading != loadingIndicator.isRefreshing) {
-                    loadingIndicator.isRefreshing = uiState.isLoading
-                }
+            if (uiState.isLoading != binding.loadingIndicator.isRefreshing) {
+                binding.loadingIndicator.isRefreshing = uiState.isLoading
             }
             if (uiState.isUpdateStart) {
                 uiState.boardgameRaw?.let { dataFromDb ->
@@ -271,12 +265,12 @@ class CardEditFragment : AbstractFragment() {
                 }
             } else {
                 uiState.boardgameRaw?.let { boardgameRaw ->
-                    binding?.editTitle?.setText(boardgameRaw.name)
-                    binding?.editDescription?.setText(boardgameRaw.description)
-                    binding?.editVictoryCondition?.setText(boardgameRaw.victoryCondition)
-                    binding?.editEndGame?.setText(boardgameRaw.endGame)
-                    binding?.editPreparation?.setText(boardgameRaw.preparation)
-                    binding?.editPlayerTurn?.setText(boardgameRaw.playerTurn)
+                    binding.editTitle.setText(boardgameRaw.name)
+                    binding.editDescription.setText(boardgameRaw.description)
+                    binding.editVictoryCondition.setText(boardgameRaw.victoryCondition)
+                    binding.editEndGame.setText(boardgameRaw.endGame)
+                    binding.editPreparation.setText(boardgameRaw.preparation)
+                    binding.editPlayerTurn.setText(boardgameRaw.playerTurn)
                 }
             }
             uiState.message?.let { message ->
@@ -291,9 +285,9 @@ class CardEditFragment : AbstractFragment() {
 
     private fun selectingTextFrom(result: Message) {
         when (result) {
-            Message.ACTION_STOPPED -> showMessage(binding!!.scrollCardEdit, R.string.message_insert_title)
-            Message.ACTION_ENDED_SUCCESS -> showMessage(binding!!.scrollCardEdit, R.string.message_card_updated)
-            Message.ACTION_ENDED_ERROR -> showMessage(binding!!.scrollCardEdit, R.string.error_action_ended)
+            Message.ACTION_STOPPED -> showMessage(binding.scrollCardEdit, R.string.message_insert_title)
+            Message.ACTION_ENDED_SUCCESS -> showMessage(binding.scrollCardEdit, R.string.message_card_updated)
+            Message.ACTION_ENDED_ERROR -> showMessage(binding.scrollCardEdit, R.string.error_action_ended)
             else -> {}
         }
     }
@@ -301,7 +295,7 @@ class CardEditFragment : AbstractFragment() {
     private fun setAnimationSizeForExpandableViews() {
         val layoutTransition: LayoutTransition = LayoutTransition()
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        binding!!.layoutExpandableCardedit.layoutTransition = layoutTransition
+        binding.layoutExpandableCardedit.layoutTransition = layoutTransition
     }
 
 }

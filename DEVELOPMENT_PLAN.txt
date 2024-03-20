@@ -11,6 +11,8 @@
 
 
 next: error handling (catch app errors & skip device errors, create app error classifications, logging)
+- каждый слой должен запаковывать приходящую ошибку в свою ошибку(DataError, DomainError and...)
+и отправлять далее
 
 
 

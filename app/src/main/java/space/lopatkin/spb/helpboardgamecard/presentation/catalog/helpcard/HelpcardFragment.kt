@@ -24,7 +24,8 @@ class HelpcardFragment : AbstractFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: HelpcardViewModel
-    private var binding: FragmentHelpcardBinding? = null
+    private var _binding: FragmentHelpcardBinding? = null
+    private val binding get() = _binding!!
     private val navController: NavController by lazy {
         Navigation.findNavController(requireView())
     }
@@ -40,8 +41,8 @@ class HelpcardFragment : AbstractFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHelpcardBinding.inflate(inflater, container, false)
-        val view: View = binding!!.root
+        _binding = FragmentHelpcardBinding.inflate(inflater, container, false)
+        val view: View = binding.root
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(HelpcardViewModel::class.java)
 
@@ -81,41 +82,41 @@ class HelpcardFragment : AbstractFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun onVictoryCondition() {
-        binding!!.textVictoryCondition.setOnTouchListener { view: View, motionEvent: MotionEvent ->
-            showLabel(view, motionEvent, binding!!.textVictoryCondition)
+        binding.textVictoryCondition.setOnTouchListener { view: View, motionEvent: MotionEvent ->
+            showLabel(view, motionEvent, binding.textVictoryCondition)
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun onEndGame() {
-        binding!!.textEndGame.setOnTouchListener { view: View, motionEvent: MotionEvent ->
-            showLabel(view, motionEvent, binding!!.textEndGame)
+        binding.textEndGame.setOnTouchListener { view: View, motionEvent: MotionEvent ->
+            showLabel(view, motionEvent, binding.textEndGame)
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun onPreparation() {
-        binding!!.textPreparation.setOnTouchListener { view: View, motionEvent: MotionEvent ->
-            showLabel(view, motionEvent, binding!!.textPreparation)
+        binding.textPreparation.setOnTouchListener { view: View, motionEvent: MotionEvent ->
+            showLabel(view, motionEvent, binding.textPreparation)
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun onPlayerTurn() {
-        binding!!.textPlayerTurn.setOnTouchListener { view: View, motionEvent: MotionEvent ->
-            showLabel(view, motionEvent, binding!!.textPlayerTurn)
+        binding.textPlayerTurn.setOnTouchListener { view: View, motionEvent: MotionEvent ->
+            showLabel(view, motionEvent, binding.textPlayerTurn)
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun onEffects() {
-        binding!!.textEffects.setOnTouchListener { view: View, motionEvent: MotionEvent ->
-            showLabel(view, motionEvent, binding!!.textEffects)
+        binding.textEffects.setOnTouchListener { view: View, motionEvent: MotionEvent ->
+            showLabel(view, motionEvent, binding.textEffects)
         }
     }
 
@@ -132,24 +133,22 @@ class HelpcardFragment : AbstractFragment() {
     private fun setAnimationSizeForExpandableViews() {
         val layoutTransition: LayoutTransition = LayoutTransition()
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        binding!!.layoutExpandableHelpcard.layoutTransition = layoutTransition
+        binding.layoutExpandableHelpcard.layoutTransition = layoutTransition
     }
 
     private fun uiStateListener() {
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
 
-            binding?.loadingIndicator?.let { loadingIndicator ->
-                if (uiState.isLoading != loadingIndicator.isRefreshing) {
-                    loadingIndicator.isRefreshing = uiState.isLoading
-                }
+            if (uiState.isLoading != binding.loadingIndicator.isRefreshing) {
+                binding.loadingIndicator.isRefreshing = uiState.isLoading
             }
             uiState.helpcard?.let { helpcard ->
-                binding?.textViewTitle?.text = helpcard.boardgameName
-                binding?.textVictoryCondition?.text = helpcard.helpcardVictoryCondition
-                binding?.textEndGame?.text = helpcard.helpcardEndGame
-                binding?.textPreparation?.text = helpcard.helpcardPreparation
-                binding?.textPlayerTurn?.text = helpcard.helpcardPlayerTurn
-                binding?.textEffects?.text = helpcard.helpcardEffects
+                binding.textViewTitle.text = helpcard.boardgameName
+                binding.textVictoryCondition.text = helpcard.helpcardVictoryCondition
+                binding.textEndGame.text = helpcard.helpcardEndGame
+                binding.textPreparation.text = helpcard.helpcardPreparation
+                binding.textPlayerTurn.text = helpcard.helpcardPlayerTurn
+                binding.textEffects.text = helpcard.helpcardEffects
             }
             uiState.message?.let { message ->
                 selectingTextFrom(message)
@@ -167,7 +166,7 @@ class HelpcardFragment : AbstractFragment() {
 
     private fun selectingTextFrom(result: Message) {
         when (result) {
-            Message.ACTION_ENDED_ERROR -> showMessage(binding!!.scrollHelpcard, R.string.error_action_ended)
+            Message.ACTION_ENDED_ERROR -> showMessage(binding.scrollHelpcard, R.string.error_action_ended)
             else -> {}
         }
     }

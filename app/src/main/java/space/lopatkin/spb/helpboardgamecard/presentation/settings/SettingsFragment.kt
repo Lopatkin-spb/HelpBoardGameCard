@@ -20,7 +20,8 @@ class SettingsFragment : AbstractFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: SettingsViewModel
-    private var binding: FragmentSettingsBinding? = null
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -32,8 +33,8 @@ class SettingsFragment : AbstractFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        val view: View = binding!!.root
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        val view: View = binding.root
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(SettingsViewModel::class.java)
         setupSpinner()
@@ -50,7 +51,7 @@ class SettingsFragment : AbstractFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
     private fun setupSpinner() {
@@ -60,18 +61,14 @@ class SettingsFragment : AbstractFragment() {
             android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        if (binding != null) {
-            binding!!.actionSpinnerKeyboards.adapter = adapter
-        }
+        binding.actionSpinnerKeyboards.adapter = adapter
     }
 
     private fun onActionSpinner() {
         val spinnerListener: SpinnerInteractionListener = SpinnerInteractionListener()
 
-        if (binding != null) {
-            binding!!.actionSpinnerKeyboards.setOnTouchListener(spinnerListener)
-            binding!!.actionSpinnerKeyboards.onItemSelectedListener = spinnerListener
-        }
+        binding.actionSpinnerKeyboards.setOnTouchListener(spinnerListener)
+        binding.actionSpinnerKeyboards.onItemSelectedListener = spinnerListener
 
         spinnerListener.setEndActionListener(SpinnerInteractionListener.OnEndActionListener { userSelection ->
             viewModel.saveKeyboardType(userSelection)
@@ -82,13 +79,11 @@ class SettingsFragment : AbstractFragment() {
     private fun uiStateListener() {
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
 
-            binding?.loadingIndicator?.let { loadingIndicator ->
-                if (uiState.isLoading != loadingIndicator.isRefreshing) {
-                    loadingIndicator.isRefreshing = uiState.isLoading
-                }
+            if (uiState.isLoading != binding.loadingIndicator.isRefreshing) {
+                binding.loadingIndicator.isRefreshing = uiState.isLoading
             }
             uiState.keyboard?.let { type ->
-                binding?.actionSpinnerKeyboards?.setSelection(type.ordinal)
+                binding.actionSpinnerKeyboards.setSelection(type.ordinal)
                 viewModel.keyboardInstalledToScreen()
             }
             uiState.message?.let { message ->
@@ -99,11 +94,9 @@ class SettingsFragment : AbstractFragment() {
     }
 
     private fun selectingTextFrom(result: Message) {
-        if (binding != null) {
-            when (result) {
-                Message.ACTION_ENDED_ERROR -> showMessage(binding!!.layoutSettings, R.string.error_action_ended)
-                else -> {}
-            }
+        when (result) {
+            Message.ACTION_ENDED_ERROR -> showMessage(binding.layoutSettings, R.string.error_action_ended)
+            else -> {}
         }
     }
 

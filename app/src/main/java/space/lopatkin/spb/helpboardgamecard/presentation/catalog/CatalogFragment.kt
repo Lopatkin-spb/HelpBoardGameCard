@@ -24,7 +24,8 @@ class CatalogFragment : AbstractFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: CatalogViewModel
-    private var binding: FragmentCatalogBinding? = null
+    private var _binding: FragmentCatalogBinding? = null
+    private val binding get() = _binding!!
     private val adapter: BoardgameAdapter by lazy { BoardgameAdapter(this) }
     private val navController: NavController by lazy {
         Navigation.findNavController(requireView())
@@ -40,8 +41,8 @@ class CatalogFragment : AbstractFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCatalogBinding.inflate(inflater, container, false)
-        val view: View = binding!!.root
+        _binding = FragmentCatalogBinding.inflate(inflater, container, false)
+        val view: View = binding.root
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(CatalogViewModel::class.java)
         setupList()
@@ -81,16 +82,14 @@ class CatalogFragment : AbstractFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
     private fun uiStateListener() {
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
 
-            binding?.loadingIndicator?.let { loadingIndicator ->
-                if (uiState.isLoading != loadingIndicator.isRefreshing) {
-                    loadingIndicator.isRefreshing = uiState.isLoading
-                }
+            if (uiState.isLoading != binding.loadingIndicator.isRefreshing) {
+                binding.loadingIndicator.isRefreshing = uiState.isLoading
             }
             if (!uiState.isLoading) {
                 adapter.setList(uiState.list)
@@ -103,37 +102,33 @@ class CatalogFragment : AbstractFragment() {
     }
 
     private fun setupList() {
-        if (binding != null) {
-            //инициализация ресайкл вью
-            binding!!.recyclerView.layoutManager = LinearLayoutManager(activity)
-            //подключение адаптера к ресайкл вью
-            binding!!.recyclerView.adapter = adapter
-            onActionSwipe()
-        }
+        //инициализация ресайкл вью
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        //подключение адаптера к ресайкл вью
+        binding.recyclerView.adapter = adapter
+        onActionSwipe()
     }
 
     private fun onActionSwipe() {
-        if (binding != null) {
-            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-                0,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            ) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
 
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val position = viewHolder.adapterPosition
-                    val item: BoardgameInfo = adapter.getBoardgameInfoAt(position)
-                    adapter.deleteItemAt(position)
-                    viewModel.delete(item)
-                }
-            }).attachToRecyclerView(binding!!.recyclerView)
-        }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val item: BoardgameInfo = adapter.getBoardgameInfoAt(position)
+                adapter.deleteItemAt(position)
+                viewModel.delete(item)
+            }
+        }).attachToRecyclerView(binding.recyclerView)
     }
 
     fun notifyToUpdateFavorite(boardgameInfo: BoardgameInfo?) {
@@ -154,17 +149,10 @@ class CatalogFragment : AbstractFragment() {
     }
 
     private fun selectingTextFrom(result: Message) {
-        if (binding != null) {
-            when (result) {
-                Message.ACTION_ENDED_SUCCESS -> showMessage(
-                    binding!!.recyclerView,
-                    R.string.message_action_ended_success
-                )
-
-                Message.ACTION_ENDED_ERROR -> showMessage(binding!!.recyclerView, R.string.error_action_ended)
-
-                else -> {}
-            }
+        when (result) {
+            Message.ACTION_ENDED_SUCCESS -> showMessage(binding.recyclerView, R.string.message_action_ended_success)
+            Message.ACTION_ENDED_ERROR -> showMessage(binding.recyclerView, R.string.error_action_ended)
+            else -> {}
         }
     }
 
